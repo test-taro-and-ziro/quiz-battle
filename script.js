@@ -26,9 +26,9 @@ const quizDatabase = {
 };
 
 const npcList = [
-    { name: "みならいニンジャ", avatar: "みならい", speed: 6.0, accuracy: 0.6 },
-    { name: "あかニンジャ", avatar: "あか", speed: 4.5, accuracy: 0.75 },
-    { name: "マスター・ハンゾウ", avatar: "マスター", speed: 3.0, accuracy: 0.9 }
+    { name: "みならいニンジャ", avatar: "🟢🥷", speed: 6.0, accuracy: 0.6 },
+    { name: "あかニンジャ", avatar: "🔴🥷", speed: 4.5, accuracy: 0.75 },
+    { name: "マスター・ハンゾウ", avatar: "🔥🥷", speed: 3.0, accuracy: 0.9 }
 ];
 
 let users = JSON.parse(localStorage.getItem('quiz_battle_users')) || {};
@@ -45,7 +45,7 @@ let npcTimeout = null;
 const maxAnswerTime = 10000;
 
 function showScreen(screenId) {
-    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.screen').forEach(function(s) { s.classList.remove('active'); });
     const target = document.getElementById(screenId);
     if (target) target.classList.add('active');
 }
@@ -54,7 +54,7 @@ function renderUserList() {
     const listContainer = document.getElementById('login-user-list');
     if (!listContainer) return;
     listContainer.innerHTML = '';
-    Object.keys(users).forEach(username => {
+    Object.keys(users).forEach(function(username) {
         const item = document.createElement('div');
         item.className = 'user-item';
         const displayGrade = users[username].grade === 1 ? "低学年・幼児" : users[username].grade === 3 ? "中学年" : "高学年";
@@ -101,7 +101,7 @@ function startBattle(genre) {
     currentGenre = genre;
     const uData = users[currentUser];
     const allGenreQuizzes = quizDatabase[genre] || [];
-    currentQuestions = allGenreQuizzes.filter(q => q.lvl === uData.grade);
+    currentQuestions = allGenreQuizzes.filter(function(q) { return q.lvl === uData.grade; });
     if(currentQuestions.length === 0) currentQuestions = allGenreQuizzes;
     currentQuestions.sort(function() { return Math.random() - 0.5; });
     const npcIdx = Math.min(Math.floor((uData.wins || 0) / 3), npcList.length - 1);
@@ -235,22 +235,22 @@ function endBattle() {
     if (npcHP <= 0) {
         document.getElementById('result-title').textContent = "かち！";
         document.getElementById('result-avatar').textContent = "🏆";
-        document.getElementById('result-text').innerHTML = "おめでとう！ " + currentNPC.name + " をたおしたぞ！";
-        uData.wins = (uData.wins || 0) + 1;
-    } else {
+    document.getElementById('result-text').innerHTML = "おめでとう！ " + currentNPC.name + " をたおしたぞ！";
+    uData.wins = (uData.wins || 0) + 1;
+} else {
     document.getElementById('result-title').textContent = "まけちゃった...";
     document.getElementById('result-avatar').textContent = "🍂";
     document.getElementById('result-text').innerHTML = currentNPC.name + " は強かった...！";
 }
-    localStorage.setItem('quiz_battle_users', JSON.stringify(users));
-    loginAs(currentUser);
-    showScreen('screen-result');
+
+localStorage.setItem('quiz_battle_users', JSON.stringify(users));
+loginAs(currentUser);
+showScreen('screen-result');
+
+function backToMenu() {
+    showScreen('screen-menu');
 }
 
-function backToMenu() { 
-    showScreen('screen-menu'); 
-}
-
-window.onload = function() { 
-    renderUserList(); 
+window.onload = function() {
+    renderUserList();
 };
