@@ -4,75 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>クイズバトル！ニンジャマスターズ</title>
-    <style>
-        :root {
-            --primary: #4a90e2;
-            --secondary: #ff6b6b;
-            --success: #2ecc71;
-            --dark: #2c3e50;
-            --light: #f8f9fa;
-        }
-        * { box-sizing: border-box; font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', sans-serif; }
-        body { margin: 0; padding: 0; background-color: #e6f0fa; color: var(--dark); display: flex; justify-content: center; min-height: 100vh; }
-        #game-window { width: 100%; max-width: 480px; background: white; min-height: 100vh; position: relative; box-shadow: 0 0 20px rgba(0,0,0,0.1); display: flex; flex-direction: column; overflow-x: hidden; }
-        .screen { display: none; padding: 20px; flex-direction: column; flex-grow: 1; justify-content: center; align-items: center; }
-        .screen.active { display: flex; }
-        
-        h1 { color: var(--primary); text-align: center; margin-bottom: 5px; font-size: 28px; text-shadow: 1px 1px 0 #fff; }
-        h2 { font-size: 20px; margin-bottom: 20px; text-align: center; color: #555; }
-        .subtitle { font-size: 14px; color: #666; text-align: center; margin-bottom: 20px; }
-        
-        input[type="text"], select { width: 85%; padding: 12px; margin: 10px 0; border: 2px solid #ccc; border-radius: 8px; font-size: 16px; text-align: center; }
-        input[type="text"]:focus, select:focus { border-color: var(--primary); outline: none; }
-        
-        .btn { width: 85%; padding: 15px; margin: 10px 0; font-size: 18px; font-weight: bold; border: none; border-radius: 30px; cursor: pointer; color: white; box-shadow: 0 4px 0 rgba(0,0,0,0.2); transition: all 0.1s; text-align: center; }
-        .btn-primary { background-color: var(--primary); }
-        .btn-secondary { background-color: var(--secondary); }
-        .btn-success { background-color: var(--success); }
-        .btn:active { transform: translateY(3px); box-shadow: 0 1px 0 rgba(0,0,0,0.2); }
-        
-        /* バトル画面スタイル */
-        .battle-header { width: 100%; display: flex; justify-content: space-between; background: #f0f4f8; padding: 10px; border-radius: 10px; margin-bottom: 15px; font-size: 14px; font-weight: bold; }
-        .stage-area { width: 100%; display: flex; justify-content: space-between; margin-bottom: 20px; background: #fdfdfd; border: 2px dashed #ddd; border-radius: 10px; padding: 10px; }
-        .fighter { width: 45%; text-align: center; display: flex; flex-direction: column; align-items: center; }
-        .avatar { font-size: 50px; margin-bottom: 5px; min-height: 60px; transition: transform 0.2s; }
-        .fighter-name { font-size: 14px; font-weight: bold; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 100%; }
-        .hp-bar-bg { width: 100%; height: 12px; background: #e0e0e0; border-radius: 6px; margin-top: 5px; overflow: hidden; border: 1px solid #ccc; }
-        .hp-bar { height: 100%; background: #ff4757; width: 100%; transition: width 0.3s ease; }
-        .status-text { font-size: 11px; color: #777; margin-top: 2px; }
-        
-        .quiz-box { width: 100%; background: #f9f9f9; border: 2px solid var(--primary); border-radius: 12px; padding: 15px; margin-bottom: 20px; min-height: 100px; display: flex; justify-content: center; align-items: center; text-align: center; font-size: 18px; font-weight: bold; line-height: 1.5; box-shadow: inset 0 2px 5px rgba(0,0,0,0.05); }
-        .options-grid { width: 100%; display: flex; flex-direction: column; gap: 10px; }
-        .option-btn { width: 100%; padding: 14px; font-size: 16px; font-weight: bold; text-align: left; background: white; border: 2px solid #e0e0e0; border-radius: 10px; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; }
-        .option-btn:hover { background: #f0f7ff; border-color: var(--primary); }
-        .option-num { background: #e0e0e0; width: 26px; height: 26px; border-radius: 50%; display: flex; justify-content: center; align-items: center; margin-right: 12px; font-size: 14px; font-weight: bold; color: #555; flex-shrink: 0; }
-        
-        /* 演出用エフェクト */
-        @keyframes attack-left { 0% { transform: translateX(0); } 50% { transform: translateX(30px) scale(1.1); } 100% { transform: translateX(0); } }
-        @keyframes attack-right { 0% { transform: translateX(0); } 50% { transform: translateX(-30px) scale(1.1); } 100% { transform: translateX(0); } }
-        @keyframes shake { 0%, 100% { transform: translateX(0); } 20%, 60% { transform: translateX(-6px); } 40%, 80% { transform: translateX(6px); } }
-        .animate-attack-left { animation: attack-left 0.3s ease; }
-        .animate-attack-right { animation: attack-right 0.3s ease; }
-        .animate-shake { animation: shake 0.3s ease; }
-
-        /* タイマーバー */
-        .timer-container { width: 100%; height: 6px; background: #e0e0e0; border-radius: 3px; margin-bottom: 15px; overflow: hidden; }
-        .timer-bar { height: 100%; background: #ffa500; width: 100%; }
-        
-        /* ユーザー選択リスト */
-        .user-list { width: 85%; max-height: 150px; overflow-y: auto; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 15px; background: #fafafa; }
-        .user-item { padding: 10px; text-align: center; border-bottom: 1px solid #eee; cursor: pointer; font-weight: bold; }
-        .user-item:hover { background: #eef5ff; }
-        .user-item:last-child { border-bottom: none; }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <div id="game-window">
-    <!-- 1. ログイン/アカウント画面 -->
     <div id="screen-login" class="screen active">
         <h1>クイズバトル！</h1>
-        <h2>🥷 ニンジャマスターズ 🥷</h2>
+        <h2>ニンジャマスターズ</h2>
         <p class="subtitle">おなまえを えらぶか、新しくつくってね！</p>
         
         <div class="user-list" id="login-user-list"></div>
@@ -89,20 +28,18 @@
         <button class="btn btn-primary" onclick="handleRegister()">スタート！</button>
     </div>
 
-    <!-- 2. メインメニュー（ジャンル選択） -->
     <div id="screen-menu" class="screen">
         <h1 id="menu-welcome">ようこそ！</h1>
         <p class="subtitle" id="user-stats">現在のランク: Lv.1</p>
         
         <h2 style="margin-bottom:10px;">どっちのクイズで しょうぶする？</h2>
-        <button class="btn btn-primary" onclick="startBattle('こくご')">📕 こくご</button>
-        <button class="btn btn-secondary" onclick="startBattle('さんすう')">📐 さんすう</button>
-        <button class="btn btn-success" onclick="startBattle('どうとく')">🤝 どうとく</button>
+        <button class="btn btn-primary" onclick="startBattle('こくご')">こくご</button>
+        <button class="btn btn-secondary" onclick="startBattle('さんすう')">さんすう</button>
+        <button class="btn btn-success" onclick="startBattle('どうとく')">どうとく</button>
         
         <button class="btn" style="background:#7f8c8d; font-size:14px; padding:8px;" onclick="logout()">別のユーザーにかえる</button>
     </div>
 
-    <!-- 3. バトル画面 -->
     <div id="screen-battle" class="screen">
         <div class="battle-header">
             <span id="battle-genre-label">ジャンル: こくご</span>
@@ -111,14 +48,14 @@
         
         <div class="stage-area">
             <div class="fighter" id="player-fighter">
-                <div class="avatar" id="player-avatar">🧑‍🥷</div>
+                <div class="avatar" id="player-avatar">プレイヤー</div>
                 <div class="fighter-name" id="player-name-label">プレイヤー</div>
                 <div class="hp-bar-bg"><div class="hp-bar" id="player-hp"></div></div>
                 <div class="status-text" id="player-hp-text">HP: 100/100</div>
             </div>
             <div style="font-size: 24px; display: flex; align-items: center; font-weight: bold; color: #ff6b6b;">VS</div>
             <div class="fighter" id="npc-fighter">
-                <div class="avatar" id="npc-avatar">🤖🥷</div>
+                <div class="avatar" id="npc-avatar">アカニンジャ</div>
                 <div class="fighter-name" id="npc-name-label">アカニンジャ</div>
                 <div class="hp-bar-bg"><div class="hp-bar" id="npc-hp"></div></div>
                 <div class="status-text" id="npc-hp-text">HP: 100/100</div>
@@ -130,7 +67,6 @@
         <div class="options-grid" id="options-container"></div>
     </div>
 
-    <!-- 4. 結果画面 -->
     <div id="screen-result" class="screen">
         <h1 id="result-title">かち！</h1>
         <div id="result-avatar" style="font-size: 80px; margin: 20px 0;">🏆</div>
@@ -139,239 +75,6 @@
     </div>
 </div>
 
-<script>
-    const quizDatabase = {
-        'こくご': [
-            { lvl: 1, q: "「いぬ」の はんたいの おおきい どうぶつは？", a: ["くま", "ねこ", "あり", "とり"], c: 0 },
-            { lvl: 1, q: "「こんにちは」の つぎに くる 正しい文字は？\nこんにち（ ）", a: ["は", "わ", "お", "あ"], c: 0 },
-            { lvl: 3, q: "「一生懸命」と 同じ意味の言葉はどれ？", a: ["必死になって", "てきとうに", "のんびりと", "おこりながら"], c: 0 },
-            { lvl: 3, q: "「（ ）も歩けば棒に当たる」 空欄に入る動物は？", a: ["犬", "猫", "猿", "鳥"], c: 0 },
-            { lvl: 5, q: "「他人の行動を見て、自分の行いを改める」という意味の四字熟語は？", a: ["反面教師", "単刀直入", "以心伝心", "弱肉強食"], c: 0 },
-            { lvl: 5, q: "次のうち、「敬語（尊敬語）」として尊敬表現で正しいものはどれ？", a: ["先生がお見えになる", "先生が来る", "先生が参る", "先生が来られる"], c: 0 }
-        ],
-        'さんすう': [
-            { lvl: 1, q: " りんごが 3こ あります。2こ もらうと、ぜんぶで なにこ？", a: ["5こ", "4こ", "1こ", "6こ"], c: 0 },
-            { lvl: 1, q: "「8」の つぎに おおきい かずは なに？", a: ["9", "7", "10", "6"], c: 0 },
-            { lvl: 3, q: " 25 × 4 の答えはいくつ？", a: ["100", "80", "90", "120"], c: 0 },
-            { lvl: 3, q: " 1リットルは何ミリリットル（ml）？", a: ["1000ml", "100ml", "10ml", "10000ml"], c: 0 },
-            { lvl: 5, q: " 時速60kmの車が、2時間で進む距離は？", a: ["120km", "30km", "60km", "180km"], c: 0 },
-
-{ lvl: 5, q: " 三角形の面積を求める公式は？", a: ["底辺 × 高さ ÷ 2", "底辺 × 高さ", "半径 × 半径 × 3.14", "縦 × 横"], c: 0 }
-],
-'どうとく': [
-{ lvl: 1, q: " ともだちの おもちゃを つかいたいとき、なんて 言う？", a: ["かして！という", "だまって とる", "おこる", "なきだす"], c: 0 },
-{ lvl: 1, q: " ごはんを たべるとき、さいしょに 言う あいさつは？", a: ["ごちそうさま", "いただきます", "こんにちは", "ありがとう"], c: 0 },
-{ lvl: 3, q: " 友達が困って泣いています。どうするのが一番良い？", a: ["「どうしたの？」と声をかける", "見ないふりをする", "一緒に泣く", "他の友達と言いふらす"], c: 0 },
-{ lvl: 3, q: " 図書館など、みんなが使う場所での正しい過ごし方は？", a: ["静かに過ごす", "大声で走る", "お菓子を食べる", "ゲームを大音量でする"], c: 0 },
-{ lvl: 5, q: " SNSで友達の悪口を書いている人を見つけました。適切な行動は？", a: ["関わらず、大人や先生に相談する", "自分も一緒に書き込む", "その人を強く責め立てる", "面白そうなので友達に拡散する"], c: 0 },
-{ lvl: 5, q: " 「責任（せきにん）を持つ」とはどういうこと？", a: ["自分の失敗を認め、次につなげる", "絶対に失敗しないこと", "誰かのせいにすること", "嫌なことから逃げること"], c: 0 }
-]
-};
-const npcList = [
-{ name: "みならいニンジャ", avatar: "🟢🥷", speed: 6.0, accuracy: 0.6 },
-{ name: "あかニンジャ", avatar: "🔴🥷", speed: 4.5, accuracy: 0.75 },
-{ name: "マスター・ハンゾウ", avatar: "🔥🥷", speed: 3.0, accuracy: 0.9 }
-];
-let users = JSON.parse(localStorage.getItem('quiz_battle_users')) || {};
-let currentUser = null;
-let currentGenre = '';
-let currentQuestions = [];
-let questionIndex = 0;
-let playerHP = 100;
-let npcHP = 100;
-let currentNPC = null;
-let questionStartTime = 0;
-let timerInterval = null;
-let npcTimeout = null;
-const maxAnswerTime = 10000;
-function showScreen(screenId) {
-document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-const target = document.getElementById(screenId);
-if (target) target.classList.add('active');
-}
-function renderUserList() {
-const listContainer = document.getElementById('login-user-list');
-if (!listContainer) return;
-listContainer.innerHTML = '';
-Object.keys(users).forEach(username => {
-const item = document.createElement('div');
-item.className = 'user-item';
-const displayGrade = users[username].grade === 1 ? "低学年・幼児" : users[username].grade === 3 ? "中学年" : "高学年";
-item.textContent = ${username} (${displayGrade} / 勝利:${users[username].wins || 0});
-item.onclick = () => loginAs(username);
-listContainer.appendChild(item);
-});
-if(Object.keys(users).length === 0) {
-listContainer.innerHTML = 'アカウントがありません';
-}
-}
-function handleRegister() {
-const nameInput = document.getElementById('username-input').value.trim();
-const ageSelect = document.getElementById('age-select').value;
-if (!nameInput) { alert('おなまえを入力してね！'); return; }
-if (!ageSelect) { alert('学年をえらんでね！'); return; }
-users[nameInput] = {
-grade: parseInt(ageSelect),
-wins: users[nameInput] ? users[nameInput].wins : 0,
-lv: users[nameInput] ? users[nameInput].lv : 1
-};
-localStorage.setItem('quiz_battle_users', JSON.stringify(users));
-loginAs(nameInput);
-}
-function loginAs(username) {
-currentUser = username;
-const uData = users[username];
-const displayGrade = uData.grade === 1 ? "低学年・幼児" : uData.grade === 3 ? "中学年" : "高学年";
-document.getElementById('menu-welcome').textContent = ようこそ、${username} さん！;
-document.getElementById('user-stats').textContent = クラス: ${displayGrade}向け | かち数: ${uData.wins || 0}回;
-showScreen('screen-menu');
-}
-function logout() {
-currentUser = null;
-document.getElementById('username-input').value = '';
-renderUserList();
-showScreen('screen-login');
-}
-function startBattle(genre) {
-currentGenre = genre;
-const uData = users[currentUser];
-const allGenreQuizzes = quizDatabase[genre] || [];
-currentQuestions = allGenreQuizzes.filter(q => q.lvl === uData.grade);
-if(currentQuestions.length === 0) currentQuestions = allGenreQuizzes;
-currentQuestions.sort(() => Math.random() - 0.5);
-const npcIdx = Math.min(Math.floor((uData.wins || 0) / 3), npcList.length - 1);
-currentNPC = npcList[npcIdx];
-playerHP = 100;
-npcHP = 100;
-questionIndex = 0;
-document.getElementById('battle-genre-label').textContent = ジャンル: ${genre};
-document.getElementById('player-name-label').textContent = currentUser;
-document.getElementById('npc-name-label').textContent = currentNPC.name;
-document.getElementById('npc-avatar').textContent = currentNPC.avatar;
-updateHPDisplays();
-showScreen('screen-battle');
-nextQuestion();
-}
-function updateHPDisplays() {
-document.getElementById('player-hp').style.width = playerHP + '%';
-document.getElementById('npc-hp').style.width = npcHP + '%';
-document.getElementById('player-hp-text').textContent = HP: ${playerHP}/100;
-document.getElementById('npc-hp-text').textContent = HP: ${npcHP}/100;
-}
-function nextQuestion() {
-if (playerHP <= 0 || npcHP <= 0) { endBattle(); return; }
-if (questionIndex >= currentQuestions.length) {
-questionIndex = 0;
-currentQuestions.sort(() => Math.random() - 0.5);
-}
-const qData = currentQuestions[questionIndex];
-document.getElementById('quiz-text').innerText = qData.q;
-const container = document.getElementById('options-container');
-container.innerHTML = '';
-qData.a.forEach((opt, idx) => {
-const btn = document.createElement('button');
-btn.className = 'option-btn';
-btn.innerHTML = <span class="option-num">${idx+1}</span> ${opt};
-btn.onclick = () => handlePlayerAnswer(idx);
-container.appendChild(btn);
-});
-questionStartTime = Date.now();
-startTimerBar();
-scheduleNPCAction(qData);
-}
-function startTimerBar() {
-clearInterval(timerInterval);
-const bar = document.getElementById('timer-bar');
-bar.style.width = '100%';
-timerInterval = setInterval(() => {
-const elapsed = Date.now() - questionStartTime;
-const remainingPercent = Math.max(0, 100 - (elapsed / maxAnswerTime) * 100);
-bar.style.width = remainingPercent + '%';
-if (elapsed >= maxAnswerTime) {
-clearInterval(timerInterval);
-handleTimeOut();
-}
-}, 50);
-}
-function scheduleNPCAction(qData) {
-clearTimeout(npcTimeout);
-const baseSpeed = currentNPC.speed * 1000;
-const actualSpeed = baseSpeed * (0.8 + Math.random() * 0.4);
-npcTimeout = setTimeout(() => {
-if (playerHP <= 0 || npcHP <= 0) return;
-const isCorrect = Math.random() < currentNPC.accuracy;
-if (isCorrect) {
-playerHP = Math.max(0, playerHP - 20);
-triggerEffect('npc-avatar', 'animate-attack-right');
-triggerEffect('player-fighter', 'animate-shake');
-updateHPDisplays();
-showTemporaryText(💥 ${currentNPC.name} のこうげき！ 20 ダメージ！);
-}
-}, actualSpeed);
-}
-function handlePlayerAnswer(selectedIdx) {
-clearInterval(timerInterval);
-clearTimeout(npcTimeout);
-const qData = currentQuestions[questionIndex];
-const elapsed = Date.now() - questionStartTime;
-if (selectedIdx === qData.c) {
-const speedBonus = elapsed < 4000 ? 30 : 20;
-npcHP = Math.max(0, npcHP - speedBonus);
-triggerEffect('player-avatar', 'animate-attack-left');
-triggerEffect('npc-fighter', 'animate-shake');
-updateHPDisplays();
-showTemporaryText(✨ せいかい！ しんそくこうげき！ ${speedBonus} ダメージ！, () => {
-questionIndex++;
-nextQuestion();
-});
-} else {
-playerHP = Math.max(0, playerHP - 15);
-triggerEffect('player-fighter', 'animate-shake');
-updateHPDisplays();
-showTemporaryText(❌ ざんねん！ まちがい (ただしくは: ${qData.a[qData.c]}), () => {
-questionIndex++;
-nextQuestion();
-});
-}
-}
-function handleTimeOut() {
-clearTimeout(npcTimeout);
-playerHP = Math.max(0, playerHP - 10);
-updateHPDisplays();
-showTemporaryText("⏱️ じかんぎれ！ 10ダメージをうけた！", () => {
-questionIndex++;
-nextQuestion();
-});
-}
-function showTemporaryText(text, callback) {
-document.querySelectorAll('.option-btn').forEach(b => b.disabled = true);
-document.getElementById('quiz-text').innerText = text;
-setTimeout(() => { if(callback) callback(); }, 1500);
-}
-function triggerEffect(elementId, className) {
-const el = document.getElementById(elementId);
-if (!el) return;
-el.classList.remove(className);
-// フリーズの原因だった無限ループにつながるリフロー処理を安全な記述に修正
-setTimeout(() => { el.classList.add(className); }, 10);
-}
-function endBattle() {
-clearInterval(timerInterval);
-clearTimeout(npcTimeout);
-const uData = users[currentUser];
-if (npcHP <= 0) {
-document.getElementById('result-title').textContent = "🎉 かち！！ 🎉";
-document.getElementById('result-avatar').textContent = "🏆";
-document.getElementById('result-text').innerHTML = おめでとう！ ${currentNPC.name} をたおしたぞ！<br>キミのクイズりょくが アップした！;
-uData.wins = (uData.wins || 0) + 1;
-} else {
-document.getElementById('result-title').textContent = "😭 まけちゃった... 😭";
-document.getElementById('result-avatar').textContent = "🍂";
-document.getElementById('result-text').innerHTML = ${currentNPC.name} は強かった...！<br>つぎは もっと早く こたえてみよう！;
-}
-localStorage.setItem('quiz_battle_users', JSON.stringify(users));
-loginAs(currentUser);
-showScreen('screen-result');
-}
-function backToMenu() { showScreen('screen-menu'); }
-window.onload = function() { renderUserList(); };
+<script src="script.js"></script>
+</body>
+</html>
