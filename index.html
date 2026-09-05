@@ -147,7 +147,7 @@
             { lvl: 3, q: "「一生懸命」と 同じ意味の言葉はどれ？", a: ["必死になって", "てきとうに", "のんびりと", "おこりながら"], c: 0 },
             { lvl: 3, q: "「（ ）も歩けば棒に当たる」 空欄に入る動物は？", a: ["犬", "猫", "猿", "鳥"], c: 0 },
             { lvl: 5, q: "「他人の行動を見て、自分の行いを改める」という意味の四字熟語は？", a: ["反面教師", "単刀直入", "以心伝心", "弱肉強食"], c: 0 },
-            { lvl: 5, q: "次のうち、「敬語（尊敬語）」として正しいものはどれ？", a: ["先生がお見えになる", "先生が来る", "先生が参る", "先生が来られる"], c: 0 }
+            { lvl: 5, q: "次のうち、「敬語（尊敬語）」として尊敬表現で正しいものはどれ？", a: ["先生がお見えになる", "先生が来る", "先生が参る", "先生が来られる"], c: 0 }
         ],
         'さんすう': [
             { lvl: 1, q: " りんごが 3こ あります。2こ もらうと、ぜんぶで なにこ？", a: ["5こ", "4こ", "1こ", "6こ"], c: 0 },
@@ -186,10 +186,12 @@ let npcTimeout = null;
 const maxAnswerTime = 10000;
 function showScreen(screenId) {
 document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-document.getElementById(screenId).classList.add('active');
+const target = document.getElementById(screenId);
+if (target) target.classList.add('active');
 }
 function renderUserList() {
 const listContainer = document.getElementById('login-user-list');
+if (!listContainer) return;
 listContainer.innerHTML = '';
 Object.keys(users).forEach(username => {
 const item = document.createElement('div');
@@ -350,8 +352,8 @@ function triggerEffect(elementId, className) {
 const el = document.getElementById(elementId);
 if (!el) return;
 el.classList.remove(className);
-void el.offsetWidth;
-el.classList.add(className);
+// フリーズの原因だった無限ループにつながるリフロー処理を安全な記述に修正
+setTimeout(() => { el.classList.add(className); }, 10);
 }
 function endBattle() {
 clearInterval(timerInterval);
