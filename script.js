@@ -1,7 +1,4 @@
-console.log("★JSファイルの読み込み自体には成功しています！");
-
 import { initializeApp } from "https://gstatic.com";
-//import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
 import { getFirestore, collection, doc, setDoc, getDoc, getDocs, updateDoc } from "https://gstatic.com";
 
 // ご自身のFirebaseプロジェクトの設定値
@@ -13,10 +10,11 @@ const firebaseConfig = {
     messagingSenderId: "883874950005",
     appId: "1:883874950005:web:08b22a374ccb1e6133013c"
 };
+
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-const ADMIN_PASSWORD = "abc123"; 
+const ADMIN_PASSWORD = "admin1234"; 
 
 let deviceId = null;
 let currentUsersMap = {}; 
@@ -41,7 +39,6 @@ function showScreen(screenId) {
     if (target) target.classList.add('active');
 }
 
-// ログイン状態による表示切り替え
 function updateDisplayByLoginStatus(username) {
     if (username) {
         currentUser = username;
@@ -52,10 +49,8 @@ function updateDisplayByLoginStatus(username) {
         document.getElementById('user-stats').textContent = "クラス: " + displayGrade + " | 現在の勝ち数: " + (uData.wins || 0) + "回";
         showScreen('screen-menu');
         
-        // 【重要】ゲーム画面（game.html）に向けて、ログインしたユーザーの情報を送る
         const gameFrame = document.getElementById('game-frame');
         if (gameFrame && gameFrame.contentWindow) {
-            // ページ読み込み完了を見越して少しだけ待ってから送信
             setTimeout(() => {
                 gameFrame.contentWindow.postMessage({
                     type: "LOGIN_USER",
@@ -205,7 +200,6 @@ async function renderAdminUserList() {
     }
 }
 
-// 親の画面（index.html）からクラウド上の勝利数を増やすための仕組みも用意
 window.addEventListener("message", async (event) => {
     if (event.data && event.data.type === "ADD_WIN") {
         if (!currentUser) return;
@@ -213,7 +207,6 @@ window.addEventListener("message", async (event) => {
         uData.wins = (uData.wins || 0) + 1;
         try {
             await updateDoc(doc(db, "users", currentUser), { wins: uData.wins });
-            // 再描画して画面の勝ち数を更新
             document.getElementById('user-stats').textContent = "クラス: " + (uData.grade === 1 ? "低学年" : "高学年") + " | 現在の勝ち数: " + uData.wins + "回";
         } catch(e) {
             console.error("ゲーム側からの勝利数保存失敗:", e);
