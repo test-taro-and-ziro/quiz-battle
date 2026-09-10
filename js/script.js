@@ -122,14 +122,14 @@ async function handleRegister() {
         }
 
         // 💡 性別と動物の組み合わせから画像ファイル名を決定
-        const finalCharImage = getCharacterFileName(animalSelect, genderSelect);
+        // const finalCharImage = getCharacterFileName(animalSelect, genderSelect);
 
         const userData = {
             device_id: deviceId,
             grade: parseInt(ageSelect),   // 学年を保存
             gender: genderSelect,         // 性別を保存
             animal: animalSelect,         // 動物の種類を保存
-            char_image: finalCharImage,   // 決定した画像ファイル名を保存
+            // char_image: finalCharImage,   // 決定した画像ファイル名を保存
             wins: 0,
             lv: 1
         };
