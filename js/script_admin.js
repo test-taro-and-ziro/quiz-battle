@@ -1,29 +1,19 @@
 // ==========================================
 // 管理者画面（admin.html）専用プログラム
 // ==========================================
-import { initializeApp } from 'https://gstatic.com';
+// 💡 共通設定ファイルから db を読み込む
+import { db } from './firebase-config.js';
 import { 
   getFirestore, 
-  collection, 
-  doc,    
-  getDocs, 
-  setDoc, 
-  updateDoc,
-  deleteDoc 
-} from 'https://gstatic.com';
-
-// ご自身のFirebaseプロジェクトの設定値
-const firebaseConfig = {
-    apiKey: "AIzaSyBUfZOKhw9nHc5K6sq7pMWH2eeVixVx3wI",
-    authDomain: "://firebaseapp.com",
-    projectId: "quiz-battle-b8b48",
-    storageBucket: "quiz-battle-b8b48.firebasestorage.app",
-    messagingSenderId: "883874950005",
-    appId: "1:883874950005:web:08b22a374ccb1e6133013c"
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+  collection, // データI/Oで使用する大きい箱
+  doc,    // データI/Oで使用する小さい箱
+  addDoc, // 場所を自動生成させてデータを保存
+  getDocs, // すべてのデータを読み込む
+  setDoc, // 指定した場所にデータを書き込む
+  getDoc, // 指定した場所のデータを読み込む
+  updateDoc,  // 更新機能
+  deleteDoc  // 削除機能
+} from 'https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js';
 
 // タブを切り替える関数
 function switchAdminTab(tabId) {
