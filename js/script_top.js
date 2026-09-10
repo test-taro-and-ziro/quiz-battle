@@ -112,12 +112,12 @@ async function loadGradesFromDB() {
 // 💡 新規登録（あたらしくはじめる）処理
 async function handleRegister() {
     const nameInput = document.getElementById('username-input').value.trim();
-    const ageSelect = document.getElementById('age-select').value;
+    const gradeSelect = document.getElementById('char-grade-select').value;
     const genderSelect = document.getElementById('gender-select').value;
     const animalSelect = document.getElementById('char-animal-select').value;
   
     if (!nameInput) { alert('おなまえを入力してね！'); return; }
-    if (!ageSelect) { alert('学年をえらんでね！'); return; }
+    if (!gradeSelect) { alert('学年をえらんでね！'); return; }
     if (!genderSelect) { alert('せいべつをえらんでね！'); return; } 
     if (!animalSelect) { alert('どうぶつをえらんでね！'); return; }
 
@@ -135,7 +135,7 @@ async function handleRegister() {
 
         const userData = {
             device_id: deviceId,
-            grade: parseInt(ageSelect),   // 学年を保存
+            grade: parseInt(gradeSelect), // 学年を保存
             gender: genderSelect,         // 性別を保存
             animal: animalSelect,         // 動物の種類を保存
             char_image: finalCharImage,   // 決定した画像ファイル名を保存
