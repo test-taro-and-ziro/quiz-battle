@@ -1,5 +1,5 @@
 import { initializeApp } from "https://gstatic.com";
-import { getFirestore, collection, doc, setDoc, getDoc, getDocs, updateDoc } from "https://gstatic.com";
+import { getFirestore, collection } from "https://gstatic.com";
 
 // ご自身のFirebaseプロジェクトの設定値
 const firebaseConfig = {
