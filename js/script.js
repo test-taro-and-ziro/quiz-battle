@@ -104,8 +104,10 @@ async function handleLogin() {
 async function handleRegister() {
     const nameInput = document.getElementById('username-input').value.trim();
     const ageSelect = document.getElementById('age-select').value;
+　  const charSelect = document.getElementById('char-visual-select').value;
     if (!nameInput) { alert('おなまえを入力してね！'); return; }
     if (!ageSelect) { alert('学年をえらんでね！'); return; }
+  　if (!charSelect) { alert('キャラクターをえらんでね！'); return; }
 
     try {
         // 重複チェック
@@ -119,6 +121,7 @@ async function handleRegister() {
         const userData = {
             device_id: deviceId,
             grade: parseInt(ageSelect),
+          　char_image: charSelect,
             wins: 0,
             lv: 1
         };
@@ -142,16 +145,15 @@ function showCharacterInfo(username, userData) {
     document.getElementById('char-name').textContent = username;
     document.getElementById('char-rank').textContent = displayGrade;
     
-    // 💡 ランク（学年）ごとにキャラクター絵を切り替える（プレースホルダーの例）
+    // 💡 Firebaseから読み込んだ画像ファイル名を使って表示（imagesフォルダを見に行く）
     const charImg = document.getElementById('char-visual');
-    if (userData.grade === 1) {
-        charImg.src = "char_low.png"; // 低学年用の画像パス
-    } else if (userData.grade === 3) {
-        charImg.src = "char_mid.png"; // 中学年用の画像パス
+    if (userData.char_image) {
+        charImg.src = "images/" + userData.char_image; 
     } else {
-        charImg.src = "char_high.png"; // 高学年用の画像パス
+        // もし昔のデータなどで画像が登録されていなかった場合のセーフティ
+        charImg.src = "images/placeholder.png";
     }
-
+  
     // 入力欄を隠し、キャラクター確認エリアを表示
     document.getElementById('login-action-zone').style.display = 'none';
     document.getElementById('logged-in-char-zone').style.display = 'block';
