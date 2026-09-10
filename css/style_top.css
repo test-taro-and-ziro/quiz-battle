@@ -127,6 +127,39 @@ button:hover { background-color: #2b6cb0; }
     max-height: 100%;
 }
 
+/* 💡 管理者画面のタブボタンの基本デザイン */
+.admin-tabs .tab-btn {
+    width: auto;
+    margin: 0;
+    padding: 10px 20px;
+    background-color: #e2e8f0;
+    color: #4a5568;
+    border-radius: 6px 6px 0 0; /* 上側だけ丸く */
+    border: 1px solid #cbd5e0;
+    border-bottom: none;
+    transition: background 0.2s;
+}
+.admin-tabs .tab-btn:hover {
+    background-color: #cbd5e0;
+}
+/* 💡 選択中のアクティブなタブ */
+.admin-tabs .tab-btn.active {
+    background-color: #3182ce;
+    color: white;
+    border-color: #3182ce;
+}
+
+/* 💡 タブ中身の基本非表示設定 */
+.admin-tab-content {
+    display: none;
+    border-top: 2px solid #e2e8f0;
+    padding-top: 15px;
+}
+/* 💡 アクティブなコンテンツだけ表示 */
+.admin-tab-content.active {
+    display: block;
+}
+
 /* 管理者用データテーブル */
 .table-responsive { overflow-x: auto; }
 .admin-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 14px; }
