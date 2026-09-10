@@ -16,12 +16,10 @@ const db = getFirestore(app);
 
 const ADMIN_PASSWORD = "admin1234"; 
 
-// 状態管理
 let deviceId = null;
 let currentUsersMap = {}; 
-let currentUser = null; // ログイン中ならここに「おなまえ」が入る（表示切り替えの鍵）
+let currentUser = null; 
 
-// 起動時処理
 window.addEventListener('DOMContentLoaded', async () => {
     initDeviceId();
     await renderUserList();
@@ -35,17 +33,15 @@ function initDeviceId() {
     }
 }
 
-// 画面の切り替え関数
 function showScreen(screenId) {
     document.querySelectorAll('.screen').forEach(function(s) { s.classList.remove('active'); });
     const target = document.getElementById(screenId);
     if (target) target.classList.add('active');
 }
 
-// 【ログイン状態の変更に伴う表示切り替えロジック】
+// ログイン状態による表示切り替え
 function updateDisplayByLoginStatus(username) {
     if (username) {
-        // ログイン状態：メニュー画面へ
         currentUser = username;
         const uData = currentUsersMap[username];
         const displayGrade = uData.grade === 1 ? "低学年・幼児" : uData.grade === 3 ? "中学年" : "高学年";
@@ -54,10 +50,20 @@ function updateDisplayByLoginStatus(username) {
         document.getElementById('user-stats').textContent = "クラス: " + displayGrade + " | 現在の勝ち数: " + (uData.wins || 0) + "回";
         showScreen('screen-menu');
         
-        // 【将来用】ここで「game.html」などの別ファイルを読み込む関数を呼び出せます
-        // loadGameScreen(); 
+        // 【重要】ゲーム画面（game.html）に向けて、ログインしたユーザーの情報を送る
+        const gameFrame = document.getElementById('game-frame');
+        if (gameFrame && gameFrame.contentWindow) {
+            // ページ読み込み完了を見越して少しだけ待ってから送信
+            setTimeout(() => {
+                gameFrame.contentWindow.postMessage({
+                    type: "LOGIN_USER",
+                    username: username,
+                    grade: uData.grade,
+                    wins: uData.wins
+                }, "*");
+            }, 500);
+        }
     } else {
-        // ログアウト状態：ログイン（アカウント選択）画面へ
         currentUser = null;
         document.getElementById('username-input').value = '';
         renderUserList();
@@ -65,7 +71,6 @@ function updateDisplayByLoginStatus(username) {
     }
 }
 
-// クラウドから自端末のアカウント一覧を取得して表示
 async function renderUserList() {
     const listContainer = document.getElementById('login-user-list');
     if (!listContainer) return;
@@ -102,7 +107,6 @@ async function renderUserList() {
     }
 }
 
-// 新規アカウント登録
 async function handleRegister() {
     const nameInput = document.getElementById('username-input').value.trim();
     const ageSelect = document.getElementById('age-select').value;
@@ -120,19 +124,17 @@ async function handleRegister() {
     try {
         await setDoc(docRef, userData);
         currentUsersMap[nameInput] = userData;
-        updateDisplayByLoginStatus(nameInput); // 登録成功したらそのままログイン状態へ
+        updateDisplayByLoginStatus(nameInput); 
     } catch (e) {
         alert("登録に失敗しました。");
         console.error(e);
     }
 }
 
-// ログアウト（引数なしで呼ぶとログアウト状態にする）
 function logout() {
     updateDisplayByLoginStatus(null);
 }
 
-// 管理者画面を開く
 async function openAdminScreen() {
     const pass = prompt("管理者パスワードを入力してください：");
     if (pass === ADMIN_PASSWORD) {
@@ -143,7 +145,6 @@ async function openAdminScreen() {
     }
 }
 
-// 管理者画面：全ユーザー表示
 async function renderAdminUserList() {
     const tbody = document.getElementById('admin-user-list');
     if (!tbody) return;
@@ -202,20 +203,22 @@ async function renderAdminUserList() {
     }
 }
 
-// 【将来用】ゲーム画面（別ファイル）を非同期で読み込んで合体させる雛形
-async function loadGameScreen() {
-    try {
-        // 例: 'game.html' という別ファイルから中身を吸い上げる
-        const response = await fetch('game.html'); 
-        const htmlText = await response.text();
-        document.getElementById('game-container').innerHTML = htmlText;
-        console.log("ゲーム画面を正常に読み込みました。");
-    } catch (e) {
-        console.error("ゲーム画面の分割読込に失敗:", e);
+// 親の画面（index.html）からクラウド上の勝利数を増やすための仕組みも用意
+window.addEventListener("message", async (event) => {
+    if (event.data && event.data.type === "ADD_WIN") {
+        if (!currentUser) return;
+        const uData = currentUsersMap[currentUser];
+        uData.wins = (uData.wins || 0) + 1;
+        try {
+            await updateDoc(doc(db, "users", currentUser), { wins: uData.wins });
+            // 再描画して画面の勝ち数を更新
+            document.getElementById('user-stats').textContent = "クラス: " + (uData.grade === 1 ? "低学年" : "高学年") + " | 現在の勝ち数: " + uData.wins + "回";
+        } catch(e) {
+            console.error("ゲーム側からの勝利数保存失敗:", e);
+        }
     }
-}
+});
 
-// グローバル紐づけ
 window.handleRegister = handleRegister;
 window.logout = logout;
 window.openAdminScreen = openAdminScreen;
