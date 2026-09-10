@@ -3,77 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>クイズバトル！ニンジャマスターズ</title>
+    <title>アカウント管理システム</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div id="game-window">
+    <!-- ==========================================
+         【ログイン前】アカウント選択・登録画面
+         ========================================== -->
     <div id="screen-login" class="screen active">
-        <h1>クイズバトル！</h1>
-        <h2>ニンジャマスターズ</h2>
-        <p class="subtitle">おなまえを えらぶか、新しくつくってね！</p>
+        <h1>アカウント選択</h1>
         
-        <div class="user-list" id="login-user-list"></div>
-        
-        <input type="text" id="username-input" placeholder="あたらしい おなまえ" maxlength="10">
-        <select id="age-select">
-            <option value="">学年（ねんれい）をえらんでね</option>
-            <option value="1">ようちえん・ほいくえん (5~6才)</option>
-            <option value="1">小学校 1・2ねんせい</option>
-            <option value="3">小学校 3・4ねんせい</option>
-            <option value="5">小学校 5・6ねんせい</option>
-        </select>
-        
-        <button class="btn btn-primary" onclick="handleRegister()">スタート！</button>
+        <div class="card">
+            <h2>この端末のアカウントをえらぶ</h2>
+            <div id="login-user-list">
+                <!-- 端末に紐づくアカウント一覧がここに表示されます -->
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>あたらしく登録する</h2>
+            <input type="text" id="username-input" placeholder="おなまえを入力してね">
+            <select id="age-select">
+                <option value="">-- 学年をえらんでね --</option>
+                <option value="1">低学年・幼児</option>
+                <option value="3">中学年</option>
+                <option value="5">高学年</option>
+            </select>
+            <button onclick="handleRegister()">登録する</button>
+        </div>
+
+        <div style="text-align: center; margin-top: 30px;">
+            <button class="btn-minor" onclick="openAdminScreen()">管理者画面（かんりしゃ用）</button>
+        </div>
     </div>
 
+    <!-- ==========================================
+         【ログイン後】メインメニュー（将来のゲーム入口）
+         ========================================== -->
     <div id="screen-menu" class="screen">
         <h1 id="menu-welcome">ようこそ！</h1>
-        <p class="subtitle" id="user-stats">現在のランク: Lv.1</p>
+        <p id="user-stats"></p>
         
-        <h2 style="margin-bottom:10px;">どっちのクイズで しょうぶする？</h2>
-        <button class="btn btn-primary" onclick="startBattle('こくご')">こくご</button>
-        <button class="btn btn-secondary" onclick="startBattle('さんすう')">さんすう</button>
-        <button class="btn btn-success" onclick="startBattle('どうとく')">どうとく</button>
-        
-        <button class="btn" style="background:#7f8c8d; font-size:14px; padding:8px;" onclick="logout()">別のユーザーにかえる</button>
-    </div>
-
-    <div id="screen-battle" class="screen">
-        <div class="battle-header">
-            <span id="battle-genre-label">ジャンル: こくご</span>
-            <span id="battle-score-label">スコア: 0</span>
+        <div class="card" style="text-align: center; padding: 30px 15px;">
+            <p>🎉 ログインに成功しました！</p>
+            <p style="font-size: 14px; color: #666;">（ここに将来、別ファイルから読み込んだゲーム画面を合体させます）</p>
+            
+            <!-- 将来ゲーム画面を読み込むための空のエリア（器） -->
+            <div id="game-container"></div>
         </div>
         
-        <div class="stage-area">
-            <div class="fighter" id="player-fighter">
-                <div class="avatar" id="player-avatar">プレイヤー</div>
-                <div class="fighter-name" id="player-name-label">プレイヤー</div>
-                <div class="hp-bar-bg"><div class="hp-bar" id="player-hp"></div></div>
-                <div class="status-text" id="player-hp-text">HP: 100/100</div>
-            </div>
-            <div style="font-size: 24px; display: flex; align-items: center; font-weight: bold; color: #ff6b6b;">VS</div>
-            <div class="fighter" id="npc-fighter">
-                <div class="avatar" id="npc-avatar">アカニンジャ</div>
-                <div class="fighter-name" id="npc-name-label">アカニンジャ</div>
-                <div class="hp-bar-bg"><div class="hp-bar" id="npc-hp"></div></div>
-                <div class="status-text" id="npc-hp-text">HP: 100/100</div>
+        <button class="btn-minor" onclick="logout()">アカウントをかえる（ログアウト）</button>
+    </div>
+
+    <!-- ==========================================
+         【管理者】パスワード付きデータ編集画面
+         ========================================== -->
+    <div id="screen-admin" class="screen">
+        <h1>管理者データ編集画面</h1>
+        <div class="card">
+            <button onclick="logout()" style="background-color: #666; margin-bottom: 15px;">トップ画面に戻る</button>
+            <h2>全ユーザーデータ一覧</h2>
+            <div class="table-responsive">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>おなまえ</th>
+                            <th>学年クラス</th>
+                            <th>勝ち数</th>
+                            <th>レベル</th>
+                            <th>端末ID</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody id="admin-user-list">
+                        <!-- 全ユーザーデータがここに一覧表示されます -->
+                    </tbody>
+                </table>
             </div>
         </div>
-
-        <div class="timer-container"><div class="timer-bar" id="timer-bar"></div></div>
-        <div class="quiz-box" id="quiz-text">もんだいがここにでるよ！</div>
-        <div class="options-grid" id="options-container"></div>
     </div>
 
-    <div id="screen-result" class="screen">
-        <h1 id="result-title">かち！</h1>
-        <div id="result-avatar" style="font-size: 80px; margin: 20px 0;">🏆</div>
-        <p id="result-text" style="font-size: 18px; font-weight: bold; text-align: center; padding: 0 20px;"></p>
-        <button class="btn btn-primary" onclick="backToMenu()">メニューにもどる</button>
-    </div>
-</div>
-<script type="module" src="script.js"></script>
+    <!-- モジュールとしてJSを読み込み -->
+    <script type="module" src="script.js"></script>
 </body>
 </html>
