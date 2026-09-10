@@ -69,17 +69,11 @@
                 <label style="display: block; margin-bottom: 5px; font-weight: bold;">おなまえ：</label>
                 <input type="text" id="username-input" placeholder="おなまえを入力してね">
             </div>
-            <div style="margin-bottom: 20px;">
+            <div style="margin-bottom: 15px;">
                 <label style="display: block; margin-bottom: 5px; font-weight: bold;">学年（ランク）：</label>
-                <select id="age-select">
-                    <option value="">-- 学年をえらんでね --</option>
-                    <option value="0">幼児</option>
-                    <option value="1">1年生</option>
-                    <option value="2">2年生</option>
-                    <option value="3">3年生</option>
-                    <option value="4">4年生</option>
-                    <option value="5">5年生</option>
-                    <option value="6">6年生</option>
+                <!-- 💡 データベースから自動でオプションを読み込むため、初期状態は空っぽです -->
+                <select id="char-grade-select">
+                    <option value="">-- よみこみ中... --</option>
                 </select>
             </div>
             <!-- 💡 オス・メス（おとこのこ・おんなのこ）の選択肢を追加 -->
