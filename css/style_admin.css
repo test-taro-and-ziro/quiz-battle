@@ -1,0 +1,88 @@
+/* ==========================================
+   管理者画面（admin.html）専用スタイルシート
+   ========================================== */
+
+body {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    background-color: #2d3748; /* 管理画面らしく少しダークな背景に */
+    color: #333;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.screen {
+    width: 100%;
+    max-width: 950px; /* テーブルが見えやすいように幅広に固定 */
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+}
+
+h1 { text-align: center; color: #2b6cb0; margin-top: 10px; }
+h2 { color: #4a5568; font-size: 18px; border-bottom: 2px solid #e2e8f0; padding-bottom: 5px; }
+h3 { color: #4a5568; font-size: 16px; margin-top: 0; }
+
+.card {
+    background: #f7fafc;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    border: 1px solid #edf2f7;
+}
+
+input, select, button {
+    width: 100%;
+    padding: 10px;
+    margin: 4px 0;
+    border-radius: 6px;
+    border: 1px solid #cbd5e0;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+button {
+    background-color: #3182ce;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+}
+button:hover { background-color: #2b6cb0; }
+
+/* 管理者画面のタブボタン */
+.admin-tabs .tab-btn {
+    width: auto;
+    margin: 0;
+    padding: 10px 20px;
+    background-color: #e2e8f0;
+    color: #4a5568;
+    border-radius: 6px 6px 0 0;
+    border: 1px solid #cbd5e0;
+    border-bottom: none;
+    transition: background 0.2s;
+}
+.admin-tabs .tab-btn:hover { background-color: #cbd5e0; }
+.admin-tabs .tab-btn.active {
+    background-color: #3182ce;
+    color: white;
+    border-color: #3182ce;
+}
+
+/* タブコンテンツの切り替え */
+.admin-tab-content {
+    display: none;
+    border-top: 2px solid #e2e8f0;
+    padding-top: 15px;
+}
+.admin-tab-content.active { display: block; }
+
+/* データテーブル */
+.table-responsive { overflow-x: auto; }
+.admin-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 14px; }
+.admin-table th, .admin-table td { border: 1px solid #cbd5e0; padding: 8px; text-align: left; }
+.admin-table th { background-color: #edf2f7; }
+.admin-table input { padding: 4px; margin: 0; font-size: 14px; }
+.admin-table button { padding: 4px 8px; margin: 0; font-size: 12px; width: auto; }
