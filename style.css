@@ -1,55 +1,83 @@
-:root {
-    --primary: #4a90e2;
-    --secondary: #ff6b6b;
-    --success: #2ecc71;
-    --dark: #2c3e50;
-    --light: #f8f9fa;
+body {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    background-color: #f0f4f8;
+    color: #333;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
 }
-* { box-sizing: border-box; font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', sans-serif; }
-body { margin: 0; padding: 0; background-color: #e6f0fa; color: var(--dark); display: flex; justify-content: center; min-height: 100vh; }
-#game-window { width: 100%; max-width: 480px; background: white; min-height: 100vh; position: relative; box-shadow: 0 0 20px rgba(0,0,0,0.1); display: flex; flex-direction: column; overflow-x: hidden; }
-.screen { display: none; padding: 20px; flex-direction: column; flex-grow: 1; justify-content: center; align-items: center; }
-.screen.active { display: flex; }
 
-h1 { color: var(--primary); text-align: center; margin-bottom: 5px; font-size: 28px; text-shadow: 1px 1px 0 #fff; }
-h2 { font-size: 20px; margin-bottom: 20px; text-align: center; color: #555; }
-.subtitle { font-size: 14px; color: #666; text-align: center; margin-bottom: 20px; }
+.screen {
+    display: none;
+    width: 100%;
+    max-width: 600px;
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
 
-input[type="text"], select { width: 85%; padding: 12px; margin: 10px 0; border: 2px solid #ccc; border-radius: 8px; font-size: 16px; text-align: center; }
-input[type="text"]:focus, select:focus { border-color: var(--primary); outline: none; }
+.screen.active {
+    display: block;
+}
 
-.btn { width: 85%; padding: 15px; margin: 10px 0; font-size: 18px; font-weight: bold; border: none; border-radius: 30px; cursor: pointer; color: white; box-shadow: 0 4px 0 rgba(0,0,0,0.2); transition: all 0.1s; text-align: center; }
-.btn-primary { background-color: var(--primary); }
-.btn-secondary { background-color: var(--secondary); }
-.btn-success { background-color: var(--success); }
-.btn:active { transform: translateY(3px); box-shadow: 0 1px 0 rgba(0,0,0,0.2); }
+#screen-admin {
+    max-width: 900px; /* 管理者画面は表が見やすいように幅を広く */
+}
 
-.battle-header { width: 100%; display: flex; justify-content: space-between; background: #f0f4f8; padding: 10px; border-radius: 10px; margin-bottom: 15px; font-size: 14px; font-weight: bold; }
-.stage-area { width: 100%; display: flex; justify-content: space-between; margin-bottom: 20px; background: #fdfdfd; border: 2px dashed #ddd; border-radius: 10px; padding: 10px; }
-.fighter { width: 45%; text-align: center; display: flex; flex-direction: column; align-items: center; }
-.avatar { font-size: 50px; margin-bottom: 5px; min-height: 60px; transition: transform 0.2s; }
-.fighter-name { font-size: 14px; font-weight: bold; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 100%; }
-.hp-bar-bg { width: 100%; height: 12px; background: #e0e0e0; border-radius: 6px; margin-top: 5px; overflow: hidden; border: 1px solid #ccc; }
-.hp-bar { height: 100%; background: #ff4757; width: 100%; transition: width 0.3s ease; }
-.status-text { font-size: 11px; color: #777; margin-top: 2px; }
+h1 { text-align: center; color: #2b6cb0; }
+h2 { color: #4a5568; font-size: 18px; border-bottom: 2px solid #e2e8f0; padding-bottom: 5px; }
 
-.quiz-box { width: 100%; background: #f9f9f9; border: 2px solid var(--primary); border-radius: 12px; padding: 15px; margin-bottom: 20px; min-height: 100px; display: flex; justify-content: center; align-items: center; text-align: center; font-size: 18px; font-weight: bold; line-height: 1.5; box-shadow: inset 0 2px 5px rgba(0,0,0,0.05); }
-.options-grid { width: 100%; display: flex; flex-direction: column; gap: 10px; }
-.option-btn { width: 100%; padding: 14px; font-size: 16px; font-weight: bold; text-align: left; background: white; border: 2px solid #e0e0e0; border-radius: 10px; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; }
-.option-btn:hover { background: #f0f7ff; border-color: var(--primary); }
-.option-num { background: #e0e0e0; width: 26px; height: 26px; border-radius: 50%; display: flex; justify-content: center; align-items: center; margin-right: 12px; font-size: 14px; font-weight: bold; color: #555; flex-shrink: 0; }
+.card {
+    background: #f7fafc;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    border: 1px solid #edf2f7;
+}
 
-@keyframes attack-left { 0% { transform: translateX(0); } 50% { transform: translateX(30px) scale(1.1); } 100% { transform: translateX(0); } }
-@keyframes attack-right { 0% { transform: translateX(0); } 50% { transform: translateX(-30px) scale(1.1); } 100% { transform: translateX(0); } }
-@keyframes shake { 0%, 100% { transform: translateX(0); } 20%, 60% { transform: translateX(-6px); } 40%, 80% { transform: translateX(6px); } }
-.animate-attack-left { animation: attack-left 0.3s ease; }
-.animate-attack-right { animation: attack-right 0.3s ease; }
-.animate-shake { animation: shake 0.3s ease; }
+input, select, button {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    border-radius: 6px;
+    border: 1px solid #cbd5e0;
+    font-size: 16px;
+    box-sizing: border-box;
+}
 
-.timer-container { width: 100%; height: 6px; background: #e0e0e0; border-radius: 3px; margin-bottom: 15px; overflow: hidden; }
-.timer-bar { height: 100%; background: #ffa500; width: 100%; }
+button {
+    background-color: #3182ce;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+}
+button:hover { background-color: #2b6cb0; }
 
-.user-list { width: 85%; max-height: 150px; overflow-y: auto; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 15px; background: #fafafa; }
-.user-item { padding: 10px; text-align: center; border-bottom: 1px solid #eee; cursor: pointer; font-weight: bold; }
-.user-item:hover { background: #eef5ff; }
-.user-item:last-child { border-bottom: none; }
+.btn-minor {
+    background-color: #718096;
+    font-size: 14px;
+    padding: 8px;
+}
+
+/* アカウントアイテム */
+.user-item {
+    background: white;
+    padding: 12px;
+    margin: 6px 0;
+    border-radius: 6px;
+    border: 1px solid #e2e8f0;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.user-item:hover { background: #ebf8ff; border-color: #bee3f8; }
+
+/* 管理者用データテーブル */
+.table-responsive { overflow-x: auto; }
+.admin-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 14px; }
+.admin-table th, .admin-table td { border: 1px solid #cbd5e0; padding: 8px; text-align: left; }
+.admin-table th { background-color: #edf2f7; }
+.admin-table input { padding: 4px; margin: 0; font-size: 14px; }
+.admin-table button { padding: 4px 8px; margin: 0; font-size: 12px; width: auto; }
