@@ -2,36 +2,25 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>ゲームエリア</title>
-    <style>
-        body { font-family: sans-serif; background: #eef2f5; padding: 20px; margin: 0; text-align: center; }
-        .box { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
-        button { background: #e53e3e; color: white; border: none; padding: 10px 20px; border-radius: 4px; font-weight: bold; cursor: pointer; }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>クイズバトル本編</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-    <div class="box">
-        <h3>🎮 ここが分割されたゲーム画面です</h3>
-        <p id="game-player-name">ログインを待っています...</p>
+    <div id="screen-game-main" class="screen" style="display: block; max-width: 800px; margin: 20px auto; text-align: center;">
+        <h1 id="game-title">⚔️ クイズバトル ⚔️</h1>
         
-        <p style="font-size: 13px; color: #666;">テスト機能：下のボタンを押すと、親画面を通じてクラウドの勝利数が+1されます</p>
-        <button onclick="sendWinToParent()">テスト：勝ったことにする</button>
+        <div class="card" style="padding: 40px 20px; background-color: #fff9c4;">
+            <h2 style="border: none; margin-top: 0;">ゲーム画面（制作中）</h2>
+            <p style="font-size: 18px; font-weight: bold;">ここにクイズの問題やバトル画面を作っていきます！</p>
+            <p id="player-name-display" style="font-size: 16px; color: #333; margin-top: 20px;">ログインユーザー: 読み込み中...</p>
+        </div>
+
+        <!-- 💡 index.html（トップ画面）にいつでも戻れるボタン -->
+        <button onclick="location.href='index.html'" style="background-color: #666; width: auto; padding: 10px 20px; margin-top: 20px;">トップ画面にもどる</button>
     </div>
 
-    <script>
-        // 親画面（index.html）からデータが送られてきたら受け取る設定
-        window.addEventListener("message", (event) => {
-            if (event.data && event.data.type === "LOGIN_USER") {
-                document.getElementById("game-player-name").innerText = "いま " + event.data.username + " くんがログイン中！";
-            }
-        });
-
-        // 勝ったときに親画面に「勝ったよ」と報告する関数
-        function sendWinToParent() {
-            window.parent.postMessage({ type: "ADD_WIN" }, "*");
-            alert("親画面に勝利を報告しました！");
-        }
-    </script>
+    <!-- 将来的にゲーム専用のプログラムを作る場合は、ここにscriptタグを追加します -->
 </body>
 </html>
