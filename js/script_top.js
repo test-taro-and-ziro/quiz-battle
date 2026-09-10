@@ -403,7 +403,6 @@ async function addImageFromAdmin() {
     await renderAdminImageList();
     alert("キャライメージデータを追加しました！");
 }
-}
 
 // HTMLのonclickから呼び出せるようにwindowオブジェクトに登録
 window.changeScreen = changeScreen;
