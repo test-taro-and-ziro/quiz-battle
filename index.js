@@ -20,6 +20,7 @@ let deviceId = null;
 let currentUsersMap = {}; 
 let currentUser = null; 
 
+// 起動時処理
 window.addEventListener('DOMContentLoaded', async () => {
     initDeviceId();
     await renderUserList();
@@ -48,18 +49,6 @@ function updateDisplayByLoginStatus(username) {
         document.getElementById('menu-welcome').textContent = "ようこそ、" + username + " さん！";
         document.getElementById('user-stats').textContent = "クラス: " + displayGrade + " | 現在の勝ち数: " + (uData.wins || 0) + "回";
         showScreen('screen-menu');
-        
-        const gameFrame = document.getElementById('game-frame');
-        if (gameFrame && gameFrame.contentWindow) {
-            setTimeout(() => {
-                gameFrame.contentWindow.postMessage({
-                    type: "LOGIN_USER",
-                    username: username,
-                    grade: uData.grade,
-                    wins: uData.wins
-                }, "*");
-            }, 500);
-        }
     } else {
         currentUser = null;
         document.getElementById('username-input').value = '';
@@ -199,20 +188,6 @@ async function renderAdminUserList() {
         tbody.innerHTML = '<tr><td colspan="6" style="color:red;">データの取得に失敗しました。</td></tr>';
     }
 }
-
-window.addEventListener("message", async (event) => {
-    if (event.data && event.data.type === "ADD_WIN") {
-        if (!currentUser) return;
-        const uData = currentUsersMap[currentUser];
-        uData.wins = (uData.wins || 0) + 1;
-        try {
-            await updateDoc(doc(db, "users", currentUser), { wins: uData.wins });
-            document.getElementById('user-stats').textContent = "クラス: " + (uData.grade === 1 ? "低学年" : "高学年") + " | 現在の勝ち数: " + uData.wins + "回";
-        } catch(e) {
-            console.error("ゲーム側からの勝利数保存失敗:", e);
-        }
-    }
-});
 
 window.handleRegister = handleRegister;
 window.logout = logout;
