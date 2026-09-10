@@ -8,8 +8,6 @@ import {
   getDocs, // すべてのデータを読み込む
   setDoc, // 指定した場所にデータを書き込む
   getDoc, // 指定した場所のデータを読み込む
-  updateDoc,  // 更新機能
-  deleteDoc  // 削除機能
 } from 'https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js';
 
 const ADMIN_PASSWORD = "admin1234"; 
@@ -18,10 +16,10 @@ let deviceId = null;
 let currentUser = null; 
 
 // 起動時処理
-window.addEventListener('DOMContentLoaded', () => {
+window.addEventListener('DOMContentLoaded', async () => { // asyncを追加
     initDeviceId();
-    // 💡 起動時はトップ画面の初期状態にリセット
     resetTopScreen();
+    await loadGradesFromDB(); // 💡 データベースから学年をロード
 });
 
 function initDeviceId() {
@@ -88,6 +86,29 @@ async function handleLogin() {
     }
 }
 
+// 💡 データベースから学年の選択肢を取得して画面に反映する関数
+async function loadGradesFromDB() {
+    const gradeSelect = document.getElementById('char-grade-select');
+    if (!gradeSelect) return;
+    try {
+        const querySnapshot = await getDocs(collection(db, "grades"));
+        gradeSelect.innerHTML = '<option value="">-- 学年をえらんでね --</option>';
+        
+        const gradeList = [];
+        querySnapshot.forEach(d => gradeList.push({ id: d.id, ...d.data() }));
+        gradeList.sort((a, b) => a.value - b.value); // 0〜6の順に並び替え
+
+        gradeList.forEach((data) => {
+            const option = document.createElement('option');
+            option.value = data.value;
+            option.textContent = data.label;
+            gradeSelect.appendChild(option);
+        });
+    } catch (e) {
+        console.error("学年ロードエラー:", e);
+        gradeSelect.innerHTML = '<option value="">エラーが発生しました</option>';
+    }
+}
 // 💡 新規登録（あたらしくはじめる）処理
 async function handleRegister() {
     const nameInput = document.getElementById('username-input').value.trim();
@@ -95,10 +116,10 @@ async function handleRegister() {
     const genderSelect = document.getElementById('gender-select').value;
     const animalSelect = document.getElementById('char-animal-select').value;
   
-　  if (!nameInput) { alert('おなまえを入力してね！'); return; }
+    if (!nameInput) { alert('おなまえを入力してね！'); return; }
     if (!ageSelect) { alert('学年をえらんでね！'); return; }
-  　if (!genderSelect) { alert('せいべつをえらんでね！'); return; }
-　  if (!animalSelect) { alert('どうぶつをえらんでね！'); return; }
+    if (!genderSelect) { alert('せいべつをえらんでね！'); return; } 
+    if (!animalSelect) { alert('どうぶつをえらんでね！'); return; }
 
     try {
         // 重複チェック
@@ -197,197 +218,10 @@ function logout() {
 async function openAdminScreen() {
     const pass = prompt("管理者パスワードを入力してください：");
     if (pass === ADMIN_PASSWORD) {
-        changeScreen('screen-admin');
-        switchAdminTab('tab-users'); // 初期タブはユーザー管理
-        await renderAdminUserList();
-        await renderAdminGradeList();
-        await renderAdminImageList();
+        window.location.href = 'admin.html';
     } else if (pass !== null) {
         alert("パスワードが違います。");
     }
-}
-// 💡 管理画面のタブを切り替える関数
-function switchAdminTab(tabId) {
-    // すべてのタブボタンから active を消す
-    document.querySelectorAll('.admin-tabs .tab-btn').forEach(btn => btn.classList.remove('active'));
-    // すべてのタブコンテンツを隠す
-    document.querySelectorAll('.admin-tab-content').forEach(content => content.classList.remove('active'));
-    
-    // クリックされたタブをアクティブにする
-    const activeBtn = Array.from(document.querySelectorAll('.admin-tabs .tab-btn')).find(btn => btn.getAttribute('onclick').includes(tabId));
-    if (activeBtn) activeBtn.classList.add('active');
-    
-    const targetContent = document.getElementById(tabId);
-    if (targetContent) targetContent.classList.add('active');
-}
-
-// 1. ユーザー一覧の描画（性別と動物の項目を追加してアップデート）
-async function renderAdminUserList() {
-    const tbody = document.getElementById('admin-user-list');
-    if (!tbody) return;
-    tbody.innerHTML = '<tr><td colspan="7">データを読み込み中...</td></tr>';
-
-    try {
-        const querySnapshot = await getDocs(collection(db, "users"));
-        tbody.innerHTML = '';
-
-        querySnapshot.forEach((docSnap) => {
-            const username = docSnap.id;
-            const data = docSnap.data();
-            
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
-                <td><strong>${username}</strong></td>
-                <td>
-                    <select id="admin-grade-${username}">
-                        <option value="1" ${data.grade === 1 ? 'selected' : ''}>低学年・幼児</option>
-                        <option value="3" ${data.grade === 3 ? 'selected' : ''}>中学年</option>
-                        <option value="5" ${data.grade === 5 ? 'selected' : ''}>高学年</option>
-                    </select>
-                </td>
-                <td><input type="text" id="admin-gender-${username}" value="${data.gender || ''}" style="width:70px;"></td>
-                <td><input type="text" id="admin-animal-${username}" value="${data.animal || ''}" style="width:70px;"></td>
-                <td><input type="number" id="admin-wins-${username}" value="${data.wins || 0}" style="width:50px;"></td>
-                <td><input type="number" id="admin-lv-${username}" value="${data.lv || 1}" style="width:50px;"></td>
-                <td><button id="btn-save-${username}">保存</button></td>
-            `;
-            
-            tr.querySelector(`#btn-save-${username}`).onclick = async function() {
-                try {
-                    await updateDoc(doc(db, "users", username), {
-                        grade: parseInt(document.getElementById(`admin-grade-${username}`).value),
-                        gender: document.getElementById(`admin-gender-${username}`).value,
-                        animal: document.getElementById(`admin-animal-${username}`).value,
-                        wins: parseInt(document.getElementById(`admin-wins-${username}`).value),
-                        lv: parseInt(document.getElementById(`admin-lv-${username}`).value)
-                    });
-                    alert(`${username} のデータを更新しました！`);
-                } catch(err) { alert("更新に失敗しました。"); }
-            };
-            tbody.appendChild(tr);
-        });
-    } catch(e) { tbody.innerHTML = '<tr><td colspan="7">取得失敗</td></tr>'; }
-}
-
-// 2. 学年管理一覧の描画と編集
-async function renderAdminGradeList() {
-    const tbody = document.getElementById('admin-grade-list');
-    if (!tbody) return;
-    tbody.innerHTML = '<tr><td colspan="4">読み込み中...</td></tr>';
-    try {
-        const querySnapshot = await getDocs(collection(db, "grades"));
-        tbody.innerHTML = '';
-        querySnapshot.forEach((docSnap) => {
-            const id = docSnap.id;
-            const data = docSnap.data();
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
-                <td><code>${id}</code></td>
-                <td><input type="number" id="ad-grade-val-${id}" value="${data.value}"></td>
-                <td><input type="text" id="ad-grade-lab-${id}" value="${data.label}"></td>
-                <td>
-                    <button onclick="saveAdminGrade('${id}')">保存</button>
-                    <button onclick="deleteAdminGrade('${id}')" style="background:#e53e3e;">削除</button>
-                </td>
-            `;
-            tbody.appendChild(tr);
-        });
-    } catch(e) { console.error(e); }
-}
-
-// 学年データ個別保存
-window.saveAdminGrade = async function(id) {
-    const val = parseInt(document.getElementById(`ad-grade-val-${id}`).value);
-    const lab = document.getElementById(`ad-grade-lab-${id}`).value;
-    await setDoc(doc(db, "grades", id), { value: val, label: lab }, { merge: true });
-    alert("学年データを更新しました！");
-    loadGradesFromDB(); // 新規登録画面のセレクトボックスも再更新
-};
-
-// 学年データ削除
-window.deleteAdminGrade = async function(id) {
-    if(!confirm("本当に削除しますか？")) return;
-    await deleteDoc(doc(db, "grades", id));
-    await renderAdminGradeList();
-    loadGradesFromDB();
-};
-
-// 新しい学年の追加
-async function addGradeFromAdmin() {
-    const id = document.getElementById('new-grade-id').value.trim();
-    const val = parseInt(document.getElementById('new-grade-value').value);
-    const lab = document.getElementById('new-grade-label').value.trim();
-    if(!id || isNaN(val) || !lab) { alert("すべての項目を入力してね"); return; }
-    await setDoc(doc(db, "grades", id), { value: val, label: lab });
-    document.getElementById('new-grade-id').value = '';
-    document.getElementById('new-grade-value').value = '';
-    document.getElementById('new-grade-label').value = '';
-    await renderAdminGradeList();
-    loadGradesFromDB();
-    alert("新しい学年を追加しました！");
-}
-
-// 3. キャライメージ管理一覧の描画と編集
-async function renderAdminImageList() {
-    const tbody = document.getElementById('admin-image-list');
-    if (!tbody) return;
-    tbody.innerHTML = '<tr><td colspan="5">読み込み中...</td></tr>';
-    try {
-        // ※コレクション名を「character_images」と仮定して作成します
-        const querySnapshot = await getDocs(collection(db, "character_images"));
-        tbody.innerHTML = '';
-        querySnapshot.forEach((docSnap) => {
-            const id = docSnap.id;
-            const data = docSnap.data();
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
-                <td><code>${id}</code></td>
-                <td><input type="text" id="ad-img-ani-${id}" value="${data.animal || ''}"></td>
-                <td><input type="text" id="ad-img-gen-${id}" value="${data.gender || ''}"></td>
-                <td><input type="text" id="ad-img-file-${id}" value="${data.char_image || ''}"></td>
-                <td>
-                    <button onclick="saveAdminImage('${id}')">保存</button>
-                    <button onclick="deleteAdminImage('${id}')" style="background:#e53e3e;">削除</button>
-                </td>
-            `;
-            tbody.appendChild(tr);
-        });
-    } catch(e) { tbody.innerHTML = '<tr><td colspan="5">データがありません。新しく追加してください。</td></tr>'; }
-}
-
-window.saveAdminImage = async function(id) {
-    await setDoc(doc(db, "character_images", id), {
-        animal: document.getElementById(`ad-img-ani-${id}`).value,
-        gender: document.getElementById(`ad-img-gen-${id}`).value,
-        char_image: document.getElementById(`ad-img-file-${id}`).value
-    }, { merge: true });
-    alert("イメージ設定を更新しました！");
-};
-
-window.deleteAdminImage = async function(id) {
-    if(!confirm("本当に削除しますか？")) return;
-    await deleteDoc(doc(db, "character_images", id));
-    await renderAdminImageList();
-};
-
-async function addImageFromAdmin() {
-    const id = document.getElementById('new-img-id').value.trim();
-    const animal = document.getElementById('new-img-animal').value.trim();
-    const gender = document.getElementById('new-img-gender').value;
-    const filename = document.getElementById('new-img-filename').value.trim();
-    if(!id || !animal || !gender || !filename) { alert("入力欄をうめてね"); return; }
-    
-    await setDoc(doc(db, "character_images", id), {
-        animal: animal,
-        gender: gender,
-        char_image: filename
-    });
-    
-    document.getElementById('new-img-id').value = '';
-    document.getElementById('new-img-animal').value = '';
-    document.getElementById('new-img-filename').value = '';
-    await renderAdminImageList();
-    alert("キャライメージデータを追加しました！");
 }
 
 // HTMLのonclickから呼び出せるようにwindowオブジェクトに登録
@@ -400,7 +234,3 @@ window.cancelLogin = resetTopScreen; // やりなおすボタン用
 window.logout = logout;
 window.openAdminScreen = openAdminScreen;
 window.previewCharacter = previewCharacter;
-window.switchAdminTab = switchAdminTab;
-window.addGradeFromAdmin = addGradeFromAdmin;
-window.addImageFromAdmin = addImageFromAdmin;
-window.openAdminScreen = openAdminScreen;
