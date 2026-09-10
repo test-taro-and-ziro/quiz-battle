@@ -187,13 +187,6 @@ function previewCharacter() {
     const animal = document.getElementById('char-animal-select').value;
     const gender = document.getElementById('gender-select').value;
     
-    // 性別がまだ選ばれていないのに動物が選ばれたら、分かりやすいようにアラートを出すか、デフォルトをオス(male)等にする
-    if (animal && !gender) {
-        alert("さきに「せいべつ」をえらんでね！");
-        document.getElementById('char-animal-select').value = ""; // 選択をリセット
-        return;
-    }
-
     const fileName = getCharacterFileName(animal, gender);
     document.getElementById('register-char-preview').src = "images/" + fileName;
 }
