@@ -39,18 +39,15 @@
     </div>
 
     <!-- ==========================================
-         【ログイン後】メインメニュー（将来のゲーム入口）
+         【ログイン後】メインメニュー＆ゲーム画面
          ========================================== -->
     <div id="screen-menu" class="screen">
         <h1 id="menu-welcome">ようこそ！</h1>
         <p id="user-stats"></p>
         
-        <div class="card" style="text-align: center; padding: 30px 15px;">
-            <p>🎉 ログインに成功しました！</p>
-            <p style="font-size: 14px; color: #666;">（ここに将来、別ファイルから読み込んだゲーム画面を合体させます）</p>
-            
-            <!-- 将来ゲーム画面を読み込むための空のエリア（器） -->
-            <div id="game-container"></div>
+        <!-- 【重要】将来ゲーム画面（game.html）を表示するための<iframe>の窓 -->
+        <div class="card" style="padding: 10px;">
+            <iframe id="game-frame" src="game.html" style="width:100%; height:450px; border:none; border-radius: 6px; background-color: #fff;"></iframe>
         </div>
         
         <button class="btn-minor" onclick="logout()">アカウントをかえる（ログアウト）</button>
