@@ -1,225 +1,221 @@
-import { quizDatabase, npcList } from './data.js';
+import { initializeApp } from "https://gstatic.com";
+import { getFirestore, collection, doc, setDoc, getDoc, getDocs, updateDoc } from "https://gstatic.com";
 
-let users = JSON.parse(localStorage.getItem('quiz_battle_users')) || {};
-let currentUser = null;
-let currentGenre = '';
-let currentQuestions = [];
-let questionIndex = 0;
-let playerHP = 100;
-let npcHP = 100;
-let currentNPC = null;
-let questionStartTime = 0;
-let timerInterval = null;
-let npcTimeout = null;
-const maxAnswerTime = 10000;
+// !!! ご自身のFirebaseプロジェクトの設定値に書き換えてください !!!
+const firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_AUTH_DOMAIN",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_STORAGE_BUCKET",
+    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+    appId: "YOUR_APP_ID"
+};
 
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+const ADMIN_PASSWORD = "admin1234"; 
+
+// 状態管理
+let deviceId = null;
+let currentUsersMap = {}; 
+let currentUser = null; // ログイン中ならここに「おなまえ」が入る（表示切り替えの鍵）
+
+// 起動時処理
+window.addEventListener('DOMContentLoaded', async () => {
+    initDeviceId();
+    await renderUserList();
+});
+
+function initDeviceId() {
+    deviceId = localStorage.getItem('quiz_battle_device_id');
+    if (!deviceId) {
+        deviceId = 'dev_' + Math.random().toString(36).substring(2, 15);
+        localStorage.setItem('quiz_battle_device_id', deviceId);
+    }
+}
+
+// 画面の切り替え関数
 function showScreen(screenId) {
     document.querySelectorAll('.screen').forEach(function(s) { s.classList.remove('active'); });
     const target = document.getElementById(screenId);
     if (target) target.classList.add('active');
 }
 
-function renderUserList() {
-    const listContainer = document.getElementById('login-user-list');
-    if (!listContainer) return;
-    listContainer.innerHTML = '';
-    Object.keys(users).forEach(function(username) {
-        const item = document.createElement('div');
-        item.className = 'user-item';
-        const displayGrade = users[username].grade === 1 ? "低学年・幼児" : users[username].grade === 3 ? "中学年" : "高学年";
-        item.textContent = username + " (" + displayGrade + " / 勝利:" + (users[username].wins || 0) + ")";
-        item.onclick = function() { loginAs(username); };
-        listContainer.appendChild(item);
-    });
-    if(Object.keys(users).length === 0) {
-        listContainer.innerHTML = '<div style="padding:10px; color:#aaa; font-size:12px;">アカウントがありません</div>';
+// 【ログイン状態の変更に伴う表示切り替えロジック】
+function updateDisplayByLoginStatus(username) {
+    if (username) {
+        // ログイン状態：メニュー画面へ
+        currentUser = username;
+        const uData = currentUsersMap[username];
+        const displayGrade = uData.grade === 1 ? "低学年・幼児" : uData.grade === 3 ? "中学年" : "高学年";
+        
+        document.getElementById('menu-welcome').textContent = "ようこそ、" + username + " さん！";
+        document.getElementById('user-stats').textContent = "クラス: " + displayGrade + " | 現在の勝ち数: " + (uData.wins || 0) + "回";
+        showScreen('screen-menu');
+        
+        // 【将来用】ここで「game.html」などの別ファイルを読み込む関数を呼び出せます
+        // loadGameScreen(); 
+    } else {
+        // ログアウト状態：ログイン（アカウント選択）画面へ
+        currentUser = null;
+        document.getElementById('username-input').value = '';
+        renderUserList();
+        showScreen('screen-login');
     }
 }
 
-function handleRegister() {
+// クラウドから自端末のアカウント一覧を取得して表示
+async function renderUserList() {
+    const listContainer = document.getElementById('login-user-list');
+    if (!listContainer) return;
+    listContainer.innerHTML = '<div style="padding:10px; color:#666;">読み込み中...</div>';
+
+    currentUsersMap = {};
+    try {
+        const querySnapshot = await getDocs(collection(db, "users"));
+        listContainer.innerHTML = ''; 
+        let count = 0;
+
+        querySnapshot.forEach((docSnap) => {
+            const data = docSnap.data();
+            if (data.device_id === deviceId) {
+                const username = docSnap.id;
+                currentUsersMap[username] = data;
+
+                const item = document.createElement('div');
+                item.className = 'user-item';
+                const displayGrade = data.grade === 1 ? "低学年・幼児" : data.grade === 3 ? "中学年" : "高学年";
+                item.textContent = username + " (" + displayGrade + " / 勝ち数:" + (data.wins || 0) + ")";
+                item.onclick = function() { updateDisplayByLoginStatus(username); };
+                listContainer.appendChild(item);
+                count++;
+            }
+        });
+
+        if (count === 0) {
+            listContainer.innerHTML = '<div style="padding:10px; color:#aaa; font-size:12px;">アカウントがありません</div>';
+        }
+    } catch (e) {
+        console.error("データ取得エラー:", e);
+        listContainer.innerHTML = '<div style="padding:10px; color:red;">データの読み込みに失敗しました</div>';
+    }
+}
+
+// 新規アカウント登録
+async function handleRegister() {
     const nameInput = document.getElementById('username-input').value.trim();
     const ageSelect = document.getElementById('age-select').value;
     if (!nameInput) { alert('おなまえを入力してね！'); return; }
     if (!ageSelect) { alert('学年をえらんでね！'); return; }
-    users[nameInput] = {
+
+    const docRef = doc(db, "users", nameInput);
+    const userData = {
+        device_id: deviceId,
         grade: parseInt(ageSelect),
-        wins: users[nameInput] ? users[nameInput].wins : 0,
-        lv: users[nameInput] ? users[nameInput].lv : 1
+        wins: 0,
+        lv: 1
     };
-    localStorage.setItem('quiz_battle_users', JSON.stringify(users));
-    loginAs(nameInput);
+
+    try {
+        await setDoc(docRef, userData);
+        currentUsersMap[nameInput] = userData;
+        updateDisplayByLoginStatus(nameInput); // 登録成功したらそのままログイン状態へ
+    } catch (e) {
+        alert("登録に失敗しました。");
+        console.error(e);
+    }
 }
 
-function loginAs(username) {
-    currentUser = username;
-    const uData = users[username];
-    const displayGrade = uData.grade === 1 ? "低学年・幼児" : uData.grade === 3 ? "中学年" : "高学年";
-    document.getElementById('menu-welcome').textContent = "ようこそ、" + username + " さん！";
-    document.getElementById('user-stats').textContent = "クラス: " + displayGrade + "向け | かち数: " + (uData.wins || 0) + "回";
-    showScreen('screen-menu');
-}
-
+// ログアウト（引数なしで呼ぶとログアウト状態にする）
 function logout() {
-    currentUser = null;
-    document.getElementById('username-input').value = '';
-    renderUserList();
-    showScreen('screen-login');
+    updateDisplayByLoginStatus(null);
 }
 
-function startBattle(genre) {
-    currentGenre = genre;
-    const uData = users[currentUser];
-    const allGenreQuizzes = quizDatabase[genre] || [];
-    currentQuestions = allGenreQuizzes.filter(function(q) { return q.lvl === uData.grade; });
-    if(currentQuestions.length === 0) currentQuestions = allGenreQuizzes;
-    currentQuestions.sort(function() { return Math.random() - 0.5; });
-    const npcIdx = Math.min(Math.floor((uData.wins || 0) / 3), npcList.length - 1);
-    currentNPC = npcList[npcIdx];
-    playerHP = 100;
-    npcHP = 100;
-    questionIndex = 0;
-    document.getElementById('battle-genre-label').textContent = "ジャンル: " + genre;
-    document.getElementById('player-name-label').textContent = currentUser;
-    document.getElementById('npc-name-label').textContent = currentNPC.name;
-    document.getElementById('npc-avatar').textContent = currentNPC.avatar;
-    updateHPDisplays();
-    showScreen('screen-battle');
-    nextQuestion();
-}
-
-function updateHPDisplays() {
-    document.getElementById('player-hp').style.width = playerHP + '%';
-    document.getElementById('npc-hp').style.width = npcHP + '%';
-    document.getElementById('player-hp-text').textContent = "HP: " + playerHP + "/100";
-    document.getElementById('npc-hp-text').textContent = "HP: " + npcHP + "/100";
-}
-
-function nextQuestion() {
-    if (playerHP <= 0 || npcHP <= 0) { endBattle(); return; }
-    if (questionIndex >= currentQuestions.length) {
-        questionIndex = 0;
-        currentQuestions.sort(function() { return Math.random() - 0.5; });
+// 管理者画面を開く
+async function openAdminScreen() {
+    const pass = prompt("管理者パスワードを入力してください：");
+    if (pass === ADMIN_PASSWORD) {
+        showScreen('screen-admin');
+        await renderAdminUserList();
+    } else if (pass !== null) {
+        alert("パスワードが違います。");
     }
-    const qData = currentQuestions[questionIndex];
-    document.getElementById('quiz-text').innerText = qData.q;
-    const container = document.getElementById('options-container');
-    container.innerHTML = '';
-    qData.a.forEach(function(opt, idx) {
-        const btn = document.createElement('button');
-        btn.className = 'option-btn';
-        btn.innerHTML = '<span class="option-num">' + (idx+1) + '</span> ' + opt;
-        btn.onclick = function() { handlePlayerAnswer(idx); };
-        container.appendChild(btn);
-    });
-    questionStartTime = Date.now();
-    startTimerBar();
-    scheduleNPCAction(qData);
 }
 
-function startTimerBar() {
-    clearInterval(timerInterval);
-    const bar = document.getElementById('timer-bar');
-    bar.style.width = '100%';
-    timerInterval = setInterval(function() {
-        const elapsed = Date.now() - questionStartTime;
-        const remainingPercent = Math.max(0, 100 - (elapsed / maxAnswerTime) * 100);
-        bar.style.width = remainingPercent + '%';
-        if (elapsed >= maxAnswerTime) {
-            clearInterval(timerInterval);
-            handleTimeOut();
-        }
-    }, 50);
-}
+// 管理者画面：全ユーザー表示
+async function renderAdminUserList() {
+    const tbody = document.getElementById('admin-user-list');
+    if (!tbody) return;
+    tbody.innerHTML = '<tr><td colspan="6">データを読み込み中...</td></tr>';
 
-function scheduleNPCAction(qData) {
-    clearTimeout(npcTimeout);
-    const baseSpeed = currentNPC.speed * 1000;
-    const actualSpeed = baseSpeed * (0.8 + Math.random() * 0.4);
-    npcTimeout = setTimeout(function() {
-        if (playerHP <= 0 || npcHP <= 0) return;
-        const isCorrect = Math.random() < currentNPC.accuracy;
-        if (isCorrect) {
-            playerHP = Math.max(0, playerHP - 20);
-            triggerEffect('npc-avatar', 'animate-attack-right');
-            triggerEffect('player-fighter', 'animate-shake');
-            updateHPDisplays();
-            showTemporaryText(currentNPC.name + " のこうげき！ 20 ダメージ！");
-        }
-    }, actualSpeed);
-}
+    try {
+        const querySnapshot = await getDocs(collection(db, "users"));
+        tbody.innerHTML = '';
 
-function handlePlayerAnswer(selectedIdx) {
-    clearInterval(timerInterval);
-    clearTimeout(npcTimeout);
-    const qData = currentQuestions[questionIndex];
-    const elapsed = Date.now() - questionStartTime;
-    if (selectedIdx === qData.c) {
-        const speedBonus = elapsed < 4000 ? 30 : 20;
-        npcHP = Math.max(0, npcHP - speedBonus);
-        triggerEffect('player-avatar', 'animate-attack-left');
-        triggerEffect('npc-fighter', 'animate-shake');
-        updateHPDisplays();
-        showTemporaryText("せいかい！ " + speedBonus + " ダメージ！", function() {
-            questionIndex++;
-            nextQuestion();
+        querySnapshot.forEach((docSnap) => {
+            const username = docSnap.id;
+            const data = docSnap.data();
+            
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td><strong>${username}</strong></td>
+                <td>
+                    <select id="admin-grade-${username}">
+                        <option value="1" ${data.grade === 1 ? 'selected' : ''}>低学年・幼児</option>
+                        <option value="3" ${data.grade === 3 ? 'selected' : ''}>中学年</option>
+                        <option value="5" ${data.grade === 5 ? 'selected' : ''}>高学年</option>
+                    </select>
+                </td>
+                <td><input type="number" id="admin-wins-${username}" value="${data.wins || 0}" style="width:60px;"></td>
+                <td><input type="number" id="admin-lv-${username}" value="${data.lv || 1}" style="width:60px;"></td>
+                <td style="font-size:10px; color:#666;">${data.device_id || 'なし'}</td>
+                <td><button id="btn-save-${username}">保存</button></td>
+            `;
+            
+            tr.querySelector(`#btn-save-${username}`).onclick = async function() {
+                const nextGrade = parseInt(document.getElementById(`admin-grade-${username}`).value);
+                const nextWins = parseInt(document.getElementById(`admin-wins-${username}`).value);
+                const nextLv = parseInt(document.getElementById(`admin-lv-${username}`).value);
+                
+                try {
+                    await updateDoc(doc(db, "users", username), {
+                        grade: nextGrade,
+                        wins: nextWins,
+                        lv: nextLv
+                    });
+                    alert(`${username} のデータを更新しました！`);
+                } catch(err) {
+                    alert("更新に失敗しました。");
+                    console.error(err);
+                }
+            };
+
+            tbody.appendChild(tr);
         });
-    } else {
-        playerHP = Math.max(0, playerHP - 15);
-        triggerEffect('player-fighter', 'animate-shake');
-        updateHPDisplays();
-        showTemporaryText("まちがい (ただしくは: " + qData.a[qData.c] + ")", function() {
-            questionIndex++;
-            nextQuestion();
-        });
+
+        if (tbody.children.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="6">登録されているユーザーがいません。</td></tr>';
+        }
+    } catch(e) {
+        tbody.innerHTML = '<tr><td colspan="6" style="color:red;">データの取得に失敗しました。</td></tr>';
     }
 }
 
-function handleTimeOut() {
-    clearTimeout(npcTimeout);
-    playerHP = Math.max(0, playerHP - 10);
-    updateHPDisplays();
-    showTemporaryText("じかんぎれ！ 10ダメージ！", function() {
-        questionIndex++;
-        nextQuestion();
-    });
-}
-
-function showTemporaryText(text, callback) {
-    document.querySelectorAll('.option-btn').forEach(function(b) { b.disabled = true; });
-    document.getElementById('quiz-text').innerText = text;
-    setTimeout(function() { if(callback) callback(); }, 1500);
-}
-
-function triggerEffect(elementId, className) {
-    const el = document.getElementById(elementId);
-    if (!el) return;
-    el.classList.remove(className);
-    setTimeout(function() { el.classList.add(className); }, 10);
-}
-
-function endBattle() {
-    clearInterval(timerInterval);
-    clearTimeout(npcTimeout);
-    const uData = users[currentUser];
-    if (npcHP <= 0) {
-        document.getElementById('result-title').textContent = "かち！";
-        document.getElementById('result-avatar').textContent = "🏆";
-        document.getElementById('result-text').innerHTML = "おめでとう！ " + currentNPC.name + " をたおしたぞ！";
-        uData.wins = (uData.wins || 0) + 1;
-    } else {
-        document.getElementById('result-title').textContent = "まけちゃった...";
-        document.getElementById('result-avatar').textContent = "🍂";
-        document.getElementById('result-text').innerHTML = currentNPC.name + " は強かった...！";
+// 【将来用】ゲーム画面（別ファイル）を非同期で読み込んで合体させる雛形
+async function loadGameScreen() {
+    try {
+        // 例: 'game.html' という別ファイルから中身を吸い上げる
+        const response = await fetch('game.html'); 
+        const htmlText = await response.text();
+        document.getElementById('game-container').innerHTML = htmlText;
+        console.log("ゲーム画面を正常に読み込みました。");
+    } catch (e) {
+        console.error("ゲーム画面の分割読込に失敗:", e);
     }
-    localStorage.setItem('quiz_battle_users', JSON.stringify(users));
-    loginAs(currentUser);
-    showScreen('screen-result');
 }
 
-function backToMenu() { 
-    showScreen('screen-menu'); 
-}
-
-window.onload = function() { 
-    renderUserList(); 
-};
+// グローバル紐づけ
+window.handleRegister = handleRegister;
+window.logout = logout;
+window.openAdminScreen = openAdminScreen;
