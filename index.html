@@ -1,88 +1,69 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>アカウント管理システム</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+    <!-- 1. トップメニュー画面 -->
+    <div id="screen-login" class="screen active" style="position: relative;">
+        <!-- 💡 管理者画面ボタンを一番上の右すみに小さく配置 -->
+        <div style="position: absolute; top: 10px; right: 10px;">
+            <button class="btn-minor" onclick="openAdminScreen()" style="font-size: 11px; padding: 4px 8px; background: #ccc; border: none; color: #666; border-radius: 4px;">かんりしゃ用</button>
+        </div>
 
-    <!-- 1. ログイン / アカウント選択画面 -->
-    <div id="screen-login" class="screen active">
-        <h1>アカウント選択</h1>
+        <h1 style="margin-top: 40px;">ゲームのトップ画面</h1>
         
-        <div class="card">
-            <h2>この端末のアカウントをえらぶ</h2>
-            <div id="login-user-list">
-                <!-- 読み込み中... の文字が入ります -->
+        <!-- メインメニューボタン -->
+        <div class="card" style="display: flex; flex-direction: column; gap: 20px; padding: 40px 20px;">
+            <!-- 💡 あたらしくはじめる（新規作成画面へ遷移） -->
+            <button class="btn-start" onclick="changeScreen('screen-register')" style="background-color: #4CAF50; font-size: 22px; padding: 15px;">
+                ✨ あたらしくはじめる
+            </button>
+
+            <!-- 💡 ログイン（名前を入力してキャラクター情報を読み出す画面へ遷移、またはその場で入力欄を出す） -->
+            <!-- ※今回はシンプルにログイン用の入力エリアを表示/非表示する想定にしています -->
+            <button class="btn-start" onclick="toggleLoginInput()" style="background-color: #2196F3; font-size: 22px; padding: 15px;">
+                🔑 ログイン（つづきから）
+            </button>
+        </div>
+
+        <!-- 【ログインエリア】ログインボタンを押すとスライド表示される想定 -->
+        <div id="login-action-zone" class="card" style="display: none; background-color: #e3f2fd;">
+            <h3>おなまえを入力してね</h3>
+            <input type="text" id="login-username-input" placeholder="登録したおなまえ">
+            <button onclick="handleLogin()" style="background-color: #2196F3; margin-top: 10px;">決定</button>
+        </div>
+
+        <!-- 【キャラクター確認エリア】ログインに成功したらここに表示 -->
+        <div id="logged-in-char-zone" class="card" style="display: none; text-align: center; background-color: #fff9c4;">
+            <h2>きみのキャラクター</h2>
+            <div class="char-profile">
+                <div id="char-image-container" style="margin: 15px auto; width: 100px; height: 100px; background: #eee; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                    <img id="char-visual" src="placeholder.png" alt="キャラクターの絵" style="max-width: 100%; max-height: 100%;">
+                </div>
+                <div style="font-size: 18px; font-weight: bold;">おなまえ：<span id="char-name">---</span></div>
+                <div style="font-size: 14px; color: #555; margin-bottom: 15px;">ランク：<span id="char-rank">---</span></div>
             </div>
-        </div>
-
-        <div class="card">
-            <h2>あたらしく登録する</h2>
-            <input type="text" id="username-input" placeholder="おなまえを入力してね">
-            <select id="age-select">
-                <option value="">-- 学年をえらんでね --</option>
-                <option value="1">低学年・幼児</option>
-                <option value="3">中学年</option>
-                <option value="5">高学年</option>
-            </select>
-            <button onclick="handleRegister()">登録する</button>
-        </div>
-
-        <div style="text-align: center; margin-top: 30px;">
-            <button class="btn-minor" onclick="openAdminScreen()">管理者画面（かんりしゃ用）</button>
+            <button class="btn-start" onclick="startGame()" style="background-color: #ff9800; font-size: 18px; width: 100%;">ゲームをはじめる</button>
         </div>
     </div>
 
-    <!-- 2. ログイン後のメインメニュー（仮画面） -->
-    <div id="screen-menu" class="screen">
-        <h1 id="menu-welcome">ようこそ！</h1>
-        <p id="user-stats"></p>
+    <!-- 💡 【新設】1.5 キャラクター新規作成画面 -->
+    <div id="screen-register" class="screen" style="display: none;">
+        <h1>あたらしく登録する</h1>
         
-        <div class="card" style="text-align: center; padding: 30px 15px;">
-            <p>🎉 ログインに成功しました！</p>
-            <p style="font-size: 14px; color: #666;">（ここに将来、別ファイルからゲーム画面を読み込みます）</p>
-        </div>
-        
-        <button class="btn-minor" onclick="logout()">アカウントをかえる（ログアウト）</button>
-    </div>
-
-    <!-- 3. 管理者画面 -->
-    <div id="screen-admin" class="screen">
-        <h1>管理者データ編集画面</h1>
         <div class="card">
-            <button onclick="logout()" style="background-color: #666; margin-bottom: 15px;">トップ画面に戻る</button>
-            <h2>全ユーザーデータ一覧</h2>
-            <div class="table-responsive">
-                <table class="admin-table">
-                    <thead>
-                        <tr>
-                            <th>おなまえ</th>
-                            <th>学年クラス</th>
-                            <th>勝ち数</th>
-                            <th>レベル</th>
-                            <th>端末ID</th>
-                            <th>操作</th>
-                        </tr>
-                    </thead>
-                    <tbody id="admin-user-list">
-                        <!-- 全ユーザーデータがここに一覧表示されます -->
-                    </tbody>
-                </table>
+            <h2>キャラクターを作ろう！</h2>
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; margin-bottom: 5px; font-weight: bold;">おなまえ：</label>
+                <input type="text" id="username-input" placeholder="おなまえを入力してね">
             </div>
+            
+            <div style="margin-bottom: 20px;">
+                <label style="display: block; margin-bottom: 5px; font-weight: bold;">学年（ランク）：</label>
+                <select id="age-select">
+                    <option value="">-- 学年をえらんでね --</option>
+                    <option value="1">低学年・幼児</option>
+                    <option value="3">中学年</option>
+                    <option value="5">高学年</option>
+                </select>
+            </div>
+
+            <button onclick="handleRegister()" style="background-color: #4CAF50; width: 100%; font-size: 18px; padding: 12px;">このキャラクターで登録する</button>
+            <button class="btn-minor" onclick="changeScreen('screen-login')" style="background-color: #999; width: 100%; margin-top: 10px;">もどる</button>
         </div>
     </div>
-    <!-- 💡 ここを追加します（公式コードをそのまま動かすための設定） -->
-    <script type="importmap">
-    {
-      "imports": {
-        "firebase/app": "https://gstatic.com",
-        "firebase/firestore": "https://gstatic.com"
-      }
-    }
-    </script>
-    <script type="module" src="script.js"></script>
-</body>
-</html>
