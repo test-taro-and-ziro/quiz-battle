@@ -59,11 +59,11 @@ button {
 button:hover { background-color: #2b6cb0; }
 
 .btn-minor {
-    background-color: #718096;
+    background-color: #f9fafb;
     font-size: 11px; 
 	padding: 4px 8px; 
 	border: none; 
-    color: #666; 
+    color: #f0f4f8; 
 	border-radius: 4px; 
 	width: auto; 
 	margin: 0;
