@@ -4,7 +4,7 @@ import { getFirestore, collection, addDoc } from "https://gstatic.com";
 // ご自身のFirebaseプロジェクトの設定値
 const firebaseConfig = {
     apiKey: "AIzaSyBUfZOKhw9nHc5K6sq7pMWH2eeVixVx3wI",
-    authDomain: "quiz-battle-b8b48.firebaseapp.com",
+    authDomain: "://firebaseapp.com",
     projectId: "quiz-battle-b8b48",
     storageBucket: "quiz-battle-b8b48.firebasestorage.app",
     messagingSenderId: "883874950005",
