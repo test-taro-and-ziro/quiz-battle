@@ -104,10 +104,13 @@ async function handleLogin() {
 async function handleRegister() {
     const nameInput = document.getElementById('username-input').value.trim();
     const ageSelect = document.getElementById('age-select').value;
-　  const charSelect = document.getElementById('char-visual-select').value;
-    if (!nameInput) { alert('おなまえを入力してね！'); return; }
+    const genderSelect = document.getElementById('gender-select').value;
+    const animalSelect = document.getElementById('char-animal-select').value;
+  
+　  if (!nameInput) { alert('おなまえを入力してね！'); return; }
     if (!ageSelect) { alert('学年をえらんでね！'); return; }
-  　if (!charSelect) { alert('キャラクターをえらんでね！'); return; }
+  　if (!genderSelect) { alert('せいべつをえらんでね！'); return; }
+　  if (!animalSelect) { alert('どうぶつをえらんでね！'); return; }
 
     try {
         // 重複チェック
@@ -118,10 +121,15 @@ async function handleRegister() {
             return;
         }
 
+        // 💡 性別と動物の組み合わせから画像ファイル名を決定
+        const finalCharImage = getCharacterFileName(animalSelect, genderSelect);
+
         const userData = {
             device_id: deviceId,
-            grade: parseInt(ageSelect),
-          　char_image: charSelect,
+            grade: parseInt(ageSelect),   // 学年を保存
+            gender: genderSelect,         // 性別を保存
+            animal: animalSelect,         // 動物の種類を保存
+            char_image: finalCharImage,   // 決定した画像ファイル名を保存
             wins: 0,
             lv: 1
         };
@@ -160,6 +168,35 @@ function showCharacterInfo(username, userData) {
     
     // もし新規作成画面にいたらトップ画面に戻す
     changeScreen('screen-login');
+}
+
+// 💡 性別と動物から画像ファイル名を決定するヘルパー関数
+function getCharacterFileName(animal, gender) {
+    if (!animal || !gender) return "placeholder.png";
+    
+    // 例：うさぎ(usagi) ＋ おとこのこ(male) ＝ usagi_male.jfif 
+    // ※お手元の「usagi_1.jfif」をオス用にする場合は、ここを "usagi_1.jfif" にしてもOKです
+    if (animal === "usagi") {
+        return gender === "male" ? "usagi_male.jfif" : "usagi_female.jfif";
+    }
+    
+    return "placeholder.png";
+}
+
+// 💡 選択中のキャラクターをその場でプレビュー表示する関数（新規追加）
+function previewCharacter() {
+    const animal = document.getElementById('char-animal-select').value;
+    const gender = document.getElementById('gender-select').value;
+    
+    // 性別がまだ選ばれていないのに動物が選ばれたら、分かりやすいようにアラートを出すか、デフォルトをオス(male)等にする
+    if (animal && !gender) {
+        alert("さきに「せいべつ」をえらんでね！");
+        document.getElementById('char-animal-select').value = ""; // 選択をリセット
+        return;
+    }
+
+    const fileName = getCharacterFileName(animal, gender);
+    document.getElementById('register-char-preview').src = "images/" + fileName;
 }
 
 // 💡 「ゲームをはじめる」ボタンを押したとき（次の画面へ）
@@ -257,4 +294,4 @@ window.startGame = startGame;
 window.cancelLogin = resetTopScreen; // やりなおすボタン用
 window.logout = logout;
 window.openAdminScreen = openAdminScreen;
-
+window.previewCharacter = previewCharacter;
