@@ -72,7 +72,6 @@ async function renderAdminUserList() {
                         wins: parseInt(document.getElementById(`admin-wins-${username}`).value),
                         lv: parseInt(document.getElementById(`admin-lv-${username}`).value)
                     });
-                    alert(`${username} のデータを更新しました！`);
                 } catch(err) { alert("更新に失敗しました。"); }
             };
             tbody.appendChild(tr);
@@ -119,7 +118,6 @@ window.saveAdminGrade = async function(id) {
     if (isNaN(val) || !lab) { alert("正しい値を入力してください。"); return; }
     try {
         await setDoc(doc(db, "grades", id), { value: val, label: lab }, { merge: true });
-        alert("学年データを更新しました！");
         await renderAdminUserList(); 
     } catch (e) { alert("保存に失敗しました。"); }
 };
@@ -146,7 +144,6 @@ async function addGradeFromAdmin() {
         document.getElementById('new-grade-label').value = '';
         await renderAdminGradeList();
         await renderAdminUserList();
-        alert("新しい学年を追加しました！");
     } catch (e) { alert("追加に失敗しました。"); }
 }
 
