@@ -27,13 +27,13 @@ const db = getFirestore(app);
 const ADMIN_PASSWORD = "admin1234"; 
 
 let deviceId = null;
-let currentUsersMap = {}; 
 let currentUser = null; 
 
 // 起動時処理
-window.addEventListener('DOMContentLoaded', async () => {
+window.addEventListener('DOMContentLoaded', () => {
     initDeviceId();
-    await renderUserList();
+    // 💡 起動時はトップ画面の初期状態にリセット
+    resetTopScreen();
 });
 
 function initDeviceId() {
@@ -44,103 +44,149 @@ function initDeviceId() {
     }
 }
 
-function showScreen(screenId) {
-    document.querySelectorAll('.screen').forEach(function(s) { s.classList.remove('active'); });
+// 💡 画面切り替えの汎用関数
+function changeScreen(screenId) {
+    document.querySelectorAll('.screen').forEach(s => s.style.display = 'none');
     const target = document.getElementById(screenId);
-    if (target) target.classList.add('active');
+    if (target) target.style.display = 'block';
 }
 
-function updateDisplayByLoginStatus(username) {
-    if (username) {
-        currentUser = username;
-        const uData = currentUsersMap[username];
-        const displayGrade = uData.grade === 1 ? "低学年・幼児" : uData.grade === 3 ? "中学年" : "高学年";
-        
-        document.getElementById('menu-welcome').textContent = "ようこそ、" + username + " さん！";
-        document.getElementById('user-stats').textContent = "クラス: " + displayGrade + " | 現在の勝ち数: " + (uData.wins || 0) + "回";
-        showScreen('screen-menu');
+// 💡 トップ画面の状態を最初のメニューだけにリセットする関数
+function resetTopScreen() {
+    currentUser = null;
+    // 各種入力欄をクリア
+    document.getElementById('login-username-input').value = '';
+    if (document.getElementById('username-input')) document.getElementById('username-input').value = '';
+    if (document.getElementById('age-select')) document.getElementById('age-select').value = '';
+    
+    // 表示エリアの制御
+    document.getElementById('login-action-zone').style.display = 'none';
+    document.getElementById('logged-in-char-zone').style.display = 'none';
+    changeScreen('screen-login');
+}
+
+// 💡 「ログイン（つづきから）」ボタンを押した時の入力欄トグル
+function toggleLoginInput() {
+    const zone = document.getElementById('login-action-zone');
+    if (zone.style.display === 'none') {
+        zone.style.display = 'block';
+        document.getElementById('logged-in-char-zone').style.display = 'none'; // キャラエリアは隠す
     } else {
-        currentUser = null;
-        document.getElementById('username-input').value = '';
-        renderUserList();
-        showScreen('screen-login');
+        zone.style.display = 'none';
     }
 }
 
-async function renderUserList() {
-    const listContainer = document.getElementById('login-user-list');
-    if (!listContainer) return;
-    listContainer.innerHTML = '<div style="padding:10px; color:#666;">読み込み中...</div>';
+// 💡 既存ユーザーのログイン処理
+async function handleLogin() {
+    const nameInput = document.getElementById('login-username-input').value.trim();
+    if (!nameInput) { alert('おなまえを入力してね！'); return; }
 
-    currentUsersMap = {};
     try {
-        const querySnapshot = await getDocs(collection(db, "users"));
-        listContainer.innerHTML = ''; 
-        let count = 0;
+        const docRef = doc(db, "users", nameInput);
+        const docSnap = await getDoc(docRef);
 
-        querySnapshot.forEach((docSnap) => {
-            const data = docSnap.data();
-            if (data.device_id === deviceId) {
-                const username = docSnap.id;
-                currentUsersMap[username] = data;
-
-                const item = document.createElement('div');
-                item.className = 'user-item';
-                const displayGrade = data.grade === 1 ? "低学年・幼児" : data.grade === 3 ? "中学年" : "高学年";
-                item.textContent = username + " (" + displayGrade + " / 勝ち数:" + (data.wins || 0) + ")";
-                item.onclick = function() { updateDisplayByLoginStatus(username); };
-                listContainer.appendChild(item);
-                count++;
-            }
-        });
-
-        if (count === 0) {
-            listContainer.innerHTML = '<div style="padding:10px; color:#aaa; font-size:12px;">アカウントがありません</div>';
+        if (docSnap.exists()) {
+            const userData = docSnap.data();
+            currentUser = nameInput;
+            
+            // 💡 トップ画面にキャラクター情報を表示
+            showCharacterInfo(nameInput, userData);
+        } else {
+            alert('そのおなまえのキャラクターは見つからなかったよ。新しくつくるか、もう一度たしかめてね！');
         }
     } catch (e) {
-        console.error("データ取得エラー:", e);
-        listContainer.innerHTML = '<div style="padding:10px; color:red;">データの読み込みに失敗しました</div>';
+        console.error("ログインエラー:", e);
+        alert("データの読み込みに失敗しました。");
     }
 }
 
+// 💡 新規登録（あたらしくはじめる）処理
 async function handleRegister() {
     const nameInput = document.getElementById('username-input').value.trim();
     const ageSelect = document.getElementById('age-select').value;
     if (!nameInput) { alert('おなまえを入力してね！'); return; }
     if (!ageSelect) { alert('学年をえらんでね！'); return; }
 
-    const docRef = doc(db, "users", nameInput);
-    const userData = {
-        device_id: deviceId,
-        grade: parseInt(ageSelect),
-        wins: 0,
-        lv: 1
-    };
-
     try {
+        // 重複チェック
+        const docRef = doc(db, "users", nameInput);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+            alert('そのおなまえはすでに使われているよ！ちがうおなまえにしてね。');
+            return;
+        }
+
+        const userData = {
+            device_id: deviceId,
+            grade: parseInt(ageSelect),
+            wins: 0,
+            lv: 1
+        };
+
         await setDoc(docRef, userData);
-        currentUsersMap[nameInput] = userData;
-        updateDisplayByLoginStatus(nameInput); 
+        currentUser = nameInput;
+        
+        // 💡 登録成功したら、トップ画面に戻してキャラクター情報を表示
+        showCharacterInfo(nameInput, userData);
     } catch (e) {
         alert("登録に失敗しました。");
         console.error(e);
     }
 }
 
-function logout() {
-    updateDisplayByLoginStatus(null);
+// 💡 トップ画面にキャラクター情報をセットして表示する共通関数
+function showCharacterInfo(username, userData) {
+    const displayGrade = userData.grade === 1 ? "低学年・幼児" : userData.grade === 3 ? "中学年" : "高学年";
+    
+    // HTML要素にデータを流し込む
+    document.getElementById('char-name').textContent = username;
+    document.getElementById('char-rank').textContent = displayGrade;
+    
+    // 💡 ランク（学年）ごとにキャラクター絵を切り替える（プレースホルダーの例）
+    const charImg = document.getElementById('char-visual');
+    if (userData.grade === 1) {
+        charImg.src = "char_low.png"; // 低学年用の画像パス
+    } else if (userData.grade === 3) {
+        charImg.src = "char_mid.png"; // 中学年用の画像パス
+    } else {
+        charImg.src = "char_high.png"; // 高学年用の画像パス
+    }
+
+    // 入力欄を隠し、キャラクター確認エリアを表示
+    document.getElementById('login-action-zone').style.display = 'none';
+    document.getElementById('logged-in-char-zone').style.display = 'block';
+    
+    // もし新規作成画面にいたらトップ画面に戻す
+    changeScreen('screen-login');
 }
 
+// 💡 「ゲームをはじめる」ボタンを押したとき（次の画面へ）
+function startGame() {
+    if (!currentUser) return;
+    
+    // 次のメインメニュー画面へデータを渡して切り替え
+    document.getElementById('menu-welcome').textContent = "ようこそ、" + currentUser + " さん！";
+    // 補足：簡易的にstatsを表示するために再取得するか、データを保持しておくと便利です
+    changeScreen('screen-menu');
+}
+
+// ログアウト（やりなおす）
+function logout() {
+    resetTopScreen();
+}
+
+// 管理者画面を開く
 async function openAdminScreen() {
     const pass = prompt("管理者パスワードを入力してください：");
     if (pass === ADMIN_PASSWORD) {
-        showScreen('screen-admin');
+        changeScreen('screen-admin');
         await renderAdminUserList();
     } else if (pass !== null) {
         alert("パスワードが違います。");
     }
 }
 
+// 管理者画面のリスト描画
 async function renderAdminUserList() {
     const tbody = document.getElementById('admin-user-list');
     if (!tbody) return;
@@ -196,9 +242,17 @@ async function renderAdminUserList() {
         }
     } catch(e) {
         tbody.innerHTML = '<tr><td colspan="6" style="color:red;">データの取得に失敗しました。</td></tr>';
+        console.error(e);
     }
 }
 
+// HTMLのonclickから呼び出せるようにwindowオブジェクトに登録
+window.changeScreen = changeScreen;
+window.toggleLoginInput = toggleLoginInput;
+window.handleLogin = handleLogin;
 window.handleRegister = handleRegister;
+window.startGame = startGame;
+window.cancelLogin = resetTopScreen; // やりなおすボタン用
 window.logout = logout;
 window.openAdminScreen = openAdminScreen;
+
