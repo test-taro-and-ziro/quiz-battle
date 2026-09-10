@@ -12,7 +12,7 @@
     <div id="screen-login" class="screen" style="position: relative;">
         <!-- 💡 管理者画面ボタンを一番上の右すみに小さく配置 -->
         <div style="position: absolute; top: 10px; right: 10px;">
-            <button class="btn-minor" onclick="openAdminScreen()" style="font-size: 11px; padding: 4px 8px; background: #ccc; border: none; color: #666; border-radius: 4px; width: auto; margin: 0;">かんりしゃ用</button>
+            <button class="btn-minor" onclick="openAdminScreen()" >かんりしゃ用</button>
         </div>
 
         <h1 style="margin-top: 40px;">ゲームのトップ画面</h1>
@@ -20,12 +20,12 @@
         <!-- メインメニューボタン -->
         <div class="card" style="display: flex; flex-direction: column; gap: 20px; padding: 40px 20px;">
             <!-- 💡 あたらしくはじめる（新規作成画面へ切り替え） -->
-            <button class="btn-start" onclick="changeScreen('screen-register')" style="background-color: #4CAF50; font-size: 22px; padding: 15px; margin: 0;">
+            <button class="btn-start" onclick="changeScreen('screen-register')" style="background-color: #4CAF50; ">
                 ✨ あたらしくはじめる
             </button>
 
             <!-- 💡 ログイン（クリックで入力欄が出現） -->
-            <button class="btn-start" onclick="toggleLoginInput()" style="background-color: #2196F3; font-size: 22px; padding: 15px; margin: 0;">
+            <button class="btn-start" onclick="toggleLoginInput()" style="background-color: #2196F3; ">
                 🔑 ログイン（つづきから）
             </button>
         </div>
