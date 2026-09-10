@@ -78,6 +78,16 @@
                     <option value="5">高学年</option>
                 </select>
             </div>
+            <!-- 💡【追加】キャラクターの見た目をえらぶ項目 -->
+            <div style="margin-bottom: 20px;">
+                <label style="display: block; margin-bottom: 5px; font-weight: bold;">キャラクターの見た目：</label>
+                <select id="char-visual-select">
+                    <option value="">-- キャラクターをえらんでね --</option>
+                    <!-- 💡 今回追加してくれたウサギちゃんを指定できるようにします -->
+                    <option value="usagi_1.jfif">うさぎ（男の子/女の子）</option>
+                    <option value="placeholder.png">仮のキャラクター</option>
+                </select>
+            </div>
             <button onclick="handleRegister()" style="background-color: #4CAF50; width: 100%; font-size: 18px; padding: 12px; margin: 0;">このキャラクターで登録する</button>
             <button class="btn-minor" onclick="changeScreen('screen-login')" style="background-color: #999; width: 100%; margin-top: 10px;">もどる</button>
         </div>
