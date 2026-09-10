@@ -1,20 +1,21 @@
 import { initializeApp } from "https://gstatic.com";
 import { getFirestore, collection, doc, setDoc, getDoc, getDocs, updateDoc } from "https://gstatic.com";
+//import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
 
-// !!! ご自身のFirebaseプロジェクトの設定値に書き換えてください !!!
+// ご自身のFirebaseプロジェクトの設定値
 const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_AUTH_DOMAIN",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_STORAGE_BUCKET",
-    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-    appId: "YOUR_APP_ID"
+    apiKey: "AIzaSyBUfZOKhw9nHc5K6sq7pMWH2eeVixVx3wI",
+    authDomain: "quiz-battle-b8b48.firebaseapp.com",
+    projectId: "quiz-battle-b8b48",
+    storageBucket: "quiz-battle-b8b48.firebasestorage.app",
+    messagingSenderId: "883874950005",
+    appId: "1:883874950005:web:08b22a374ccb1e6133013c"
 };
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-const ADMIN_PASSWORD = "admin1234"; 
+const ADMIN_PASSWORD = "abc123"; 
 
 let deviceId = null;
 let currentUsersMap = {}; 
