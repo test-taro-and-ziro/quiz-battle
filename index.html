@@ -8,16 +8,14 @@
 </head>
 <body>
 
-    <!-- ==========================================
-         【ログイン前】アカウント選択・登録画面
-         ========================================== -->
+    <!-- 1. ログイン / アカウント選択画面 -->
     <div id="screen-login" class="screen active">
         <h1>アカウント選択</h1>
         
         <div class="card">
             <h2>この端末のアカウントをえらぶ</h2>
             <div id="login-user-list">
-                <!-- 端末に紐づくアカウント一覧がここに表示されます -->
+                <!-- 読み込み中... の文字が入ります -->
             </div>
         </div>
 
@@ -38,24 +36,20 @@
         </div>
     </div>
 
-    <!-- ==========================================
-         【ログイン後】メインメニュー＆ゲーム画面
-         ========================================== -->
+    <!-- 2. ログイン後のメインメニュー（仮画面） -->
     <div id="screen-menu" class="screen">
         <h1 id="menu-welcome">ようこそ！</h1>
         <p id="user-stats"></p>
         
-        <!-- 【重要】将来ゲーム画面（game.html）を表示するための<iframe>の窓 -->
-        <div class="card" style="padding: 10px;">
-            <iframe id="game-frame" src="game.html" style="width:100%; height:450px; border:none; border-radius: 6px; background-color: #fff;"></iframe>
+        <div class="card" style="text-align: center; padding: 30px 15px;">
+            <p>🎉 ログインに成功しました！</p>
+            <p style="font-size: 14px; color: #666;">（ここに将来、別ファイルからゲーム画面を読み込みます）</p>
         </div>
         
         <button class="btn-minor" onclick="logout()">アカウントをかえる（ログアウト）</button>
     </div>
 
-    <!-- ==========================================
-         【管理者】パスワード付きデータ編集画面
-         ========================================== -->
+    <!-- 3. 管理者画面 -->
     <div id="screen-admin" class="screen">
         <h1>管理者データ編集画面</h1>
         <div class="card">
@@ -81,7 +75,7 @@
         </div>
     </div>
 
-    <!-- モジュールとしてJSを読み込み -->
-    <script type="module" src="index.js"></script>
+    <!-- モジュールとして index.js を読み込み -->
+    <script type="module" src="./index.js"></script>
 </body>
 </html>
