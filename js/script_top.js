@@ -199,14 +199,13 @@ function previewCharacter() {
     document.getElementById('register-char-preview').src = "images/" + fileName;
 }
 
-// 💡 「ゲームをはじめる」ボタンを押したとき（次の画面へ）
+// 💡 「ゲームをはじめる」ボタンを押したとき（別ファイル game.html へ遷移）
 function startGame() {
     if (!currentUser) return;
     
-    // 次のメインメニュー画面へデータを渡して切り替え
-    document.getElementById('menu-welcome').textContent = "ようこそ、" + currentUser + " さん！";
-    // 補足：簡易的にstatsを表示するために再取得するか、データを保持しておくと便利です
-    changeScreen('screen-menu');
+    // 💡 画面切り替えではなく、ゲーム本編のHTMLファイルへ確実にジャンプさせます！
+    // URLのパラメーターにおなまえ（currentUser）をくっつけて、次の画面に引き継げるようにします
+    window.location.href = 'game.html?user=' + encodeURIComponent(currentUser);
 }
 
 // ログアウト（やりなおす）
