@@ -1,6 +1,6 @@
 // バージョン（例: 10.13.0）や拡張子（.js）まで正しく記述します
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js';
-import { getFirestore } from 'https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js';
+import { getFirestore, collection, addDoc, getDocs } from 'https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js';
 
 // ご自身のFirebaseプロジェクトの設定値
 const firebaseConfig = {
