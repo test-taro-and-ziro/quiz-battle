@@ -175,7 +175,6 @@ function getCharacterFileName(animal, gender) {
     if (!animal || !gender) return "placeholder.jfif";
     
     // 例：うさぎ(usagi) ＋ おとこのこ(male) ＝ usagi_male.jfif 
-    // ※お手元の「usagi_1.jfif」をオス用にする場合は、ここを "usagi_1.jfif" にしてもOKです
     if (animal === "usagi") {
         return gender === "male" ? "usagi_male.jfif" : "usagi_female.jfif";
     }
