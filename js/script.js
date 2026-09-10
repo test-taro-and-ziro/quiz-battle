@@ -147,8 +147,7 @@ async function handleRegister() {
 
 // 💡 トップ画面にキャラクター情報をセットして表示する共通関数
 function showCharacterInfo(username, userData) {
-    const displayGrade = userData.grade === 1 ? "低学年・幼児" : userData.grade === 3 ? "中学年" : "高学年";
-    
+    const displayGrade = userData.grade === 0 ? "幼児" : userData.grade + "1年生";    
     // HTML要素にデータを流し込む
     document.getElementById('char-name').textContent = username;
     document.getElementById('char-rank').textContent = displayGrade;
