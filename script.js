@@ -1,7 +1,7 @@
 console.log("★JSファイルの読み込み自体には成功しています！");
 
-//import { initializeApp } from "https://gstatic.com";
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+import { initializeApp } from "https://gstatic.com";
+//import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
 import { getFirestore, collection, doc, setDoc, getDoc, getDocs, updateDoc } from "https://gstatic.com";
 
 // ご自身のFirebaseプロジェクトの設定値
