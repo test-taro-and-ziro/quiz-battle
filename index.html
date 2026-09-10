@@ -78,16 +78,35 @@
                     <option value="5">高学年</option>
                 </select>
             </div>
-            <!-- 💡【追加】キャラクターの見た目をえらぶ項目 -->
-            <div style="margin-bottom: 20px;">
-                <label style="display: block; margin-bottom: 5px; font-weight: bold;">キャラクターの見た目：</label>
-                <select id="char-visual-select">
-                    <option value="">-- キャラクターをえらんでね --</option>
-                    <!-- 💡 今回追加してくれたウサギちゃんを指定できるようにします -->
-                    <option value="usagi_1.jfif">うさぎ（男の子/女の子）</option>
-                    <option value="placeholder.png">仮のキャラクター</option>
+            <!-- 💡 オス・メス（おとこのこ・おんなのこ）の選択肢を追加 -->
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; margin-bottom: 5px; font-weight: bold;">せいべつ：</label>
+                <select id="gender-select">
+                    <option value="">-- せいべつをえらんでね --</option>
+                    <option value="male">おとこのこ (オス)</option>
+                    <option value="female">おんなのこ (メス)</option>
                 </select>
             </div>
+
+            <!-- 💡 キャラクターの動物の選択肢（今回はうさぎ、そして今後増える想定で記載） -->
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; margin-bottom: 5px; font-weight: bold;">どうぶつ：</label>
+                <!-- 💡 選んだらその場で画像が変わるように onchange="previewCharacter()" を追加 -->
+                <select id="char-animal-select" onchange="previewCharacter()">
+                    <option value="">-- どうぶつをえらんでね --</option>
+                    <option value="usagi">うさぎ</option>
+                </select>
+            </div>
+
+            <!-- 💡【新設】選んだキャラクターのイメージがその場で確認できるプレビューエリア -->
+            <div style="text-align: center; margin: 20px 0; background: #fff; padding: 10px; border: 2px dashed #cbd5e0; border-radius: 8px;">
+                <div style="font-size: 12px; color: #666; margin-bottom: 5px;">キャラクターのイメージ</div>
+                <div style="margin: 0 auto; width: 100px; height: 100px; background: #eee; border-radius: 50%; display: flex; align-items: center; justify-content: center; overflow: hidden;">
+                    <!-- 💡 最初は仮の画像、選ぶとJavaScriptで変わります -->
+                    <img id="register-char-preview" src="images/placeholder.png" alt="プレビュー" style="max-width: 100%; max-height: 100%;">
+                </div>
+            </div>
+            
             <button onclick="handleRegister()" style="background-color: #4CAF50; width: 100%; font-size: 18px; padding: 12px; margin: 0;">このキャラクターで登録する</button>
             <button class="btn-minor" onclick="changeScreen('screen-login')" style="background-color: #999; width: 100%; margin-top: 10px;">もどる</button>
         </div>
