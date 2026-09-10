@@ -1,3 +1,5 @@
+import { initializeApp } from "firebase/app";
+import { getFirestore, collection, addDoc, getDocs } from "firebase/firestore";
 
 // ご自身のFirebaseプロジェクトの設定値
 const firebaseConfig = {
@@ -8,12 +10,10 @@ const firebaseConfig = {
     messagingSenderId: "883874950005",
     appId: "1:883874950005:web:08b22a374ccb1e6133013c"
 };
-
-//const app = initializeApp(firebaseConfig);
-firebase.initializeApp(firebaseConfig);
-//const db = getFirestore(app);
-const db = firebase.firestore();
-
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+// Initialize Cloud Firestore
+const db = getFirestore(app);
 
 const ADMIN_PASSWORD = "admin1234"; 
 
