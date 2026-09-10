@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>ゲームエリア</title>
+    <style>
+        body { font-family: sans-serif; background: #eef2f5; padding: 20px; margin: 0; text-align: center; }
+        .box { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        button { background: #e53e3e; color: white; border: none; padding: 10px 20px; border-radius: 4px; font-weight: bold; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <div class="box">
+        <h3>🎮 ここが分割されたゲーム画面です</h3>
+        <p id="game-player-name">ログインを待っています...</p>
+        
+        <p style="font-size: 13px; color: #666;">テスト機能：下のボタンを押すと、親画面を通じてクラウドの勝利数が+1されます</p>
+        <button onclick="sendWinToParent()">テスト：勝ったことにする</button>
+    </div>
+
+    <script>
+        // 親画面（index.html）からデータが送られてきたら受け取る設定
+        window.addEventListener("message", (event) => {
+            if (event.data && event.data.type === "LOGIN_USER") {
+                document.getElementById("game-player-name").innerText = "いま " + event.data.username + " くんがログイン中！";
+            }
+        });
+
+        // 勝ったときに親画面に「勝ったよ」と報告する関数
+        function sendWinToParent() {
+            window.parent.postMessage({ type: "ADD_WIN" }, "*");
+            alert("親画面に勝利を報告しました！");
+        }
+    </script>
+</body>
+</html>
