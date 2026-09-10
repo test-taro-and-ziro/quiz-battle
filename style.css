@@ -9,6 +9,7 @@ body {
 }
 
 .screen {
+    /* 💡 JS側でdisplay: none/blockを直接制御するため、初期値はnoneにします */
     display: none;
     width: 100%;
     max-width: 600px;
@@ -18,6 +19,7 @@ body {
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
+/* 💡 JSが動く前のHTML確認用として残していますが、基本はJSがdisplayを上書きします */
 .screen.active {
     display: block;
 }
@@ -62,17 +64,25 @@ button:hover { background-color: #2b6cb0; }
     padding: 8px;
 }
 
-/* アカウントアイテム */
-.user-item {
-    background: white;
-    padding: 12px;
-    margin: 6px 0;
-    border-radius: 6px;
-    border: 1px solid #e2e8f0;
-    cursor: pointer;
-    transition: background 0.2s;
+/* 💡 新規追加：ログイン後に表示されるキャラクタープロフィールのスタイル */
+.char-profile {
+    background-color: #ffffff;
+    border: 2px dashed #ffb74d; /* 子ども向けの可愛い点線枠 */
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
 }
-.user-item:hover { background: #ebf8ff; border-color: #bee3f8; }
+
+/* 💡 新規追加：トップ画面の「あたらしくはじめる」などの大きなボタン用 */
+.btn-start {
+    border-bottom: 4px solid rgba(0, 0, 0, 0.2); /* 立体的なボタンに見せる影 */
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+    transition: transform 0.1s, border-bottom 0.1s;
+}
+.btn-start:active {
+    transform: translateY(2px); /* 押した時に少し沈むアニメーション */
+    border-bottom: 2px solid rgba(0, 0, 0, 0.2);
+}
 
 /* 管理者用データテーブル */
 .table-responsive { overflow-x: auto; }
