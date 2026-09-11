@@ -67,6 +67,25 @@ button {
 }
 button:hover { background-color: #2b6cb0; }
 
+// 管理者画面遷移ボタン
+.btn-admin {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    z-index: 50; /* 💡 背景画像やカードよりも必ず手前に表示させる指定 */
+
+	font-size: 11px;
+    padding: 6px 10px;
+    background-color: transparent; /* 💡 背景色を「透明」に変更 */
+    color: #2e7d32;               /* 💡 文字色を「葉っぱの深い緑色」に変更 */
+    border: 1px solid #2e7d32;    /* 💡 文字に合わせてうっすら緑の細い枠線を引くと、上品に目立ちます */
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: none;             /* 余計な影を消してすっきりさせます */
+    transition: background 0.2s, color 0.2s;
+}
+
 .btn-minor {
     background-color: #f9fafb;
     font-size: 11px; 
