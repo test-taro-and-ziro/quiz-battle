@@ -14,8 +14,9 @@ body {
 	
     /* 💡 imagesフォルダの中にある、タイトルロゴ入りの背景画像を読み込みます */
     background-image: url('../images/title_image.jpg'); 
-    background-size: 150% auto;       
-    background-position: center 30%; 
+    /* 💡 画像の全体が絶対に切れることなく、画面いっぱいに表示される設定にします */
+    background-size: contain;       
+    background-position: center;
     background-repeat: no-repeat;  /* 画像が繰り返し並ぶのを防ぐ */
     background-attachment: fixed;  /* 画面がズレないように背景を固定 */
 }
