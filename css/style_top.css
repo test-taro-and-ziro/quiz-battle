@@ -143,7 +143,7 @@ button.btn-start:active {
     max-width: 320px; /* 💡 メニュー画面と同じ最大320pxに制限 */
     margin: 0 auto;   /* 左右中央に綺麗に配置 */
     box-sizing: border-box;
-	margin-top: 100px;
+	margin-top: 70px;
 }
 
 /* 💡 ログイン後に表示されるキャラクタープロフィールのスタイル */
