@@ -44,23 +44,23 @@
         </div>
 
         <!-- 【キャラクター確認エリア】ログイン/新規登録に成功したら表示されます -->
-        <div id="logged-in-char-zone" class="card" style="display: none; text-align: center; background-color: #fff9c4;">
-            <h2 style="border: none; margin-top: 0;">きみのキャラクター</h2>
+        <div id="logged-in-char-zone" class="card char-confirm-window" style="display: none; text-align: center; background-color: #fff9c4;">
+            <h2 style="border: none; margin-top: 0; font-size: 18px;">きみのキャラクター</h2>
             <div class="char-profile">
                 <!-- キャラクター絵の表示エリア -->
-                <div id="char-image-container" style="margin: 15px auto; width: 120px; height: 120px; background: #eee; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-                    <img id="char-visual" src="images/placeholder.jpg" alt="キャラクターの絵" style="max-width: 100%; max-height: 100%;">
+                 <div class="char-avatar-circle">
+                    <img id="char-visual" src="images/placeholder.jpg" alt="キャラクターの絵">
                 </div>
                 <!-- ステータス表示 -->
-                <div style="font-size: 20px; font-weight: bold; margin-bottom: 5px;">
+                <div style="font-size: 18px; font-weight: bold; margin-bottom: 5px;">
                     おなまえ：<span id="char-name">---</span>
                 </div>
-                <div style="font-size: 16px; color: #555; margin-bottom: 15px;">
+                <div style="font-size: 14px; color: #555; margin-bottom: 5px;">
                     ランク：<span id="char-rank">---</span>
                 </div>
             </div>
-            <!-- ゲーム本編へ進むボタン -->
-            <button class="btn-start" onclick="startGame()" style="background-color: #ff9800; font-size: 20px; padding: 15px 30px; margin: 0;">ゲームをはじめる</button>
+            <!-- 💡 ボタンもCSSの「btn-start」の自動調整（幅85%・最大320px）が効くようになり、はみ出さずに美しく収まります -->
+            <button class="btn-start" onclick="startGame()" style="background-color: #ff9800; width: 100%;">ゲームをはじめる</button>
             <br>
             <button class="btn-minor" onclick="cancelLogin()" style="margin-top: 15px; background-color: #999;">ログアウト</button>
         </div>
