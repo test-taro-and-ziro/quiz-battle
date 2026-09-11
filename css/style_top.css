@@ -106,7 +106,7 @@ button.btn-admin:hover {
     background: transparent !important; /* 💡 背景を完全に透明にします */
     border: none !important;            /* 💡 周りの枠線も消してすっきりさせます */
     box-shadow: none !important;        /* 💡 浮き出ていた影も消します */
-	margin-top: 500px; /* 💡 開始位置調整の設定 */
+	margin-top: 450px; /* 💡 開始位置調整の設定 */
 }
 button.btn-start {
     width: 85%;     /* 💡 画面いっぱいに広げず、少し内側に収まるスリムな幅に */
