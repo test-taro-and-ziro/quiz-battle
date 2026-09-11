@@ -156,7 +156,7 @@ html, body {
 .map-village {
     position: absolute;
     /* 💡 地図のど真ん中に配置 */
-    top: 52%;
+    top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
@@ -166,16 +166,16 @@ html, body {
 
 /* 村の画像を丸くて可愛いアイコン風にする指定 */
 .village-icon-wrap {
-    width: 70px;
-    height: 70px;
+    width: 100px;
+    height: 100px;
     background-color: white;
-    border: 3px solid #ffb74d; /* 優しいオレンジの枠線 */
+    border: 4px solid #ffb74d; /* 優しいオレンジの枠線 */
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.2);
 }
 
 .village-img {
