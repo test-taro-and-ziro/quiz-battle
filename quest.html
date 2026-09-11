@@ -30,7 +30,16 @@
 
         <h1 class="map-title">ぼうけんのちず</h1>
 
-        <!-- 💡 変更点②：地図上に配置された冒険先のスタンプ（位置はCSSで調整） -->
+        <!-- 💡 地図上に配置された冒険先のスタンプ（位置はCSSで調整） -->
+        <!-- 💡 地図の中心に表示されるプレイヤーの村（スタート地点） -->
+        <div class="map-village">
+            <div class="village-icon-wrap">
+                <!-- 💡 お手元の村の画像を「village.jpg」などの名前でimagesフォルダに入れて指定してください -->
+                <img src="images/village.jpg" alt="プレイヤーの村" class="village-img">
+            </div>
+            <div class="village-label">プレイヤーの村</div>
+        </div>
+        
         <!-- 🌳 近くの森 -->
         <button class="stamp-btn stamp-forest" onclick="selectQuest('近くの森')">
             <div class="stamp-icon">🌳</div>
