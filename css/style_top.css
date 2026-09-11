@@ -8,10 +8,13 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    
+
+	/* 💡 地図画面とお揃いのシックな暗い背景色（画像の隙間を埋める色） */
+    background-color: #2d3748; 
+	
     /* 💡 imagesフォルダの中にある、タイトルロゴ入りの背景画像を読み込みます */
     background-image: url('../images/title_image.jpg'); 
-    background-size: cover;       /* 💡 画面の縦横に合わせて、画像を隙間なくピッタリ敷き詰める指定 */
+    background-size: contain;       /* 💡 スマホの画面幅に合わせて全体が綺麗に縮小表示されます */
     background-position: center;   /* 💡 常にタイトルの中心が画面の真ん中に来るようにする指定 */
     background-repeat: no-repeat;  /* 画像が繰り返し並ぶのを防ぐ */
     background-attachment: fixed;  /* 画面がズレないように背景を固定 */
