@@ -136,13 +136,21 @@ button.btn-start:active {
     margin: 0;
 }
 
+/* 💡 ログイン後のキャラクター情報の外枠をスリムに固定 */
+.char-confirm-window {
+    width: 85%;
+    max-width: 320px; /* 💡 メニュー画面と同じ最大320pxに制限 */
+    margin: 0 auto;   /* 左右中央に綺麗に配置 */
+    box-sizing: border-box;
+}
+
 /* 💡 ログイン後に表示されるキャラクタープロフィールのスタイル */
 .char-profile {
     background-color: #ffffff;
     border: 2px dashed #ffb74d; /* 子ども向けの可愛い点線枠 */
     border-radius: 10px;
-    padding: 20px;
-    margin-bottom: 20px;
+    padding: 15px;
+    margin-bottom: 15px;
 }
 
 /* 💡 新規作成画面のキャラクタープレビューエリア */
