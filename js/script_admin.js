@@ -92,7 +92,7 @@ async function renderAdminGradeList() {
     const tbody = document.getElementById('admin-grade-list');
     const formGradeSelect = document.getElementById('new-q-grade');
     if (!tbody) return;
-    tbody.innerHTML = '<tr><td colspan="4">読み込み中...</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="3">読み込み中...</td></tr>';
     
     try {
         const querySnapshot = await getDocs(collection(db, "grades"));
@@ -106,10 +106,9 @@ async function renderAdminGradeList() {
         gradeList.sort((a, b) => a.value - b.value); 
 
         gradeList.forEach((data) => {
-            const id = data.id;
+            const id = data.id; // どこかで必要らしい
             const tr = document.createElement('tr');
             tr.innerHTML = `
-                <td><code>${id}</code></td>
                 <td><input type="number" id="ad-grade-val-${id}" value="${data.value}"></td>
                 <td><input type="text" id="ad-grade-lab-${id}" value="${data.label}"></td>
                 <td>
@@ -150,14 +149,15 @@ window.deleteAdminGrade = async function(id) {
 };
 
 async function addGradeFromAdmin() {
-    const id = document.getElementById('new-grade-id').value.trim();
     const val = parseInt(document.getElementById('new-grade-value').value);
     const lab = document.getElementById('new-grade-label').value.trim();
-    if(!id || isNaN(val) || !lab) { alert("すべての項目を正しく入力してね"); return; }
+    if(isNaN(val) || !lab) { alert("すべての項目を正しく入力してね"); return; }
     
     try {
-        await setDoc(doc(db, "grades", id), { value: val, label: lab });
-        document.getElementById('new-grade-id').value = '';
+        // 💡 ドキュメント名（ID）を指定せず、コレクションに addDoc で直接放り込みます！
+        await addDoc(collection(db, "grades"), {value: val, label: lab });
+
+        // フォームを綺麗にクリア
         document.getElementById('new-grade-value').value = '';
         document.getElementById('new-grade-label').value = '';
         await renderAdminGradeList();
