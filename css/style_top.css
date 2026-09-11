@@ -58,14 +58,6 @@ input, select, button {
     box-sizing: border-box;
 }
 
-button {
-    background-color: #3182ce;
-    color: white;
-    border: none;
-    cursor: pointer;
-    font-weight: bold;
-}
-button:hover { background-color: #2b6cb0; }
 
 // 管理者画面遷移ボタン
 .btn-admin {
@@ -84,6 +76,12 @@ button:hover { background-color: #2b6cb0; }
     cursor: pointer;
     box-shadow: none;             /* 余計な影を消してすっきりさせます */
     transition: background 0.2s, color 0.2s;
+}
+/* 💡 マウスを乗せた（ホバーした）ときだけ、少し緑色を濃くして分かりやすくする設定 */
+.position-admin .btn-minor:hover {
+    background-color: rgba(46, 125, 50, 0.1); /* ほんのり緑色の透明な膜を張る */
+    color: #1b5e20;
+    border-color: #1b5e20;
 }
 
 .btn-minor {
