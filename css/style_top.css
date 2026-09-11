@@ -1,24 +1,29 @@
 body {
     font-family: 'Helvetica Neue', Arial, sans-serif;
-    background-color: #f0f4f8;
     color: #333;
     margin: 0;
-    padding: 20px;
+    padding: 0;
+    width: 100%;
+    height: 100%;
     display: flex;
     justify-content: center;
+    align-items: center;
+    
+    /* 💡 imagesフォルダの中にある、タイトルロゴ入りの背景画像を読み込みます */
+    background-image: url('../images/title_image.jpg'); 
+    background-size: cover;       /* 💡 画面の縦横に合わせて、画像を隙間なくピッタリ敷き詰める指定 */
+    background-position: center;   /* 💡 常にタイトルの中心が画面の真ん中に来るようにする指定 */
+    background-repeat: no-repeat;  /* 画像が繰り返し並ぶのを防ぐ */
+    background-attachment: fixed;  /* 画面がズレないように背景を固定 */
 }
 
 .screen {
-    /* 💡 JS側でdisplay: none/blockを直接制御するため、初期値はnoneにします */
     display: none;
     width: 100%;
-    max-width: 600px;
-    background: white;
+    max-width: 500px; /* 💡 背景のタイトル絵がよく見えるように、ボタンの横幅を少しスリムに調整 */
     padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    box-sizing: border-box;
 }
-
 /* 💡 JSが動く前のHTML確認用として残していますが、基本はJSがdisplayを上書きします */
 .screen.active {
     display: block;
