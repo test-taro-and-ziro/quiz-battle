@@ -199,13 +199,12 @@ function previewCharacter() {
     document.getElementById('register-char-preview').src = "images/" + fileName;
 }
 
-// 💡 「ゲームをはじめる」ボタンを押したとき（別ファイル game.html へ遷移）
+// 💡 「ゲームをはじめる」ボタンを押したとき（まずは地図画面 quest.html へ遷移！）
 function startGame() {
     if (!currentUser) return;
     
-    // 💡 画面切り替えではなく、ゲーム本編のHTMLファイルへ確実にジャンプさせます！
-    // URLのパラメーターにおなまえ（currentUser）をくっつけて、次の画面に引き継げるようにします
-    window.location.href = 'game.html?user=' + encodeURIComponent(currentUser);
+    // 💡 クエスト選択画面（quest.html）へ名前を引き継いでジャンプ！
+    window.location.href = 'quest.html?user=' + encodeURIComponent(currentUser);
 }
 
 // ログアウト（やりなおす）
