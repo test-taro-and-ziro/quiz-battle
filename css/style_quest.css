@@ -92,19 +92,20 @@ html, body {
     background-color: rgba(255, 255, 255, 0.9); /* 左上とお揃いの半透明の白 */
     border: 2px solid #4caf50;
     border-radius: 12px;
-    width: calc(100% - 40px); /* スマホ画面でもはみ出さないように自動調整 */
-    max-width: 280px; /* PCなど大きな画面ではこの幅でストップ */
-    padding: 15px;
+    width: calc(100% - 50px); /* スマホ画面でもはみ出さないように自動調整 */
+    max-width: 200px; /* PCなど大きな画面ではこの幅でストップ */
+    padding: 12px;
     box-shadow: 0 8px 16px rgba(0,0,0,0.2);
     backdrop-filter: blur(4px);
     z-index: 20;
+    box-sizing: border-box; /* 幅の計算がズレないように保護 */
 }
 
 .menu-title {
-    font-size: 14px;
+    font-size: 11px;
     font-weight: bold;
     color: #2e7d32;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
     border-bottom: 2px solid #a5d6a7;
     padding-bottom: 5px;
 }
@@ -112,18 +113,18 @@ html, body {
 .menu-list {
     display: flex;
     flex-direction: column;
-    gap: 8px; /* ボタン同士の隙間 */
+    gap: 6px; /* ボタン同士の隙間 */
 }
 
 /* 箇条書き風の選択ボタン */
 .menu-item-btn {
     width: 100%;
-    padding: 12px;
+    padding: 10px 8px;
     text-align: left; /* 💡 左寄せにして箇条書き感を出す */
     background-color: #fff;
     border: 1px solid #cbd5e0;
     border-radius: 8px;
-    font-size: 15px;
+    font-size: 13px;
     font-weight: bold;
     color: #333;
     cursor: pointer;
