@@ -55,7 +55,7 @@ function resetTopScreen() {
 function toggleLoginInput() {
     const zone = document.getElementById('login-action-zone');
     if (zone.style.display === 'none') {
-        zone.style.display = 'block';
+        zone.style.display = 'flex';
         document.getElementById('logged-in-char-zone').style.display = 'none'; // キャラエリアは隠す
     } else {
         zone.style.display = 'none';
