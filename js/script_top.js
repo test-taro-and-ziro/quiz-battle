@@ -48,6 +48,11 @@ function resetTopScreen() {
     // 表示エリアの制御
     document.getElementById('login-action-zone').style.display = 'none';
     document.getElementById('logged-in-char-zone').style.display = 'none';
+
+    // 💡 ログアウトしたら、隠れていた「2つのメインボタン」を再度表示させます！
+    const menuZone = document.querySelector('.screen-login-menu');
+    if (menuZone) menuZone.style.display = 'flex';
+  
     changeScreen('screen-login');
 }
 
@@ -74,9 +79,13 @@ async function handleLogin() {
         if (docSnap.exists()) {
             const userData = docSnap.data();
             currentUser = nameInput;
-            
+
+            // 💡 ログインに成功したら、「2つのメインボタン」を非表示にして隠します！
+            const menuZone = document.querySelector('.screen-login-menu');
+            if (menuZone) menuZone.style.display = 'none';
+
             // 💡 トップ画面にキャラクター情報を表示
-            showCharacterInfo(nameInput, userData);
+            await showCharacterInfo(nameInput, userData);          
         } else {
             alert('そのおなまえのキャラクターは見つからなかったよ。新しくつくるか、もう一度たしかめてね！');
         }
@@ -145,9 +154,13 @@ async function handleRegister() {
 
         await setDoc(docRef, userData);
         currentUser = nameInput;
-        
+
+        // 💡 新規登録に成功した時も、「2つのメインボタン」を非表示にして隠します！
+        const menuZone = document.querySelector('.screen-login-menu');
+        if (menuZone) menuZone.style.display = 'none';
+
         // 💡 登録成功したら、トップ画面に戻してキャラクター情報を表示
-        showCharacterInfo(nameInput, userData);
+        await showCharacterInfo(nameInput, userData);
     } catch (e) {
         alert("登録に失敗しました。");
         console.error(e);
