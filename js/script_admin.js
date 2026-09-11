@@ -296,3 +296,4 @@ async function addQuestionFromAdmin() {
 // 公開登録
 window.switchAdminTab = switchAdminTab;
 window.addGradeFromAdmin = addGradeFromAdmin;
+window.addQuestionFromAdmin = addQuestionFromAdmin;
