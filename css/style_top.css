@@ -14,8 +14,8 @@ body {
 	
     /* 💡 imagesフォルダの中にある、タイトルロゴ入りの背景画像を読み込みます */
     background-image: url('../images/title_image.jpg'); 
-    background-size: contain;       /* 💡 スマホの画面幅に合わせて全体が綺麗に縮小表示されます */
-    background-position: center;   /* 💡 常にタイトルの中心が画面の真ん中に来るようにする指定 */
+    background-size: 100% auto;       
+    background-position: center 30%; 
     background-repeat: no-repeat;  /* 画像が繰り返し並ぶのを防ぐ */
     background-attachment: fixed;  /* 画面がズレないように背景を固定 */
 }
