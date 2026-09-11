@@ -76,7 +76,7 @@ button:hover { background-color: #2b6cb0; }
 
 	font-size: 11px;
     padding: 6px 10px;
-    background-color: transparent; /* 💡 背景色を「透明」に変更 */
+    background-color: transparent !important; /* 💡 背景色を「透明」に変更 */
     color: #2e7d32;               /* 💡 文字色を「葉っぱの深い緑色」に変更 */
     border: 1px solid #2e7d32;    /* 💡 文字に合わせてうっすら緑の細い枠線を引くと、上品に目立ちます */
     border-radius: 4px;
