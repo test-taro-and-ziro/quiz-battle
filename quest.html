@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>クエスト選択画面</title>
+    <!-- 💡 新しく作った専用のスタイルシートを読み込みます -->
+    <link rel="stylesheet" href="css/style_quest.css">
+</head>
+<body>
+
+    <div id="screen-quest-select" class="screen" style="position: relative;">
+        
+        <!-- トップへもどるボタン -->
+        <div style="position: absolute; top: 10px; right: 10px;">
+            <button class="btn-minor" onclick="location.href='index.html'" style="font-size: 11px; padding: 4px 10px;">トップへもどる</button>
+        </div>
+
+        <h1>ぼうけんのちず</h1>
+        <p id="quest-welcome" style="text-align: center; font-weight: bold; color: #4a5568;">ようこそ！冒険のじゅんびをしてね</p>
+
+        <!-- 🗺️ 地図エリア（CSSクラス .map-card を適用） -->
+        <div class="map-card">
+            <p style="text-align: center; font-size: 14px; color: #2e7d32; font-weight: bold; margin-top: 0;">🧭 プレイヤーの村のまわりのちず 🧭</p>
+            
+            <div style="display: flex; flex-direction: column; gap: 15px; max-width: 300px; margin: 20px auto;">
+                <!-- 💡 クエストボタンに .btn-quest を適用 -->
+                <button class="btn-quest" onclick="selectQuest('近くの森')" style="background-color: #4caf50;">🌳 近くの森</button>
+                <button class="btn-quest" onclick="selectQuest('きれいな泉')" style="background-color: #2196f3;">💧 きれいな泉</button>
+                <button class="btn-quest" onclick="selectQuest('くらい洞窟')" style="background-color: #795548;">🪨 くらい洞窟</button>
+            </div>
+        </div>
+
+        <!-- 🧪 ジャンル決定エリア（CSSクラス .genre-card を適用） -->
+        <div id="genre-select-zone" class="genre-card" style="display: none; text-align: center;">
+            <h3 style="color: #e65100;"><span id="selected-quest-name">---</span> に出発するよ！</h3>
+            <p style="font-size: 14px; color: #666; margin-bottom: 15px;">挑戦するクイズのジャンルをえらんでね！</p>
+            
+            <div style="display: flex; flex-direction: column; gap: 10px; max-width: 250px; margin: 15px auto;">
+                <!-- 💡 ジャンル決定ボタンに .btn-genre を適用 -->
+                <button class="btn-genre" onclick="goToGame('math')" style="background-color: #ff9800;">➕ さんすう（算数）</button>
+                <button class="btn-genre" onclick="goToGame('japanese')" style="background-color: #ff5722;">📖 こくご（国語）</button>
+            </div>
+            
+            <button class="btn-minor" onclick="cancelQuestSelect()" style="font-size: 12px; padding: 4px 10px; margin-top: 15px;">えらびなおす</button>
+        </div>
+
+    </div>
+
+    <!-- 地図画面用の専用スクリプト -->
+    <script type="module" src="js/script_quest.js"></script>
+</body>
+</html>
