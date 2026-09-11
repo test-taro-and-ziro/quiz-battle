@@ -174,6 +174,34 @@ button.btn-start:active {
     object-fit: cover;
 }
 
+/* ===================================================
+   💡 新規作成画面の入力項目（ラベルと入力欄の横並び設定）
+   =================================================== */
+.register-form-row {
+    display: flex;
+    align-items: center; /* 💡 上下の中央をピッタリ揃える */
+    gap: 10px;          /* 文字とボックスの間のスキマ */
+    margin-bottom: 12px; /* 縦の間隔を少しスリムに調整 */
+}
+
+/* 「おなまえ：」などの文字（ラベル）の幅を綺麗に揃える */
+.register-form-row label {
+    width: 110px;        /* 💡 文字数を考慮して、左側の幅を110pxに固定して縦のラインを揃えます */
+    font-weight: bold;
+    color: #4a5568;
+    text-align: right;   /* 文字を右寄せにしてコロロン「：」の位置を合わせる */
+    margin: 0;
+    white-space: nowrap; /* 画面が狭くても文字が勝手に改行されるのを防ぐ */
+}
+
+/* 入力欄（inputやselect）の横幅や余白の微調整 */
+.register-form-row input,
+.register-form-row select {
+    flex: 1;             /* 💡 残りの横幅いっぱいにボックスを自動で広げる魔法の指定 */
+    margin: 0;           /* 共通の上下マージン（8px）を消して横並びのズレを防ぐ */
+    padding: 10px;       /* 横並び用に少しだけスリムな厚みに調整 */
+}
+
 /* 💡 新規作成画面のキャラクタープレビューエリア */
 .preview-container {
     text-align: center;
