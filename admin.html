@@ -17,6 +17,7 @@
                 <div class="admin-tabs" style="display: flex; gap: 10px;">
                     <button class="tab-btn active" onclick="switchAdminTab('tab-users')">ユーザー管理</button>
                     <button class="tab-btn" onclick="switchAdminTab('tab-grades')">学年管理</button>
+                    <button class="tab-btn" onclick="switchAdminTab('tab-questions')">クイズ管理</button>
                 </div>
                 <button onclick="location.href='index.html'" style="background-color: #666; width: auto; margin: 0; padding: 8px 16px;">トップ画面に戻る</button>
             </div>
@@ -73,6 +74,53 @@
                 </div>
             </div>
 
+            <!-- 💡【新設】タブ3: クイズ管理 -->
+            <div id="tab-questions" class="admin-tab-content">
+                <h2>クイズ問題の管理（1問1レコード）</h2>
+                <div class="table-responsive">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>学年</th>
+                                <th>ジャンル</th>
+                                <th>タイプ</th>
+                                <th>問題文</th>
+                                <th>選択肢（カンマ区切り）</th>
+                                <th>正解</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-question-list">
+                            <!-- JSで挿入 -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- 💡 クイズ問題の追加フォーム -->
+                <div class="card" style="margin-top: 15px; background: #fff;">
+                    <h3>➕ 新しいクイズ問題を追加（ドキュメントID自動生成）</h3>
+                    <div style="display: flex; flex-direction: column; gap: 10px;">
+                        <div style="display: flex; gap: 10px;">
+                            <select id="new-q-grade" style="flex: 1;">
+                                <option value="">-- 対象の学年を選んでね --</option>
+                                <!-- JSで学年マスターから自動挿入されます -->
+                            </select>
+                            <input type="text" id="new-q-genre" placeholder="ジャンル (例: math, japanese)" style="flex: 1;">
+                            <select id="new-q-type" style="flex: 1;">
+                                <option value="四択">四択</option>
+                                <option value="○×">○×</option>
+                                <option value="直接入力">直接入力</option>
+                            </select>
+                        </div>
+                        <input type="text" id="new-q-text" placeholder="問題文 (例: 1たす2は なにかな？)">
+                        <input type="text" id="new-q-choices" placeholder="選択肢をカンマ「,」で区切って入力 (例: 1,2,3,4 ) ※○×なら「○,×」 ※直接入力なら空欄でOK">
+                        <input type="text" id="new-q-answer" placeholder="正解の文字 (例: 3 ) ※選択肢の中のどれかと完全に一致させてね">
+                        <button onclick="addQuestionFromAdmin()" style="background-color: #4CAF50; width: 100%; margin-top: 5px;">このクイズを追加する</button>
+                    </div>
+                </div>
+            </div>
+
+            
         </div>
     </div>
 
