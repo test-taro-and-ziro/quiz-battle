@@ -12,19 +12,19 @@
     <!-- 🗺️ 画面いっぱいの地図コンテナ -->
     <div class="map-container">
         
-        <!-- 🛑 ログアウトボタン -->
-        <div class="exit-zone">
-            <button class="btn-minor" onclick="location.href='index.html'">🛑 ログアウト</button>
-        </div>
 
         <!-- 👤 地図上に浮かぶ半透明のプレイヤー情報箱 -->
         <div class="player-status-box">
-            <div class="status-avatar">
+            <div class="status-upper">
                 <img id="player-avatar" src="images/placeholder.png" alt="キャラ">
             </div>
             <div class="status-info">
                 <div id="player-name" class="status-name">読み込み中...</div>
                 <div id="player-grade" class="status-grade">---</div>
+            </div>
+            <!-- 🛑 ログアウトボタン -->
+            <div class="status-lower">
+                <button class="btn-exit-status" onclick="location.href='index.html'">🛑 ログアウト</button>
             </div>
         </div>
 
