@@ -144,11 +144,50 @@ html, body {
 }
 
 /* 📌 各スタンプの配置位置（画面の縦横％でバランスよく分散） */
-.stamp-forest { top: 35%; left: 25%; }
-.stamp-spring { top: 60%; left: 65%; border-color: #2196f3; }
+.stamp-forest { top: 25%; left: 45%; }
+.stamp-spring { top: 30%; left: 28%; border-color: #2196f3; }
 .stamp-spring .stamp-label { color: #1565c0; }
-.stamp-cave   { top: 25%; left: 70%; border-color: #795548; }
+.stamp-cave   { top: 50%; left: 78%; border-color: #795548; }
 .stamp-cave .stamp-label   { color: #4e342e; }
+
+.map-village {
+    position: absolute;
+    /* 💡 地図のど真ん中に配置 */
+    top: 52%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 4; /* スタンプより少し下に配置して邪魔しないように */
+    pointer-events: none; /* クリックの邪魔をしない設定 */
+}
+
+/* 村の画像を丸くて可愛いアイコン風にする指定 */
+.village-icon-wrap {
+    width: 70px;
+    height: 70px;
+    background-color: white;
+    border: 3px solid #ffb74d; /* 優しいオレンジの枠線 */
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.village-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.village-label {
+    font-size: 11px;
+    font-weight: bold;
+    color: #e65100;
+    margin-top: 4px;
+    text-shadow: 1px 1px 0px white, -1px -1px 0px white, 1px -1px 0px white, -1px 1px 0px white;
+}
 
 /* 💡 変更点②：小さな選択小窓（モーダル）のスタイル */
 .modal-overlay {
