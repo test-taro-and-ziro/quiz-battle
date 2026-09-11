@@ -97,16 +97,29 @@ button.btn-admin:hover {
 /* ===================================================
    5. ゲーム固有のオリジナルパーツ設定
    =================================================== */
-/* トップ画面の「あたらしくはじめる」などの大きな立体ボタン用 */
-.btn-start {
-    border-bottom: 4px solid rgba(0, 0, 0, 0.2); 
+/* 💡 2つのボタンが載っている大きな箱の背景を透明にする特別な指定 */
+.screen-login-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;      /* ボタン同士の間隔を少しだけ詰めました */
+    padding: 20px;  /* 周りの余白をスリムに */
+    background: transparent !important; /* 💡 背景を完全に透明にします */
+    border: none !important;            /* 💡 周りの枠線も消してすっきりさせます */
+    box-shadow: none !important;        /* 💡 浮き出ていた影も消します */
+}
+button.btn-start {
+    width: 85%;     /* 💡 画面いっぱいに広げず、少し内側に収まるスリムな幅に */
+    max-width: 320px; /* PCなどで見た時に大きくなりすぎないようにストップ */
+    margin: 0 auto;  /* 💡 左右の真ん中にきれいに配置 */
+    font-size: 18px; /* 💡 文字の大きさを 22px から 18px に少し小さく */
+    padding: 12px;   /* 💡 ボタンの上下の厚みを 15px から 12px に少し薄く */
+    border-radius: 8px;
+    border: none;
+    border-bottom: 4px solid rgba(0, 0, 0, 0.2); /* 立体的なボタンに見せる影 */
     text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
     transition: transform 0.1s, border-bottom 0.1s;
-    font-size: 22px; 
-    padding: 15px; 
-    margin: 0;
 }
-.btn-start:active {
+button.btn-start:active {
     transform: translateY(2px); /* 押した時に少し沈むアニメーション */
     border-bottom: 2px solid rgba(0, 0, 0, 0.2);
 }
