@@ -27,20 +27,6 @@ html, body {
     background-repeat: no-repeat;
 }
 
-/* タイトルテキスト */
-.map-title {
-    position: absolute;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    margin: 0;
-    color: #2e7d32;
-    font-size: 28px;
-    text-shadow: 2px 2px 0px white, -2px -2px 0px white, 2px -2px 0px white, -2px 2px 0px white;
-    z-index: 10;
-    pointer-events: none; /* クリックの邪魔をしない */
-}
-
 /* 🛑 ゲームを終わるボタンの配置 */
 .exit-zone {
     position: absolute;
