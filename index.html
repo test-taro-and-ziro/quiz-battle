@@ -66,34 +66,33 @@
     <!-- 2. キャラクター新規作成画面（トップ画面から分離） -->
     <div id="screen-register" class="screen">
         <div class="card">
-            <h2>キャラクターを作ろう！</h2>
-            <div style="margin-bottom: 15px;">
-                <label style="display: block; margin-bottom: 5px; font-weight: bold;">おなまえ：</label>
+            <h2 style="text-align: center; color: #2e7d32; margin-top: 0; margin-bottom: 20px;">キャラクターを作ろう！</h2>
+            <!-- おなまえ -->
+            <div class="register-form-row">
+                <label>おなまえ：</label>
                 <input type="text" id="username-input" placeholder="おなまえを入力してね">
             </div>
-            <div style="margin-bottom: 15px;">
-                <label style="display: block; margin-bottom: 5px; font-weight: bold;">学年（ランク）：</label>
-                <!-- 💡 データベースから自動でオプションを読み込むため、初期状態は空っぽです -->
+            <!-- 学年（ランク） -->
+            <div class="register-form-row">
+                <label>学年（ランク）：</label>
                 <select id="char-grade-select">
                     <option value="">-- よみこみ中... --</option>
                 </select>
             </div>
             <!-- 💡 オス・メス（おとこのこ・おんなのこ）の選択肢を追加 -->
-            <div style="margin-bottom: 15px;">
-                <label style="display: block; margin-bottom: 5px; font-weight: bold;">せいべつ：</label>
+            <div class="register-form-row">
+                <label>せいべつ：</label>
                 <select id="gender-select" onchange="previewCharacter()">
-                    <option value="">-- せいべつをえらんでね --</option>
+                    <option value="">-- えらんでね --</option>
                     <option value="male">おとこのこ (オス)</option>
                     <option value="female">おんなのこ (メス)</option>
                 </select>
             </div>
-
             <!-- 💡 キャラクターの動物の選択肢（今回はうさぎ、そして今後増える想定で記載） -->
-            <div style="margin-bottom: 15px;">
-                <label style="display: block; margin-bottom: 5px; font-weight: bold;">どうぶつ：</label>
-                <!-- 💡 選んだらその場で画像が変わるように onchange="previewCharacter()" を追加 -->
+            <div class="register-form-row">
+                <label>どうぶつ：</label>
                 <select id="char-animal-select" onchange="previewCharacter()">
-                    <option value="">-- どうぶつをえらんでね --</option>
+                    <option value="">-- えらんでね --</option>
                     <option value="usagi">うさぎ</option>
                 </select>
             </div>
