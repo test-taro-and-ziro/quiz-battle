@@ -106,7 +106,7 @@ button.btn-admin:hover {
     background: transparent !important; /* 💡 背景を完全に透明にします */
     border: none !important;            /* 💡 周りの枠線も消してすっきりさせます */
     box-shadow: none !important;        /* 💡 浮き出ていた影も消します */
-	margin-top: 50px: /* 💡 開始位置調整の設定 */
+	margin-top: 500px: /* 💡 開始位置調整の設定 */
 }
 button.btn-start {
     width: 85%;     /* 💡 画面いっぱいに広げず、少し内側に収まるスリムな幅に */
@@ -143,7 +143,7 @@ button.btn-start:active {
     max-width: 320px; /* 💡 メニュー画面と同じ最大320pxに制限 */
     margin: 0 auto;   /* 左右中央に綺麗に配置 */
     box-sizing: border-box;
-	margin-top: 30px;
+	margin-top: 100px;
 }
 
 /* 💡 ログイン後に表示されるキャラクタープロフィールのスタイル */
