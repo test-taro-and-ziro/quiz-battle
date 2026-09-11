@@ -9,43 +9,64 @@
 </head>
 <body>
 
-    <div id="screen-quest-select" class="screen" style="position: relative;">
+    <!-- 🗺️ 画面いっぱいの地図コンテナ -->
+    <div class="map-container">
         
-        <!-- トップへもどるボタン -->
-        <div style="position: absolute; top: 10px; right: 10px;">
-            <button class="btn-minor" onclick="location.href='index.html'" style="font-size: 11px; padding: 4px 10px;">トップへもどる</button>
+        <!-- 💡 変更点①：「トップへもどる」から「ゲームを終わる」ボタンに変更 -->
+        <div class="exit-zone">
+            <button class="btn-minor" onclick="location.href='index.html'">🛑 ゲームを終わる</button>
         </div>
 
-        <h1>ぼうけんのちず</h1>
-        <p id="quest-welcome" style="text-align: center; font-weight: bold; color: #4a5568;">ようこそ！冒険のじゅんびをしてね</p>
-
-        <!-- 🗺️ 地図エリア（CSSクラス .map-card を適用） -->
-        <div class="map-card">
-            <p style="text-align: center; font-size: 14px; color: #2e7d32; font-weight: bold; margin-top: 0;">🧭 プレイヤーの村のまわりのちず 🧭</p>
-            
-            <div style="display: flex; flex-direction: column; gap: 15px; max-width: 300px; margin: 20px auto;">
-                <!-- 💡 クエストボタンに .btn-quest を適用 -->
-                <button class="btn-quest" onclick="selectQuest('近くの森')" style="background-color: #4caf50;">🌳 近くの森</button>
-                <button class="btn-quest" onclick="selectQuest('きれいな泉')" style="background-color: #2196f3;">💧 きれいな泉</button>
-                <button class="btn-quest" onclick="selectQuest('くらい洞窟')" style="background-color: #795548;">🪨 くらい洞窟</button>
+        <!-- 💡 変更点③：地図上に浮かぶ半透明のプレイヤー情報箱 -->
+        <div class="player-status-box">
+            <div class="status-avatar">
+                <img id="player-avatar" src="images/placeholder.png" alt="キャラ">
+            </div>
+            <div class="status-info">
+                <div id="player-name" class="status-name">読み込み中...</div>
+                <div id="player-grade" class="status-grade">---</div>
             </div>
         </div>
 
-        <!-- 🧪 ジャンル決定エリア（CSSクラス .genre-card を適用） -->
-        <div id="genre-select-zone" class="genre-card" style="display: none; text-align: center;">
-            <h3 style="color: #e65100;"><span id="selected-quest-name">---</span> に出発するよ！</h3>
-            <p style="font-size: 14px; color: #666; margin-bottom: 15px;">挑戦するクイズのジャンルをえらんでね！</p>
-            
-            <div style="display: flex; flex-direction: column; gap: 10px; max-width: 250px; margin: 15px auto;">
-                <!-- 💡 ジャンル決定ボタンに .btn-genre を適用 -->
-                <button class="btn-genre" onclick="goToGame('math')" style="background-color: #ff9800;">➕ さんすう（算数）</button>
-                <button class="btn-genre" onclick="goToGame('japanese')" style="background-color: #ff5722;">📖 こくご（国語）</button>
+        <h1 class="map-title">ぼうけんのちず</h1>
+
+        <!-- 💡 変更点②：地図上に配置された冒険先のスタンプ（位置はCSSで調整） -->
+        <!-- 🌳 近くの森 -->
+        <button class="stamp-btn stamp-forest" onclick="selectQuest('近くの森')">
+            <div class="stamp-icon">🌳</div>
+            <div class="stamp-label">近くの森</div>
+        </button>
+
+        <!-- 💧 きれいな泉 -->
+        <button class="stamp-btn stamp-spring" onclick="selectQuest('きれいな泉')">
+            <div class="stamp-icon">💧</div>
+            <div class="stamp-label">きれいな泉</div>
+        </button>
+
+        <!-- 🪨 くらい洞窟 -->
+        <button class="stamp-btn stamp-cave" onclick="selectQuest('くらい洞窟')">
+            <div class="stamp-icon">🪨</div>
+            <div class="stamp-label">くらい洞窟</div>
+        </button>
+
+        <!-- 💡 変更点②：ジャンルを選択する小さな小窓（最初は非表示、スタンプを押すと浮かび上がります） -->
+        <div id="genre-modal-overlay" class="modal-overlay" style="display: none;">
+            <div class="genre-window">
+                <h3>⚔️ クエストしゅっぱつ ⚔️</h3>
+                <p class="window-target-text"><span id="selected-quest-name">---</span> にいくよ！</p>
+                <p class="window-sub-text">挑戦するクイズのジャンルをえらんでね</p>
+                
+                <div class="window-btn-group">
+                    <button class="btn-genre btn-math" onclick="goToGame('math')">➕ さんすう（算数）</button>
+                    <button class="btn-genre btn-japanese" onclick="goToGame('japanese')">📖 こくご（国語）</button>
+                </div>
+                
+                <button class="btn-cancel" onclick="cancelQuestSelect()">えらびなおす</button>
             </div>
-            
-            <button class="btn-minor" onclick="cancelQuestSelect()" style="font-size: 12px; padding: 4px 10px; margin-top: 15px;">えらびなおす</button>
         </div>
 
     </div>
+
 
     <!-- 地図画面用の専用スクリプト -->
     <script type="module" src="js/script_quest.js"></script>
