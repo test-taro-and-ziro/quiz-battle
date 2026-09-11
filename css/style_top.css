@@ -153,6 +153,25 @@ button.btn-start:active {
     margin-bottom: 15px;
 }
 
+// 💡 ログイン後のキャラクターの丸いアイコン枠
+.char-avatar-circle {
+    margin: 10px auto;
+    width: 100px;
+    height: 100px;
+    background-color: #eee;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden; /* 💡 画像が丸枠からはみ出さないようにするセーフティ */
+}
+/* 丸枠の中に入っている画像（#char-visual）のフィット設定 */
+.char-avatar-circle img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+}
+
 /* 💡 新規作成画面のキャラクタープレビューエリア */
 .preview-container {
     text-align: center;
