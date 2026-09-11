@@ -53,7 +53,7 @@ html, body {
 /* 💡 変更点③：地図上に浮かぶ半透明のプレイヤー情報箱 */
 .player-status-box {
     position: absolute;
-    top: 20px;
+    bottom: 20px;
     left: 20px;
     background-color: rgba(255, 255, 255, 0.85); /* 💡 綺麗な半透明の白 */
     border: 2px solid #81c784;
@@ -87,7 +87,7 @@ html, body {
    =================================================== */
 .quest-menu-box {
     position: absolute;
-    bottom: 20px; /* 💡 画面の一番下から20px浮かす */
+    top: 20px; /* 💡 画面の一番下から20px浮かす */
     left: 20px;   /* 💡 画面の左端から20px離す */
     background-color: rgba(255, 255, 255, 0.9); /* 左上とお揃いの半透明の白 */
     border: 2px solid #4caf50;
