@@ -2,100 +2,232 @@
    クエスト選択（quest.html）専用スタイルシート
    ========================================== */
 
-body {
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
     font-family: 'Helvetica Neue', Arial, sans-serif;
-    background-color: #e8f5e9; /* 💡 ぼうけんにぴったりな、優しい新緑のグリーン背景 */
-    color: #333;
+    background-color: #c8e6c9; /* 万が一の背景色 */
+    overflow: hidden; /* 画面スクロールを防いで固定 */
+}
+
+/* 🗺️ 画面いっぱいの地図コンテナ */
+.map-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    /* 💡 あとでオリジナルのドット絵地図などの画像をここに背景として敷くことができます */
+    background-color: #e8f5e9; 
+    background-image: 
+        radial-gradient(#c8e6c9 20%, transparent 20%),
+        radial-gradient(#c8e6c9 20%, transparent 20%);
+    background-size: 40px 40px;
+    background-position: 0 0, 20px 20px;
+}
+
+/* タイトルテキスト */
+.map-title {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
     margin: 0;
-    padding: 20px;
+    color: #2e7d32;
+    font-size: 28px;
+    text-shadow: 2px 2px 0px white, -2px -2px 0px white, 2px -2px 0px white, -2px 2px 0px white;
+    z-index: 10;
+    pointer-events: none; /* クリックの邪魔をしない */
+}
+
+/* 🛑 ゲームを終わるボタンの配置 */
+.exit-zone {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 20;
+}
+
+.btn-minor {
+    background-color: #e53e3e; /* 終わるボタンなので注意を引く赤系に変更 */
+    color: white;
+    font-size: 13px;
+    padding: 8px 14px;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+.btn-minor:hover {
+    background-color: #c53030;
+}
+
+/* 💡 変更点③：地図上に浮かぶ半透明のプレイヤー情報箱 */
+.player-status-box {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background-color: rgba(255, 255, 255, 0.85); /* 💡 綺麗な半透明の白 */
+    border: 2px solid #81c784;
+    border-radius: 10px;
+    padding: 10px 15px;
     display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    backdrop-filter: blur(4px); /* 背景をほんのりぼかすおしゃれエフェクト */
+    z-index: 20;
+}
+
+.status-avatar {
+    width: 45px;
+    height: 45px;
+    background-color: #fff;
+    border-radius: 50%;
+    border: 2px solid #4caf50;
+    display: flex;
+    align-items: center;
     justify-content: center;
+    overflow: hidden;
+}
+.status-avatar img {
+    max-width: 100%;
+    max-height: 100%;
 }
 
-.screen {
-    width: 100%;
-    max-width: 600px;
+.status-name {
+    font-weight: bold;
+    font-size: 16px;
+    color: #1b5e20;
+}
+.status-grade {
+    font-size: 12px;
+    color: #555;
+    margin-top: 2px;
+}
+
+/* 💡 変更点②：地図上の冒険先スタンプボタン */
+.stamp-btn {
+    position: absolute;
     background: white;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 6px 12px rgba(0,0,0,0.15); /* 少し影を強めて立体的に */
+    border: 3px solid #4caf50;
+    border-radius: 50%;
+    width: 90px;
+    height: 90px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 6px 10px rgba(0,0,0,0.15);
+    transition: transform 0.1s, box-shadow 0.1s;
+    z-index: 5;
+}
+.stamp-btn:hover {
+    transform: scale(1.05);
+    border-color: #2e7d32;
+}
+.stamp-btn:active {
+    transform: scale(0.95);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.15);
 }
 
-h1 { 
-    text-align: center; 
-    color: #2e7d32; /* 森をイメージした深い緑色 */
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
-    margin-top: 10px;
+.stamp-icon {
+    font-size: 28px;
+    line-height: 1;
+}
+.stamp-label {
+    font-size: 11px;
+    font-weight: bold;
+    color: #2e7d32;
+    margin-top: 4px;
+    white-space: nowrap;
 }
 
-h3 {
-    margin-top: 0;
-    font-size: 18px;
-}
+/* 📌 各スタンプの配置位置（画面の縦横％でバランスよく分散） */
+.stamp-forest { top: 35%; left: 25%; }
+.stamp-spring { top: 60%; left: 65%; border-color: #2196f3; }
+.stamp-spring .stamp-label { color: #1565c0; }
+.stamp-cave   { top: 25%; left: 70%; border-color: #795548; }
+.stamp-cave .stamp-label   { color: #4e342e; }
 
-/* 🗺️ 地図を囲むカードの特別なデザイン */
-.map-card {
-    background-color: #f1f8e9;
-    border: 3px solid #81c784;
-    border-radius: 12px;
-    padding: 25px 15px;
-    margin-bottom: 20px;
-    box-shadow: inset 0 2px 5px rgba(0,0,0,0.05); /* 内側に少し影をつけて立体的な盆地に */
-}
-
-/* 💡 行き先（クエスト）を選ぶ大きなボタン */
-.btn-quest {
+/* 💡 変更点②：小さな選択小窓（モーダル）のスタイル */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
-    padding: 15px;
-    margin: 0;
-    border-radius: 8px;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4); /* 背景を少し暗く */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+}
+
+.genre-window {
+    background: white;
+    border: 3px solid #ffb74d;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 320px; /* 小さな小窓サイズに制限 */
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    animation: popup 0.2s ease-out;
+}
+
+@keyframes popup {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.window-target-text {
     font-size: 18px;
     font-weight: bold;
-    color: white;
-    border: none;
-    border-bottom: 4px solid rgba(0, 0, 0, 0.2); /* ポチッと押せる立体感 */
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
-    cursor: pointer;
-    transition: transform 0.1s, border-bottom 0.1s;
+    color: #e65100;
+    margin: 10px 0 5px 0;
 }
-.btn-quest:active {
-    transform: translateY(2px);
-    border-bottom: 2px solid rgba(0, 0, 0, 0.2);
+.window-sub-text {
+    font-size: 13px;
+    color: #666;
+    margin: 0 0 20px 0;
 }
 
-/* 🧪 ジャンルを選ぶエリアのカード */
-.genre-card {
-    background-color: #fff9c4;
-    border: 2px dashed #ffb74d;
-    border-radius: 10px;
-    padding: 20px;
-    margin-bottom: 20px;
+.window-btn-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 }
 
-/* ジャンル決定ボタン（算数や国語など） */
 .btn-genre {
-    width: 100%;
     padding: 12px;
-    margin: 0;
-    border-radius: 6px;
     font-size: 16px;
     font-weight: bold;
     color: white;
     border: none;
+    border-radius: 8px;
+    border-bottom: 3px solid rgba(0,0,0,0.2);
     cursor: pointer;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
 }
+.btn-genre:active {
+    transform: translateY(1px);
+    border-bottom: 2px solid rgba(0,0,0,0.2);
+}
+.btn-math { background-color: #ff9800; }
+.btn-japanese { background-color: #ff5722; }
 
-.btn-minor {
-    background-color: #78909c; /* ブルーグレー */
-    color: white;
-    font-size: 14px;
-    padding: 8px 16px;
-    width: auto;
+.btn-cancel {
+    background: none;
     border: none;
-    border-radius: 6px;
-    font-weight: bold;
+    color: #777;
+    text-decoration: underline;
+    font-size: 13px;
+    margin-top: 15px;
     cursor: pointer;
+    width: auto;
+    padding: 5px;
 }
-.btn-minor:hover {
-    background-color: #546e7a;
-}
+.btn-cancel:hover { color: #333; }
