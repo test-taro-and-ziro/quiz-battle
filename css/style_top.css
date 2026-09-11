@@ -58,6 +58,14 @@ input, select, button {
     box-sizing: border-box;
 }
 
+button {
+    background-color: #3182ce;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+}
+button:hover { background-color: #2b6cb0; }
 
 // 管理者画面遷移ボタン
 .btn-admin {
