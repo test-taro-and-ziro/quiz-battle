@@ -1,3 +1,6 @@
+/* ===================================================
+   1. 画面全体（ボディ）の設定
+   =================================================== */
 body {
     font-family: 'Helvetica Neue', Arial, sans-serif;
     color: #333;
@@ -9,45 +12,22 @@ body {
     justify-content: center;
     align-items: center;
 
-	/* 💡 地図画面とお揃いのシックな暗い背景色（画像の隙間を埋める色） */
+    /* 地図画面とお揃いのシックな暗い背景色（画像の隙間を埋める色） */
     background-color: #2d3748; 
 	
-    /* 💡 imagesフォルダの中にある、タイトルロゴ入りの背景画像を読み込みます */
+    /* タイトルロゴ入りの背景画像を読み込みます */
     background-image: url('../images/title_image.jpg'); 
-    /* 💡 画像の全体が絶対に切れることなく、画面いっぱいに表示される設定にします */
+    /* 画像の全体が絶対に切れることなく、画面いっぱいに表示される設定 */
     background-size: contain;       
     background-position: center;
-    background-repeat: no-repeat;  /* 画像が繰り返し並ぶのを防ぐ */
-    background-attachment: fixed;  /* 画面がズレないように背景を固定 */
+    background-repeat: no-repeat;  
+    background-attachment: fixed;  
 }
 
-.screen {
-    display: none;
-    width: 100%;
-    max-width: 500px; /* 💡 背景のタイトル絵がよく見えるように、ボタンの横幅を少しスリムに調整 */
-    padding: 20px;
-    box-sizing: border-box;
-}
-/* 💡 JSが動く前のHTML確認用として残していますが、基本はJSがdisplayを上書きします */
-.screen.active {
-    display: block;
-}
-
-#screen-admin {
-    max-width: 900px; /* 管理者画面は表が見やすいように幅を広く */
-}
-
-h1 { text-align: center; color: #2b6cb0; }
-h2 { color: #4a5568; font-size: 18px; border-bottom: 2px solid #e2e8f0; padding-bottom: 5px; }
-
-.card {
-    background: #f7fafc;
-    padding: 15px;
-    border-radius: 8px;
-    margin-bottom: 20px;
-    border: 1px solid #edf2f7;
-}
-
+/* ===================================================
+   2. 共通の基本パーツ設定（ベースの見た目）
+   =================================================== */
+/* inputやbuttonなどの標準の見た目をここで一番最初に共通化します */
 input, select, button {
     width: 100%;
     padding: 12px;
@@ -58,6 +38,7 @@ input, select, button {
     box-sizing: border-box;
 }
 
+/* 共通の標準ボタンの基本ルール（青） */
 button {
     background-color: #3182ce;
     color: white;
@@ -65,56 +46,60 @@ button {
     cursor: pointer;
     font-weight: bold;
 }
-button:hover { background-color: #2b6cb0; }
+button:hover { 
+    background-color: #2b6cb0; 
+}
 
-// 管理者画面遷移ボタン
-.btn-admin {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    z-index: 50; /* 💡 背景画像やカードよりも必ず手前に表示させる指定 */
-
-	font-size: 11px;
+/* ===================================================
+   3. 管理者画面遷移ボタン（!importantなしで完全制御）
+   =================================================== */
+/* 28行目で指定した標準の button ルールよりもさらに「下に」「詳しく」書くことで、
+   !important を使わずに、美しく背景を透明化し、文字を葉っぱの緑色に上書きします */
+button.btn-admin {
+    font-size: 11px;
     padding: 6px 10px;
-    background-color: transparent !important; /* 💡 背景色を「透明」に変更 */
-    color: #2e7d32;               /* 💡 文字色を「葉っぱの深い緑色」に変更 */
-    border: 1px solid #2e7d32;    /* 💡 文字に合わせてうっすら緑の細い枠線を引くと、上品に目立ちます */
+    background-color: transparent; /* 背景色を「透明」にスマートに上書き */
+    color: #2e7d32;               /* 文字色を「葉っぱの深い緑色」に変更 */
+    border: 1px solid #2e7d32;    /* 文字に合わせてうっすら緑の細い枠線 */
     border-radius: 4px;
     font-weight: bold;
+    box-shadow: none;             /* 通常ボタンの影をリセット */
+    width: auto;                  /* 横幅100%を解除して文字の長さに合わせる */
+    margin: 0;
     cursor: pointer;
-    box-shadow: none;             /* 余計な影を消してすっきりさせます */
     transition: background 0.2s, color 0.2s;
 }
-/* 💡 マウスを乗せた（ホバーした）ときだけ、少し緑色を濃くして分かりやすくする設定 */
-.position-admin .btn-minor:hover {
+button.btn-admin:hover {
     background-color: rgba(46, 125, 50, 0.1); /* ほんのり緑色の透明な膜を張る */
     color: #1b5e20;
     border-color: #1b5e20;
 }
 
-.btn-minor {
-    background-color: #f9fafb;
-    font-size: 11px; 
-	padding: 4px 8px; 
-	border: none; 
-    color: #f0f4f8; 
-	border-radius: 4px; 
-	width: auto; 
-	margin: 0;
-}
-
-/* 💡 新規追加：ログイン後に表示されるキャラクタープロフィールのスタイル */
-.char-profile {
-    background-color: #ffffff;
-    border: 2px dashed #ffb74d; /* 子ども向けの可愛い点線枠 */
-    border-radius: 10px;
+/* ===================================================
+   4. 各画面（スクリーン）と共通カードの設定
+   =================================================== */
+.screen {
+    display: none;
+    width: 100%;
+    max-width: 500px; /* 背景のタイトル絵がよく見えるようにボタンの横幅をスリムに */
     padding: 20px;
-    margin-bottom: 20px;
+    box-sizing: border-box;
 }
 
-/* 💡 新規追加：トップ画面の「あたらしくはじめる」などの大きなボタン用 */
+.card {
+    background: #f7fafc;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    border: 1px solid #edf2f7;
+}
+
+/* ===================================================
+   5. ゲーム固有のオリジナルパーツ設定
+   =================================================== */
+/* トップ画面の「あたらしくはじめる」などの大きな立体ボタン用 */
 .btn-start {
-    border-bottom: 4px solid rgba(0, 0, 0, 0.2); /* 立体的なボタンに見せる影 */
+    border-bottom: 4px solid rgba(0, 0, 0, 0.2); 
     text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
     transition: transform 0.1s, border-bottom 0.1s;
     font-size: 22px; 
@@ -125,7 +110,29 @@ button:hover { background-color: #2b6cb0; }
     transform: translateY(2px); /* 押した時に少し沈むアニメーション */
     border-bottom: 2px solid rgba(0, 0, 0, 0.2);
 }
-/* 💡 新規追加：新規作成画面のキャラクタープレビューエリア */
+
+/* やりなおすボタンなどの、小さなサブボタン用（btn-minor） */
+.btn-minor {
+    background-color: #f9fafb;
+    font-size: 11px; 
+    padding: 4px 8px; 
+    border: none; 
+    color: #4a5568; 
+    border-radius: 4px; 
+    width: auto; 
+    margin: 0;
+}
+
+/* 💡 ログイン後に表示されるキャラクタープロフィールのスタイル */
+.char-profile {
+    background-color: #ffffff;
+    border: 2px dashed #ffb74d; /* 子ども向けの可愛い点線枠 */
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+/* 💡 新規作成画面のキャラクタープレビューエリア */
 .preview-container {
     text-align: center;
     margin: 20px 0;
@@ -134,15 +141,11 @@ button:hover { background-color: #2b6cb0; }
     border: 2px dashed #cbd5e0;
     border-radius: 8px;
 }
-
-/* 💡 プレビューエリアの見出し文字 */
 .preview-title {
     font-size: 12px;
     color: #666;
     margin-bottom: 5px;
 }
-
-/* 💡 キャラクター画像を入れる丸い枠 */
 .preview-circle {
     margin: 0 auto;
     width: 200px;
@@ -154,50 +157,7 @@ button:hover { background-color: #2b6cb0; }
     justify-content: center;
     overflow: hidden;
 }
-
-/* 💡 丸い枠からはみ出さないように画像をフィットさせる指定 */
 .preview-img {
     max-width: 100%;
     max-height: 100%;
 }
-
-/* 💡 管理者画面のタブボタンの基本デザイン */
-.admin-tabs .tab-btn {
-    width: auto;
-    margin: 0;
-    padding: 10px 20px;
-    background-color: #e2e8f0;
-    color: #4a5568;
-    border-radius: 6px 6px 0 0; /* 上側だけ丸く */
-    border: 1px solid #cbd5e0;
-    border-bottom: none;
-    transition: background 0.2s;
-}
-.admin-tabs .tab-btn:hover {
-    background-color: #cbd5e0;
-}
-/* 💡 選択中のアクティブなタブ */
-.admin-tabs .tab-btn.active {
-    background-color: #3182ce;
-    color: white;
-    border-color: #3182ce;
-}
-
-/* 💡 タブ中身の基本非表示設定 */
-.admin-tab-content {
-    display: none;
-    border-top: 2px solid #e2e8f0;
-    padding-top: 15px;
-}
-/* 💡 アクティブなコンテンツだけ表示 */
-.admin-tab-content.active {
-    display: block;
-}
-
-/* 管理者用データテーブル */
-.table-responsive { overflow-x: auto; }
-.admin-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 14px; }
-.admin-table th, .admin-table td { border: 1px solid #cbd5e0; padding: 8px; text-align: left; }
-.admin-table th { background-color: #edf2f7; }
-.admin-table input { padding: 4px; margin: 0; font-size: 14px; }
-.admin-table button { padding: 4px 8px; margin: 0; font-size: 12px; width: auto; }
