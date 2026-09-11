@@ -167,7 +167,7 @@ function showCharacterInfo(username, userData) {
         charImg.src = "images/" + userData.char_image; 
     } else {
         // もし昔のデータなどで画像が登録されていなかった場合のセーフティ
-        charImg.src = "images/placeholder.jfif";
+        charImg.src = "images/placeholder.jpg";
     }
   
     // 入力欄を隠し、キャラクター確認エリアを表示
@@ -180,14 +180,14 @@ function showCharacterInfo(username, userData) {
 
 // 💡 性別と動物から画像ファイル名を決定するヘルパー関数
 function getCharacterFileName(animal, gender) {
-    if (!animal || !gender) return "placeholder.jfif";
+    if (!animal || !gender) return "placeholder.jpg";
     
-    // 例：うさぎ(usagi) ＋ おとこのこ(male) ＝ usagi_male.jfif 
+    // 例：うさぎ(usagi) ＋ おとこのこ(male) ＝ usagi_male.jpg
     if (animal === "usagi") {
-        return gender === "male" ? "usagi_male.jfif" : "usagi_female.jfif";
+        return gender === "male" ? "usagi_male.jpg" : "usagi_female.jpg";
     }
     
-    return "placeholder.jfif";
+    return "placeholder.jpg";
 }
 
 // 💡 選択中のキャラクターをその場でプレビュー表示する関数（新規追加）
