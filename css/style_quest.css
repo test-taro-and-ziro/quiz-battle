@@ -8,20 +8,27 @@ html, body {
     width: 100%;
     height: 100%;
     font-family: 'Helvetica Neue', Arial, sans-serif;
-    background-color: #c8e6c9; /* 万が一の背景色 */
-    overflow: hidden; /* 画面スクロールを防いで固定 */
+    background-color: #2d3748; /* 💡 地図の外側（余白）をシックな暗い色にして引き締めます */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
 }
 
 /* 🗺️ 画面いっぱいに地図のJPG画像を表示するコンテナ */
 .map-container {
     position: relative;
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: calc(100vw * 9 / 16);
+    max-height: 100vh;
+    max-width: calc(100vh * 16 / 9);
     /* 💡 imagesフォルダの中にある map.jpg を固定の背景画像として読み込みます */
     background-image: url('../images/quest_map.jpg'); 
-    background-size: cover;       /* 💡 画面の縦横に合わせて、画像を隙間なくピッタリ敷き詰める指定 */
-    background-position: center;   /* 💡 常に地図の中心が画面の真ん中に来るようにする指定 */
-    background-repeat: no-repeat;  /* 画像が繰り返しタイル状に並ぶのを防ぐ */
+    background-size: 100% 100%; /* 💡 画像をこの16:9の箱に完全にフィットさせます */
+    background-position: center;
+    background-repeat: no-repeat;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5); /* 地図の周りに高級感のある影をつけます */
+    border-radius: 4px;
 }
 
 /* タイトルテキスト */
