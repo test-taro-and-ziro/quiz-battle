@@ -67,6 +67,9 @@ function resetTopScreen() {
     if (document.getElementById('char-grade-select')) document.getElementById('char-grade-select').selectedIndex = 0;
     if (document.getElementById('char-animal-select')) document.getElementById('char-animal-select').selectedIndex = 0;
     if (document.getElementById('gender-select')) document.getElementById('gender-select').selectedIndex = 0;
+
+    // ✨ プレビュー画像も「準備中」のイメージに自動リセット！
+    if (typeof previewCharacter === 'function') previewCharacter();
   
     // 表示エリアの制御
     document.getElementById('login-action-zone').style.display = 'none';
