@@ -495,3 +495,5 @@ async function addGenreFromAdmin() {
 window.switchAdminTab = switchAdminTab;
 window.addGradeFromAdmin = addGradeFromAdmin;
 window.addQuestionFromAdmin = addQuestionFromAdmin;
+window.addAnimalFromAdmin = addAnimalFromAdmin;
+window.addGenreFromAdmin = addGenreFromAdmin;
