@@ -14,7 +14,9 @@ import {
 } from 'https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js';
 
 // 各画面で共有するための変数
-export let animalMasterData = [];
+export let animalMasterData = [];     // 💡 動物マスタ
+export let currentLoginUser = null;   // 💡 ログイン中のユーザー名（例: "うさぎまる"）
+export let currentPlayerData = null;  // 💡 ログイン中のユーザーの全データ（grade, lv, wins, animal 等）
 
 // 💡 共通関数：Firebaseから動物マスタをまとめてロードする [js]
 export async function loadAnimalMaster() {
@@ -49,5 +51,32 @@ export function setCharacterSrc(imgElement, fileName) {
         imgElement.src = "images/" + fileName;
     } else {
         imgElement.src = "images/chara/" + fileName;
+    }
+}
+
+// 💡 共通関数：ユーザー情報をFirebaseから一度だけ取得して共通変数にセットする
+export async function setupPlayerMaster(username) {
+    if (!username) return null;
+    
+    // すでにデータを取得済みなら、Firebaseを見に行かずに今のデータをそのまま返す
+    if (currentLoginUser === username && currentPlayerData !== null) {
+        return currentPlayerData;
+    }
+
+    try {
+        const docRef = doc(db, "users", username);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+            currentLoginUser = username;
+            currentPlayerData = docSnap.data(); // 💡 共通変数にガチッと保存！
+            return currentPlayerData;
+        } else {
+            console.error("ユーザーデータが見つかりません:", username);
+            return null;
+        }
+    } catch (e) {
+        console.error("プレイヤー情報の取得失敗:", e);
+        return null;
     }
 }
