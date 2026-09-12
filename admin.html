@@ -4,20 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>管理者コントロールパネル</title>
-    <!-- CSSの読み込み -->
     <link rel="stylesheet" href="css/style_admin.css">
 </head>
 <body>
 
-    <div id="screen-admin" class="screen" style="display: block; max-width: 900px; margin: 20px auto;">
+    <div id="screen-admin" class="screen" style="display: block; max-width: 950px; margin: 20px auto;">
         <h1>管理者コントロールパネル</h1>
         <div class="card">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                <!-- 💡 タブメニューを「ユーザー」と「学年」の2つに整理 -->
+                <!-- 💡 タブメニューに「科目管理」を追加して5つに拡張 -->
                 <div class="admin-tabs" style="display: flex; gap: 10px;">
                     <button class="tab-btn active" onclick="switchAdminTab('tab-users')">ユーザー管理</button>
                     <button class="tab-btn" onclick="switchAdminTab('tab-grades')">学年管理</button>
                     <button class="tab-btn" onclick="switchAdminTab('tab-questions')">クイズ管理</button>
+                    <button class="tab-btn" onclick="switchAdminTab('tab-animals')">動物管理</button>
+                    <button class="tab-btn" onclick="switchAdminTab('tab-genres')">科目管理</button>
                 </div>
                 <button onclick="location.href='index.html'" style="background-color: #666; width: auto; margin: 0; padding: 8px 16px;">トップ画面に戻る</button>
             </div>
@@ -63,7 +64,7 @@
                     </table>
                 </div>
                 <div class="card" style="margin-top: 15px; background: #fff;">
-                    <h3>➕ 新しい学年を追加</h3>
+                    <h3>➕ 新しい学年を追加（ドキュメントID自動生成）</h3>
                     <div style="display: flex; gap: 10px;">
                         <input type="number" id="new-grade-value" placeholder="数値 (例: 6)">
                         <input type="text" id="new-grade-label" placeholder="表示名 (例: 6年生)">
@@ -72,7 +73,7 @@
                 </div>
             </div>
 
-            <!-- 💡【新設】タブ3: クイズ管理 -->
+            <!-- タブ3: クイズ管理 -->
             <div id="tab-questions" class="admin-tab-content">
                 <h2>クイズ問題の管理（1問1レコード）</h2>
                 <div class="table-responsive">
@@ -94,14 +95,12 @@
                     </table>
                 </div>
 
-                <!-- 💡 クイズ問題の追加フォーム -->
                 <div class="card" style="margin-top: 15px; background: #fff;">
                     <h3>➕ 新しいクイズ問題を追加（ドキュメントID自動生成）</h3>
                     <div style="display: flex; flex-direction: column; gap: 10px;">
                         <div style="display: flex; gap: 10px;">
                             <select id="new-q-grade" style="flex: 1;">
                                 <option value="">-- 対象の学年を選んでね --</option>
-                                <!-- JSで学年マスターから自動挿入されます -->
                             </select>
                             <input type="text" id="new-q-genre" placeholder="ジャンル (例: math, japanese)" style="flex: 1;">
                             <select id="new-q-type" style="flex: 1;">
@@ -118,7 +117,71 @@
                 </div>
             </div>
 
-            
+            <!-- タブ4: 動物管理 -->
+            <div id="tab-animals" class="admin-tab-content">
+                <h2>動物マスターの管理（ドキュメントID自動生成）</h2>
+                <div class="table-responsive">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>表示名 (label)</th>
+                                <th>送信値 (value)</th>
+                                <th>おとこのこ画像 (male)</th>
+                                <th>おんなのこ画像 (female)</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-animal-list">
+                            <!-- JSで挿入 -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="card" style="margin-top: 15px; background: #fff;">
+                    <h3>➕ 新しい動物キャラクターを追加</h3>
+                    <div style="display: flex; flex-direction: column; gap: 10px;">
+                        <div style="display: flex; gap: 10px;">
+                            <input type="text" id="new-an-label" placeholder="表示名 (例: いぬ)" style="flex: 1;">
+                            <input type="text" id="new-an-value" placeholder="送信値 (例: inu)" style="flex: 1;">
+                        </div>
+                        <div style="display: flex; gap: 10px;">
+                            <input type="text" id="new-an-male" placeholder="オス画像名 (例: inu_male.jpg)" style="flex: 1;">
+                            <input type="text" id="new-an-female" placeholder="メス画像名 (例: inu_female.jpg)" style="flex: 1;">
+                        </div>
+                        <button onclick="addAnimalFromAdmin()" style="background-color: #4CAF50; width: 100%; margin-top: 5px;">この動物を追加する</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 💡【新設】タブ5: 科目管理 -->
+            <div id="tab-genres" class="admin-tab-content">
+                <h2>科目（ジャンル）マスターの管理（ドキュメントID自動生成）</h2>
+                <div class="table-responsive">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>表示名 (label)</th>
+                                <th>送信値 (value)</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-genre-list">
+                            <!-- JSで挿入 -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- 科目の追加フォーム -->
+                <div class="card" style="margin-top: 15px; background: #fff;">
+                    <h3>➕ 新しい科目（ジャンル）を追加</h3>
+                    <div style="display: flex; gap: 10px;">
+                        <input type="text" id="new-ge-label" placeholder="表示名 (例: さんすう)">
+                        <input type="text" id="new-ge-value" placeholder="送信値 (例: math)">
+                        <button onclick="addGenreFromAdmin()" style="background-color: #4CAF50; width: auto; white-space: nowrap;">この科力を追加する</button>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 
@@ -131,7 +194,6 @@
       }
     }
     </script>
-    <!-- JSの読み込み -->
     <script type="module" src="js/script_admin.js"></script>
 </body>
 </html>
