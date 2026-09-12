@@ -18,24 +18,31 @@ import {
 import { loadAnimalMaster, getCharacterFileName, setCharacterSrc, setupPlayerMaster } from './game-master.js';
 
 let currentUser = null;
-let animalMasterData = []; // 💡 新設：データベースから読み込んだ動物マスターを保存する配列
+// let animalMasterData = []; // 💡 新設：データベースから読み込んだ動物マスターを保存する配列
 
 // 💡 画面が起動した時の処理
 window.addEventListener('DOMContentLoaded', async () => {
     // 1. URLの「?user=おなまえ」からプレイヤーの名前を読み取る
     const urlParams = new URLSearchParams(window.location.search);
     currentUser = urlParams.get('user');
-
     if (!currentUser) {
         // 名前が取れなければ安全のためにトップ画面に戻す
         alert("もういちどログインしなおしてね！");
         window.location.href = 'index.html';
         return;
     }
-    // 2. 先に「animal」コレクション（マスターデータ）をすべて読み込む [js]
+    // 2. 「animal」コレクション（マスターデータ）をすべて読み込む [js]
     await loadAnimalMaster();
-    // 3. プレイヤーの名前を使って、Firebaseからキャラクター情報を読み込む
+  
+    // 3. 共通関数を使ってプレイヤー情報を準備
     await loadPlayerStatus();
+    const userData = await setupPlayerMaster(currentUser);
+    if(userData){
+        renderPlayerStatus(userData);
+    }else{
+        alert("キャラクター情報が"みつかりませんでした。);
+        window.location.href = 'index.html';
+    }
 });
 
 // 💡 Firebaseからデータを読み込んで、左上の半透明の箱に表示する関数
