@@ -35,42 +35,24 @@ window.addEventListener('DOMContentLoaded', async () => {
     await loadAnimalMaster();
   
     // 3. 共通関数を使ってプレイヤー情報を準備
-    await loadPlayerStatus();
     const userData = await setupPlayerMaster(currentUser);
-    if(userData){
+    if (userData) {
         renderPlayerStatus(userData);
-    }else{
-        alert("キャラクター情報が"みつかりませんでした。);
+    } else {
+        alert("キャラクター情報がみつかりませんでした。");
         window.location.href = 'index.html';
     }
 });
 
 // 💡 Firebaseからデータを読み込んで、左上の半透明の箱に表示する関数
-async function loadPlayerStatus() {
-    try {
-        const docRef = doc(db, "users", currentUser);
-        const docSnap = await getDoc(docRef);
+function renderPlayerStatus(userData) {
+    document.getElementById('player-name').textContent = currentUser;
+    
+    const displayGrade = userData.grade === 0 ? "幼児" : userData.grade + "年生";
+    document.getElementById('player-grade').textContent = "ランク: " + displayGrade;
 
-        if (docSnap.exists()) {
-            const userData = docSnap.data();
-
-            // ① おなまえを表示
-            document.getElementById('player-name').textContent = currentUser;
-
-            // ② ランク（学年）を表示 (0=幼児、それ以外=数字+年生)
-            const displayGrade = userData.grade === 0 ? "幼児" : userData.grade + "年生";
-            document.getElementById('player-grade').textContent = "ランク: " + displayGrade;
-
-            // 💡 共通関数を使ってキャライメージを表示
-            const fileName = getCharacterFileName(userData.animal, userData.gender);
-            setCharacterSrc(document.getElementById('player-avatar'), fileName);
-
-        } else {
-            console.error("ユーザーデータが見つかりません");
-        }
-    } catch (e) {
-        console.error("ステータス読み込みエラー:", e);
-    }
+    const fileName = getCharacterFileName(userData.animal, userData.gender);
+    setCharacterSrc(document.getElementById('player-avatar'), fileName);
 }
 
 // 💡 地図上のスタンプ（森・泉・洞窟）が押されたときの処理
