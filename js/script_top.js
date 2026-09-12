@@ -138,7 +138,7 @@ async function loadAnimalsFromDB() {
 
             const option = document.createElement('option');
             option.value = data.value; // 例: "usagi"
-            option.textContent = data.Label; // 例: "うさぎ"
+            option.textContent = data.label; // 例: "うさぎ"
             animalSelect.appendChild(option);
         });
     } catch (e) {
