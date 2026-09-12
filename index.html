@@ -79,6 +79,13 @@
                     <option value="">-- よみこみ中... --</option>
                 </select>
             </div>
+            <!-- 💡 キャラクターの動物の選択肢（今回はうさぎ、そして今後増える想定で記載） -->
+            <div class="register-form-row">
+                <label>どうぶつ：</label>
+                <select id="char-animal-select" onchange="previewCharacter()">
+                    <option value="">-- えらんでね --</option>
+                </select>
+            </div>
             <!-- 💡 オス・メス（おとこのこ・おんなのこ）の選択肢を追加 -->
             <div class="register-form-row">
                 <label>せいべつ：</label>
@@ -86,14 +93,6 @@
                     <option value="">-- えらんでね --</option>
                     <option value="male">おとこのこ (オス)</option>
                     <option value="female">おんなのこ (メス)</option>
-                </select>
-            </div>
-            <!-- 💡 キャラクターの動物の選択肢（今回はうさぎ、そして今後増える想定で記載） -->
-            <div class="register-form-row">
-                <label>どうぶつ：</label>
-                <select id="char-animal-select" onchange="previewCharacter()">
-                    <option value="">-- えらんでね --</option>
-                    <option value="usagi">うさぎ</option>
                 </select>
             </div>
 
