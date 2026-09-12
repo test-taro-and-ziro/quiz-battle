@@ -20,7 +20,11 @@ window.addEventListener('DOMContentLoaded', async () => { // asyncを追加
     initDeviceId();
     resetTopScreen();
     await loadGradesFromDB(); // 💡 データベースから学年をロード
+    await loadAnimalsFromDB(); // 💡 データベースから動物リストをロード
 });
+
+// 💡 動物データを取得してドロップダウンを組み立てる関数
+let animalMasterData = []; // 読み込んだ動物データを一時保存しておく配列
 
 function initDeviceId() {
     deviceId = localStorage.getItem('quiz_battle_device_id');
@@ -118,6 +122,31 @@ async function loadGradesFromDB() {
         gradeSelect.innerHTML = '<option value="">エラーが発生しました</option>';
     }
 }
+
+async function loadAnimalsFromDB() {
+    const animalSelect = document.getElementById('char-animal-select');
+    if (!animalSelect) return;
+    
+    try {
+        const querySnapshot = await getDocs(collection(db, "animal"));
+        animalSelect.innerHTML = '<option value="">-- どうぶつをえらんでね --</option>';
+        animalMasterData = []; // リセット
+
+        querySnapshot.forEach((docSnap) => {
+            const data = docSnap.data();
+            animalMasterData.push(data); // プレビュー用にデータをキープ
+
+            const option = document.createElement('option');
+            option.value = data.value; // 例: "usagi"
+            option.textContent = data.Label; // 例: "うさぎ"
+            animalSelect.appendChild(option);
+        });
+    } catch (e) {
+        console.error("動物リストのロードエラー:", e);
+        animalSelect.innerHTML = '<option value="">エラーが発生しました</option>';
+    }
+}
+
 // 💡 新規登録（あたらしくはじめる）処理
 async function handleRegister() {
     const nameInput = document.getElementById('username-input').value.trim();
@@ -143,11 +172,9 @@ async function handleRegister() {
         const finalCharImage = getCharacterFileName(animalSelect, genderSelect);
 
         const userData = {
-            device_id: deviceId,
             grade: parseInt(gradeSelect), // 学年を保存
             gender: genderSelect,         // 性別を保存
             animal: animalSelect,         // 動物の種類を保存
-            char_image: finalCharImage,   // 決定した画像ファイル名を保存
             wins: 0,
             lv: 1
         };
@@ -169,47 +196,56 @@ async function handleRegister() {
 
 // 💡 トップ画面にキャラクター情報をセットして表示する共通関数
 function showCharacterInfo(username, userData) {
-    const displayGrade = userData.grade === 0 ? "幼児" : userData.grade + "年生";    
-    // HTML要素にデータを流し込む
-    document.getElementById('char-name').textContent = username;
+
+    // ユーザ名の表示
+    document.getElementById('char-name').textContent = username;    
+    // ランクの表示名変換（0=幼児、それ以外=〇年生）
+    const displayGrade = userData.grade === 0 ? "幼児" : userData.grade + "年生";
     document.getElementById('char-rank').textContent = displayGrade;
-    
-    // 💡 Firebaseから読み込んだ画像ファイル名を使って表示（imagesフォルダを見に行く）
-    const charImg = document.getElementById('char-visual');
-    if (userData.char_image) {
-        charImg.src = "images/" + userData.char_image; 
+
+ 　 // 💡 動物マスターからファイル名を逆引きして images/chara/ から読み込む
+    const fileName = getCharacterFileName(userData.animal, userData.gender);
+    if (fileName === "placeholder.jpg") {
+        document.getElementById('char-visual').src = "images/" + fileName;
     } else {
-        // もし昔のデータなどで画像が登録されていなかった場合のセーフティ
-        charImg.src = "images/placeholder.jpg";
+        document.getElementById('char-visual').src = "images/chara/" + fileName;
     }
-  
+    
     // 入力欄を隠し、キャラクター確認エリアを表示
-    document.getElementById('login-action-zone').style.display = 'none';
+    //document.getElementById('login-action-zone').style.display = 'none';
     document.getElementById('logged-in-char-zone').style.display = 'block';
     
     // もし新規作成画面にいたらトップ画面に戻す
     changeScreen('screen-login');
 }
 
-// 💡 性別と動物から画像ファイル名を決定するヘルパー関数
-function getCharacterFileName(animal, gender) {
-    if (!animal || !gender) return "placeholder.jpg";
+// 💡 Firebaseのデータ構造に合わせて画像ファイル名を決定するヘルパー関数
+function getCharacterFileName(animalValue, genderValue) {
+    if (!animalValue || !genderValue) return "placeholder.jpg";
     
-    // 例：うさぎ(usagi) ＋ おとこのこ(male) ＝ usagi_male.jpg
-    if (animal === "usagi") {
-        return gender === "male" ? "usagi_male.jpg" : "usagi_female.jpg";
+    // 💡 キープしておいた動物マスターデータから、選択された動物（value）を探す
+    const targetAnimal = animalMasterData.find(a => a.value === animalValue);
+    
+    if (targetAnimal) {
+        // 性別（male / female）のフィールド名をそのまま使ってファイル名を取得！
+        return targetAnimal[genderValue] || "placeholder.jpg";
     }
     
     return "placeholder.jpg";
 }
 
-// 💡 選択中のキャラクターをその場でプレビュー表示する関数（新規追加）
+// 💡 選択中のキャラクターをその場でプレビュー表示する関数
 function previewCharacter() {
     const animal = document.getElementById('char-animal-select').value;
     const gender = document.getElementById('gender-select').value;
     
     const fileName = getCharacterFileName(animal, gender);
-    document.getElementById('register-char-preview').src = "images/" + fileName;
+    // 💡 placeholder.jpg の場合は images/ 直下、それ以外は images/chara/ から読み込む
+    if (fileName === "placeholder.jpg") {
+        document.getElementById('register-char-preview').src = "images/" + fileName;
+    } else {
+        document.getElementById('register-char-preview').src = "images/chara/" + fileName;
+    }
 }
 
 // 💡 「ゲームをはじめる」ボタンを押したとき（まずは地図画面 quest.html へ遷移！）
