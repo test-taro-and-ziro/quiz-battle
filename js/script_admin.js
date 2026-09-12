@@ -368,7 +368,7 @@ window.deleteAdminAnimal = async function(id) {
 async function addAnimalFromAdmin() {
     const label = document.getElementById('new-an-label').value.trim();
     const val = document.getElementById('new-an-value').value.trim();
-    const male = document.getElementById('new-an-report' ? 'new-an-male' : 'new-an-male').value.trim();
+    const male = document.getElementById('new-an-male').value.trim();
     const female = document.getElementById('new-an-female').value.trim();
 
     if (!label || !val || !male || !female) {
