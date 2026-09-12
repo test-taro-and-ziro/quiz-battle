@@ -15,6 +15,7 @@ import {
 } from 'https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js';
 
 let currentUser = null;
+let animalMasterData = []; // 💡 新設：データベースから読み込んだ動物マスターを保存する配列
 
 // 💡 画面が起動した時の処理
 window.addEventListener('DOMContentLoaded', async () => {
@@ -28,10 +29,24 @@ window.addEventListener('DOMContentLoaded', async () => {
         window.location.href = 'index.html';
         return;
     }
-
-    // 2. プレイヤーの名前を使って、Firebaseからキャラクター情報を読み込む
+    // 2. 先に「animal」コレクション（マスターデータ）をすべて読み込む [js]
+    await loadAnimalMaster();
+    // 3. プレイヤーの名前を使って、Firebaseからキャラクター情報を読み込む
     await loadPlayerStatus();
 });
+
+// 💡 Firebaseから動物マスターデータを一括取得してキープする関数
+async function loadAnimalMaster() {
+    try {
+        const querySnapshot = await getDocs(collection(db, "animal"));
+        animalMasterData = [];
+        querySnapshot.forEach((docSnap) => {
+            animalMasterData.push(docSnap.data());
+        });
+    } catch (e) {
+        console.error("動物マスターの読み込みに失敗:", e);
+    }
+}
 
 // 💡 Firebaseからデータを読み込んで、左上の半透明の箱に表示する関数
 async function loadPlayerStatus() {
@@ -49,13 +64,17 @@ async function loadPlayerStatus() {
             const displayGrade = userData.grade === 0 ? "幼児" : userData.grade + "年生";
             document.getElementById('player-grade').textContent = "ランク: " + displayGrade;
 
-            // ③ キャラクター絵を表示
+            // ③ キャラクター絵を新しいフォルダパスから表示
             const avatarImg = document.getElementById('player-avatar');
-            if (userData.char_image) {
-                avatarImg.src = "images/" + userData.char_image;
+            // 💡 ユーザー情報にある animal と gender から正しいファイル名を逆引き！
+            const fileName = getCharacterFileName(userData.animal, userData.gender);
+            // 💡 placeholder.jpg の場合は images/ 直下、それ以外は images/chara/ から読み込む
+            if (fileName === "placeholder.jpg") {
+                avatarImg.src = "images/" + fileName;
             } else {
-                avatarImg.src = "images/placeholder.png";
+                avatarImg.src = "images/chara/" + fileName;
             }
+
         } else {
             console.error("ユーザーデータが見つかりません");
         }
@@ -68,7 +87,6 @@ async function loadPlayerStatus() {
 function selectQuest(questName) {
     // 選択されたクエストの名前を小窓にセット
     document.getElementById('selected-quest-name').textContent = questName;
-    
     // ジャンルを選ぶ小さな小窓（モーダル）をパッと表示する
     document.getElementById('genre-modal-overlay').style.display = 'flex';
 }
@@ -82,7 +100,6 @@ function cancelQuestSelect() {
 // 💡 ジャンル（さんすう・こくご）ボタンが押されたときの処理（game.html へ遷移）
 function goToGame(genre) {
     const questName = document.getElementById('selected-quest-name').textContent;
-    
     // 次のゲーム本編（game.html）へ「ユーザー名」「選んだクエスト」「ジャンル」をすべて引き継いでジャンプ！
     window.location.href = `game.html?user=${encodeURIComponent(currentUser)}&quest=${encodeURIComponent(questName)}&genre=${encodeURIComponent(genre)}`;
 }
