@@ -60,10 +60,14 @@ function changeScreen(screenId) {
 function resetTopScreen() {
     currentUser = null;
     // 各種入力欄をクリア
-    document.getElementById('login-username-input').value = '';
+    if (document.getElementById('login-username-input')) document.getElementById('login-username-input').value = '';
     if (document.getElementById('username-input')) document.getElementById('username-input').value = '';
     if (document.getElementById('age-select')) document.getElementById('age-select').value = '';
-    
+
+    if (document.getElementById('char-grade-select')) document.getElementById('char-grade-select').selectedIndex = 0;
+    if (document.getElementById('char-animal-select')) document.getElementById('char-animal-select').selectedIndex = 0;
+    if (document.getElementById('gender-select')) document.getElementById('gender-select').selectedIndex = 0;
+  
     // 表示エリアの制御
     document.getElementById('login-action-zone').style.display = 'none';
     document.getElementById('logged-in-char-zone').style.display = 'none';
