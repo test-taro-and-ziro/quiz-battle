@@ -15,7 +15,7 @@ import {
 } from 'https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js';
 
 // 💡 共通マスタファイルからお仕事をインポート
-import { loadAnimalMaster, getCharacterFileName, setCharacterSrc } from './game-master.js';
+import { loadAnimalMaster, getCharacterFileName, setCharacterSrc, setupPlayerMaster } from './game-master.js';
 
 let currentUser = null;
 let animalMasterData = []; // 💡 新設：データベースから読み込んだ動物マスターを保存する配列
