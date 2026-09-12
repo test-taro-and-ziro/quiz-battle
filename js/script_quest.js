@@ -14,6 +14,9 @@ import {
   deleteDoc  // 削除機能
 } from 'https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js';
 
+// 💡 共通マスタファイルからお仕事をインポート
+import { loadAnimalMaster, getCharacterFileName, setCharacterSrc } from './game-master.js';
+
 let currentUser = null;
 let animalMasterData = []; // 💡 新設：データベースから読み込んだ動物マスターを保存する配列
 
@@ -35,19 +38,6 @@ window.addEventListener('DOMContentLoaded', async () => {
     await loadPlayerStatus();
 });
 
-// 💡 Firebaseから動物マスターデータを一括取得してキープする関数
-async function loadAnimalMaster() {
-    try {
-        const querySnapshot = await getDocs(collection(db, "animal"));
-        animalMasterData = [];
-        querySnapshot.forEach((docSnap) => {
-            animalMasterData.push(docSnap.data());
-        });
-    } catch (e) {
-        console.error("動物マスターの読み込みに失敗:", e);
-    }
-}
-
 // 💡 Firebaseからデータを読み込んで、左上の半透明の箱に表示する関数
 async function loadPlayerStatus() {
     try {
@@ -64,16 +54,9 @@ async function loadPlayerStatus() {
             const displayGrade = userData.grade === 0 ? "幼児" : userData.grade + "年生";
             document.getElementById('player-grade').textContent = "ランク: " + displayGrade;
 
-            // ③ キャラクター絵を新しいフォルダパスから表示
-            const avatarImg = document.getElementById('player-avatar');
-            // 💡 ユーザー情報にある animal と gender から正しいファイル名を逆引き！
+            // 💡 共通関数を使ってキャライメージを表示
             const fileName = getCharacterFileName(userData.animal, userData.gender);
-            // 💡 placeholder.jpg の場合は images/ 直下、それ以外は images/chara/ から読み込む
-            if (fileName === "placeholder.jpg") {
-                avatarImg.src = "images/" + fileName;
-            } else {
-                avatarImg.src = "images/chara/" + fileName;
-            }
+            setCharacterSrc(document.getElementById('player-avatar'), fileName);
 
         } else {
             console.error("ユーザーデータが見つかりません");
