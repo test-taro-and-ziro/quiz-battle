@@ -1,8 +1,17 @@
 // ==========================================
 // アニマルクエスト：ゲーム全体共通マスタ管理ファイル
 // ==========================================
+// 💡 共通設定ファイルから db を読み込む
 import { db } from './firebase-config.js';
-import { collection, getDocs } from 'https://gstatic.com';
+import { 
+  getFirestore, 
+  collection, // データI/Oで使用する大きい箱
+  doc,    // データI/Oで使用する小さい箱
+  addDoc, // 場所を自動生成させてデータを保存
+  getDocs, // すべてのデータを読み込む
+  setDoc, // 指定した場所にデータを書き込む
+  getDoc, // 指定した場所のデータを読み込む
+} from 'https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js';
 
 // 各画面で共有するための変数
 export let animalMasterData = [];
