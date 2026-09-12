@@ -10,6 +10,9 @@ import {
   getDoc, // 指定した場所のデータを読み込む
 } from 'https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js';
 
+// 💡 共通ファイルを読み込む1行を追加
+import { loadAnimalMaster, getCharacterFileName, setCharacterSrc } from './game-master.js';
+
 const ADMIN_PASSWORD = "admin1234"; 
 
 let deviceId = null;
@@ -20,7 +23,19 @@ window.addEventListener('DOMContentLoaded', async () => { // asyncを追加
     initDeviceId();
     resetTopScreen();
     await loadGradesFromDB(); // 💡 データベースから学年をロード
-    await loadAnimalsFromDB(); // 💡 データベースから動物リストをロード
+    
+    // 💡 共通ファイルを呼び出してドロップダウンを組み立てる
+    const animals = await loadAnimalMaster();
+    const animalSelect = document.getElementById('char-animal-select');
+    if (animalSelect) {
+        animalSelect.innerHTML = '<option value="">-- どうぶつをえらんでね --</option>';
+        animals.forEach(data => {
+            const option = document.createElement('option');
+            option.value = data.value;
+            option.textContent = data.label; // Firebaseの小文字label
+            animalSelect.appendChild(option);
+        });
+    }
 });
 
 // 💡 動物データを取得してドロップダウンを組み立てる関数
@@ -123,30 +138,6 @@ async function loadGradesFromDB() {
     }
 }
 
-async function loadAnimalsFromDB() {
-    const animalSelect = document.getElementById('char-animal-select');
-    if (!animalSelect) return;
-    
-    try {
-        const querySnapshot = await getDocs(collection(db, "animal"));
-        animalSelect.innerHTML = '<option value="">-- どうぶつをえらんでね --</option>';
-        animalMasterData = []; // リセット
-
-        querySnapshot.forEach((docSnap) => {
-            const data = docSnap.data();
-            animalMasterData.push(data); // プレビュー用にデータをキープ
-
-            const option = document.createElement('option');
-            option.value = data.value; // 例: "usagi"
-            option.textContent = data.label; // 例: "うさぎ"
-            animalSelect.appendChild(option);
-        });
-    } catch (e) {
-        console.error("動物リストのロードエラー:", e);
-        animalSelect.innerHTML = '<option value="">エラーが発生しました</option>';
-    }
-}
-
 // 💡 新規登録（あたらしくはじめる）処理
 async function handleRegister() {
     const nameInput = document.getElementById('username-input').value.trim();
@@ -205,11 +196,7 @@ function showCharacterInfo(username, userData) {
 
  　 // 💡 動物マスターからファイル名を逆引きして images/chara/ から読み込む
     const fileName = getCharacterFileName(userData.animal, userData.gender);
-    if (fileName === "placeholder.jpg") {
-        document.getElementById('char-visual').src = "images/" + fileName;
-    } else {
-        document.getElementById('char-visual').src = "images/chara/" + fileName;
-    }
+    setCharacterSrc(document.getElementById('char-visual'), fileName);
     
     // 入力欄を隠し、キャラクター確認エリアを表示
     document.getElementById('login-action-zone').style.display = 'none';
@@ -219,33 +206,13 @@ function showCharacterInfo(username, userData) {
     changeScreen('screen-login');
 }
 
-// 💡 Firebaseのデータ構造に合わせて画像ファイル名を決定するヘルパー関数
-function getCharacterFileName(animalValue, genderValue) {
-    if (!animalValue || !genderValue) return "placeholder.jpg";
-    
-    // 💡 キープしておいた動物マスターデータから、選択された動物（value）を探す
-    const targetAnimal = animalMasterData.find(a => a.value === animalValue);
-    
-    if (targetAnimal) {
-        // 性別（male / female）のフィールド名をそのまま使ってファイル名を取得！
-        return targetAnimal[genderValue] || "placeholder.jpg";
-    }
-    
-    return "placeholder.jpg";
-}
-
-// 💡 選択中のキャラクターをその場でプレビュー表示する関数
+// 💡 プレビュー関数（共通のパス判定関数を使う）
 function previewCharacter() {
     const animal = document.getElementById('char-animal-select').value;
     const gender = document.getElementById('gender-select').value;
     
     const fileName = getCharacterFileName(animal, gender);
-    // 💡 placeholder.jpg の場合は images/ 直下、それ以外は images/chara/ から読み込む
-    if (fileName === "placeholder.jpg") {
-        document.getElementById('register-char-preview').src = "images/" + fileName;
-    } else {
-        document.getElementById('register-char-preview').src = "images/chara/" + fileName;
-    }
+    setCharacterSrc(document.getElementById('register-char-preview'), fileName);
 }
 
 // 💡 「ゲームをはじめる」ボタンを押したとき（まずは地図画面 quest.html へ遷移！）
