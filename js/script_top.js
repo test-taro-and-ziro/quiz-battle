@@ -212,7 +212,7 @@ function showCharacterInfo(username, userData) {
     }
     
     // 入力欄を隠し、キャラクター確認エリアを表示
-    //document.getElementById('login-action-zone').style.display = 'none';
+    document.getElementById('login-action-zone').style.display = 'none';
     document.getElementById('logged-in-char-zone').style.display = 'block';
     
     // もし新規作成画面にいたらトップ画面に戻す
