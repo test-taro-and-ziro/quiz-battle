@@ -67,7 +67,7 @@ export async function setupPlayerMaster(username) {
 
     try {
         // 🌟 フィールドの「loginName」から一致するユーザーを探す
-        const q = query(collection(db, "users"), where("loginName", "==", username));
+        const q = query(collection(db, "users"), where("name", "==", username));
         const querySnapshot = await getDocs(q);
       
         if (!querySnapshot.empty) {
