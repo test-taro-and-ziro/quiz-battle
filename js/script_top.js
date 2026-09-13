@@ -13,7 +13,7 @@ import {
 } from 'https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js';
 
 // 💡 共通ファイルを読み込む1行を追加
-import { loadAnimalMaster, getCharacterFileName, setCharacterSrc, logoutPlayerMaster } from './game-master.js';
+import { loadAnimalMaster, getCharacterFileName, setCharacterSrc, setupPlayerMaster, logoutPlayerMaster } from './game-master.js';
 
 const ADMIN_PASSWORD = "admin1234"; 
 
