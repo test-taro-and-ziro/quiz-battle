@@ -13,7 +13,7 @@ import {
 } from 'https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js';
 
 // 💡 共通ファイルを読み込む1行を追加
-import { loadAnimalMaster, getCharacterFileName, setCharacterSrc } from './game-master.js';
+import { loadAnimalMaster, getCharacterFileName, setCharacterSrc, logoutPlayerMaster } from './game-master.js';
 
 const ADMIN_PASSWORD = "admin1234"; 
 
@@ -60,7 +60,6 @@ function changeScreen(screenId) {
 
 // 💡 トップ画面の状態を最初のメニューだけにリセットする関数
 function resetTopScreen() {
-    currentUser = null;
     // 各種入力欄をクリア
     if (document.getElementById('login-username-input')) document.getElementById('login-username-input').value = '';
     if (document.getElementById('username-input')) document.getElementById('username-input').value = '';
@@ -72,6 +71,10 @@ function resetTopScreen() {
 
     // ✨ プレビュー画像も「準備中」のイメージに自動リセット！
     if (typeof previewCharacter === 'function') previewCharacter();
+
+    // 🌟 共通の金庫（変数）の中身をきれいにリセット！
+    currentUser = null;
+    logoutPlayerMaster(); 
   
     // 表示エリアの制御
     document.getElementById('login-action-zone').style.display = 'none';
