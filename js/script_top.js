@@ -158,26 +158,24 @@ async function handleRegister() {
     if (!animalSelect) { alert('どうぶつをえらんでね！'); return; }
 
     try {
-        // 重複チェック
-        const docRef = doc(db, "users", nameInput);
-        const docSnap = await getDoc(docRef);
-        if (docSnap.exists()) {
+        // 🌟 フィールドの「loginName」で重複チェックをする
+        const q = query(collection(db, "users"), where("loginName", "==", nameInput));
+        const querySnapshot = await getDocs(q);
+        
+        if (!querySnapshot.empty) {
             alert('そのおなまえはすでに使われているよ！ちがうおなまえにしてね。');
             return;
         }
 
-        // 💡 性別と動物の組み合わせから画像ファイル名を決定
-        const finalCharImage = getCharacterFileName(animalSelect, genderSelect);
-
         const userData = {
+            name: nameInput,              // ユーザー名を保存
             grade: parseInt(gradeSelect), // 学年を保存
             gender: genderSelect,         // 性別を保存
-            animal: animalSelect,         // 動物の種類を保存
-            wins: 0,
-            lv: 1
+            animal: animalSelect          // 動物の種類を保存
         };
 
-        await setDoc(docRef, userData);
+        // 🌟 addDocを使い、FirestoreにドキュメントIDを自動生成させて保存する
+        const docRef = await addDoc(collection(db, "users"), userData);
         currentUser = nameInput;
 
         // 💡 新規登録に成功した時も、「2つのメインボタン」を非表示にして隠します！
