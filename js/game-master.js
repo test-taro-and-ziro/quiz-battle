@@ -11,6 +11,8 @@ import {
   getDocs, // すべてのデータを読み込む
   setDoc, // 指定した場所にデータを書き込む
   getDoc, // 指定した場所のデータを読み込む
+  query,  // フィールド検索に必要
+  where, //　フィールド検索に必要
 } from 'https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js';
 
 // 各画面で共有するための変数
@@ -64,12 +66,15 @@ export async function setupPlayerMaster(username) {
     }
 
     try {
-        const docRef = doc(db, "users", username);
-        const docSnap = await getDoc(docRef);
-
-        if (docSnap.exists()) {
+        // 🌟 フィールドの「loginName」から一致するユーザーを探す
+        const q = query(collection(db, "users"), where("loginName", "==", username));
+        const querySnapshot = await getDocs(q);
+      
+        if (!querySnapshot.empty) {
             currentLoginUser = username;
-            currentPlayerData = docSnap.data(); // 💡 共通変数にガチッと保存！
+            // 一致するユーザーが見つかった場合（通常は1件だけヒットします）
+            const userDoc = querySnapshot.docs[0]; 
+            currentPlayerData = userDoc.data(); // 💡 共通変数にガチッと保存！
             return currentPlayerData;
         } else {
             console.error("ユーザーデータが見つかりません:", username);
