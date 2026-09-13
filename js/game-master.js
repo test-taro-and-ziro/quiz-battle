@@ -85,3 +85,9 @@ export async function setupPlayerMaster(username) {
         return null;
     }
 }
+
+// 🌟 共通関数：ログアウト時に共通変数をきれいにリセットする関数
+export function logoutPlayerMaster() {
+    currentLoginUser = null;
+    currentPlayerData = null;
+}
