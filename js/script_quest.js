@@ -42,7 +42,7 @@ window.addEventListener('DOMContentLoaded', async () => {
     const userData = await setupPlayerMaster(currentUser);
 
     // 🌟 ログを追加②：Firebaseから何が返ってきたかチェック
-    console.log("【デバッグ】Firebaseから返ってきたデータ:", userData);　
+    console.log("【デバッグ】Firebaseから返ってきたデータ:", userData);
   
     if (userData) {
         renderPlayerStatus(userData);
