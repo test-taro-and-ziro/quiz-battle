@@ -99,13 +99,20 @@ async function handleLogin() {
     if (!nameInput) { alert('おなまえを入力してね！'); return; }
 
     try {
+        // 🌟 変更点：ドキュメントID検索ではなく、フィールドの「loginName」で一致するユーザーを探す
+        const q = query(collection(db, "users"), where("name", "==", nameInput));
+        const querySnapshot = await getDocs(q);
+      
         const docRef = doc(db, "users", nameInput);
         const docSnap = await getDoc(docRef);
 
-        if (docSnap.exists()) {
-            const userData = docSnap.data();
-            currentUser = nameInput;
+        if (!querySnapshot.empty) {
+            const userDoc = querySnapshot.docs[0];
+            const userData = userDoc.data();
 
+            // 💡 ログイン成功時の処理
+            toggleLoginInput(); // 入力小窓を閉じる
+          
             // 💡 ログインに成功したら、「2つのメインボタン」を非表示にして隠します！
             const menuZone = document.querySelector('.screen-login-menu');
             if (menuZone) menuZone.style.display = 'none';
