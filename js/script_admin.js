@@ -37,8 +37,6 @@ function switchAdminTab(tabId) {
     if (targetContent) targetContent.classList.add('active');
 }
 
-
-
 // 2️⃣ 【学年管理】一覧描画・保存・削除・追加
 async function renderAdminGradeList() {
     const tbody = document.getElementById('admin-grade-list');
