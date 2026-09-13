@@ -111,6 +111,7 @@ async function handleLogin() {
         if (!querySnapshot.empty) {
             const userDoc = querySnapshot.docs[0];
             const userData = userDoc.data();
+            currentUser = nameInput;
 
             // 💡 ログイン成功時の処理
             toggleLoginInput(); // 入力小窓を閉じる
