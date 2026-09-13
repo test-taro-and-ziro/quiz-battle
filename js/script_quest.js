@@ -25,6 +25,10 @@ window.addEventListener('DOMContentLoaded', async () => {
     // 1. URLの「?user=おなまえ」からプレイヤーの名前を読み取る
     const urlParams = new URLSearchParams(window.location.search);
     currentUser = urlParams.get('user');
+
+    // 🌟 ログを追加①：URLからどんな文字が取れているかチェック
+    console.log("【デバッグ】URLから取得したユーザー名:", currentUser);
+  
     if (!currentUser) {
         // 名前が取れなければ安全のためにトップ画面に戻す
         alert("もういちどログインしなおしてね！");
