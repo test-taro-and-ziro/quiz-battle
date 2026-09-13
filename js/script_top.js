@@ -8,6 +8,8 @@ import {
   getDocs, // すべてのデータを読み込む
   setDoc, // 指定した場所にデータを書き込む
   getDoc, // 指定した場所のデータを読み込む
+  query,      // 🌟 フィールド検索で使用
+  where,      // 🌟 フィールド検索で使用
 } from 'https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js';
 
 // 💡 共通ファイルを読み込む1行を追加
