@@ -26,9 +26,6 @@ window.addEventListener('DOMContentLoaded', async () => {
     const urlParams = new URLSearchParams(window.location.search);
     currentUser = urlParams.get('user');
 
-    // 🌟 ログを追加①：URLからどんな文字が取れているかチェック
-    console.log("【デバッグ】URLから取得したユーザー名:", currentUser);
-  
     if (!currentUser) {
         // 名前が取れなければ安全のためにトップ画面に戻す
         alert("もういちどログインしなおしてね！");
@@ -41,9 +38,6 @@ window.addEventListener('DOMContentLoaded', async () => {
     // 3. 共通関数を使ってプレイヤー情報を準備
     const userData = await setupPlayerMaster(currentUser);
 
-    // 🌟 ログを追加②：Firebaseから何が返ってきたかチェック
-    console.log("【デバッグ】Firebaseから返ってきたデータ:", userData);
-  
     if (userData) {
         renderPlayerStatus(userData);
     } else {
