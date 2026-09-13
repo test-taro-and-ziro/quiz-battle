@@ -101,21 +101,15 @@ async function handleLogin() {
     if (!nameInput) { alert('おなまえを入力してね！'); return; }
 
     try {
-        // 🌟 変更点：ドキュメントID検索ではなく、フィールドの「loginName」で一致するユーザーを探す
-        const q = query(collection(db, "users"), where("name", "==", nameInput));
-        const querySnapshot = await getDocs(q);
-      
-        const docRef = doc(db, "users", nameInput);
-        const docSnap = await getDoc(docRef);
 
-        if (!querySnapshot.empty) {
-            const userDoc = querySnapshot.docs[0];
-            const userData = userDoc.data();
+        // 🌟 共通関数を呼び出すだけで、Firebaseからのデータ取得と共通変数への保存が同時に完了！
+        const userData = await setupPlayerMaster(nameInput);
+
+        if (userData) {
             currentUser = nameInput;
 
             // 💡 ログイン成功時の処理
             toggleLoginInput(); // 入力小窓を閉じる
-          
             // 💡 ログインに成功したら、「2つのメインボタン」を非表示にして隠します！
             const menuZone = document.querySelector('.screen-login-menu');
             if (menuZone) menuZone.style.display = 'none';
@@ -169,7 +163,7 @@ async function handleRegister() {
 
     try {
         // 🌟 フィールドの「loginName」で重複チェックをする
-        const q = query(collection(db, "users"), where("loginName", "==", nameInput));
+        const q = query(collection(db, "users"), where("name", "==", nameInput));
         const querySnapshot = await getDocs(q);
         
         if (!querySnapshot.empty) {
