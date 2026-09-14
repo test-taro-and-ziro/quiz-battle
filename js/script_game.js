@@ -74,6 +74,78 @@ window.addEventListener('DOMContentLoaded', async () => {
     setupBackToMapButton();
 });
 
+// ★ なかまデータの取得と画面反映ロジック
+async function setupPartyAndRender(userId) {
+    try {
+        let partyIds = [];
+        
+        // ① usersコレクションからユーザー情報を取得
+        const userDocRef = doc(db, "users", userId);
+        const userDocSnap = await getDoc(userDocRef);
+        
+        if (userDocSnap.exists()) {
+            const userData = userDocSnap.data();
+            // current_party 配列があれば取得
+            if (userData.current_party && Array.isArray(userData.current_party)) {
+                partyIds = [...userData.current_party];
+            }
+        }
+        
+        // ② 仲間が2人に満たない場合は、仕様通り「おさるさん」のIDで埋める（自動補完）
+        while (partyIds.length < 2) {
+            partyIds.push(DEFAULT_NPC_ID);
+        }
+        
+        // 安全のため最大2人枠に固定
+        partyIds = partyIds.slice(0, 2);
+        
+        // ③ companions コレクションからそれぞれの仲間データを取得
+        activeCompanions = [];
+        for (let i = 0; i < partyIds.length; i++) {
+            const npcId = partyIds[i];
+            const npcDocRef = doc(db, "companions", npcId);
+            const npcDocSnap = await getDoc(npcId === DEFAULT_NPC_ID ? doc(db, "companions", "dummy") : npcDocRef); // 安全策
+            
+            if (npcDocSnap.exists()) {
+                // データをステートに保持
+                activeCompanions.push({
+                    id: npcId,
+                    ...npcDocSnap.data()
+                });
+            } else {
+                // もしIDが存在しないエラー等の場合も、安全のためにデフォルトおさるさんをセット
+                activeCompanions.push({
+                    id: DEFAULT_NPC_ID,
+                    name: "おさるさん",
+                    image_path: "monkey_01", // game-masterで逆引きできるキー
+                    good_genres: [],
+                    bad_genres: ["math", "Japanese", "moral"] // すべて苦手
+                });
+            }
+        }
+        
+        // ④ 取得したデータをHTML画面（下部フッター）に反映
+        activeCompanions.forEach((companion, index) => {
+            const num = index + 1; // なかま1 または なかま2
+            
+            // 名前のセット
+            const nameEl = document.getElementById(`npc${num}-name`);
+            if (nameEl) nameEl.textContent = companion.name;
+            
+            // 画像のセット（game-master.js の逆引き関数を活用）
+            const imgEl = document.getElementById(`npc${num}-img`);
+            if (imgEl) {
+                const fullImgPath = getCharacterFileName(companion.image_path);
+                imgEl.src = fullImgPath;
+                imgEl.alt = companion.name;
+            }
+        });
+
+    } catch (error) {
+        console.error("なかまデータの読み込みに失敗しました:", error);
+    }
+}
+
 // ==========================================
 // 4. クイズの出題処理
 // ==========================================
