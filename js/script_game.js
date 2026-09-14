@@ -1,1 +1,250 @@
+// ==========================================
+// クエスト画面（game.html）専用プログラム
+// ==========================================
+// 💡 共通設定ファイルから db を読み込む
+import { db, collection, doc, addDoc, getDocs, setDoc, getDoc, updateDoc, deleteDoc, query, where, orderBy } from './firebase-config.js';
+// 💡 共通マスタファイルからお仕事をインポート
+import { loadAnimalMaster, getCharacterFileName, setCharacterSrc, setupPlayerMaster } from './game-master.js';
 
+// ==========================================
+// 1. 本物のFirebase構造に合わせたダミーデータ
+// ==========================================
+const mockQuestions = [
+    {
+        id: "q1",
+        type: "四択",
+        genre: "math", // 英文字に修正
+        grade: 4,      // 数値（小4）に修正
+        text: "15 × 6 のこたえは つぎのうちどれかな？",
+        choices: ["75", "80", "90", "100"],
+        answer: "90",
+        explanation: "15×6は90になります。10×6=60、5×6=30を合わせると計算しやすいよ！"
+    },
+    {
+        id: "q2",
+        type: "四択",
+        genre: "moral", // 実データにある「どうとく」を再現
+        grade: 4,       // 数値に修正
+        text: "SNSで友達の悪口を書いている人を見つけました。適切な行動は？",
+        choices: ["関わらず、大人や先生に相談する", "自分も一緒に書き込む", "その人を強く問い詰める", "面白そうなので友達に拡散する"],
+        answer: "関わらず、大人や先生に相談する",
+        explanation: "悪口には関わらず、すぐに信頼できる大人や先生に相談するのが正しい行動だよ。"
+    },
+    {
+        id: "q3",
+        type: "四択",
+        genre: "Japanese", // 英文字に修正
+        grade: 4,          // 数値に修正
+        text: "「一生懸命」と同じ意味の言葉はどれ？",
+        choices: ["必死になって", "てきとうに", "のんびりと", "おこりながら"],
+        answer: "必死になって",
+        explanation: "正解は「必死になって」です！命をかけるくらい一生懸命がんばるという意味だよ。"
+    },
+    {
+        id: "q4",
+        type: "直接入力",
+        genre: "math",
+        grade: 4,
+        text: "25 × 4 の答えはいくつ？",
+        choices: [],
+        answer: "100",
+        explanation: "正解は100です！25×4はキリの良い数字になるので覚えておくと便利だよ。"
+    },
+    {
+        id: "q5",
+        type: "四択",
+        genre: "math",
+        grade: 0, // 数値（幼児）を再現
+        text: "りんごが 3こ あります。2こ もらうと、ぜんぶで なんこ？",
+        choices: ["5こ", "4こ", "1こ", "6こ"],
+        answer: "5こ",
+        explanation: "3こ に 2こ を あわせると 5こ に なるよ。ゆびで かぞえて みよう！"
+    }
+];
+
+// ==========================================
+// 2. ゲームの状態管理（ステート）
+// ==========================================
+let currentQuestionIndex = 0; 
+let currentScore = 100;       
+let timerInterval = null;     
+const maxQuestions = mockQuestions.length; 
+
+// スコア記録用
+let playerScore = 0;
+let npc1Score = 0;
+let npc2Score = 0;
+const clearQuota = 250; // 問題数が増えたのでノルマを調整
+
+// ==========================================
+// 3. 画面起動時の処理
+// ==========================================
+window.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('clear-quota').textContent = clearQuota;
+    document.getElementById('res-quota-score').textContent = clearQuota;
+    
+    loadQuestion(currentQuestionIndex);
+    
+    document.getElementById('back-to-map-btn').addEventListener('click', () => {
+        window.location.href = 'quest.html';
+    });
+});
+
+// ==========================================
+// 4. クイズの出題処理
+// ==========================================
+function loadQuestion(index) {
+    if (index >= maxQuestions) {
+        showResult();
+        return;
+    }
+
+    const q = mockQuestions[index];
+    
+    // 画面要素の更新
+    document.getElementById('current-question-num').textContent = index + 1;
+    
+    // --- ★英文字・数値をプレイヤー向けに翻訳して表示するロジック ---
+    let genreJA = q.genre;
+    if (q.genre === "math") genreJA = "さんすう";
+    if (q.genre === "Japanese") genreJA = "こくご";
+    if (q.genre === "moral") genreJA = "どうとく";
+    
+    let gradeJA = q.grade === 0 ? "ようじ" : `小${q.grade}`;
+    
+    document.getElementById('quiz-genre').textContent = genreJA;
+    document.getElementById('quiz-grade').textContent = gradeJA;
+    // -----------------------------------------------------------
+
+    document.getElementById('quiz-text').textContent = q.text;
+    document.getElementById('explanation-area').classList.add('hidden');
+    
+    const inputsContainer = document.getElementById('quiz-inputs');
+    inputsContainer.innerHTML = ''; 
+    inputsContainer.classList.remove('hidden');
+
+    if (q.type === "四択" || q.type === "○×") {
+        q.choices.forEach(choice => {
+            const btn = document.createElement('button');
+            btn.className = q.type === "○×" ? 'choice-btn ox-btn' : 'choice-btn';
+            btn.textContent = choice;
+            btn.addEventListener('click', () => handleAnswer(choice, q.answer));
+            inputsContainer.appendChild(btn);
+        });
+    } else if (q.type === "直接入力") {
+        const group = document.createElement('div');
+        group.className = 'text-input-group';
+        
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.id = 'direct-answer-input';
+        input.placeholder = 'こたえを入力してね';
+        
+        const submitBtn = document.createElement('button');
+        submitBtn.id = 'submit-answer-btn';
+        submitBtn.className = 'submit-btn';
+        submitBtn.textContent = '決定';
+        
+        submitBtn.addEventListener('click', () => {
+            const userAnswer = input.value.trim();
+            handleAnswer(userAnswer, q.answer);
+        });
+        
+        group.appendChild(input);
+        group.appendChild(submitBtn);
+        inputsContainer.appendChild(group);
+    }
+
+    currentScore = 100;
+    document.getElementById('time-score').textContent = currentScore;
+    
+    clearInterval(timerInterval);
+    timerInterval = setInterval(() => {
+        if (currentScore > 0) {
+            currentScore--;
+            document.getElementById('time-score').textContent = currentScore;
+        }
+    }, 100);
+}
+
+// ==========================================
+// 5. 回答時の判定・解説表示処理
+// ==========================================
+function handleAnswer(userAnswer, correctAnswer) {
+    clearInterval(timerInterval);
+    document.getElementById('quiz-inputs').classList.add('hidden');
+
+    const isCorrect = (userAnswer === correctAnswer);
+    const resultMessage = document.getElementById('result-message');
+    
+    let addedPlayerScore = 0;
+    if (isCorrect) {
+        resultMessage.textContent = "せいかい！ 🎉";
+        resultMessage.className = "result-text correct"; 
+        addedPlayerScore = currentScore; 
+    } else {
+        resultMessage.textContent = "ざんねん… 😢";
+        resultMessage.className = "result-text incorrect"; 
+        addedPlayerScore = 0;
+    }
+
+    playerScore += addedPlayerScore;
+    document.getElementById('player-score').textContent = playerScore;
+
+    // NPCの自動回答（仮）
+    const npc1Correct = Math.random() > 0.4; 
+    const npc2Correct = Math.random() > 0.5; 
+    const addedNpc1 = npc1Correct ? Math.floor(Math.random() * 40) + 40 : 0; 
+    const addedNpc2 = npc2Correct ? Math.floor(Math.random() * 40) + 40 : 0;
+    
+    npc1Score += addedNpc1;
+    npc2Score += addedNpc2;
+    document.getElementById('npc1-score').textContent = npc1Score;
+    document.getElementById('npc2-score').textContent = npc2Score;
+
+    const totalScore = playerScore + npc1Score + npc2Score;
+    document.getElementById('total-score').textContent = totalScore;
+    const progressPercent = Math.min((totalScore / clearQuota) * 100, 100);
+    document.getElementById('quota-bar-fill').style.width = `${progressPercent}%`;
+
+    const q = mockQuestions[currentQuestionIndex];
+    document.getElementById('explanation-text').textContent = q.explanation;
+    document.getElementById('explanation-area').classList.remove('hidden');
+
+    const nextBtn = document.getElementById('next-question-btn');
+    nextBtn.onclick = () => {
+        currentQuestionIndex++;
+        loadQuestion(currentQuestionIndex);
+    };
+}
+
+// ==========================================
+// 6. 結果確認（リザルト）画面の表示処理
+// ==========================================
+function showResult() {
+    document.getElementById('res-player-score').textContent = playerScore;
+    document.getElementById('res-npc1-score').textContent = npc1Score;
+    document.getElementById('res-npc2-score').textContent = npc2Score;
+    
+    const totalScore = playerScore + npc1Score + npc2Score;
+    document.getElementById('res-total-score').textContent = totalScore;
+
+    const resultTitle = document.getElementById('result-title');
+    const rewardArea = document.getElementById('reward-area');
+    const rewardContent = document.getElementById('reward-content');
+
+    if (totalScore >= clearQuota) {
+        resultTitle.textContent = "STAGE CLEAR!! 🎉";
+        resultTitle.className = "clear-title";
+        
+        rewardArea.classList.remove('hidden');
+        rewardContent.innerHTML = `<p>🏅 ひほう<strong>「たいようのメダル」</strong>をみつけた！</p>
+                                   <p>🐾 <strong>おさるさん</strong> がなかまに加わりたそうにこちらを見ている！（後日対応）</p>`;
+    } else {
+        resultTitle.textContent = "GAME OVER... 😢";
+        resultTitle.className = "failed-title";
+        rewardArea.classList.add('hidden'); 
+    }
+
+    document.getElementById('result-screen').classList.remove('hidden');
+}
