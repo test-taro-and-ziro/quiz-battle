@@ -74,7 +74,7 @@ const maxQuestions = mockQuestions.length;
 let playerScore = 0;
 let npc1Score = 0;
 let npc2Score = 0;
-const clearQuota = 250; // 問題数が増えたのでノルマを調整
+const clearQuota = 300; // 問題数が増えたのでノルマを調整
 
 // ==========================================
 // 3. 画面起動時の処理
@@ -104,31 +104,39 @@ function loadQuestion(index) {
     // 画面要素の更新
     document.getElementById('current-question-num').textContent = index + 1;
     
-    // --- ★英文字・数値をプレイヤー向けに翻訳して表示するロジック ---
+    // 進行度ゲージの更新
+    const qProgress = ((index + 1) / 10) * 100;
+    document.getElementById('question-bar-fill').style.width = `${qProgress}%`;
+    
+    // 属性の翻訳表示
     let genreJA = q.genre;
     if (q.genre === "math") genreJA = "さんすう";
     if (q.genre === "Japanese") genreJA = "こくご";
     if (q.genre === "moral") genreJA = "どうとく";
-    
     let gradeJA = q.grade === 0 ? "ようじ" : `小${q.grade}`;
     
     document.getElementById('quiz-genre').textContent = genreJA;
     document.getElementById('quiz-grade').textContent = gradeJA;
-    // -----------------------------------------------------------
-
     document.getElementById('quiz-text').textContent = q.text;
+    
     document.getElementById('explanation-area').classList.add('hidden');
     
     const inputsContainer = document.getElementById('quiz-inputs');
     inputsContainer.innerHTML = ''; 
     inputsContainer.classList.remove('hidden');
 
+    // クイズ形式による最大獲得ポイント（初期値）の条件分岐
+    let maxScoreForType = 30; // 通常は30ポイント
+    if (q.type === "直接入力") {
+        maxScoreForType = 40; // 直接入力は40ポイントスタート
+    }
+
     if (q.type === "四択" || q.type === "○×") {
         q.choices.forEach(choice => {
             const btn = document.createElement('button');
             btn.className = q.type === "○×" ? 'choice-btn ox-btn' : 'choice-btn';
             btn.textContent = choice;
-            btn.addEventListener('click', () => handleAnswer(choice, q.answer));
+            btn.addEventListener('click', () => handleAnswer(choice, q.answer, maxScoreForType));
             inputsContainer.appendChild(btn);
         });
     } else if (q.type === "直接入力") {
@@ -147,7 +155,7 @@ function loadQuestion(index) {
         
         submitBtn.addEventListener('click', () => {
             const userAnswer = input.value.trim();
-            handleAnswer(userAnswer, q.answer);
+            handleAnswer(userAnswer, q.answer, maxScoreForType);
         });
         
         group.appendChild(input);
@@ -155,24 +163,31 @@ function loadQuestion(index) {
         inputsContainer.appendChild(group);
     }
 
-    currentScore = 100;
+    // タイマーの開始（★最低10ポイントを保証するため、10になるまで減る）
+    currentScore = maxScoreForType;
     document.getElementById('time-score').textContent = currentScore;
+    document.getElementById('timer-bar-fill').style.width = '100%';
     
     clearInterval(timerInterval);
     timerInterval = setInterval(() => {
-        if (currentScore > 0) {
+        if (currentScore > 10) { // ★ 10より小さくならない（最小10ポイントキープ）
             currentScore--;
             document.getElementById('time-score').textContent = currentScore;
+            
+            // タイマーゲージの連動
+            const timerPercent = (currentScore / maxScoreForType) * 100;
+            document.getElementById('timer-bar-fill').style.width = `${timerPercent}%`;
         }
-    }, 100);
+    }, 333); 
 }
 
 // ==========================================
 // 5. 回答時の判定・解説表示処理
 // ==========================================
-function handleAnswer(userAnswer, correctAnswer) {
+function handleAnswer(userAnswer, correctAnswer, maxScore) {
     clearInterval(timerInterval);
     document.getElementById('quiz-inputs').classList.add('hidden');
+    document.getElementById('timer-bar-fill').style.width = '0%';
 
     const isCorrect = (userAnswer === correctAnswer);
     const resultMessage = document.getElementById('result-message');
@@ -181,27 +196,29 @@ function handleAnswer(userAnswer, correctAnswer) {
     if (isCorrect) {
         resultMessage.textContent = "せいかい！ 🎉";
         resultMessage.className = "result-text correct"; 
+        // ★正解なら現在の数値をそのまま獲得（時間をかけても最低10ポイント入る）
         addedPlayerScore = currentScore; 
     } else {
         resultMessage.textContent = "ざんねん… 😢";
         resultMessage.className = "result-text incorrect"; 
-        addedPlayerScore = 0;
+        addedPlayerScore = 0; // 不正解は一律0ポイント
     }
 
     playerScore += addedPlayerScore;
     document.getElementById('player-score').textContent = playerScore;
 
-    // NPCの自動回答（仮）
+    // NPCの自動回答（1/3スケール用に獲得ポイントを調整）
     const npc1Correct = Math.random() > 0.4; 
     const npc2Correct = Math.random() > 0.5; 
-    const addedNpc1 = npc1Correct ? Math.floor(Math.random() * 40) + 40 : 0; 
-    const addedNpc2 = npc2Correct ? Math.floor(Math.random() * 40) + 40 : 0;
+    const addedNpc1 = npc1Correct ? Math.floor(Math.random() * 10) + 12 : 0; // 12~22ポイント
+    const addedNpc2 = npc2Correct ? Math.floor(Math.random() * 10) + 12 : 0;
     
     npc1Score += addedNpc1;
     npc2Score += addedNpc2;
     document.getElementById('npc1-score').textContent = npc1Score;
     document.getElementById('npc2-score').textContent = npc2Score;
 
+    // 合計ポイントとフッターゲージの更新
     const totalScore = playerScore + npc1Score + npc2Score;
     document.getElementById('total-score').textContent = totalScore;
     const progressPercent = Math.min((totalScore / clearQuota) * 100, 100);
