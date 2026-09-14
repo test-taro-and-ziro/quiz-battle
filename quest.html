@@ -17,8 +17,8 @@
             <button class="btn-minor" onclick="location.href='index.html'">🛑 ログアウト</button>
         </div>
 
-        <!-- 👤 地図上に浮かぶ半透明のプレイヤー情報箱 -->
-        <div class="player-status-box">
+        <!-- 👤 地図上に浮かぶ半透明のプレイヤー情報箱（クリックで詳細画面へ） -->
+        <div class="player-status-box" id="player-status-trigger">
             <div class="status-avatar">
                 <img id="player-avatar" src="images/placeholder.jpg" alt="キャラ">
             </div>
@@ -63,6 +63,34 @@
             </div>
         </div>
 
+        <!-- 🏆 ユーザー詳細＆ひほう（秘宝）確認モーダル -->
+        <div id="profile-modal-overlay" class="profile-modal-overlay">
+            <div class="profile-window">
+                <h3 class="profile-title">📜 ぼうけんの記録 📜</h3>
+                
+                <!-- ユーザー基本情報エリア -->
+                <div class="profile-user-zone">
+                    <div class="profile-avatar-wrap">
+                        <img id="profile-modal-avatar" src="images/placeholder.jpg" alt="キャラ">
+                    </div>
+                    <div class="profile-text-wrap">
+                        <div id="profile-modal-name" class="profile-name">---</div>
+                        <div id="profile-modal-grade" class="profile-grade">---</div>
+                    </div>
+                </div>
+        
+                <!-- 🏅 ひほう（秘宝）コレクションエリア -->
+                <div class="treasure-section">
+                    <h4 class="treasure-title">✨ あつめたひほう ✨</h4>
+                    <div class="treasure-list" id="treasure-list-container">
+                        <!-- JSで丸い枠の秘宝アイコンがここに自動生成されます -->
+                    </div>
+                </div>
+                
+                <button id="btn-close-profile" class="btn-profile-close">とじる</button>
+            </div>
+        </div>
+        
     </div>
 
     <!-- 地図画面用の専用スクリプト -->
