@@ -12,7 +12,10 @@ import {
   setDoc, // 指定した場所にデータを書き込む
   getDoc, // 指定した場所のデータを読み込む
   updateDoc,  // 更新機能
-  deleteDoc  // 削除機能
+  deleteDoc,  // 削除機能
+  query,      // 🌟 フィールド検索で使用
+  where,      // 🌟 フィールド検索で使用
+  orderBy     // 🌟 フィールド検索で使用
 } from 'https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js';
 
 // ご自身のFirebaseプロジェクトの設定値
@@ -29,4 +32,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 // 💡 外部のJSファイルからでもデータベースを扱えるように export（書き出し）する
-export const db = getFirestore(app);
+const db = getFirestore(app);
+
+/ 🌟 すべての画面や共通関数で使い回せるように、dbとFirestoreの各お仕事を丸ごとエクスポート！
+export { db, collection, doc, addDoc, getDocs, setDoc, getDoc, updateDoc, deleteDoc, query, where, orderBy };
