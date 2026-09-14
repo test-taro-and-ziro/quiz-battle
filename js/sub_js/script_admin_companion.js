@@ -4,6 +4,37 @@
 // 💡 共通設定ファイルから db を読み込む
 import { db, collection, doc, addDoc, getDocs, setDoc, getDoc, updateDoc, deleteDoc, query, where, orderBy } from '../firebase-config.js';
 
+async function convertGenresToValue(array) {
+    try {
+        // 科目マスター（genres）をサッと取得
+        const genreSnapshot = await getDocs(collection(db, "genres"));
+        const labelToValueMap = {}; // 「こくご」 -> 「japanese」 の辞書
+        const validValues = new Set(); // 「japanese」 自体の存在チェック用
+
+        genreSnapshot.forEach(d => {
+            const gData = d.data();
+            if (gData.value && gData.label) {
+                labelToValueMap[gData.label.trim()] = gData.value.trim();
+                validValues.add(gData.value.trim());
+            }
+        });
+
+        // 変換処理
+        return array.map(item => {
+            const trimmed = item.trim();
+            // もし「こくご」などLabel値で入力されていたらValue値（japanese）に変換
+            if (labelToValueMap[trimmed]) {
+                return labelToValueMap[trimmed];
+            }
+            // もし最初から「japanese」などのValue値で入力されていたらそのまま採用
+            return trimmed;
+        });
+    } catch (e) {
+        console.error("科目マスターの逆引きに失敗しました", e);
+        return array; // 失敗時はそのまま返す安全策
+    }
+}
+
 // 一覧描画
 async function renderAdminCompanionList() {
     const tbody = document.getElementById('admin-companion-list');
@@ -11,16 +42,26 @@ async function renderAdminCompanionList() {
     tbody.innerHTML = '<tr><td colspan="6">仲間データを読み込み中...</td></tr>';
 
     try {
+        // 先に表示用として、科目マスターの Value から Label への逆引きマップを作っておく
+        const genreSnapshot = await getDocs(collection(db, "genres"));
+        const valueToLabelMap = {}; // 「japanese」 -> 「こくご」
+        genreSnapshot.forEach(d => {
+            const gData = d.data();
+            if (gData.value && gData.label) {
+                valueToLabelMap[gData.value.trim()] = gData.label.trim();
+            }
+        });
+
         const querySnapshot = await getDocs(collection(db, "companions"));
         tbody.innerHTML = '';
 
         querySnapshot.forEach((docSnap) => {
-            const id = docSnap.id; // 自動生成されたドキュメントID
+            const id = docSnap.id; 
             const data = docSnap.data();
 
-            // 配列データをカンマ区切りの文字列に戻してテキストボックスに表示する
-            const goodText = data.good_genres ? data.good_genres.join(',') : '';
-            const badText = data.bad_genres ? data.bad_genres.join(',') : '';
+            // 💡 画面上の表示：DB内が「japanese」になっていたら、管理者が分かりやすいように「こくご」に翻訳してテキストボックスに表示する
+            const goodText = data.good_genres ? data.good_genres.map(v => valueToLabelMap[v] || v).join(',') : '';
+            const badText = data.bad_genres ? data.bad_genres.map(v => valueToLabelMap[v] || v).join(',') : '';
 
             const tr = document.createElement('tr');
             tr.innerHTML = `
@@ -59,19 +100,22 @@ async function saveAdminCompanion(id) {
         return;
     }
 
-    // カンマ区切りの文字列を配列データにきれいに分解（空文字は除外）
     const goodArray = goodStr ? goodStr.split(',').map(s => s.trim()).filter(Boolean) : [];
     const badArray = badStr ? badStr.split(',').map(s => s.trim()).filter(Boolean) : [];
+
+    // 💡 保存前に、入力された文字をすべてシステム用のValue値（japaneseなど）に自動変換する
+    const goodConverted = await convertGenresToValue(goodArray);
+    const badConverted = await convertGenresToValue(badArray);
 
     try {
         await updateDoc(doc(db, "companions", id), {
             name: name,
             id: compId,
             img: img,
-            good_genres: goodArray,
-            bad_genres: badArray
+            good_genres: goodConverted, // Value値で保存
+            bad_genres: badConverted    // Value値で保存
         });
-        alert("仲間マスターデータを更新しました！🎉");
+        alert("仲間マスターデータを更新しました！🎉（システム用Value値に補正しました）");
         await renderAdminCompanionList();
     } catch (e) { 
         console.error(e);
@@ -92,7 +136,7 @@ async function deleteAdminCompanion(id) {
     }
 }
 
-// 新しい仲間の追加（addDocによる自動ID生成）
+// 新しい仲間の追加
 async function addCompanionFromAdmin() {
     const name = document.getElementById('new-comp-name').value.trim();
     const compId = document.getElementById('new-comp-id').value.trim();
@@ -108,23 +152,26 @@ async function addCompanionFromAdmin() {
     const goodArray = goodStr ? goodStr.split(',').map(s => s.trim()).filter(Boolean) : [];
     const badArray = badStr ? badStr.split(',').map(s => s.trim()).filter(Boolean) : [];
 
+    // 💡 追加前にも、すべてシステム用のValue値（japaneseなど）に自動変換する
+    const goodConverted = await convertGenresToValue(goodArray);
+    const badConverted = await convertGenresToValue(badArray);
+
     try {
         await addDoc(collection(db, "companions"), {
             name: name,
             id: compId,
             img: img,
-            good_genres: goodArray,
-            bad_genres: badArray
+            good_genres: goodConverted, // Value値で保存
+            bad_genres: badConverted    // Value値で保存
         });
 
-        // フォームのリセット
         document.getElementById('new-comp-name').value = '';
         document.getElementById('new-comp-id').value = '';
         document.getElementById('new-comp-img').value = '';
         document.getElementById('new-comp-good').value = '';
         document.getElementById('new-comp-bad').value = '';
 
-        await renderAdminCompanionList(); // 最新リストに再描画
+        await renderAdminCompanionList(); 
         alert("新しい仲間マスターデータを追加しました！🎉");
     } catch (e) {
         console.error(e);
@@ -132,7 +179,6 @@ async function addCompanionFromAdmin() {
     }
 }
 
-// 親ファイルやHTML（onclick）へのグローバル公開登録
 window.renderAdminCompanionList = renderAdminCompanionList;
 window.saveAdminCompanion = saveAdminCompanion;
 window.deleteAdminCompanion = deleteAdminCompanion;
