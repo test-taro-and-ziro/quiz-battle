@@ -37,14 +37,11 @@
             <div class="village-label">こもれびの村</div>
         </div>
         
-        <!-- 💡 新設：画面左下に固定表示される「ぼうけん先えらび」の箇条書きメニュー箱 -->
+        <!-- 💡 画面左上に固定表示される「ぼうけん先えらび」の箇条書きメニュー箱 -->
         <div class="quest-menu-box">
-            <div class="menu-title">🚩 どこに ぼうけんにいく？</div>
-            <div class="menu-list">
-                <button class="menu-item-btn" onclick="selectQuest('北の森')">🌳 北の森</button>
-                <button class="menu-item-btn" onclick="selectQuest('南の沼')">🐊 南の沼</button>
-                <button class="menu-item-btn" onclick="selectQuest('東の洞窟')">🪨 東の洞窟</button>
-            </div>
+            <div class="menu-title">🚩 whereに ぼうけんにいく？</div>
+            <!-- 💡 中身を空っぽにして、id="dungeon-list-container" を追加します -->
+            <div class="menu-list" id="dungeon-list-container"></div>
         </div>
 
         <!-- 💬 ジャンルを選択する小さな小窓（モーダル） -->
@@ -54,10 +51,8 @@
                 <p class="window-target-text"><span id="selected-quest-name">---</span> にいくよ！</p>
                 <p class="window-sub-text">挑戦するクイズのジャンルをえらんでね</p>
                 
-                <div class="window-btn-group">
-                    <button class="btn-genre btn-math" onclick="goToGame('math')">➕ さんすう（算数）</button>
-                    <button class="btn-genre btn-japanese" onclick="goToGame('japanese')">📖 こくご（国語）</button>
-                </div>
+                <!-- 💡 中身を空っぽにして、id="genre-list-container" を追加します -->
+                <div class="window-btn-group" id="genre-list-container"></div>
                 
                 <button class="btn-cancel" onclick="cancelQuestSelect()">えらびなおす</button>
             </div>
