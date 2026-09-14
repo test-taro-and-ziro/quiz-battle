@@ -8,6 +8,7 @@ import { loadAnimalMaster, getCharacterFileName, setCharacterSrc, setupPlayerMas
 
 let currentUser = null;
 // let animalMasterData = []; // 💡 新設：データベースから読み込んだ動物マスターを保存する配列
+let treasureMasterData = [];
 
 // 💡 画面が起動した時の処理
 window.addEventListener('DOMContentLoaded', async () => {
