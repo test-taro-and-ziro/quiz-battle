@@ -48,7 +48,7 @@ const DEFAULT_NPC_ID = "p72A7WPl8OtG5Ht7hhXC";
 // ==========================================
 // 3. 画面起動時の処理
 // ==========================================
-window.addEventListener('DOMContentLoaded', () => {
+window.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('clear-quota').textContent = clearQuota;
     document.getElementById('res-quota-score').textContent = clearQuota;
 
