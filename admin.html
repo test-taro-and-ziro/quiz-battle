@@ -19,6 +19,9 @@
                     <button class="tab-btn" onclick="switchAdminTab('tab-questions')">クイズ管理</button>
                     <button class="tab-btn" onclick="switchAdminTab('tab-animals')">動物管理</button>
                     <button class="tab-btn" onclick="switchAdminTab('tab-genres')">科目管理</button>
+                    <button class="tab-btn" onclick="switchAdminTab('tab-companions')">仲間管理</button>
+                    <button class="tab-btn" onclick="switchAdminTab('tab-dungeons')">ダンジョン管理</button>
+                    <button class="tab-btn" onclick="switchAdminTab('tab-treasures')">宝物管理</button>
                 </div>
                 <button onclick="location.href='index.html'" style="background-color: #666; width: auto; margin: 0; padding: 8px 16px;">トップ画面に戻る</button>
             </div>
@@ -180,6 +183,111 @@
                 </div>
             </div>
 
+            <!-- 💡【新設】タブ6: 仲間管理 -->
+            <div id="tab-companions" class="admin-tab-content">
+                <h2>仲間マスターの管理（ドキュメントID自動生成）</h2>
+                <div class="table-responsive">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>名前 (name)</th>
+                                <th>識別ID (id)</th>
+                                <th>画像名 (img)</th>
+                                <th>得意科目 (good_genres ※カンマ区切り)</th>
+                                <th>苦手科目 (bad_genres ※カンマ区切り)</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-companion-list">
+                            <!-- JSで挿入 -->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card" style="margin-top: 15px; background: #fff;">
+                    <h3>➕ 新しい仲間を追加</h3>
+                    <div style="display: flex; flex-direction: column; gap: 10px;">
+                        <div style="display: flex; gap: 10px;">
+                            <input type="text" id="new-comp-name" placeholder="名前 (例: うさ美)" style="flex: 1;">
+                            <input type="text" id="new-comp-id" placeholder="識別ID (例: rabbit_01)" style="flex: 1;">
+                            <input type="text" id="new-comp-img" placeholder="画像名 (例: rabbit.png)" style="flex: 1;">
+                        </div>
+                        <input type="text" id="new-comp-good" placeholder="得意科目をカンマ区切りで入力 (例: さんすう )">
+                        <input type="text" id="new-comp-bad" placeholder="苦手科目をカンマ区切りで入力 (例: しゃかい,こくご )">
+                        <button onclick="addCompanionFromAdmin()" style="background-color: #4CAF50; width: 100%;">この仲間を追加する</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 💡【新設】タブ7: ダンジョン管理 -->
+            <div id="tab-dungeons" class="admin-tab-content">
+                <h2>ダンジョンマスターの管理（ドキュメントID手動入力指定）</h2>
+                <div class="table-responsive">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>ドキュメントID</th>
+                                <th>ダンジョン名 (name)</th>
+                                <th>ノルマ (norma)</th>
+                                <th>表示順 (order)</th>
+                                <th>報酬設定 (rewards ※国語,算数,道徳の宝物コードを入力)</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-dungeon-list">
+                            <!-- JSで挿入 -->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card" style="margin-top: 15px; background: #fff;">
+                    <h3>➕ 新しいダンジョンを追加</h3>
+                    <div style="display: flex; flex-direction: column; gap: 10px;">
+                        <div style="display: flex; gap: 10px;">
+                            <input type="text" id="new-dunj-docid" placeholder="ドキュメントID (例: dungeon_03)" style="flex: 1;">
+                            <input type="text" id="new-dunj-name" placeholder="ダンジョン名 (例: 北の森)" style="flex: 1;">
+                            <input type="number" id="new-dunj-norma" placeholder="ノルマ (例: 500)" style="flex: 1;">
+                            <input type="number" id="new-dunj-order" placeholder="表示順 (例: 1)" style="flex: 1;">
+                        </div>
+                        <div style="display: flex; gap: 10px;">
+                            <input type="text" id="new-dunj-rew-japanese" placeholder="こくご報酬コード (例: T1)" style="flex: 1;">
+                            <input type="text" id="new-dunj-rew-math" placeholder="さんすう報酬コード (例: T2)" style="flex: 1;">
+                            <input type="text" id="new-dunj-rew-moral" placeholder="どうとく報酬コード (例: T3)" style="flex: 1;">
+                        </div>
+                        <button onclick="addDungeonFromAdmin()" style="background-color: #4CAF50; width: 100%;">このダンジョンを追加する</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 💡【新設】タブ8: 宝物管理 -->
+            <div id="tab-treasures" class="admin-tab-content">
+                <h2>宝物マスターの管理（ドキュメントID自動生成）</h2>
+                <div class="table-responsive">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>宝物名 (name)</th>
+                                <th>宝物コード (treasure)</th>
+                                <th>画像名 (img)</th>
+                                <th>表示順 (order)</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-treasure-list">
+                            <!-- JSで挿入 -->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card" style="margin-top: 15px; background: #fff;">
+                    <h3>➕ 新しい宝物を追加</h3>
+                    <div style="display: flex; gap: 10px;">
+                        <input type="text" id="new-tres-name" placeholder="宝物名 (例: もりのメダル)">
+                        <input type="text" id="new-tres-code" placeholder="宝物コード (例: T1)">
+                        <input type="text" id="new-tres-img" placeholder="画像名 (例: medal.jpg)">
+                        <input type="text" id="new-tres-order" placeholder="表示順 (例: 1)" style="width: 120px;">
+                        <button onclick="addTreasureFromAdmin()" style="background-color: #4CAF50; width: auto; white-space: nowrap;">追加</button>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 
@@ -198,6 +306,9 @@
     <script type="module" src="js/sub_js/script_admin_question.js"></script>
     <script type="module" src="js/sub_js/script_admin_animal.js"></script>
     <script type="module" src="js/sub_js/script_admin_genre.js"></script>
+    <script type="module" src="js/sub_js/script_admin_companion.js"></script>
+    <script type="module" src="js/sub_js/script_admin_dungeon.js"></script>
+    <script type="module" src="js/sub_js/script_admin_treasure.js"></script>
     
     <!-- 最後に、全体をまとめる親ファイルを読み込む -->
     <script type="module" src="js/script_admin.js"></script>
