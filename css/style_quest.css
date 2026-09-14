@@ -441,3 +441,10 @@ html, body {
 .btn-profile-close:hover {
     background: #94a3b8;
 }
+
+/* 動的ジャンルボタン用のカラーバリエーション */
+.btn-english { background: #f97316; } /* 英語：オレンジ */
+.btn-moral { background: #84cc16; }   /* 道徳：きみどり */
+.btn-science { background: #a855f7; } /* 理科：むらさき */
+.btn-social { background: #b45309; }  /* 社会：茶色 */
+.btn-genre-default { background: #6b7280; } /* その他：グレー */
