@@ -159,7 +159,15 @@ function goToGame(genre) {
     window.location.href = `game.html?user=${encodeURIComponent(currentUser)}&quest=${encodeURIComponent(questName)}&genre=${encodeURIComponent(genre)}`;
 }
 
+// 🛑 新設：ログアウトボタンが押されたときに確認する関数
+function logout() {
+    if (confirm("ログアウトして トップがめんにもどる？")) {
+        window.location.href = 'index.html';
+    }
+}
+
 // HTMLの onclick から呼び出せるように window オブジェクトに登録 [js]
 window.selectQuest = selectQuest;
 window.cancelQuestSelect = cancelQuestSelect;
 window.goToGame = goToGame;
+window.logout = logout;
