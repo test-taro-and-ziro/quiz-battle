@@ -14,6 +14,9 @@ window.addEventListener('DOMContentLoaded', async () => {
     if (typeof window.renderAdminQuestionList === 'function') await window.renderAdminQuestionList();
     if (typeof window.renderAdminAnimalList === 'function') await window.renderAdminAnimalList();
     if (typeof window.renderAdminGenreList === 'function') await window.renderAdminGenreList();
+    if (typeof window.renderAdminCompanionList === 'function') await window.renderAdminCompanionList();
+    if (typeof window.renderAdminDungeonList === 'function') await window.renderAdminDungeonList();
+    if (typeof window.renderAdminTreasureList === 'function') await window.renderAdminTreasureList();
 });
 
 // タブを切り替える関数
