@@ -84,4 +84,4 @@ async function addGradeFromAdmin() {
 
 // 「親画面の起動時」や「HTMLのボタン」から呼べるようにwindowに登録
 window.renderAdminGradeList = renderAdminGradeList;
-// window.deleteAdminUser = deleteAdminUser; (もし削除関数があれば登録)
+window.addGradeFromAdmin = addGradeFromAdmin;
