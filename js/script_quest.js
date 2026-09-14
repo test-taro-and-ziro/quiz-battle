@@ -168,7 +168,7 @@ function renderTreasures(userTreasures) {
     });
 }
 
-/ 💡 ダンジョンが押されたとき、対応するジャンルだけを出し分ける処理
+// 💡 ダンジョンが押されたとき、対応するジャンルだけを出し分ける処理
 function selectQuest(dungeon) {
     selectedDungeon = dungeon; 
     document.getElementById('selected-quest-name').textContent = dungeon.name;
