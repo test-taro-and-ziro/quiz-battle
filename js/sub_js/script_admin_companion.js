@@ -4,36 +4,6 @@
 // 💡 共通設定ファイルから db を読み込む
 import { db, collection, doc, addDoc, getDocs, setDoc, getDoc, updateDoc, deleteDoc, query, where, orderBy } from '../firebase-config.js';
 
-async function validateGenresOnlyValue(array) {
-    if (array.length === 0) return true; // 空っぽならチェック不要でOK
-
-    try {
-        // 科目マスター（genres）から有効な「value」の一覧を取得する
-        const genreSnapshot = await getDocs(collection(db, "genres"));
-        const validValues = new Set(); // 有効なValue値を詰め込む箱
-
-        genreSnapshot.forEach(d => {
-            const gData = d.data();
-            if (gData.value) {
-                validValues.add(gData.value.trim()); // 例: "japanese", "math"
-            }
-        });
-
-        // 入力された文字を1つずつチェック
-        for (const item of array) {
-            // もし科目マスターのValue値に存在しない文字（例:「こくご」など）があればエラー
-            if (!validValues.has(item)) {
-                alert(`🚨 エラー:「${item}」は無効な科目コードです。\n科目マスターの【送信値(value)】（例: japanese, math）で入力してください。`);
-                return false; 
-            }
-        }
-        return true; // すべてValue値なら合格！
-    } catch (e) {
-        console.error("科目マスターのチェックに失敗しました", e);
-        return false;
-    }
-}
-
 // 一覧描画
 async function renderAdminCompanionList() {
     const tbody = document.getElementById('admin-companion-list');
@@ -48,7 +18,7 @@ async function renderAdminCompanionList() {
             const id = docSnap.id; 
             const data = docSnap.data();
 
-            // 💡 DBの中身（japaneseなど）をそのままテキストボックスにカンマ区切りで表示する
+            // 💡 DBの中身（入力された文字）をそのままテキストボックスにカンマ区切りで表示
             const goodText = data.good_genres ? data.good_genres.join(',') : '';
             const badText = data.bad_genres ? data.bad_genres.join(',') : '';
 
@@ -57,7 +27,7 @@ async function renderAdminCompanionList() {
                 <td><input type="text" id="ad-comp-name-${id}" value="${data.name || ''}" style="width:110px;"></td>
                 <td><input type="text" id="ad-comp-id-${id}" value="${data.id || ''}" style="width:100px;"></td>
                 <td><input type="text" id="ad-comp-img-${id}" value="${data.img || ''}" style="width:110px;"></td>
-                <td><input type="text" id="ad-comp-good-${id}" value="${goodText}" placeholder="例: japanese"></td>
+                <td><input type="text" id="ad-comp-good-${id}" value="${goodText}" placeholder="例: math"></td>
                 <td><input type="text" id="ad-comp-bad-${id}" value="${badText}" placeholder="例: social,japanese"></td>
                 <td>
                     <button onclick="saveAdminCompanion('${id}')">保存</button>
@@ -89,23 +59,17 @@ async function saveAdminCompanion(id) {
         return;
     }
 
+    // 💡 エラーチェックなしで、入力された文字をそのまま素直に配列化
     const goodArray = goodStr ? goodStr.split(',').map(s => s.trim()).filter(Boolean) : [];
     const badArray = badStr ? badStr.split(',').map(s => s.trim()).filter(Boolean) : [];
-
-    // 💡 厳格チェックを実行：不適切な文字があれば、ここで処理を終了（保存させない）
-    const isGoodValid = await validateGenresOnlyValue(goodArray);
-    if (!isGoodValid) return;
-
-    const isBadValid = await validateGenresOnlyValue(badArray);
-    if (!isBadValid) return;
 
     try {
         await updateDoc(doc(db, "companions", id), {
             name: name,
             id: compId,
             img: img,
-            good_genres: goodArray, // そのまま保存
-            bad_genres: badArray    // そのまま保存
+            good_genres: goodArray,
+            bad_genres: badArray
         });
         alert("仲間マスターデータを更新しました！🎉");
         await renderAdminCompanionList();
@@ -143,13 +107,6 @@ async function addCompanionFromAdmin() {
 
     const goodArray = goodStr ? goodStr.split(',').map(s => s.trim()).filter(Boolean) : [];
     const badArray = badStr ? badStr.split(',').map(s => s.trim()).filter(Boolean) : [];
-
-    // 💡 追加前にも、厳格チェックを実行して不適切な文字を弾く
-    const isGoodValid = await validateGenresOnlyValue(goodArray);
-    if (!isGoodValid) return;
-
-    const isBadValid = await validateGenresOnlyValue(badArray);
-    if (!isBadValid) return;
 
     try {
         await addDoc(collection(db, "companions"), {
