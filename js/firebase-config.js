@@ -34,5 +34,5 @@ const app = initializeApp(firebaseConfig);
 // 💡 外部のJSファイルからでもデータベースを扱えるように export（書き出し）する
 const db = getFirestore(app);
 
-/ 🌟 すべての画面や共通関数で使い回せるように、dbとFirestoreの各お仕事を丸ごとエクスポート！
+// 🌟 すべての画面や共通関数で使い回せるように、dbとFirestoreの各お仕事を丸ごとエクスポート！
 export { db, collection, doc, addDoc, getDocs, setDoc, getDoc, updateDoc, deleteDoc, query, where, orderBy };
