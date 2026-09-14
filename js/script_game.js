@@ -10,16 +10,16 @@ import { loadAnimalMaster, getCharacterFileName, setCharacterSrc, setupPlayerMas
 // 1. 本物のFirebase構造に合わせたダミーデータ
 // ==========================================
 const mockQuestions = [
-    { id: "q1", type: "四択", genre: "math", grade: 4, text: "15 × 6 のこたえは つぎのうちどれかな？", choices: ["75", "80", "90", "100"], answer: "90", explanation: "15×6は90になります。" },
-    { id: "q2", type: "四択", genre: "moral", grade: 4, text: "SNSで友達の悪口を書いている人を見つけました。適切な行動は？", choices: ["関わらず、大人や先生に相談する", "自分も一緒に書き込む", "その人を強く問い詰める", "面白そうなので友達に拡散する"], answer: "関わらず、大人や先生に相談する", explanation: "悪口には関わらず、すぐに信頼できる大人や先生に相談しよう。" },
-    { id: "q3", type: "四択", genre: "Japanese", grade: 4, text: "「一生懸命」と同じ意味の言葉はどれ？", choices: ["必死になって", "てきとうに", "のんびりと", "おこりながら"], answer: "必死になって", explanation: "正解は「必死になって」です！" },
-    { id: "q4", type: "直接入力", genre: "math", grade: 4, text: "25 × 4 の答えはいくつ？", choices: [], answer: "100", explanation: "25×4は100です！" },
-    { id: "q5", type: "四択", genre: "math", grade: 0, text: "りんごが 3こ あります。2こ もらうと、ぜんぶで なんこ？", choices: ["5こ", "4こ", "1こ", "6こ"], answer: "5こ", explanation: "3+2は5になるよ。" },
-    { id: "q6", type: "〇×", genre: "math", grade: 4, text: "三角形の内角の和（3つの角をたした数）は 180度 である。マルかバツか？", choices: ["〇", "×"], answer: "〇", explanation: "正解は〇！どんな三角形でも、3つの角を合わせると絶対に180度になるよ。" },
-    { id: "q7", type: "四択", genre: "Japanese", grade: 4, text: "「ノートに文字を（　）。」カッコに入る正しい言葉は？", choices: ["書く", "歩く", "食べる", "話す"], answer: "書く", explanation: "ノートには文字を「書く」のが正しいね。" },
-    { id: "q8", type: "〇×", genre: "moral", grade: 4, text: "友達が困っているときは、気づかないふりをするのが良い。マルかバツか？", choices: ["〇", "×"], answer: "×", explanation: "バツです！困っている友達がいたら、「どうしたの？」と声をかけてあげよう。" },
-    { id: "q9", type: "直接入力", genre: "math", grade: 4, text: "1分間は、何秒かな？（数字だけでこたえてね）", choices: [], answer: "60", explanation: "正解は60秒です！ちなみに1時間は60分だよ。" },
-    { id: "q10", type: "四択", genre: "math", grade: 4, text: "81 ÷ 9 のこたえは？", choices: ["7", "8", "9", "10"], answer: "9", explanation: "九九の「くく あしじゅういち」を逆算すると9になるよ！" }
+    { id: "q1", type: "select", genre: "math", grade: 4, text: "15 × 6 のこたえは つぎのうちどれかな？", choices: ["75", "80", "90", "100"], answer: "90", explanation: "15×6は90になります。" },
+    { id: "q2", type: "select", genre: "moral", grade: 4, text: "SNSで友達の悪口を書いている人を見つけました。適切な行動は？", choices: ["関わらず、大人や先生に相談する", "自分も一緒に書き込む", "その人を強く問い詰める", "面白そうなので友達に拡散する"], answer: "関わらず、大人や先生に相談する", explanation: "悪口には関わらず、すぐに信頼できる大人や先生に相談しよう。" },
+    { id: "q3", type: "select", genre: "Japanese", grade: 4, text: "「一生懸命」と同じ意味の言葉はどれ？", choices: ["必死になって", "てきとうに", "のんびりと", "おこりながら"], answer: "必死になって", explanation: "正解は「必死になって」です！" },
+    { id: "q4", type: "direct", genre: "math", grade: 4, text: "25 × 4 の答えはいくつ？", choices: [], answer: "100", explanation: "25×4は100です！" },
+    { id: "q5", type: "select", genre: "math", grade: 0, text: "りんごが 3こ あります。2こ もらうと、ぜんぶで なんこ？", choices: ["5こ", "4こ", "1こ", "6こ"], answer: "5こ", explanation: "3+2は5になるよ。" },
+    { id: "q6", type: "whitch", genre: "math", grade: 4, text: "三角形の内角の和（3つの角をたした数）は 180度 である。マルかバツか？", choices: ["〇", "×"], answer: "〇", explanation: "正解は〇！どんな三角形でも、3つの角を合わせると絶対に180度になるよ。" },
+    { id: "q7", type: "select", genre: "Japanese", grade: 4, text: "「ノートに文字を（　）。」カッコに入る正しい言葉は？", choices: ["書く", "歩く", "食べる", "話す"], answer: "書く", explanation: "ノートには文字を「書く」のが正しいね。" },
+    { id: "q8", type: "whitch", genre: "moral", grade: 4, text: "友達が困っているときは、気づかないふりをするのが良い。マルかバツか？", choices: ["〇", "×"], answer: "×", explanation: "バツです！困っている友達がいたら、「どうしたの？」と声をかけてあげよう。" },
+    { id: "q9", type: "direct", genre: "math", grade: 4, text: "1分間は、何秒かな？（数字だけでこたえてね）", choices: [], answer: "60", explanation: "正解は60秒です！ちなみに1時間は60分だよ。" },
+    { id: "q10", type: "select", genre: "math", grade: 4, text: "81 ÷ 9 のこたえは？", choices: ["7", "8", "9", "10"], answer: "9", explanation: "九九の「くく あしじゅういち」を逆算すると9になるよ！" }
 ];
 
 // ==========================================
@@ -184,19 +184,28 @@ function loadQuestion(index) {
     // クイズ形式による初期値（制限時間カウンタ）の分岐
     // ※内部的には、0になるまで減算し、残り時間ボーナス（最大20ポイント）の計算に使用します
     let maxTimerValue = 30; // 通常は30
-    if (q.type === "直接入力") {
-        maxTimerValue = 40; // 直接入力は長めの40
-    }
-
-    if (q.type === "四択" || q.type === "○×") {
+    // --- 【確定版】英単語化されたtypeに応じたボタン生成処理 ---
+    if (q.type === "select") {
+        // 【四択】データのchoices配列からボタンを生成
         q.choices.forEach(choice => {
             const btn = document.createElement('button');
-            btn.className = q.type === "○×" ? 'choice-btn ox-btn' : 'choice-btn';
+            btn.className = 'choice-btn';
             btn.textContent = choice;
-            btn.addEventListener('click', () => handleAnswer(choice, q.answer, maxTimerValue));
+            btn.addEventListener('click', () => handleAnswer(choice, q.answer, maxScoreForType));
             inputsContainer.appendChild(btn);
         });
-    } else if (q.type === "直接入力") {
+    } else if (q.type === "which") {
+        // 【〇×】自動的に「〇」と「×」の2つの大型ボタンを確実に生成
+        const oxChoices = ["〇", "×"];
+        oxChoices.forEach(choice => {
+            const btn = document.createElement('button');
+            btn.className = 'choice-btn ox-btn';
+            btn.textContent = choice;
+            btn.addEventListener('click', () => handleAnswer(choice, q.answer, maxScoreForType));
+            inputsContainer.appendChild(btn);
+        });
+    } else if (q.type === "direct") {
+        // 【直接入力】フォームの生成
         const group = document.createElement('div');
         group.className = 'text-input-group';
         
@@ -212,7 +221,7 @@ function loadQuestion(index) {
         
         submitBtn.addEventListener('click', () => {
             const userAnswer = input.value.trim();
-            handleAnswer(userAnswer, q.answer, maxTimerValue);
+            handleAnswer(userAnswer, q.answer, maxScoreForType);
         });
         
         group.appendChild(input);
