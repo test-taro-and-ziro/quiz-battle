@@ -218,7 +218,7 @@
                 </div>
             </div>
             
-            <!-- 💡【新設】タブ7: ダンジョン管理 -->
+            <!-- 💡【確定版】タブ7: ダンジョン管理（キー・値ペアの可変システム） -->
             <div id="tab-dungeons" class="admin-tab-content">
                 <h2>ダンジョンマスターの管理（ドキュメントID手動入力指定）</h2>
                 <div class="table-responsive">
@@ -229,7 +229,7 @@
                                 <th>ダンジョン名 (name)</th>
                                 <th>ノルマ (norma)</th>
                                 <th>表示順 (order)</th>
-                                <th>報酬設定 (rewards)</th>
+                                <th style="width: 250px;">報酬設定 (rewards)</th>
                                 <th>操作</th>
                             </tr>
                         </thead>
@@ -242,20 +242,31 @@
                     <h3>➕ 新しいダンジョンを追加</h3>
                     <div style="display: flex; flex-direction: column; gap: 10px;">
                         <div style="display: flex; gap: 10px;">
-                            <input type="text" id="new-dunj-docid" placeholder="ドキュメントID (例: dungeon_03)" style="flex: 1;">
-                            <input type="text" id="new-dunj-name" placeholder="ダンジョン名 (例: 北の森)" style="flex: 1;">
+                            <input type="text" id="new-dunj-docid" placeholder="ドキュメントID (例: dungeon_04)" style="flex: 1;">
+                            <input type="text" id="new-dunj-name" placeholder="ダンジョン名 (例: 東の洞窟)" style="flex: 1;">
                             <input type="number" id="new-dunj-norma" placeholder="ノルマ (例: 500)" style="flex: 1;">
-                            <input type="number" id="new-dunj-order" placeholder="表示順 (例: 1)" style="flex: 1;">
+                            <input type="number" id="new-dunj-order" placeholder="表示順 (例: 4)" style="flex: 1;">
                         </div>
-                        <!-- 固定の3つのインプットの代わりに、この自動配置用のエリアを1行置くだけ！ -->
-                        <div id="new-dunj-rewards-area" style="display: flex; gap: 10px; flex-wrap: wrap;">
-                            <!-- ここに科目マスタから自動的に「〇〇報酬」の入力欄が作られます -->
+                        
+                        <div style="border: 1px dashed #ccc; padding: 10px; border-radius: 4px; background: #f9f9f9;">
+                            <h4 style="margin: 0 0 10px 0; font-size: 13px; color: #555;">🎁 報酬マップの登録（必要な分だけ追加してください）</h4>
+                            <div id="new-dunj-rewards-container" style="display: flex; flex-direction: column; gap: 5px;">
+                                <!-- 初期値として1枠だけサンプルを置いておきます -->
+                                <div class="new-reward-pair" style="display: flex; gap: 5px; align-items: center;">
+                                    <input type="text" class="new-rew-key" placeholder="科目の送信値 (例: math)" style="flex: 1; padding: 4px;">
+                                    <span>:</span>
+                                    <input type="text" class="new-rew-val" placeholder="宝物コード (例: T1)" style="flex: 1; padding: 4px;">
+                                    <button type="button" onclick="this.parentElement.remove()" style="background:#e53e3e; padding:4px 8px; margin:0; width:auto;">❌</button>
+                                </div>
+                            </div>
+                            <button type="button" onclick="addNewRewardRow()" style="margin-top: 8px; background: #666; width: auto; padding: 4px 12px; font-size: 12px;">➕ 報酬のペアを追加</button>
                         </div>
+                        
                         <button onclick="addDungeonFromAdmin()" style="background-color: #4CAF50; width: 100%;">このダンジョンを追加する</button>
                     </div>
                 </div>
             </div>
-            
+
             <!-- 💡【新設】タブ8: 宝物管理 -->
             <div id="tab-treasures" class="admin-tab-content">
                 <h2>宝物マスターの管理（ドキュメントID自動生成）</h2>
