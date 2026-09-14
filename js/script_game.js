@@ -182,30 +182,30 @@ function loadQuestion(index) {
     inputsContainer.classList.remove('hidden');
 
     // クイズ形式による初期値（制限時間カウンタ）の分岐
-    // ※内部的には、0になるまで減算し、残り時間ボーナス（最大20ポイント）の計算に使用します
-    let maxTimerValue = 30; // 通常は30
-    // --- 【確定版】英単語化されたtypeに応じたボタン生成処理 ---
+    let maxTimerValue = 30; // 通常（select, which）は30
+    if (q.type === "direct") {
+        maxTimerValue = 40; // 直接入力（direct）は40
+    }
+
+    // ボタン・入力エリアの生成（引数から余計な変数を削除してシンプルに）
     if (q.type === "select") {
-        // 【四択】データのchoices配列からボタンを生成
         q.choices.forEach(choice => {
             const btn = document.createElement('button');
             btn.className = 'choice-btn';
             btn.textContent = choice;
-            btn.addEventListener('click', () => handleAnswer(choice, q.answer, maxScoreForType));
+            btn.addEventListener('click', () => handleAnswer(choice, q.answer));
             inputsContainer.appendChild(btn);
         });
     } else if (q.type === "which") {
-        // 【〇×】自動的に「〇」と「×」の2つの大型ボタンを確実に生成
         const oxChoices = ["〇", "×"];
         oxChoices.forEach(choice => {
             const btn = document.createElement('button');
             btn.className = 'choice-btn ox-btn';
             btn.textContent = choice;
-            btn.addEventListener('click', () => handleAnswer(choice, q.answer, maxScoreForType));
+            btn.addEventListener('click', () => handleAnswer(choice, q.answer));
             inputsContainer.appendChild(btn);
         });
     } else if (q.type === "direct") {
-        // 【直接入力】フォームの生成
         const group = document.createElement('div');
         group.className = 'text-input-group';
         
@@ -221,7 +221,7 @@ function loadQuestion(index) {
         
         submitBtn.addEventListener('click', () => {
             const userAnswer = input.value.trim();
-            handleAnswer(userAnswer, q.answer, maxScoreForType);
+            handleAnswer(userAnswer, q.answer);
         });
         
         group.appendChild(input);
@@ -229,7 +229,7 @@ function loadQuestion(index) {
         inputsContainer.appendChild(group);
     }
 
-    // タイマーの開始（0になるまでしっかり減る、HTML上の数値要素への反映は削除）
+    // タイマーの開始（0になるまで減る）
     currentScore = maxTimerValue;
     document.getElementById('timer-bar-fill').style.width = '100%';
     
@@ -248,7 +248,7 @@ function loadQuestion(index) {
 // ==========================================
 // 5. 回答時の判定・解説表示処理
 // ==========================================
-function handleAnswer(userAnswer, correctAnswer, maxTimerValue) {
+function handleAnswer(userAnswer, correctAnswer) {
     clearInterval(timerInterval);
     document.getElementById('quiz-inputs').classList.add('hidden');
     document.getElementById('timer-bar-fill').style.width = '0%';
@@ -261,15 +261,18 @@ function handleAnswer(userAnswer, correctAnswer, maxTimerValue) {
         resultMessage.textContent = "せいかい！ 🎉";
         resultMessage.className = "result-text correct"; 
         
-        // ★新しいポイント計算ロジック
-        // 残り時間を最大20ポイントに換算 ＋ 最小値の10ポイントを必ず加算
+        // ★現在の問題のタイプを安全に取得してベース時間を判定
+        const q = mockQuestions[currentQuestionIndex];
+        const maxTimerValue = (q.type === "direct") ? 40 : 30;
+        
+        // 新しいポイント計算ロジック（残り時間ボーナス最大20ポイント ＋ 最小値10ポイント）
         const timeBonus = Math.round((currentScore / maxTimerValue) * 20);
         addedPlayerScore = timeBonus + 10; 
         
     } else {
         resultMessage.textContent = "ざんねん… 😢";
         resultMessage.className = "result-text incorrect"; 
-        addedPlayerScore = 0; // 不正解は0ポイント
+        addedPlayerScore = 0; 
     }
 
     playerScore += addedPlayerScore;
