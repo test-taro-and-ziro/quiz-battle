@@ -1,0 +1,363 @@
+/* ==========================================
+   全体の基本設定
+   ========================================== */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+    background-color: #f0fdf4; /* 優しい緑系の背景 */
+    color: #333;
+}
+
+#game-container {
+    max-width: 600px; /* 縦長画面を想定 */
+    margin: 0 auto;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-sizing: border-box;
+    padding: 15px;
+    position: relative;
+}
+
+/* 非表示コントロール用の共通クラス */
+.hidden {
+    display: none !important;
+}
+
+/* ==========================================
+   1. ヘッダーエリア（進行度・タイマー）
+   ========================================== */
+.game-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #ffffff;
+    padding: 10px 15px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+.progress-box, .timer-box {
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+.label {
+    font-size: 0.8rem;
+    color: #666;
+    display: block;
+}
+
+.score-highlight {
+    color: #e11d48; /* タイマーの数字を強調 */
+    font-size: 1.5rem;
+}
+
+/* ==========================================
+   2. メインエリア（クイズ・解説）
+   ========================================== */
+.quiz-area {
+    flex-grow: 1;
+    margin: 20px 0;
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    display: flex;
+    flex-direction: column;
+}
+
+.quiz-meta-info {
+    margin-bottom: 10px;
+}
+
+.badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+.genre-badge { background: #dbeafe; color: #1e40af; } /* 青系 */
+.grade-badge { background: #fef3c7; color: #92400e; } /* 黄系 */
+
+.question-text-container h2 {
+    font-size: 1.25rem;
+    line-height: 1.6;
+    margin: 10px 0 20px 0;
+}
+
+/* 回答UIの配置 */
+.inputs-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: auto;
+}
+
+/* 4択・〇×ボタンの共通スタイル */
+.choice-btn {
+    background: #f3f4f6;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 14px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.choice-btn:hover {
+    background: #eedff9;
+    border-color: #a855f7;
+}
+
+.ox-btn {
+    font-size: 2rem;
+    padding: 10px;
+}
+
+/* 直接入力フォームのスタイル */
+.text-input-group {
+    display: flex;
+    gap: 8px;
+}
+
+#direct-answer-input {
+    flex-grow: 1;
+    padding: 12px;
+    border: 2px solid #css-border;
+    border-radius: 12px;
+    font-size: 1.1rem;
+}
+
+.submit-btn {
+    background: #22c55e;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 0 20px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* 解説ボックス */
+.explanation-box {
+    background: #fef2f2;
+    border: 2px dashed #f87171;
+    border-radius: 12px;
+    padding: 15px;
+    margin-top: auto;
+}
+
+.result-text {
+    font-size: 1.4rem;
+    font-weight: bold;
+    margin: 0 0 10px 0;
+    text-align: center;
+}
+
+.result-text.correct { color: #22c55e; }
+.result-text.incorrect { color: #ef4444; }
+
+.explanation-content h3 {
+    margin: 0 0 5px 0;
+    font-size: 1rem;
+    color: #991b1b;
+}
+
+.next-btn {
+    width: 100%;
+    background: #3b82f6;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 12px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+/* ==========================================
+   3. フッターエリア（ステータス・ノルマ）
+   ========================================== */
+.status-area {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 15px;
+    box-shadow: 0 -4px 10px rgba(0,0,0,0.05);
+}
+
+.party-status-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.character-card {
+    flex: 1;
+    background: #f9fafb;
+    border: 1px solid #f3f4f6;
+    border-radius: 12px;
+    padding: 8px;
+    text-align: center;
+}
+
+.chara-img-wrapper img {
+    width: 45px;
+    height: 45px;
+    object-fit: contain;
+    background: #eee;
+    border-radius: 50%;
+}
+
+.chara-name {
+    font-size: 0.8rem;
+    margin: 4px 0 2px 0;
+    color: #555;
+}
+
+.chara-score {
+    font-size: 0.95rem;
+    font-weight: bold;
+    margin: 0;
+}
+
+/* ノルマゲージ */
+.quota-container {
+    background: #f3f4f6;
+    padding: 10px;
+    border-radius: 12px;
+}
+
+.quota-text-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    margin-bottom: 6px;
+}
+
+.quota-bar-bg {
+    background: #e5e7eb;
+    height: 14px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.quota-bar-fill {
+    background: #eab308; /* 金色のプログレスバー */
+    height: 100%;
+    transition: width 0.4s ease;
+}
+
+/* ==========================================
+   4. 結果確認画面（リザルト画面）オーバーレイ
+   ========================================== */
+.result-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6); /* 画面全体を暗くする */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+    border-radius: 16px;
+}
+
+.result-window {
+    background: #ffffff;
+    width: 85%;
+    max-width: 450px;
+    border-radius: 24px;
+    padding: 25px;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    animation: popIn 0.3s ease-out;
+}
+
+@keyframes popIn {
+    0% { transform: scale(0.8); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.clear-title { color: #eab308; font-size: 2rem; margin-top: 0; }
+.failed-title { color: #ef4444; font-size: 2rem; margin-top: 0; }
+
+.result-scores-container {
+    background: #f9fafb;
+    border-radius: 16px;
+    padding: 15px;
+    margin: 20px 0;
+    text-align: left;
+}
+
+.result-score-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    color: #4b5563;
+}
+
+.result-divider {
+    border-top: 1px solid #e5e7eb;
+    margin: 10px 0;
+}
+
+.result-total-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.result-total-row h2 {
+    margin: 0;
+    color: #111827;
+}
+
+/* ごほうび箱 */
+.reward-box {
+    background: #f0fdf4;
+    border: 2px solid #bbf7d0;
+    border-radius: 16px;
+    padding: 15px;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.reward-header {
+    margin: 0 0 8px 0;
+    color: #16a34a;
+    font-size: 1rem;
+}
+
+.reward-content p {
+    margin: 4px 0;
+    font-size: 0.95rem;
+}
+
+.map-return-btn {
+    background: #f59e0b;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 14px 28px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: background 0.2s;
+}
+
+.map-return-btn:hover {
+    background: #d97706;
+}
