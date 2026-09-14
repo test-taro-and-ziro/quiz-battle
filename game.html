@@ -13,19 +13,29 @@
     <div id="game-container">
         
         <!-- ==========================================
-             1. 上部ヘッダーエリア（進行度とタイマー）
+             1. 上部ヘッダーエリア（進行度ゲージ ＆ タイマーゲージ）
              ========================================== -->
         <header class="game-header">
-            <!-- クイズの進行度表示 -->
-            <div class="progress-box">
-                <span class="label">もんだい</span>
-                <span id="current-question-num" class="count">1</span> / 10
+            <!-- クイズの進行度表示 ＋ 進行ゲージ -->
+            <div class="progress-container">
+                <div class="progress-box">
+                    <span class="label">もんだい</span>
+                    <span id="current-question-num" class="count">1</span> / 10
+                </div>
+                <div class="question-bar-bg">
+                    <div id="question-bar-fill" class="question-bar-fill" style="width: 10%;"></div>
+                </div>
             </div>
             
-            <!-- 動的に減少する回答スコア/タイマー表示 -->
-            <div class="timer-box">
-                <span class="label">のこりスコア</span>
-                <span id="time-score" class="score-highlight">100</span>
+            <!-- 残りスコア ＋ タイマーゲージ -->
+            <div class="timer-container">
+                <div class="timer-box">
+                    <span class="label">のこりスコア</span>
+                    <span id="time-score" class="score-highlight">30</span>
+                </div>
+                <div class="timer-bar-bg">
+                    <div id="timer-bar-fill" class="timer-bar-fill" style="width: 100%;"></div>
+                </div>
             </div>
         </header>
 
@@ -45,9 +55,9 @@
                 <h2 id="quiz-text">ここに問題文が読み込まれます。</h2>
             </div>
 
-            <!-- 動的回答エリア（JSでクイズのtypeに合わせて中身を生成・切り替え） -->
+            <!-- 動的回答エリア（JSでクイズのtypeに合わせて中身を切り替え） -->
             <div id="quiz-inputs" class="inputs-container">
-                <!-- JSでクイズのtype（4択 / 〇× / 直接入力）に応じたUIがここに挿入されます -->
+                <!-- JSでクイズのtype（四択 / 〇× / 直接入力）に応じたUIが自動挿入されます -->
             </div>
 
             <!-- 解説エリア（初期状態は「hidden」クラスで非表示、回答後に表示） -->
@@ -85,7 +95,7 @@
                     </div>
                 </div>
 
-                <!-- なかま1（Firebaseから取得 / 不足時はおさるさん） -->
+                <!-- なかま1 -->
                 <div class="character-card companion-card-1">
                     <div class="chara-img-wrapper">
                         <img id="npc1-img" src="" alt="なかま1">
@@ -96,7 +106,7 @@
                     </div>
                 </div>
 
-                <!-- なかま2（Firebaseから取得 / 不足時はおさるさん） -->
+                <!-- なかま2 -->
                 <div class="character-card companion-card-2">
                     <div class="chara-img-wrapper">
                         <img id="npc2-img" src="" alt="なかま2">
@@ -112,9 +122,9 @@
             <div class="quota-container">
                 <div class="quota-text-info">
                     <span>みんなの合計: <strong id="total-score">0</strong> 点</span>
-                    <span>ノルマ: <strong id="clear-quota">500</strong> 点</span>
+                    <span>ノルマ: <strong id="clear-quota">300</strong> 点</span>
                 </div>
-                <!-- CSSでゲージにするためのプログレスバー構造 -->
+                <!-- みんなの合計スコアゲージ -->
                 <div class="quota-bar-bg">
                     <div id="quota-bar-fill" class="quota-bar-fill" style="width: 0%;"></div>
                 </div>
@@ -126,7 +136,6 @@
 
     <!-- ==========================================
          4. 結果確認画面（リザルト画面）オーバーレイ
-         ※初期状態は hidden で非表示。10問終了時にJSで表示
          ========================================== -->
     <div id="result-screen" class="result-overlay hidden">
         <div class="result-window">
@@ -151,15 +160,15 @@
                 <div class="result-divider"></div>
                 <div class="result-total-row">
                     <span>みんなの合計スコア:</span>
-                    <h2><span id="res-total-score">0</span> / <span id="res-quota-score">500</span> 点</h2>
+                    <h2><span id="res-total-score">0</span> / <span id="res-quota-score">300</span> 点</h2>
                 </div>
             </div>
 
-            <!-- 報酬（秘宝）＆新なかま獲得エリア（条件を満たした時だけJSで表示を制御） -->
+            <!-- 報酬（秘宝）＆新なかま獲得エリア -->
             <div id="reward-area" class="reward-box hidden">
                 <h3 class="reward-header">🎁 ごほうびゲット！</h3>
                 <div id="reward-content" class="reward-content">
-                    <!-- 例：「ひほう『たいようのメダル』をみつけた！」や、新しく仲間が増えた演出をJSで挿入 -->
+                    <!-- JSで動的に挿入 -->
                 </div>
             </div>
 
@@ -171,7 +180,7 @@
         </div>
     </div>
 
-    <!-- スクリプトの読み込み -->
+    <!-- スクリプトの読み込み（モジュール対応） -->
     <script type="module" src="js/game-master.js"></script>
     <script type="module" src="js/script_game.js"></script>
 </body>
