@@ -36,18 +36,42 @@ let npc1Score = 0;
 let npc2Score = 0;
 const clearQuota = 300; // 問題数が増えたのでノルマを調整
 
+// ★ URLパラメータから受け取るクエスト情報用の変数
+let currentUser = "";  // ユーザー名
+let currentQuest = ""; // クエスト名
+let currentGenre = ""; // ジャンル（math, Japanese など）
+
+// 仲間データ管理
+let activeCompanions = [];
+const DEFAULT_NPC_ID = "p72A7WPl8OtG5Ht7hhXC"; 
+
 // ==========================================
 // 3. 画面起動時の処理
 // ==========================================
 window.addEventListener('DOMContentLoaded', () => {
     document.getElementById('clear-quota').textContent = clearQuota;
     document.getElementById('res-quota-score').textContent = clearQuota;
-    
+
+    // ★ URLパラメータ（?user=〇〇&quest=〇〇&genre=〇〇）の解析と受け取り
+    const urlParams = new URLSearchParams(window.location.search);
+    currentUser = urlParams.get('user');
+    currentQuest = urlParams.get('quest');
+    currentGenre = urlParams.get('genre');
+    // 万が一、ユーザー名が取れなかった場合は安全のためにトップ画面に戻す
+    if (!currentUser) {
+        alert("もういちどログインしなおしてね！");
+        window.location.href = 'index.html';
+        return;
+    }
+
+    // ★ 受け取った本物のユーザー名を使って仲間データを読み込み
+    await setupPartyAndRender(currentUser);
+
+    // 最初の問題を表示
     loadQuestion(currentQuestionIndex);
-    
-    document.getElementById('back-to-map-btn').addEventListener('click', () => {
-        window.location.href = 'quest.html';
-    });
+
+    // ★ 地図に戻るボタンのイベント設定（ユーザー名を引き継ぐ）
+    setupBackToMapButton();
 });
 
 // ==========================================
@@ -227,4 +251,26 @@ function showResult() {
     }
 
     document.getElementById('result-screen').classList.remove('hidden');
+}
+
+// ==========================================
+// ★ 地図に戻るボタンのユーザー情報引き継ぎ処理
+// ==========================================
+function setupBackToMapButton() {
+    // 地図に戻るアクションを持つボタン全てにイベントを設定
+    // （ヘッダーにあるボタンや、リザルト画面の「ちずに戻る」ボタンに対応）
+    const backButtons = [
+        document.getElementById('back-to-map-btn'), // リザルト画面上のボタン
+        document.getElementById('header-back-btn')   // （もしヘッダー等にもあれば対応できるよう共通化）
+    ];
+
+    backButtons.forEach(btn => {
+        if (btn) {
+            btn.addEventListener('click', () => {
+                // 安全にユーザー名エンコードしてURLパラメータを組み立てる
+                const targetUrl = `quest.html?user=${encodeURIComponent(currentUser)}`;
+                window.location.href = targetUrl;
+            });
+        }
+    });
 }
