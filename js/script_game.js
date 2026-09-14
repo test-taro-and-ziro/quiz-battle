@@ -125,10 +125,11 @@ function loadQuestion(index) {
     inputsContainer.innerHTML = ''; 
     inputsContainer.classList.remove('hidden');
 
-    // クイズ形式による最大獲得ポイント（初期値）の条件分岐
-    let maxScoreForType = 30; // 通常は30ポイント
+    // クイズ形式による初期値（制限時間カウンタ）の分岐
+    // ※内部的には、0になるまで減算し、残り時間ボーナス（最大20ポイント）の計算に使用します
+    let maxTimerValue = 30; // 通常は30
     if (q.type === "直接入力") {
-        maxScoreForType = 40; // 直接入力は40ポイントスタート
+        maxTimerValue = 40; // 直接入力は長めの40
     }
 
     if (q.type === "四択" || q.type === "○×") {
@@ -136,7 +137,7 @@ function loadQuestion(index) {
             const btn = document.createElement('button');
             btn.className = q.type === "○×" ? 'choice-btn ox-btn' : 'choice-btn';
             btn.textContent = choice;
-            btn.addEventListener('click', () => handleAnswer(choice, q.answer, maxScoreForType));
+            btn.addEventListener('click', () => handleAnswer(choice, q.answer, maxTimerValue));
             inputsContainer.appendChild(btn);
         });
     } else if (q.type === "直接入力") {
@@ -155,7 +156,7 @@ function loadQuestion(index) {
         
         submitBtn.addEventListener('click', () => {
             const userAnswer = input.value.trim();
-            handleAnswer(userAnswer, q.answer, maxScoreForType);
+            handleAnswer(userAnswer, q.answer, maxTimerValue);
         });
         
         group.appendChild(input);
@@ -163,19 +164,17 @@ function loadQuestion(index) {
         inputsContainer.appendChild(group);
     }
 
-    // タイマーの開始（★最低10ポイントを保証するため、10になるまで減る）
-    currentScore = maxScoreForType;
-    document.getElementById('time-score').textContent = currentScore;
+    // タイマーの開始（0になるまでしっかり減る、HTML上の数値要素への反映は削除）
+    currentScore = maxTimerValue;
     document.getElementById('timer-bar-fill').style.width = '100%';
     
     clearInterval(timerInterval);
     timerInterval = setInterval(() => {
-        if (currentScore > 10) { // ★ 10より小さくならない（最小10ポイントキープ）
+        if (currentScore > 0) {
             currentScore--;
-            document.getElementById('time-score').textContent = currentScore;
             
-            // タイマーゲージの連動
-            const timerPercent = (currentScore / maxScoreForType) * 100;
+            // 残り時間ゲージをリアルタイムに縮小（100% から 0% まで）
+            const timerPercent = (currentScore / maxTimerValue) * 100;
             document.getElementById('timer-bar-fill').style.width = `${timerPercent}%`;
         }
     }, 333); 
@@ -184,7 +183,7 @@ function loadQuestion(index) {
 // ==========================================
 // 5. 回答時の判定・解説表示処理
 // ==========================================
-function handleAnswer(userAnswer, correctAnswer, maxScore) {
+function handleAnswer(userAnswer, correctAnswer, maxTimerValue) {
     clearInterval(timerInterval);
     document.getElementById('quiz-inputs').classList.add('hidden');
     document.getElementById('timer-bar-fill').style.width = '0%';
@@ -196,12 +195,16 @@ function handleAnswer(userAnswer, correctAnswer, maxScore) {
     if (isCorrect) {
         resultMessage.textContent = "せいかい！ 🎉";
         resultMessage.className = "result-text correct"; 
-        // ★正解なら現在の数値をそのまま獲得（時間をかけても最低10ポイント入る）
-        addedPlayerScore = currentScore; 
+        
+        // ★新しいポイント計算ロジック
+        // 残り時間を最大20ポイントに換算 ＋ 最小値の10ポイントを必ず加算
+        const timeBonus = Math.round((currentScore / maxTimerValue) * 20);
+        addedPlayerScore = timeBonus + 10; 
+        
     } else {
         resultMessage.textContent = "ざんねん… 😢";
         resultMessage.className = "result-text incorrect"; 
-        addedPlayerScore = 0; // 不正解は一律0ポイント
+        addedPlayerScore = 0; // 不正解は0ポイント
     }
 
     playerScore += addedPlayerScore;
@@ -210,7 +213,7 @@ function handleAnswer(userAnswer, correctAnswer, maxScore) {
     // NPCの自動回答（1/3スケール用に獲得ポイントを調整）
     const npc1Correct = Math.random() > 0.4; 
     const npc2Correct = Math.random() > 0.5; 
-    const addedNpc1 = npc1Correct ? Math.floor(Math.random() * 10) + 12 : 0; // 12~22ポイント
+    const addedNpc1 = npc1Correct ? Math.floor(Math.random() * 10) + 12 : 0; 
     const addedNpc2 = npc2Correct ? Math.floor(Math.random() * 10) + 12 : 0;
     
     npc1Score += addedNpc1;
