@@ -34,27 +34,108 @@ window.addEventListener('DOMContentLoaded', async () => {
     }
     // 2. 「animal」コレクション（マスターデータ）をすべて読み込む [js]
     await loadAnimalMaster();
+    // 「Treasures」コレクション（マスターデータ）をすべて読み込む [js]
+    await loadTreasureMaster();
   
     // 3. 共通関数を使ってプレイヤー情報を準備
     const userData = await setupPlayerMaster(currentUser);
 
     if (userData) {
         renderPlayerStatus(userData);
+        setupProfileModal(userData);
     } else {
         alert("キャラクター情報がみつかりませんでした。");
         window.location.href = 'index.html';
     }
 });
 
-// 💡 Firebaseからデータを読み込んで、左上の半透明の箱に表示する関数
+// 💡 Firestoreから秘宝マスタをロードして order フィールド順に並べる関数
+async function loadTreasureMaster() {
+    try {
+        // ドキュメントは自動生成IDなので、フィールドの「order」を基準に昇順ソートして取得
+        const q = query(collection(db, "treasures"), orderBy("order", "asc"));
+        const querySnapshot = await getDocs(q);
+        
+        treasureMasterData = [];
+        querySnapshot.forEach((docSnap) => {
+            treasureMasterData.push(docSnap.data());
+        });
+    } catch (e) {
+        console.error("秘宝マスタのロードに失敗しました:", e);
+    }
+}
+
+// 💡 Firebaseからデータを読み込んで、左下の情報箱に表示する関数
 function renderPlayerStatus(userData) {
     document.getElementById('player-name').textContent = currentUser;
-    
     const displayGrade = userData.grade === 0 ? "幼児" : userData.grade + "年生";
-    document.getElementById('player-grade').textContent = "ランク: " + displayGrade;
+    document.getElementById('player-grade').textContent = "がくねん: " + displayGrade;
 
     const fileName = getCharacterFileName(userData.animal, userData.gender);
     setCharacterSrc(document.getElementById('player-avatar'), fileName);
+}
+
+// 💡 プロフィール＆秘宝モーダルの制御ロジック
+function setupProfileModal(userData) {
+    const trigger = document.getElementById('player-status-trigger');
+    const overlay = document.getElementById('profile-modal-overlay');
+    const closeBtn = document.getElementById('btn-close-profile');
+
+    // 左下の情報箱がクリックされたらモーダルを開く
+    trigger.addEventListener('click', () => {
+        document.getElementById('profile-modal-name').textContent = currentUser;
+        const displayGrade = userData.grade === 0 ? "幼児" : userData.grade + "年生";
+        document.getElementById('profile-modal-grade').textContent = "がくねん: " + displayGrade;
+        
+        const fileName = getCharacterFileName(userData.animal, userData.gender);
+        setCharacterSrc(document.getElementById('profile-modal-avatar'), fileName);
+
+        // 💡 ユーザーの所持リスト（例: ['T1', 'T3']）を渡して丸い枠を生成
+        renderTreasures(userData.treasures || []);
+
+        // CSSのクラスを追加してモーダルを表示
+        overlay.classList.add('is-active');
+    });
+
+    // とじるボタンでモーダルを閉じる
+    closeBtn.addEventListener('click', () => {
+        overlay.classList.remove('is-active');
+    });
+}
+
+// 💡 ひほう（秘宝）をマスタ順（order順）に丸い枠で並べる関数
+function renderTreasures(userTreasures) {
+    const container = document.getElementById('treasure-list-container');
+    container.innerHTML = ''; // リセット
+
+    // Firestoreから取得した全ての秘宝データをループ
+    treasureMasterData.forEach(treasure => {
+        // フィールド「treasure」（T1など）がユーザーの所持リストに含まれているか判定
+        const hasTreasure = userTreasures.includes(treasure.treasure);
+
+        // 秘宝の丸い枠（スロット）を作成
+        const slot = document.createElement('div');
+        slot.classList.add('treasure-slot');
+        if (!hasTreasure) {
+            slot.classList.add('is-locked'); // 未獲得時はCSSで薄暗く見せる
+        }
+
+        // 丸い枠の中のイメージ画像
+        const img = document.createElement('img');
+        // 獲得済みなら images/treasures/ 内のファイル名、未獲得なら placeholder.jpg
+        img.src = hasTreasure ? `images/treasures/${treasure.img}` : 'images/placeholder.jpg';
+        img.alt = treasure.name;
+        img.classList.add('treasure-icon');
+
+        // 秘宝の名前ラベル
+        const label = document.createElement('div');
+        label.classList.add('treasure-label');
+        label.textContent = hasTreasure ? treasure.name : '？？？';
+
+        slot.appendChild(img);
+        slot.appendChild(label);
+        container.appendChild(slot);
+    });
 }
 
 // 💡 地図上のスタンプ（森・泉・洞窟）が押されたときの処理
