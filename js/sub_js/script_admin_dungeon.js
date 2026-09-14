@@ -7,37 +7,55 @@ import { db, collection, doc, addDoc, getDocs, setDoc, getDoc, updateDoc, delete
 // 一覧描画
 async function renderAdminDungeonList() {
     const tbody = document.getElementById('admin-dungeon-list');
-    const formRewardsArea = document.getElementById('new-dunj-rewards-area'); // 💡新規追加フォームの科目配置用
+    const formRewardsArea = document.getElementById('new-dunj-rewards-area'); 
     if (!tbody) return;
     tbody.innerHTML = '<tr><td colspan="6">ダンジョンデータを読み込み中...</td></tr>';
 
     try {
-        // 💡 1. まず科目マスター（genres）をサッと読み込んで、最新の科目リストを作る
-        const genreSnapshot = await getDocs(collection(db, "genres"));
-        const genreList = [];
-        genreSnapshot.forEach(d => {
-            const gData = d.data();
-            if (gData.value && gData.label) {
-                genreList.push({ value: gData.value, label: gData.label });
-            }
-        });
+        // 💡 対策：コレクション名が「genres」または「genre」のどちらでも対応できるように安全に取得を試みる
+        let genreSnapshot = null;
+        try {
+            genreSnapshot = await getDocs(collection(db, "genres"));
+        } catch (err) {
+            console.warn("genresコレクションの取得に失敗したため、genreで再試行します", err);
+            genreSnapshot = await getDocs(collection(db, "genre"));
+        }
 
-        // 💡 2. 新規追加フォーム側の報酬入力欄も、取得した科目リストで動的に作り替える
+        const genreList = [];
+        if (genreSnapshot) {
+            genreSnapshot.forEach(d => {
+                const gData = d.data();
+                // データベース上のフィールド名が label/value であるか確認
+                if (gData.value && gData.label) {
+                    genreList.push({ value: gData.value, label: gData.label });
+                }
+            });
+        }
+
+        // 💡 バックアップ対策：もし科目マスターが1件も取得できなかった場合は、デフォルトの3科目を適用する
+        if (genreList.length === 0) {
+            console.log("科目マスターが空のため、デフォルトの3科目をセットします。");
+            genreList.push({ value: "japanese", label: "こくご" });
+            genreList.push({ value: "math", label: "さんすう" });
+            genreList.push({ value: "moral", label: "どうとく" });
+        }
+
+        // 新規追加フォーム側の報酬入力欄を動的に作り替える
         if (formRewardsArea) {
-            formRewardsArea.innerHTML = ''; // 一旦クリア
+            formRewardsArea.innerHTML = ''; 
             genreList.forEach(g => {
                 const div = document.createElement('div');
                 div.style.flex = "1";
                 div.style.minWidth = "120px";
                 div.innerHTML = `
                     <label style="font-size:12px; display:block; margin-bottom:2px;">${g.label}報酬</label>
-                    <input type="text" class="new-dunj-rew-input" data-genre="${g.value}" placeholder="例: T1" style="width:100%;">
+                    <input type="text" class="new-dunj-rew-input" data-genre="${g.value}" placeholder="例: T1" style="width:100%; padding: 4px; box-sizing: border-box;">
                 `;
                 formRewardsArea.appendChild(div);
             });
         }
 
-        // 3. ダンジョンデータを読み込む
+        // ダンジョンデータを読み込む
         const querySnapshot = await getDocs(collection(db, "dungeons"));
         tbody.innerHTML = '';
 
@@ -51,13 +69,14 @@ async function renderAdminDungeonList() {
             const id = data.id; 
             const rewards = data.rewards || {};
 
-            // 💡 4. 一覧表の中の報酬入力欄も、科目マスターをループして動的に組み立てる
+            // 一覧表の中の報酬入力欄を科目リストから組み立てる
             let rewardsHTML = '<div style="display:flex; gap:5px; flex-direction:column; font-size:12px;">';
             genreList.forEach(g => {
-                const currentRewardValue = rewards[g.value] || ''; // すでに設定されている値
+                const currentRewardValue = rewards[g.value] || ''; 
                 rewardsHTML += `
-                    <div>
-                        ${g.label}: <input type="text" class="ad-dunj-rew-dynamic-${id}" data-genre="${g.value}" value="${currentRewardValue}" style="width:70px; padding:2px;">
+                    <div style="display: flex; align-items: center; gap: 5px;">
+                        <span style="min-width: 50px; display: inline-block;">${g.label}:</span>
+                        <input type="text" class="ad-dunj-rew-dynamic-${id}" data-genre="${g.value}" value="${currentRewardValue}" style="width:70px; padding:2px;">
                     </div>
                 `;
             });
@@ -98,7 +117,6 @@ async function saveAdminDungeon(id) {
         return;
     }
 
-    // 💡 5. 画面に動的生成された入力欄から、科目のvalueをキーにしたrewardsオブジェクトを収集する
     const rewards = {};
     const rewardInputs = document.querySelectorAll(`.ad-dunj-rew-dynamic-${id}`);
     rewardInputs.forEach(input => {
@@ -111,7 +129,7 @@ async function saveAdminDungeon(id) {
             name: name,
             norma: norma,
             order: order,
-            rewards: rewards // 収集した可変マップをそのまま保存
+            rewards: rewards 
         });
         alert("ダンジョンマスターデータを更新しました！🎉");
         await renderAdminDungeonList();
@@ -146,7 +164,6 @@ async function addDungeonFromAdmin() {
         return;
     }
 
-    // 💡 6. 新規追加用エリアに動的生成された入力欄から、報酬オブジェクトを収集する
     const rewards = {};
     const newRewardInputs = document.querySelectorAll('.new-dunj-rew-input');
     newRewardInputs.forEach(input => {
@@ -169,13 +186,11 @@ async function addDungeonFromAdmin() {
             rewards: rewards
         });
 
-        // フォームのリセット
         document.getElementById('new-dunj-docid').value = '';
         document.getElementById('new-dunj-name').value = '';
         document.getElementById('new-dunj-norma').value = '';
         document.getElementById('new-dunj-order').value = '';
         
-        // 可変入力欄の文字をクリア
         newRewardInputs.forEach(input => input.value = '');
 
         await renderAdminDungeonList(); 
