@@ -27,15 +27,19 @@ async function renderAdminQuestionList() {
             const choicesText = data.choices ? data.choices.join(',') : '';
             const gradeLabel = gradeMap[data.grade] || (data.grade + "の学年値");
 
+            // 💡 データベースの英単語設定値に合わせて、セレクトボックスの selected 状態を正しく制御
+            const typeValue = data.type || 'select'; // 未設定時は暫定で select 
+
             const tr = document.createElement('tr');
             tr.innerHTML = `
                 <td><small>${gradeLabel} (${data.grade})</small></td>
                 <td><input type="text" id="ad-q-genre-${id}" value="${data.genre || ''}" style="width:70px;"></td>
                 <td>
+                    <!-- 💡 value属性を英単語にし、画面の表示名は日本語のまま維持 -->
                     <select id="ad-q-type-${id}">
-                        <option value="四択" ${data.type === '四択' ? 'selected' : ''}>四択</option>
-                        <option value="○×" ${data.type === '○×' ? 'selected' : ''}>○×</option>
-                        <option value="直接入力" ${data.type === '直接入力' ? 'selected' : ''}>直接入力</option>
+                        <option value="select" ${typeValue === 'select' || typeValue === '四択' ? 'selected' : ''}>四択</option>
+                        <option value="which" ${typeValue === 'which' || typeValue === '○×' ? 'selected' : ''}>○×</option>
+                        <option value="direct" ${typeValue === 'direct' || typeValue === '直接入力' ? 'selected' : ''}>直接入力</option>
                     </select>
                 </td>
                 <td><input type="text" id="ad-q-text-${id}" value="${data.text || ''}"></td>
@@ -59,9 +63,9 @@ async function renderAdminQuestionList() {
 }
 
 // クイズ問題の個別編集・保存
-window.saveAdminQuestion = async function(id) {
+async function saveAdminQuestion(id) {
     const genre = document.getElementById(`ad-q-genre-${id}`).value.trim();
-    const type = document.getElementById(`ad-q-type-${id}`).value;
+    const type = document.getElementById(`ad-q-type-${id}`).value; // 💡 英単語（select/which/direct）が取得されます
     const text = document.getElementById(`ad-q-text-${id}`).value.trim();
     const choicesStr = document.getElementById(`ad-q-choices-${id}`).value.trim();
     const answer = document.getElementById(`ad-q-answer-${id}`).value.trim();
@@ -72,29 +76,30 @@ window.saveAdminQuestion = async function(id) {
     try {
         await updateDoc(doc(db, "questions", id), {
             genre: genre,
-            type: type,
+            type: type, // 💡 英単語でFirebaseを更新
             text: text,
             choices: choicesArray,
             answer: answer
         });
-        alert("クイズデータを更新しました！");
+        alert("クイズデータを更新しました！🎉");
+        await renderAdminQuestionList();
     } catch (e) { alert("更新に失敗しました。"); }
-};
+}
 
 // クイズ問題の削除
-window.deleteAdminQuestion = async function(id) {
+async function deleteAdminQuestion(id) {
     if(!confirm("この問題を削除しますか？")) return;
     try {
         await deleteDoc(doc(db, "questions", id));
         await renderAdminQuestionList();
     } catch (e) { alert("削除に失敗しました。"); }
-};
+}
 
-// 新しいクイズの追加（addDocによる自動ID生成）
+// 新しいクイズの追加
 async function addQuestionFromAdmin() {
     const gradeVal = document.getElementById('new-q-grade').value;
     const genre = document.getElementById('new-q-genre').value.trim();
-    const type = document.getElementById('new-q-type').value;
+    const type = document.getElementById('new-q-type').value; // 💡 HTML側の新しい英単語valueを取得
     const text = document.getElementById('new-q-text').value.trim();
     const choicesStr = document.getElementById('new-q-choices').value.trim();
     const answer = document.getElementById('new-q-answer').value.trim();
@@ -104,15 +109,13 @@ async function addQuestionFromAdmin() {
         return;
     }
 
-    // カンマ区切りのテキストを配列データにきれいに分解
     const choicesArray = choicesStr ? choicesStr.split(',').map(s => s.trim()) : [];
 
     try {
-        // ドキュメント名を指定せず、大きな箱（コレクション）に直接 addDoc で放り込む！
         await addDoc(collection(db, "questions"), {
             grade: parseInt(gradeVal),
             genre: genre,
-            type: type,
+            type: type, // 💡 英単語（select / which / direct）で登録！
             text: text,
             choices: choicesArray,
             answer: answer
@@ -124,14 +127,13 @@ async function addQuestionFromAdmin() {
         document.getElementById('new-q-choices').value = '';
         document.getElementById('new-q-answer').value = '';
 
-        await renderAdminQuestionList(); // リストを最新に再描画
+        await renderAdminQuestionList(); 
         alert("新しいクイズ問題を1件追加しました！🎉");
-    } catch (e) {
-        console.error(e);
-        alert("追加に失敗しました。");
-    }
+    } catch (e) { alert("追加に失敗しました。"); }
 }
 
-// 「親画面の起動時」や「HTMLのボタン」から呼べるようにwindowに登録
+// 親ファイルやHTMLへのグローバル公開登録
 window.renderAdminQuestionList = renderAdminQuestionList;
+window.saveAdminQuestion = saveAdminQuestion;
+window.deleteAdminQuestion = deleteAdminQuestion;
 window.addQuestionFromAdmin = addQuestionFromAdmin;
