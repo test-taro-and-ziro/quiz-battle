@@ -3,8 +3,6 @@
 // ==========================================
 // 💡 共通設定ファイルから db を読み込む
 import { db, collection, doc, addDoc, getDocs, setDoc, getDoc, updateDoc, deleteDoc, query, where, orderBy } from './firebase-config.js';
-// 💡 共通マスタファイルからお仕事をインポート
-import { loadAnimalMaster, getCharacterFileName, setCharacterSrc, setupPlayerMaster } from './game-master.js';
 
 // 4️⃣【💡新設：動物管理】一覧描画・保存・削除・追加（自動ID生成版）
 async function renderAdminAnimalList() {
