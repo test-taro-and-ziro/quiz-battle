@@ -247,10 +247,9 @@
                             <input type="number" id="new-dunj-norma" placeholder="ノルマ (例: 500)" style="flex: 1;">
                             <input type="number" id="new-dunj-order" placeholder="表示順 (例: 1)" style="flex: 1;">
                         </div>
-                        <div style="display: flex; gap: 10px;">
-                            <input type="text" id="new-dunj-rew-japanese" placeholder="こくご報酬コード (例: T1)" style="flex: 1;">
-                            <input type="text" id="new-dunj-rew-math" placeholder="さんすう報酬コード (例: T2)" style="flex: 1;">
-                            <input type="text" id="new-dunj-rew-moral" placeholder="どうとく報酬コード (例: T3)" style="flex: 1;">
+                        <!-- 固定の3つのインプットの代わりに、この自動配置用のエリアを1行置くだけ！ -->
+                        <div id="new-dunj-rewards-area" style="display: flex; gap: 10px; flex-wrap: wrap;">
+                            <!-- ここに科目マスタから自動的に「〇〇報酬」の入力欄が作られます -->
                         </div>
                         <button onclick="addDungeonFromAdmin()" style="background-color: #4CAF50; width: 100%;">このダンジョンを追加する</button>
                     </div>
