@@ -25,14 +25,51 @@
 
             <!-- タブ1: ユーザー管理 -->
             <div id="tab-users" class="admin-tab-content active">
-                <iframe src="sub_html/admin_user.html" style="width:100%; height:600px; border:none;"></iframe>
-            </div>
-            
-            <!-- タブ2: 学年管理 -->
-            <div id="tab-grades" class="admin-tab-content">
-                <iframe src="sub_html/admin_grade.html" style="width:100%; height:600px; border:none;"></iframe>
+                <h2>全ユーザーデータ一覧</h2>
+                <div class="table-responsive">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>おなまえ</th>
+                                <th>学年（ランク）</th>
+                                <th>せいべつ</th>
+                                <th>どうぶつ</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-user-list">
+                            <!-- JSで挿入 -->
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
+            <!-- タブ2: 学年管理 -->
+            <div id="tab-grades" class="admin-tab-content">
+                <h2>学年選択肢の管理</h2>
+                <div class="table-responsive">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>送信値 (value)</th>
+                                <th>表示名 (label)</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-grade-list">
+                            <!-- JSで挿入 -->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card" style="margin-top: 15px; background: #fff;">
+                    <h3>➕ 新しい学年を追加（ドキュメントID自動生成）</h3>
+                    <div style="display: flex; gap: 10px;">
+                        <input type="number" id="new-grade-value" placeholder="数値 (例: 6)">
+                        <input type="text" id="new-grade-label" placeholder="表示名 (例: 6年生)">
+                        <button onclick="addGradeFromAdmin()" style="background-color: #4CAF50; width: auto; white-space: nowrap;">追加</button>
+                    </div>
+                </div>
+            </div>
 
             <!-- タブ3: クイズ管理 -->
             <div id="tab-questions" class="admin-tab-content">
