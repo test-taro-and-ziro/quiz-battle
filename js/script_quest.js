@@ -9,6 +9,8 @@ import { loadAnimalMaster, getCharacterFileName, setCharacterSrc, setupPlayerMas
 let currentUser = null;
 // let animalMasterData = []; // 💡 新設：データベースから読み込んだ動物マスターを保存する配列
 let treasureMasterData = [];
+let dungeonMasterData = []; // 💡 データベースから読み込んだダンジョン情報を保存する配列
+let selectedDungeon = null; // 💡 現在プレイヤーが選択したダンジョンのデータ
 
 // 💡 画面が起動した時の処理
 window.addEventListener('DOMContentLoaded', async () => {
@@ -26,6 +28,8 @@ window.addEventListener('DOMContentLoaded', async () => {
     await loadAnimalMaster();
     // 「Treasures」コレクション（マスターデータ）をすべて読み込む [js]
     await loadTreasureMaster();
+    // 「Dungeons」コレクション（マスターデータ）をすべて読み込む [js]
+    await loadDungeonMaster(); 
   
     // 3. 共通関数を使ってプレイヤー情報を準備
     const userData = await setupPlayerMaster(currentUser);
@@ -53,6 +57,42 @@ async function loadTreasureMaster() {
     } catch (e) {
         console.error("秘宝マスタのロードに失敗しました:", e);
     }
+}
+
+// 💡 Firestoreからダンジョンマスタをロードし、メニューボタンを自動生成する関数
+async function loadDungeonMaster() {
+    try {
+        const q = query(collection(db, "dungeons"), orderBy("order", "asc"));
+        const querySnapshot = await getDocs(q);
+        
+        dungeonMasterData = [];
+        querySnapshot.forEach((docSnap) => {
+            dungeonMasterData.push(docSnap.data());
+        });
+
+        // ボタンの自動生成を実行
+        renderDungeonMenu();
+    } catch (e) {
+        console.error("ダンジョンマスタのロードに失敗しました:", e);
+    }
+}
+
+// 💡 メニュー箱の中にダンジョンボタンを自動生成して並べる関数
+function renderDungeonMenu() {
+    const container = document.getElementById('dungeon-list-container');
+    container.innerHTML = ''; 
+
+    dungeonMasterData.forEach(dungeon => {
+        const btn = document.createElement('button');
+        btn.classList.add('menu-item-btn');
+        btn.textContent = `🚩 ${dungeon.name}`; 
+        
+        btn.addEventListener('click', () => {
+            selectQuest(dungeon);
+        });
+
+        container.appendChild(btn);
+    });
 }
 
 // 💡 Firebaseからデータを読み込んで、左下の情報箱に表示する関数
@@ -128,11 +168,40 @@ function renderTreasures(userTreasures) {
     });
 }
 
-// 💡 地図上のスタンプ（森・泉・洞窟）が押されたときの処理
-function selectQuest(questName) {
-    // 選択されたクエストの名前を小窓にセット
-    document.getElementById('selected-quest-name').textContent = questName;
-    // ジャンルを選ぶ小さな小窓（モーダル）をパッと表示する
+/ 💡 ダンジョンが押されたとき、対応するジャンルだけを出し分ける処理
+function selectQuest(dungeon) {
+    selectedDungeon = dungeon; 
+    document.getElementById('selected-quest-name').textContent = dungeon.name;
+    
+    const genreContainer = document.getElementById('genre-list-container');
+    genreContainer.innerHTML = ''; 
+
+    const availableGenres = Object.keys(dungeon.rewards || {});
+
+    // 日本語表示用の対応マップ
+    const genreLabels = {
+        math: { label: '➕ さんすう（算数）', className: 'btn-math' },
+        japanese: { label: '📖 こくご（国語）', className: 'btn-japanese' },
+        english: { label: '🔤 えいご（英語）', className: 'btn-english' },
+        science: { label: '🧪 りか（理科）', className: 'btn-science' },
+        social: { label: '🗺️ しゃかい（社会）', className: 'btn-social' },
+        moral: { label: '🤝 どうとく（道徳）', className: 'btn-moral' }
+    };
+
+    availableGenres.forEach(genreKey => {
+        const genreInfo = genreLabels[genreKey] || { label: genreKey, className: 'btn-genre-default' };
+
+        const btn = document.createElement('button');
+        btn.classList.add('btn-genre', genreInfo.className);
+        btn.textContent = genreInfo.label;
+        
+        btn.addEventListener('click', () => {
+            goToGame(genreKey);
+        });
+
+        genreContainer.appendChild(btn);
+    });
+
     document.getElementById('genre-modal-overlay').style.display = 'flex';
 }
 
