@@ -10,7 +10,7 @@ body {
 }
 
 #game-container {
-    max-width: 600px; /* 縦長画面を想定 */
+    max-width: 600px;
     margin: 0 auto;
     min-height: 100vh;
     display: flex;
@@ -21,38 +21,74 @@ body {
     position: relative;
 }
 
-/* 非表示コントロール用の共通クラス */
 .hidden {
     display: none !important;
 }
 
 /* ==========================================
-   1. ヘッダーエリア（進行度・タイマー）
+   1. ヘッダーエリア（進行度・タイマー・ダブルゲージ）
    ========================================== */
 .game-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     background: #ffffff;
-    padding: 10px 15px;
+    padding: 12px 15px;
     border-radius: 12px;
     box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    gap: 20px;
+}
+
+.progress-container, .timer-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
 }
 
 .progress-box, .timer-box {
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
 }
 
 .label {
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     color: #666;
-    display: block;
 }
 
 .score-highlight {
-    color: #e11d48; /* タイマーの数字を強調 */
-    font-size: 1.5rem;
+    color: #e11d48;
+    font-size: 1.3rem;
+}
+
+/* 問題進捗ゲージ（青系） */
+.question-bar-bg {
+    background: #e5e7eb;
+    height: 8px;
+    border-radius: 4px;
+    overflow: hidden;
+}
+.question-bar-fill {
+    background: #3b82f6;
+    height: 100%;
+    transition: width 0.3s ease;
+}
+
+/* タイマーゲージ（赤系・リアルタイム連動） */
+.timer-bar-bg {
+    background: #e5e7eb;
+    height: 8px;
+    border-radius: 4px;
+    overflow: hidden;
+}
+.timer-bar-fill {
+    background: #ef4444;
+    height: 100%;
+    width: 100%;
+    transition: width 0.1s linear;
 }
 
 /* ==========================================
@@ -60,7 +96,7 @@ body {
    ========================================== */
 .quiz-area {
     flex-grow: 1;
-    margin: 20px 0;
+    margin: 15px 0;
     background: #ffffff;
     border-radius: 16px;
     padding: 20px;
@@ -82,8 +118,8 @@ body {
     margin-right: 5px;
 }
 
-.genre-badge { background: #dbeafe; color: #1e40af; } /* 青系 */
-.grade-badge { background: #fef3c7; color: #92400e; } /* 黄系 */
+.genre-badge { background: #dbeafe; color: #1e40af; }
+.grade-badge { background: #fef3c7; color: #92400e; }
 
 .question-text-container h2 {
     font-size: 1.25rem;
@@ -91,7 +127,6 @@ body {
     margin: 10px 0 20px 0;
 }
 
-/* 回答UIの配置 */
 .inputs-container {
     display: flex;
     flex-direction: column;
@@ -99,7 +134,6 @@ body {
     margin-top: auto;
 }
 
-/* 4択・〇×ボタンの共通スタイル */
 .choice-btn {
     background: #f3f4f6;
     border: 2px solid #e5e7eb;
@@ -121,7 +155,6 @@ body {
     padding: 10px;
 }
 
-/* 直接入力フォームのスタイル */
 .text-input-group {
     display: flex;
     gap: 8px;
@@ -130,7 +163,7 @@ body {
 #direct-answer-input {
     flex-grow: 1;
     padding: 12px;
-    border: 2px solid #css-border;
+    border: 2px solid #e5e7eb;
     border-radius: 12px;
     font-size: 1.1rem;
 }
@@ -146,7 +179,6 @@ body {
     cursor: pointer;
 }
 
-/* 解説ボックス */
 .explanation-box {
     background: #fef2f2;
     border: 2px dashed #f87171;
@@ -185,7 +217,7 @@ body {
 }
 
 /* ==========================================
-   3. フッターエリア（ステータス・ノルマ）
+   3. フッターエリア（ステータス・ノルマゲージ）
    ========================================== */
 .status-area {
     background: #ffffff;
@@ -230,7 +262,6 @@ body {
     margin: 0;
 }
 
-/* ノルマゲージ */
 .quota-container {
     background: #f3f4f6;
     padding: 10px;
@@ -252,7 +283,7 @@ body {
 }
 
 .quota-bar-fill {
-    background: #eab308; /* 金色のプログレスバー */
+    background: #eab308;
     height: 100%;
     transition: width 0.4s ease;
 }
@@ -266,7 +297,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.6); /* 画面全体を暗くする */
+    background: rgba(0, 0, 0, 0.6);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -324,7 +355,6 @@ body {
     color: #111827;
 }
 
-/* ごほうび箱 */
 .reward-box {
     background: #f0fdf4;
     border: 2px solid #bbf7d0;
