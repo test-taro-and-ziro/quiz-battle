@@ -109,5 +109,5 @@ async function addAnimalFromAdmin() {
 }
 
 // 「親画面の起動時」や「HTMLのボタン」から呼べるようにwindowに登録
-window.renderAdminUserList = renderAdminUserList;
+window.renderAdminAnimalList = renderAdminAnimalList;
 // window.deleteAdminUser = deleteAdminUser; (もし削除関数があれば登録)
