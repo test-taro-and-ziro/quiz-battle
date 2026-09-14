@@ -1,21 +1,8 @@
 // ==========================================
 // クエスト選択画面（quest.html）専用プログラム
 // ==========================================
-import { db } from './firebase-config.js';
-import { 
-  getFirestore, 
-  collection, // データI/Oで使用する大きい箱
-  doc,    // データI/Oで使用する小さい箱
-  addDoc, // 場所を自動生成させてデータを保存
-  getDocs, // すべてのデータを読み込む
-  setDoc, // 指定した場所にデータを書き込む
-  getDoc, // 指定した場所のデータを読み込む
-  updateDoc,  // 更新機能
-  deleteDoc,  // 削除機能
-  query,      // 🌟 フィールド検索で使用
-  where       // 🌟 フィールド検索で使用
-} from 'https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js';
-
+// 💡 共通設定ファイルから db を読み込む
+import { db, collection, doc, addDoc, getDocs, setDoc, getDoc, updateDoc, deleteDoc, query, where, orderBy } from './firebase-config.js';
 // 💡 共通マスタファイルからお仕事をインポート
 import { loadAnimalMaster, getCharacterFileName, setCharacterSrc, setupPlayerMaster } from './game-master.js';
 
