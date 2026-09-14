@@ -10,56 +10,16 @@ import { loadAnimalMaster, getCharacterFileName, setCharacterSrc, setupPlayerMas
 // 1. 本物のFirebase構造に合わせたダミーデータ
 // ==========================================
 const mockQuestions = [
-    {
-        id: "q1",
-        type: "四択",
-        genre: "math", // 英文字に修正
-        grade: 4,      // 数値（小4）に修正
-        text: "15 × 6 のこたえは つぎのうちどれかな？",
-        choices: ["75", "80", "90", "100"],
-        answer: "90",
-        explanation: "15×6は90になります。10×6=60、5×6=30を合わせると計算しやすいよ！"
-    },
-    {
-        id: "q2",
-        type: "四択",
-        genre: "moral", // 実データにある「どうとく」を再現
-        grade: 4,       // 数値に修正
-        text: "SNSで友達の悪口を書いている人を見つけました。適切な行動は？",
-        choices: ["関わらず、大人や先生に相談する", "自分も一緒に書き込む", "その人を強く問い詰める", "面白そうなので友達に拡散する"],
-        answer: "関わらず、大人や先生に相談する",
-        explanation: "悪口には関わらず、すぐに信頼できる大人や先生に相談するのが正しい行動だよ。"
-    },
-    {
-        id: "q3",
-        type: "四択",
-        genre: "Japanese", // 英文字に修正
-        grade: 4,          // 数値に修正
-        text: "「一生懸命」と同じ意味の言葉はどれ？",
-        choices: ["必死になって", "てきとうに", "のんびりと", "おこりながら"],
-        answer: "必死になって",
-        explanation: "正解は「必死になって」です！命をかけるくらい一生懸命がんばるという意味だよ。"
-    },
-    {
-        id: "q4",
-        type: "直接入力",
-        genre: "math",
-        grade: 4,
-        text: "25 × 4 の答えはいくつ？",
-        choices: [],
-        answer: "100",
-        explanation: "正解は100です！25×4はキリの良い数字になるので覚えておくと便利だよ。"
-    },
-    {
-        id: "q5",
-        type: "四択",
-        genre: "math",
-        grade: 0, // 数値（幼児）を再現
-        text: "りんごが 3こ あります。2こ もらうと、ぜんぶで なんこ？",
-        choices: ["5こ", "4こ", "1こ", "6こ"],
-        answer: "5こ",
-        explanation: "3こ に 2こ を あわせると 5こ に なるよ。ゆびで かぞえて みよう！"
-    }
+    { id: "q1", type: "四択", genre: "math", grade: 4, text: "15 × 6 のこたえは つぎのうちどれかな？", choices: ["75", "80", "90", "100"], answer: "90", explanation: "15×6は90になります。" },
+    { id: "q2", type: "四択", genre: "moral", grade: 4, text: "SNSで友達の悪口を書いている人を見つけました。適切な行動は？", choices: ["関わらず、大人や先生に相談する", "自分も一緒に書き込む", "その人を強く問い詰める", "面白そうなので友達に拡散する"], answer: "関わらず、大人や先生に相談する", explanation: "悪口には関わらず、すぐに信頼できる大人や先生に相談しよう。" },
+    { id: "q3", type: "四択", genre: "Japanese", grade: 4, text: "「一生懸命」と同じ意味の言葉はどれ？", choices: ["必死になって", "てきとうに", "のんびりと", "おこりながら"], answer: "必死になって", explanation: "正解は「必死になって」です！" },
+    { id: "q4", type: "直接入力", genre: "math", grade: 4, text: "25 × 4 の答えはいくつ？", choices: [], answer: "100", explanation: "25×4は100です！" },
+    { id: "q5", type: "四択", genre: "math", grade: 0, text: "りんごが 3こ あります。2こ もらうと、ぜんぶで なんこ？", choices: ["5こ", "4こ", "1こ", "6こ"], answer: "5こ", explanation: "3+2は5になるよ。" },
+    { id: "q6", type: "〇×", genre: "math", grade: 4, text: "三角形の内角の和（3つの角をたした数）は 180度 である。マルかバツか？", choices: ["〇", "×"], answer: "〇", explanation: "正解は〇！どんな三角形でも、3つの角を合わせると絶対に180度になるよ。" },
+    { id: "q7", type: "四択", genre: "Japanese", grade: 4, text: "「ノートに文字を（　）。」カッコに入る正しい言葉は？", choices: ["書く", "歩く", "食べる", "話す"], answer: "書く", explanation: "ノートには文字を「書く」のが正しいね。" },
+    { id: "q8", type: "〇×", genre: "moral", grade: 4, text: "友達が困っているときは、気づかないふりをするのが良い。マルかバツか？", choices: ["〇", "×"], answer: "×", explanation: "バツです！困っている友達がいたら、「どうしたの？」と声をかけてあげよう。" },
+    { id: "q9", type: "直接入力", genre: "math", grade: 4, text: "1分間は、何秒かな？（数字だけでこたえてね）", choices: [], answer: "60", explanation: "正解は60秒です！ちなみに1時間は60分だよ。" },
+    { id: "q10", type: "四択", genre: "math", grade: 4, text: "81 ÷ 9 のこたえは？", choices: ["7", "8", "9", "10"], answer: "9", explanation: "九九の「くく あしじゅういち」を逆算すると9になるよ！" }
 ];
 
 // ==========================================
