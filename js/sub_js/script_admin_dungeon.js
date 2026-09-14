@@ -7,55 +7,10 @@ import { db, collection, doc, addDoc, getDocs, setDoc, getDoc, updateDoc, delete
 // 一覧描画
 async function renderAdminDungeonList() {
     const tbody = document.getElementById('admin-dungeon-list');
-    const formRewardsArea = document.getElementById('new-dunj-rewards-area'); 
     if (!tbody) return;
     tbody.innerHTML = '<tr><td colspan="6">ダンジョンデータを読み込み中...</td></tr>';
 
     try {
-        // 💡 対策：コレクション名が「genres」または「genre」のどちらでも対応できるように安全に取得を試みる
-        let genreSnapshot = null;
-        try {
-            genreSnapshot = await getDocs(collection(db, "genres"));
-        } catch (err) {
-            console.warn("genresコレクションの取得に失敗したため、genreで再試行します", err);
-            genreSnapshot = await getDocs(collection(db, "genre"));
-        }
-
-        const genreList = [];
-        if (genreSnapshot) {
-            genreSnapshot.forEach(d => {
-                const gData = d.data();
-                // データベース上のフィールド名が label/value であるか確認
-                if (gData.value && gData.label) {
-                    genreList.push({ value: gData.value, label: gData.label });
-                }
-            });
-        }
-
-        // 💡 バックアップ対策：もし科目マスターが1件も取得できなかった場合は、デフォルトの3科目を適用する
-        if (genreList.length === 0) {
-            console.log("科目マスターが空のため、デフォルトの3科目をセットします。");
-            genreList.push({ value: "japanese", label: "こくご" });
-            genreList.push({ value: "math", label: "さんすう" });
-            genreList.push({ value: "moral", label: "どうとく" });
-        }
-
-        // 新規追加フォーム側の報酬入力欄を動的に作り替える
-        if (formRewardsArea) {
-            formRewardsArea.innerHTML = ''; 
-            genreList.forEach(g => {
-                const div = document.createElement('div');
-                div.style.flex = "1";
-                div.style.minWidth = "120px";
-                div.innerHTML = `
-                    <label style="font-size:12px; display:block; margin-bottom:2px;">${g.label}報酬</label>
-                    <input type="text" class="new-dunj-rew-input" data-genre="${g.value}" placeholder="例: T1" style="width:100%; padding: 4px; box-sizing: border-box;">
-                `;
-                formRewardsArea.appendChild(div);
-            });
-        }
-
-        // ダンジョンデータを読み込む
         const querySnapshot = await getDocs(collection(db, "dungeons"));
         tbody.innerHTML = '';
 
@@ -69,18 +24,23 @@ async function renderAdminDungeonList() {
             const id = data.id; 
             const rewards = data.rewards || {};
 
-            // 一覧表の中の報酬入力欄を科目リストから組み立てる
-            let rewardsHTML = '<div style="display:flex; gap:5px; flex-direction:column; font-size:12px;">';
-            genreList.forEach(g => {
-                const currentRewardValue = rewards[g.value] || ''; 
+            // 💡 報酬マップ（Object）のキーと値をループして、ペアの入力欄を動的に生成する
+            let rewardsHTML = `<div id="ad-dunj-rew-container-${id}" style="display:flex; gap:5px; flex-direction:column;">`;
+            
+            Object.keys(rewards).forEach(key => {
                 rewardsHTML += `
-                    <div style="display: flex; align-items: center; gap: 5px;">
-                        <span style="min-width: 50px; display: inline-block;">${g.label}:</span>
-                        <input type="text" class="ad-dunj-rew-dynamic-${id}" data-genre="${g.value}" value="${currentRewardValue}" style="width:70px; padding:2px;">
+                    <div class="ad-dunj-rew-pair-${id}" style="display: flex; align-items: center; gap: 4px;">
+                        <input type="text" class="rew-key-${id}" value="${key}" placeholder="科目キー" style="width:75px; padding:2px; font-size:12px;">
+                        <span>:</span>
+                        <input type="text" class="rew-val-${id}" value="${rewards[key]}" placeholder="宝物コード" style="width:60px; padding:2px; font-size:12px;">
+                        <button type="button" onclick="this.parentElement.remove()" style="background:#e53e3e; padding:2px 6px; font-size:10px; margin:0; width:auto; height:auto; line-height:1;">❌</button>
                     </div>
                 `;
             });
-            rewardsHTML += '</div>';
+            
+            rewardsHTML += `</div>`;
+            // テーブル内にもその場で報酬ペアを増やすボタンを設置
+            rewardsHTML += `<button type="button" onclick="addRewardRowToExisting('${id}')" style="background:#666; font-size:11px; padding:2px 6px; margin-top:4px; width:auto; display:block;">➕ ペア追加</button>`;
 
             const tr = document.createElement('tr');
             tr.innerHTML = `
@@ -106,6 +66,44 @@ async function renderAdminDungeonList() {
     }
 }
 
+// 既存のダンジョン一覧の中に、報酬ペアの入力行をその場で1行追加する関数
+window.addRewardRowToExisting = function(id) {
+    const container = document.getElementById(`ad-dunj-rew-container-${id}`);
+    if (!container) return;
+    
+    const div = document.createElement('div');
+    div.className = `ad-dunj-rew-pair-${id}`;
+    div.style.display = "flex";
+    div.style.alignItems = "center";
+    div.style.gap = "4px";
+    div.innerHTML = `
+        <input type="text" class="rew-key-${id}" value="" placeholder="科目キー" style="width:75px; padding:2px; font-size:12px;">
+        <span>:</span>
+        <input type="text" class="rew-val-${id}" value="" placeholder="宝物コード" style="width:60px; padding:2px; font-size:12px;">
+        <button type="button" onclick="this.parentElement.remove()" style="background:#e53e3e; padding:2px 6px; font-size:10px; margin:0; width:auto; height:auto; line-height:1;">❌</button>
+    `;
+    container.appendChild(div);
+};
+
+// 新規追加フォームの中に、報酬ペアの入力行を1行追加する関数
+window.addNewRewardRow = function() {
+    const container = document.getElementById('new-dunj-rewards-container');
+    if (!container) return;
+    
+    const div = document.createElement('div');
+    div.className = 'new-reward-pair';
+    div.style.display = "flex";
+    div.style.gap = "5px";
+    div.style.alignItems = "center";
+    div.innerHTML = `
+        <input type="text" class="new-rew-key" placeholder="科目の送信値 (例: math)" style="flex: 1; padding: 4px;">
+        <span>:</span>
+        <input type="text" class="new-rew-val" placeholder="宝物コード (例: T1)" style="flex: 1; padding: 4px;">
+        <button type="button" onclick="this.parentElement.remove()" style="background:#e53e3e; padding:4px 8px; margin:0; width:auto;">❌</button>
+    `;
+    container.appendChild(div);
+};
+
 // 個別編集・保存
 async function saveAdminDungeon(id) {
     const name = document.getElementById(`ad-dunj-name-${id}`).value.trim();
@@ -117,11 +115,15 @@ async function saveAdminDungeon(id) {
         return;
     }
 
+    // 💡 画面上のペア（キーと値）を全走査して、Firebase用のオブジェクトに再構築する
     const rewards = {};
-    const rewardInputs = document.querySelectorAll(`.ad-dunj-rew-dynamic-${id}`);
-    rewardInputs.forEach(input => {
-        const genreKey = input.getAttribute('data-genre');
-        rewards[genreKey] = input.value.trim();
+    const pairs = document.querySelectorAll(`.ad-dunj-rew-pair-${id}`);
+    pairs.forEach(pair => {
+        const key = pair.querySelector(`.rew-key-${id}`).value.trim();
+        const val = pair.querySelector(`.rew-val-${id}`).value.trim();
+        if (key) {
+            rewards[key] = val; // キーが入力されている場合のみ格納
+        }
     });
 
     try {
@@ -129,7 +131,7 @@ async function saveAdminDungeon(id) {
             name: name,
             norma: norma,
             order: order,
-            rewards: rewards 
+            rewards: rewards // 可変オブジェクトに上書き保存
         });
         alert("ダンジョンマスターデータを更新しました！🎉");
         await renderAdminDungeonList();
@@ -164,11 +166,15 @@ async function addDungeonFromAdmin() {
         return;
     }
 
+    // 💡 新規追加用エリアに入力されたペアを収集する
     const rewards = {};
-    const newRewardInputs = document.querySelectorAll('.new-dunj-rew-input');
-    newRewardInputs.forEach(input => {
-        const genreKey = input.getAttribute('data-genre');
-        rewards[genreKey] = input.value.trim();
+    const pairs = document.querySelectorAll('.new-reward-pair');
+    pairs.forEach(pair => {
+        const key = pair.querySelector('.new-rew-key').value.trim();
+        const val = pair.querySelector('.new-rew-val').value.trim();
+        if (key) {
+            rewards[key] = val;
+        }
     });
 
     try {
@@ -186,12 +192,22 @@ async function addDungeonFromAdmin() {
             rewards: rewards
         });
 
+        // フォームのリセット
         document.getElementById('new-dunj-docid').value = '';
         document.getElementById('new-dunj-name').value = '';
         document.getElementById('new-dunj-norma').value = '';
         document.getElementById('new-dunj-order').value = '';
         
-        newRewardInputs.forEach(input => input.value = '');
+        // 報酬コンテナをクリアして初期の1行だけに戻す
+        const container = document.getElementById('new-dunj-rewards-container');
+        container.innerHTML = `
+            <div class="new-reward-pair" style="display: flex; gap: 5px; align-items: center;">
+                <input type="text" class="new-rew-key" placeholder="科目の送信値 (例: math)" style="flex: 1; padding: 4px;">
+                <span>:</span>
+                <input type="text" class="new-rew-val" placeholder="宝物コード (例: T1)" style="flex: 1; padding: 4px;">
+                <button type="button" onclick="this.parentElement.remove()" style="background:#e53e3e; padding:4px 8px; margin:0; width:auto;">❌</button>
+            </div>
+        `;
 
         await renderAdminDungeonList(); 
         alert("新しいダンジョンマスターデータを追加しました！🎉");
