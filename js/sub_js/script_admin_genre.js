@@ -2,7 +2,7 @@
 // 管理者画面（admin.html）親コントロール
 // ==========================================
 // 💡 共通設定ファイルから db を読み込む
-import { db, collection, doc, addDoc, getDocs, setDoc, getDoc, updateDoc, deleteDoc, query, where, orderBy } from './firebase-config.js';
+import { db, collection, doc, addDoc, getDocs, setDoc, getDoc, updateDoc, deleteDoc, query, where, orderBy } from '../firebase-config.js';
 
 // 5️⃣【💡新設：科目管理】一覧描画・保存・削除・追加（自動ID生成版）
 async function renderAdminGenreList() {
