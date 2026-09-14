@@ -134,4 +134,4 @@ async function addQuestionFromAdmin() {
 
 // 「親画面の起動時」や「HTMLのボタン」から呼べるようにwindowに登録
 window.renderAdminQuestionList = renderAdminQuestionList;
-// window.deleteAdminUser = deleteAdminUser; (もし削除関数があれば登録)
+window.addQuestionFromAdmin = addQuestionFromAdmin;
