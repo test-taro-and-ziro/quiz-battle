@@ -3,24 +3,176 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>クイズバトル本編</title>
-    <link rel="stylesheet" href="css/style.css">
+    <title>アニマルクエスト ～動物村のクイズ大作戦～ | クエスト画面</title>
+    <!-- クエスト画面専用のスタイルシート -->
+    <link rel="stylesheet" href="css/style_game.css"> 
 </head>
 <body>
 
-    <div id="screen-game-main" class="screen" style="display: block; max-width: 800px; margin: 20px auto; text-align: center;">
-        <h1 id="game-title">⚔️ クイズバトル ⚔️</h1>
+    <!-- クエスト画面全体を包むコンテナ -->
+    <div id="game-container">
         
-        <div class="card" style="padding: 40px 20px; background-color: #fff9c4;">
-            <h2 style="border: none; margin-top: 0;">ゲーム画面（制作中）</h2>
-            <p style="font-size: 18px; font-weight: bold;">ここにクイズの問題やバトル画面を作っていきます！</p>
-            <p id="player-name-display" style="font-size: 16px; color: #333; margin-top: 20px;">ログインユーザー: 読み込み中...</p>
-        </div>
+        <!-- ==========================================
+             1. 上部ヘッダーエリア（進行度とタイマー）
+             ========================================== -->
+        <header class="game-header">
+            <!-- クイズの進行度表示 -->
+            <div class="progress-box">
+                <span class="label">もんだい</span>
+                <span id="current-question-num" class="count">1</span> / 10
+            </div>
+            
+            <!-- 動的に減少する回答スコア/タイマー表示 -->
+            <div class="timer-box">
+                <span class="label">のこりスコア</span>
+                <span id="time-score" class="score-highlight">100</span>
+            </div>
+        </header>
 
-        <!-- 💡 index.html（トップ画面）にいつでも戻れるボタン -->
-        <button onclick="location.href='index.html'" style="background-color: #666; width: auto; padding: 10px 20px; margin-top: 20px;">トップ画面にもどる</button>
+        <!-- ==========================================
+             2. メインエリア（クイズ出題・回答・解説）
+             ========================================== -->
+        <main class="quiz-area">
+            
+            <!-- クイズの属性情報（ジャンル・学年バッジ） -->
+            <div class="quiz-meta-info">
+                <span id="quiz-genre" class="badge genre-badge">---</span>
+                <span id="quiz-grade" class="badge grade-badge">---</span>
+            </div>
+            
+            <!-- 問題文テキスト -->
+            <div class="question-text-container">
+                <h2 id="quiz-text">ここに問題文が読み込まれます。</h2>
+            </div>
+
+            <!-- 動的回答エリア（JSでクイズのtypeに合わせて中身を生成・切り替え） -->
+            <div id="quiz-inputs" class="inputs-container">
+                <!-- JSでクイズのtype（4択 / 〇× / 直接入力）に応じたUIがここに挿入されます -->
+            </div>
+
+            <!-- 解説エリア（初期状態は「hidden」クラスで非表示、回答後に表示） -->
+            <div id="explanation-area" class="explanation-box hidden">
+                <div class="result-message-box">
+                    <p id="result-message" class="result-text">---</p>
+                </div>
+                <div class="explanation-content">
+                    <h3>【 かいせつ 】</h3>
+                    <p id="explanation-text">ここにクイズの解説文が入ります。</p>
+                </div>
+                <!-- 次の問題へ進むボタン -->
+                <div class="next-action-container">
+                    <button id="next-question-btn" class="next-btn">つぎの問題へ ➔</button>
+                </div>
+            </div>
+
+        </main>
+
+        <!-- ==========================================
+             3. 下部フッターエリア（ステータス・ノルマ）
+             ========================================== -->
+        <footer class="status-area">
+            
+            <!-- キャラクターたちの情報カード（3人分） -->
+            <div class="party-status-container">
+                <!-- プレイヤー自身 -->
+                <div class="character-card player-card">
+                    <div class="chara-img-wrapper">
+                        <img id="player-img" src="" alt="じぶん">
+                    </div>
+                    <div class="chara-info">
+                        <p class="chara-name">じぶん</p>
+                        <p class="chara-score"><span id="player-score">0</span> 点</p>
+                    </div>
+                </div>
+
+                <!-- なかま1（Firebaseから取得 / 不足時はおさるさん） -->
+                <div class="character-card companion-card-1">
+                    <div class="chara-img-wrapper">
+                        <img id="npc1-img" src="" alt="なかま1">
+                    </div>
+                    <div class="chara-info">
+                        <p id="npc1-name" class="chara-name">なかま1</p>
+                        <p class="chara-score"><span id="npc1-score">0</span> 点</p>
+                    </div>
+                </div>
+
+                <!-- なかま2（Firebaseから取得 / 不足時はおさるさん） -->
+                <div class="character-card companion-card-2">
+                    <div class="chara-img-wrapper">
+                        <img id="npc2-img" src="" alt="なかま2">
+                    </div>
+                    <div class="chara-info">
+                        <p id="npc2-name" class="chara-name">なかま2</p>
+                        <p class="chara-score"><span id="npc2-score">0</span> 点</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 全体の合計スコアとクリアノルマの進捗表示 -->
+            <div class="quota-container">
+                <div class="quota-text-info">
+                    <span>みんなの合計: <strong id="total-score">0</strong> 点</span>
+                    <span>ノルマ: <strong id="clear-quota">500</strong> 点</span>
+                </div>
+                <!-- CSSでゲージにするためのプログレスバー構造 -->
+                <div class="quota-bar-bg">
+                    <div id="quota-bar-fill" class="quota-bar-fill" style="width: 0%;"></div>
+                </div>
+            </div>
+
+        </footer>
+
     </div>
 
-    <!-- 将来的にゲーム専用のプログラムを作る場合は、ここにscriptタグを追加します -->
+    <!-- ==========================================
+         4. 結果確認画面（リザルト画面）オーバーレイ
+         ※初期状態は hidden で非表示。10問終了時にJSで表示
+         ========================================== -->
+    <div id="result-screen" class="result-overlay hidden">
+        <div class="result-window">
+            
+            <!-- クリア / 失敗 の大見出し -->
+            <h1 id="result-title" class="clear-title">STAGE CLEAR!! 🎉</h1>
+
+            <!-- スコア結果発表詳細 -->
+            <div class="result-scores-container">
+                <div class="result-score-row">
+                    <span>じぶんのスコア:</span>
+                    <strong id="res-player-score">0</strong> 点
+                </div>
+                <div class="result-score-row">
+                    <span>なかま1のスコア:</span>
+                    <strong id="res-npc1-score">0</strong> 点
+                </div>
+                <div class="result-score-row">
+                    <span>なかま2のスコア:</span>
+                    <strong id="res-npc2-score">0</strong> 点
+                </div>
+                <div class="result-divider"></div>
+                <div class="result-total-row">
+                    <span>みんなの合計スコア:</span>
+                    <h2><span id="res-total-score">0</span> / <span id="res-quota-score">500</span> 点</h2>
+                </div>
+            </div>
+
+            <!-- 報酬（秘宝）＆新なかま獲得エリア（条件を満たした時だけJSで表示を制御） -->
+            <div id="reward-area" class="reward-box hidden">
+                <h3 class="reward-header">🎁 ごほうびゲット！</h3>
+                <div id="reward-content" class="reward-content">
+                    <!-- 例：「ひほう『たいようのメダル』をみつけた！」や、新しく仲間が増えた演出をJSで挿入 -->
+                </div>
+            </div>
+
+            <!-- 次へのアクション（地図画面へ戻る） -->
+            <div class="result-actions">
+                <button id="back-to-map-btn" class="map-return-btn">ちずに戻る ➔</button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- スクリプトの読み込み -->
+    <script src="js/game-master.js"></script>
+    <script src="js/script_game.js"></script>
 </body>
 </html>
