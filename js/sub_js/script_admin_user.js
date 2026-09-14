@@ -2,7 +2,7 @@
 // 管理者画面（admin.html）子コントロール
 // ==========================================
 // 💡 共通設定ファイルから db を読み込む
-import { db, collection, doc, addDoc, getDocs, setDoc, getDoc, updateDoc, deleteDoc, query, where, orderBy } from './firebase-config.js';
+import { db, collection, doc, addDoc, getDocs, setDoc, getDoc, updateDoc, deleteDoc, query, where, orderBy } from '../firebase-config.js';
 
 // 1️⃣ 【ユーザー管理】一覧描画と保存（新システム完全対応版）
 async function renderAdminUserList() {
