@@ -5,7 +5,7 @@
 import { db, collection, doc, addDoc, getDocs, setDoc, getDoc, updateDoc, deleteDoc, query, where, orderBy } from '../firebase-config.js';
 
 // 📝 大量に登録したいクイズデータの配列（1レコード1行仕様）
-const bulkQuestionsData = [
+export const bulkQuestionsData = [
     { grade: 0, genre: "moral", type: "select", text: "ともだちの おもちゃを つかいたいとき、なんて 言う？", choices: ["かして、という", "だまって とる", "おこる", "なきだす"], answer: "かして、という", explanation: "" },
     { grade: 4, genre: "math", type: "select", text: "三角形の面積を求める公式は？", choices: ["底辺 × 高さ", "半径 × 半経 × 3.14", "縦 × 横", "底辺 × 高さ ÷ 2"], answer: "底辺 × 高さ ÷ 2", explanation: "" },
     { grade: 4, genre: "moral", type: "select", text: "図書館など、みんなが使う場所での正しい過ごし方は？", choices: ["静かに過ごす", "大声で走る", "お菓子を食べる", "ゲームを大音量でする"], answer: "静かに過ごす", explanation: "" },
