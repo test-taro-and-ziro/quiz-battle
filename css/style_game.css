@@ -143,11 +143,17 @@ body {
     margin: 10px 0 20px 0;
 }
 
+/* 回答UIを包むコンテナ（〇×の時は横並び、それ以外は縦並びを自動切り替え） */
 .inputs-container {
     display: flex;
-    flex-direction: column;
+    flex-direction: column; /* 基本は縦並び（4択など） */
     gap: 12px;
     margin-top: auto;
+}
+
+/* ★ 〇×ボタンの時だけ、このコンテナのクラスをJS側で横並びに切り替えます */
+.inputs-container.ox-row {
+    flex-direction: row;    /* 左右に並べる */
 }
 
 .choice-btn {
@@ -166,9 +172,11 @@ body {
     border-color: #a855f7;
 }
 
+/* 〇×ボタンのスタイル（4択と同じ高さをキープし、左右均等に広げる） */
 .ox-btn {
-    font-size: 2rem;
-    padding: 10px;
+    flex: 1;                /* 左右で50%ずつ綺麗に幅を分け合います */
+    font-size: 2rem;        /* 〇×の文字を大きく見せる */
+    padding: 10px 14px;     /* ★先ほど調整した4択ボタンと「全く同じ高さ」になります */
 }
 
 .text-input-group {
