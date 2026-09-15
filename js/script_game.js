@@ -57,9 +57,9 @@ window.addEventListener('DOMContentLoaded', async () => {
     currentUser = urlParams.get('user');
     currentQuest = urlParams.get('quest');
     currentGenre = urlParams.get('genre');
-    const currentGenre = urlParams.get('norma');
-    if (currentGenre) {
-        clearQuota = parseInt(currentGenre, 10); // clearQuotaに直接セット！
+    const currentNorma = urlParams.get('norma');
+    if (currentNorma) {
+        clearQuota = parseInt(currentNorma, 10); // clearQuotaに直接セット！
     }    
     document.getElementById('clear-quota').textContent = clearQuota;
     document.getElementById('res-quota-score').textContent = clearQuota;
