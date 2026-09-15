@@ -25,7 +25,7 @@ const mockQuestions = [
 // ==========================================
 // 2. ゲームの状態管理（ステート）
 // ==========================================
-// ★【New】エラー解決のため、現在のダミーデータを本番用配列名として定義します
+// ★ エラー解決のため、現在のダミーデータを本番用配列名として定義します
 let currentQuestions = mockQuestions;
 
 let currentQuestionIndex = 0; 
@@ -158,7 +158,7 @@ function loadQuestion(index) {
         return;
     }
 
-    const q = mockQuestions[index];
+    const q = currentQuestions[index];
     
     // 画面要素の更新
     document.getElementById('current-question-num').textContent = index + 1;
@@ -269,7 +269,7 @@ function handleAnswer(userAnswer, correctAnswer) {
         resultMessage.className = "result-text correct"; 
         
         // ★現在の問題のタイプを安全に取得してベース時間を判定
-        const q = mockQuestions[currentQuestionIndex];
+        const q = currentQuestions[currentQuestionIndex];
         const maxTimerValue = (q.type === "direct") ? 40 : 30;
         
         // 新しいポイント計算ロジック（残り時間ボーナス最大20ポイント ＋ 最小値10ポイント）
