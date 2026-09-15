@@ -211,11 +211,12 @@ function cancelQuestSelect() {
     document.getElementById('genre-modal-overlay').style.display = 'none';
 }
 
-// 💡 ジャンル（さんすう・こくご）ボタンが押されたときの処理（game.html へ遷移）
+// 💡 ジャンルボタンが押されたときの処理（game.html へ遷移）
 function goToGame(genre) {
-    const questName = document.getElementById('selected-quest-name').textContent;
-    // 次のゲーム本編（game.html）へ「ユーザー名」「選んだクエスト」「ジャンル」をすべて引き継いでジャンプ！
-    window.location.href = `game.html?user=${encodeURIComponent(currentUser)}&quest=${encodeURIComponent(questName)}&genre=${encodeURIComponent(genre)}`;
+    // 💡 選択されたダンジョンデータからノルマ（norma）を取得（万が一空ならデフォルト値「10000」に）
+    const normaValue = selectedDungeon.norma || "10000";
+    // 次のゲーム本編（game.html）へ引き継いでジャンプ！
+    window.location.href = `game.html?user=${encodeURIComponent(currentUser)}&quest=${encodeURIComponent(selectedDungeon.name)}&genre=${encodeURIComponent(genre)}&norma=${encodeURIComponent(normaValue)}`;
 }
 
 // 🛑 新設：ログアウトボタンが押されたときに確認する関数
