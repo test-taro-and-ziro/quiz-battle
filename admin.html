@@ -80,6 +80,12 @@
             <!-- タブ3: クイズ管理 -->
             <div id="tab-questions" class="admin-tab-content">
                 <h2>クイズ問題の管理（1問1レコード）</h2>
+                <!-- 📄 admin.html のクイズ管理タブ内、ボタンを追加したい場所に追記 -->
+                <div style="margin-top: 15px; border-top: 1px dashed #ccc; padding-top: 15px;">
+                    <button onclick="addBulkQuestionsFromAdmin()" style="background-color: #e67e22; width: 100%;">
+                        🔥 【テスト用】クイズ問題をまとめて大量登録する
+                    </button>
+                </div>
                 <div class="table-responsive">
                     <table class="admin-table">
                         <thead>
@@ -322,6 +328,9 @@
     <script type="module" src="js/sub_js/script_admin_companion.js"></script>
     <script type="module" src="js/sub_js/script_admin_dungeon.js"></script>
     <script type="module" src="js/sub_js/script_admin_treasure.js"></script>
+
+    <!-- 個別に追加した特殊なスクリプト -->
+    <script type="module" src="js/sub_js/add_quiz.js"></script>
     
     <!-- 最後に、全体をまとめる親ファイルを読み込む -->
     <script type="module" src="js/script_admin.js"></script>
