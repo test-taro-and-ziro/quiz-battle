@@ -287,12 +287,12 @@ function handleAnswer(userAnswer, correctAnswer) {
 
     activeCompanions.forEach((companion, index) => {
         // ① 得意・苦手・それ以外の確率（正解率）を決定
-        let successRate = 0.35; // デフォルト：それ以外（35%）
+        let successRate = 0.40; // デフォルト：それ以外（40%）
         
         if (companion.good_genres && companion.good_genres.includes(currentGenre)) {
             successRate = 0.60; // 得意（60%）
         } else if (companion.bad_genres && companion.bad_genres.includes(currentGenre)) {
-            successRate = 0.10; // 苦手（10%）
+            successRate = 0.20; // 苦手（20%）
         }
 
         // ② 確率の抽選
