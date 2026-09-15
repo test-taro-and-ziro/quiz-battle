@@ -99,7 +99,7 @@ function renderDungeonMenu() {
 function renderPlayerStatus(userData) {
     document.getElementById('player-name').textContent = currentUser;
     const displayGrade = userData.grade === 0 ? "幼児" : userData.grade + "年生";
-    document.getElementById('player-grade').textContent = "がくねん: " + displayGrade;
+    document.getElementById('player-grade').textContent = "学年: " + displayGrade;
 
     const fileName = getCharacterFileName(userData.animal, userData.gender);
     setCharacterSrc(document.getElementById('player-avatar'), fileName);
@@ -115,7 +115,7 @@ function setupProfileModal(userData) {
     trigger.addEventListener('click', () => {
         document.getElementById('profile-modal-name').textContent = currentUser;
         const displayGrade = userData.grade === 0 ? "幼児" : userData.grade + "年生";
-        document.getElementById('profile-modal-grade').textContent = "がくねん: " + displayGrade;
+        document.getElementById('profile-modal-grade').textContent = "学年: " + displayGrade;
         
         const fileName = getCharacterFileName(userData.animal, userData.gender);
         setCharacterSrc(document.getElementById('profile-modal-avatar'), fileName);
