@@ -4,11 +4,13 @@
 // 💡 共通設定ファイルから db を読み込む
 import { db, collection, doc, addDoc, getDocs, setDoc, getDoc, updateDoc, deleteDoc, query, where, orderBy } from '../firebase-config.js';
 
-// 3️⃣【💡新設：クイズ管理】一覧描画・保存・削除・追加（1問1レコード）
+// ==========================================
+// 3️⃣【クイズ管理】専用プログラム（英単語type ＆ 解説対応版）
+// ==========================================
 async function renderAdminQuestionList() {
     const tbody = document.getElementById('admin-question-list');
     if (!tbody) return;
-    tbody.innerHTML = '<tr><td colspan="7">データを読み込み中...</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="8">データを読み込み中...</td></tr>';
 
     try {
         // 先に学年用の表示名マスターをサッと取得
@@ -26,16 +28,13 @@ async function renderAdminQuestionList() {
             // choices配列を「カンマ区切り」の文字に戻して表示する
             const choicesText = data.choices ? data.choices.join(',') : '';
             const gradeLabel = gradeMap[data.grade] || (data.grade + "の学年値");
-
-            // 💡 データベースの英単語設定値に合わせて、セレクトボックスの selected 状態を正しく制御
-            const typeValue = data.type || 'select'; // 未設定時は暫定で select 
+            const typeValue = data.type || 'select'; 
 
             const tr = document.createElement('tr');
             tr.innerHTML = `
                 <td><small>${gradeLabel} (${data.grade})</small></td>
                 <td><input type="text" id="ad-q-genre-${id}" value="${data.genre || ''}" style="width:70px;"></td>
                 <td>
-                    <!-- 💡 value属性を英単語にし、画面の表示名は日本語のまま維持 -->
                     <select id="ad-q-type-${id}">
                         <option value="select" ${typeValue === 'select' || typeValue === '四択' ? 'selected' : ''}>四択</option>
                         <option value="which" ${typeValue === 'which' || typeValue === '○×' ? 'selected' : ''}>○×</option>
@@ -45,6 +44,8 @@ async function renderAdminQuestionList() {
                 <td><input type="text" id="ad-q-text-${id}" value="${data.text || ''}"></td>
                 <td><input type="text" id="ad-q-choices-${id}" value="${choicesText}" placeholder="a,b,c,d"></td>
                 <td><input type="text" id="ad-q-answer-${id}" value="${data.answer || ''}" style="width:80px;"></td>
+                <!-- 💡 解説入力用の textarea 列を追加（HTMLタグをそのまま編集可能） -->
+                <td><textarea id="ad-q-explanation-${id}" style="width:180px; height:50px; font-size:12px;">${data.explanation || ''}</textarea></td>
                 <td>
                     <button onclick="saveAdminQuestion('${id}')">保存</button>
                     <button onclick="deleteAdminQuestion('${id}')" style="background:#e53e3e;">削除</button>
@@ -54,32 +55,33 @@ async function renderAdminQuestionList() {
         });
 
         if (tbody.children.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="7">クイズ問題が1問もありません。新しく追加してください。</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="8">クイズ問題が1問もありません。新しく追加してください。</td></tr>';
         }
     } catch (e) {
         console.error(e);
-        tbody.innerHTML = '<tr><td colspan="7" style="color:red;">クイズデータの取得に失敗しました。</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="8" style="color:red;">クイズデータの取得に失敗しました。</td></tr>';
     }
 }
 
 // クイズ問題の個別編集・保存
 async function saveAdminQuestion(id) {
     const genre = document.getElementById(`ad-q-genre-${id}`).value.trim();
-    const type = document.getElementById(`ad-q-type-${id}`).value; // 💡 英単語（select/which/direct）が取得されます
+    const type = document.getElementById(`ad-q-type-${id}`).value; 
     const text = document.getElementById(`ad-q-text-${id}`).value.trim();
     const choicesStr = document.getElementById(`ad-q-choices-${id}`).value.trim();
     const answer = document.getElementById(`ad-q-answer-${id}`).value.trim();
+    const explanation = document.getElementById(`ad-q-explanation-${id}`).value.trim(); // 💡解説の取得
 
-    // カンマ区切りの文字列を配列に変換
     const choicesArray = choicesStr ? choicesStr.split(',').map(s => s.trim()) : [];
 
     try {
         await updateDoc(doc(db, "questions", id), {
             genre: genre,
-            type: type, // 💡 英単語でFirebaseを更新
+            type: type, 
             text: text,
             choices: choicesArray,
-            answer: answer
+            answer: answer,
+            explanation: explanation // 💡Firebaseのフィールドを更新
         });
         alert("クイズデータを更新しました！🎉");
         await renderAdminQuestionList();
@@ -99,10 +101,11 @@ async function deleteAdminQuestion(id) {
 async function addQuestionFromAdmin() {
     const gradeVal = document.getElementById('new-q-grade').value;
     const genre = document.getElementById('new-q-genre').value.trim();
-    const type = document.getElementById('new-q-type').value; // 💡 HTML側の新しい英単語valueを取得
+    const type = document.getElementById('new-q-type').value; 
     const text = document.getElementById('new-q-text').value.trim();
     const choicesStr = document.getElementById('new-q-choices').value.trim();
     const answer = document.getElementById('new-q-answer').value.trim();
+    const explanation = document.getElementById('new-q-explanation').value.trim(); // 💡解説の取得
 
     if (gradeVal === "" || !genre || !text || !answer) {
         alert("学年、ジャンル、問題文、正解は必ず入力・選択してね！");
@@ -115,10 +118,11 @@ async function addQuestionFromAdmin() {
         await addDoc(collection(db, "questions"), {
             grade: parseInt(gradeVal),
             genre: genre,
-            type: type, // 💡 英単語（select / which / direct）で登録！
+            type: type, 
             text: text,
             choices: choicesArray,
-            answer: answer
+            answer: answer,
+            explanation: explanation // 💡新規追加時に保存
         });
 
         // フォームのリセット
@@ -126,6 +130,7 @@ async function addQuestionFromAdmin() {
         document.getElementById('new-q-text').value = '';
         document.getElementById('new-q-choices').value = '';
         document.getElementById('new-q-answer').value = '';
+        document.getElementById('new-q-explanation').value = ''; // 解説入力欄をクリア
 
         await renderAdminQuestionList(); 
         alert("新しいクイズ問題を1件追加しました！🎉");
@@ -137,3 +142,4 @@ window.renderAdminQuestionList = renderAdminQuestionList;
 window.saveAdminQuestion = saveAdminQuestion;
 window.deleteAdminQuestion = deleteAdminQuestion;
 window.addQuestionFromAdmin = addQuestionFromAdmin;
+
