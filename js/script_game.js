@@ -78,12 +78,12 @@ window.addEventListener('DOMContentLoaded', async () => {
 });
 
 // ==========================================
-// ★ なかまと【自キャラ共通関数連動】のデータ取得・画像画面反映ロジック
+// ★ なかまと【自キャラ共通関数連動】のデータ取得・画像画面反映ロジック（準備中画像対応版）
 // ==========================================
 async function setupPartyAndRender(userId) {
     try {
         let partyIds = [];
-        let playerImgFile = "placeholder.jpg"; // 初期値
+        let playerImgFile = "placeholder.jpg"; // 初期値（画像がないときはこれになる）
         
         // ① usersコレクションからユーザー情報を取得
         const userDocRef = doc(db, "users", userId);
@@ -104,17 +104,19 @@ async function setupPartyAndRender(userId) {
             // 共通関数からファイル名（例: "rabbit_boy_01.png"）を取得
             const fileName = getCharacterFileName(userAnimal, userGender);
             
-            // ★【修正ポイント】共通マスタの仕様に合わせてフォルダパスを付与！
+            // 共通関数から正しいファイル名が返ってきて、かつplaceholder以外の場合にパスを組み立て
             if (fileName && fileName !== "placeholder.jpg") {
                 playerImgFile = `images/chara/${fileName}`;
-            } else {
-                playerImgFile = "placeholder.jpg";
             }
         }
         
-        // ② 【自キャラの画像反映】正しいフルパスをsrcにセット
+        // ② 【自キャラの画像反映】
         const playerImgEl = document.getElementById('player-img');
         if (playerImgEl) {
+            // 画像の読み込みエラー（404など）が起きたら、自動的に準備中画像（placeholder.jpg）に差し替える安全装置
+            playerImgEl.onerror = () => {
+                playerImgEl.src = "placeholder.jpg";
+            };
             playerImgEl.src = playerImgFile;
             playerImgEl.alt = "じぶん";
         }
@@ -156,7 +158,12 @@ async function setupPartyAndRender(userId) {
             
             const imgEl = document.getElementById(`npc${num}-img`);
             if (imgEl) {
-                // 仲間（NPC）の画像パスも同様にフォルダパスを付与してセット
+                // ★【NPC用の安全装置】画像ファイルがまだ用意されていない場合は、
+                // 自動的に「placeholder.jpg（準備中イメージ）」を表示する
+                imgEl.onerror = () => {
+                    imgEl.src = "placeholder.jpg"; // 読み込めなければ準備中に強制差し替え
+                };
+
                 if (companion.image_path) {
                     imgEl.src = `images/chara/${companion.image_path}`;
                 } else {
