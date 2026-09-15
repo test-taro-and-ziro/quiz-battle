@@ -176,4 +176,4 @@ window.renderAdminQuestionList = renderAdminQuestionList;
 window.saveAdminQuestion = saveAdminQuestion;
 window.deleteAdminQuestion = deleteAdminQuestion;
 window.addQuestionFromAdmin = addQuestionFromAdmin;
-
+window.deleteAllQuestionsFromAdmin = deleteAllQuestionsFromAdmin;
