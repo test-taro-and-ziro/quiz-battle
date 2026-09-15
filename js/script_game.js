@@ -4,9 +4,9 @@
 // 💡 共通設定ファイルから db を読み込む
 import { db, collection, doc, addDoc, getDocs, setDoc, getDoc, updateDoc, deleteDoc, query, where, orderBy } from './firebase-config.js';
 // 💡 共通ファイルを読み込む1行を追加
-import { loadAnimalMaster, getCharacterFileName, setCharacterSrc, loadGenreMaster, setupPlayerMaster, logoutPlayerMaster } from './game-master.js';
+// import { loadAnimalMaster, getCharacterFileName, setCharacterSrc, loadGenreMaster, setupPlayerMaster, logoutPlayerMaster } from './game-master.js';
 // ⭕【修正版】末尾に「, loadGenreMaster, genreMasterData」が確実に入っているか確認し、差し替えます
-import { loadAnimalMaster, getCharacterFileName, setCharacterSrc, loadGenreMaster, setupPlayerMaster, genreMasterData } from './game-master.js';
+import { loadAnimalMaster, getCharacterFileName, setCharacterSrc, loadGenreMaster, genreMasterData, setupPlayerMaster, logoutPlayerMaster } from './game-master.js';
 
 // ==========================================
 // 1. 本物のFirebase構造に合わせたダミーデータ
