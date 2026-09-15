@@ -278,16 +278,43 @@ function handleAnswer(userAnswer, correctAnswer) {
     playerScore += addedPlayerScore;
     document.getElementById('player-score').textContent = playerScore;
 
-    // NPCの自動回答（1/3スケール用に獲得ポイントを調整）
-    const npc1Correct = Math.random() > 0.4; 
-    const npc2Correct = Math.random() > 0.5; 
-    const addedNpc1 = npc1Correct ? Math.floor(Math.random() * 10) + 12 : 0; 
-    const addedNpc2 = npc2Correct ? Math.floor(Math.random() * 10) + 12 : 0;
-    
-    npc1Score += addedNpc1;
-    npc2Score += addedNpc2;
+    // ==========================================
+    // ★【確定版】NPC2人の自動回答シミュレーション
+    // 得意(60%) / 苦手(10%) / それ以外(35%) の確率で判定
+    // ==========================================
+    const currentGenre = mockQuestions[currentQuestionIndex].genre; // 現在の問題のジャンル（mathなど）
+    let npcScores =; // なかま1、なかま2が得るポイントのキープ用
+
+    activeCompanions.forEach((companion, index) => {
+        // ① 得意・苦手・それ以外の確率（正解率）を決定
+        let successRate = 0.35; // デフォルト：それ以外（35%）
+        
+        if (companion.good_genres && companion.good_genres.includes(currentGenre)) {
+            successRate = 0.60; // 得意（60%）
+        } else if (companion.bad_genres && companion.bad_genres.includes(currentGenre)) {
+            successRate = 0.10; // 苦手（10%）
+        }
+
+        // ② 確率の抽選
+        const isNpcCorrect = Math.random() < successRate;
+
+        // ③ 正解していたら、回答速度ボーナスを含めたポイントを算出
+        if (isNpcCorrect) {
+            // 回答の速さはランダム（残り時間ボーナスを 5〜15ポイントの間でランダムに付与）
+            const npcTimeBonus = Math.floor(Math.random() * 11) + 5; 
+            // 基礎ポイント10 ＋ スピードボーナス
+            npcScores[index] = 10 + npcTimeBonus; 
+        } else {
+            npcScores[index] = 0; // 不正解なら0ポイント
+        }
+    });
+
+    // 算出したポイントをそれぞれのトータルスコアに加算して画面に反映
+    npc1Score += npcScores[0];
+    npc2Score += npcScores[1];
     document.getElementById('npc1-score').textContent = npc1Score;
     document.getElementById('npc2-score').textContent = npc2Score;
+    // ==========================================
 
     // 合計ポイントとフッターゲージの更新
     const totalScore = playerScore + npc1Score + npc2Score;
