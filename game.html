@@ -27,7 +27,7 @@
                 </div>
             </div>
             
-            <!-- 残りスコア ＋ タイマーゲージ -->
+            <!-- 残り時間 ＋ タイマーゲージ -->
             <div class="timer-container">
                 <div class="timer-box">
                     <span class="label">のこりじかん</span>
@@ -38,11 +38,23 @@
             </div>
         </header>
 
+        <!-- ★【引っ越し先】もんだい・のこりじかんのすぐ下に配置 -->
+        <div class="quota-container">
+            <div class="quota-text-info">
+                <span>みんなの合計: <strong id="total-score">0</strong> ポイント</span>
+                <span>ノルマ: <strong id="clear-quota">300</strong> ポイント</span>
+            </div>
+            <!-- みんなの合計スコアゲージ -->
+            <div class="quota-bar-bg">
+                <div id="quota-bar-fill" class="quota-bar-fill" style="width: 0%;"></div>
+            </div>
+        </div>
+
         <!-- ==========================================
              2. メインエリア（クイズ出題・回答・解説）
              ========================================== -->
         <main class="quiz-area">
-            
+
             <!-- クイズの属性情報（ジャンル・学年バッジ） -->
             <div class="quiz-meta-info">
                 <span id="quiz-genre" class="badge genre-badge">---</span>
@@ -114,18 +126,6 @@
                         <p id="npc2-name" class="chara-name">なかま2</p>
                         <p class="chara-score"><span id="npc2-score">0</span> Point</p>
                     </div>
-                </div>
-            </div>
-
-            <!-- 全体の合計スコアとクリアノルマの進捗表示 -->
-            <div class="quota-container">
-                <div class="quota-text-info">
-                    <span>みんなの合計: <strong id="total-score">0</strong> Point</span>
-                    <span>ノルマ: <strong id="clear-quota">300</strong> Point</span>
-                </div>
-                <!-- みんなの合計スコアゲージ -->
-                <div class="quota-bar-bg">
-                    <div id="quota-bar-fill" class="quota-bar-fill" style="width: 0%;"></div>
                 </div>
             </div>
 
