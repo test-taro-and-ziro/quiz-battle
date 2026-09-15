@@ -102,14 +102,14 @@ async function setupPartyAndRender(userId) {
             const userAnimal = userData.animal;
             const userGender = userData.gender;
             
-            // game-master.js の共通関数が、一瞬で「images/chara/うさぎ男の子.png」のようなフルパスを返してくれます
+            // game-master.js の共通関数が、ファイル名を返す
             playerImgFile = getCharacterFileName(userAnimal, userGender);
         }
         
         // ② 【自キャラの画像反映】共通関数が解決してくれたパスをそのままsrcにセット
         const playerImgEl = document.getElementById('player-img');
         if (playerImgEl) {
-            playerImgEl.src = images/chara/playerImgFile;
+            playerImgEl.src = "images/chara/" + playerImgFile;
             playerImgEl.alt = "じぶん";
         }
         
