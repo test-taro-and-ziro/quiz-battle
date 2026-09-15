@@ -4,7 +4,7 @@
 // 💡 共通設定ファイルから db を読み込む
 import { db, collection, doc, addDoc, getDocs, setDoc, getDoc, updateDoc, deleteDoc, query, where, orderBy } from './firebase-config.js';
 // 💡 共通マスタファイルからお仕事をインポート
-import { loadAnimalMaster, getCharacterFileName, setCharacterSrc, setupPlayerMaster } from './game-master.js';
+import { loadAnimalMaster, getCharacterFileName, setCharacterSrc, loadGenreMaster, setupPlayerMaster } from './game-master.js';
 
 let currentUser = null;
 // let animalMasterData = []; // 💡 新設：データベースから読み込んだ動物マスターを保存する配列
