@@ -7,7 +7,6 @@ import { db, collection, doc, addDoc, getDocs, setDoc, getDoc, updateDoc, delete
 import { loadAnimalMaster, getCharacterFileName, setCharacterSrc, loadGenreMaster, setupPlayerMaster, logoutPlayerMaster } from './game-master.js';
 
 let currentUser = null;
-// let animalMasterData = []; // 💡 新設：データベースから読み込んだ動物マスターを保存する配列
 let treasureMasterData = [];
 let dungeonMasterData = []; // 💡 データベースから読み込んだダンジョン情報を保存する配列
 let selectedDungeon = null; // 💡 現在プレイヤーが選択したダンジョンのデータ
