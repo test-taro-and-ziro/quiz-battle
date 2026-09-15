@@ -294,12 +294,21 @@ function loadQuestion(index) {
     // ボタン・入力エリアの生成（引数から余計な変数を削除してシンプルに）
     if (q.type === "select") {
         q.choices.forEach(choice => {
-            const btn = document.createElement('button');
-            btn.className = 'choice-btn';
-            btn.textContent = choice;
-            btn.addEventListener('click', () => handleAnswer(choice, q.answer));
-            inputsContainer.appendChild(btn);
-        });
+            // ★【New】選択肢の配列を安全にコピーしてランダムにシャッフルする処理
+            let shuffledChoices = [...q.choices];
+            for (let i = shuffledChoices.length - 1; i > 0; i--) {
+                const r = Math.floor(Math.random() * (i + 1));
+                [shuffledChoices[i], shuffledChoices[r]] = [shuffledChoices[r], shuffledChoices[i]];
+            }
+            // シャッフルされた新しい並び順でボタンを生成！
+            shuffledChoices.forEach(choice => {
+                const btn = document.createElement('button');
+                btn.className = 'choice-btn';
+                btn.textContent = choice;
+                btn.addEventListener('click', () => handleAnswer(choice, q.answer));
+                inputsContainer.appendChild(btn);
+            });
+        }
     } else if (q.type === "which") {
         // ★ 〇×の時だけコンテナを横並び（ox-row）にするクラスを追加！
         inputsContainer.classList.add('ox-row');
