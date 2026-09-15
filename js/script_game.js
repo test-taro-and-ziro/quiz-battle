@@ -97,19 +97,25 @@ async function setupPartyAndRender(userId) {
                 partyIds = [...userData.current_party];
             }
 
-            // ★【スマート化】共通関数 getCharacterFileName をフル活用！
-            // ユーザーの animal (例: "rabbit") と gender (例: "male") をそのまま共通関数に渡すだけ！
+            // ユーザーの animal (例: "rabbit") と gender (例: "male") を取得
             const userAnimal = userData.animal;
             const userGender = userData.gender;
             
-            // game-master.js の共通関数が、ファイル名を返す
-            playerImgFile = getCharacterFileName(userAnimal, userGender);
+            // 共通関数からファイル名（例: "rabbit_boy_01.png"）を取得
+            const fileName = getCharacterFileName(userAnimal, userGender);
+            
+            // ★【修正ポイント】共通マスタの仕様に合わせてフォルダパスを付与！
+            if (fileName && fileName !== "placeholder.jpg") {
+                playerImgFile = `images/chara/${fileName}`;
+            } else {
+                playerImgFile = "placeholder.jpg";
+            }
         }
         
-        // ② 【自キャラの画像反映】共通関数が解決してくれたパスをそのままsrcにセット
+        // ② 【自キャラの画像反映】正しいフルパスをsrcにセット
         const playerImgEl = document.getElementById('player-img');
         if (playerImgEl) {
-            playerImgEl.src = "images/chara/" + playerImgFile;
+            playerImgEl.src = playerImgFile;
             playerImgEl.alt = "じぶん";
         }
         
@@ -150,10 +156,12 @@ async function setupPartyAndRender(userId) {
             
             const imgEl = document.getElementById(`npc${num}-img`);
             if (imgEl) {
-                // ※仲間（NPC）の画像に関しては、これまで通りimage_path（引数1つ）で解決するロジック、
-                // もしくは必要に応じて getCharacterFileName を呼び出す既存の形を維持します
-                const fullImgPath = getCharacterFileName(companion.image_path, "male"); // 必要に応じて調整
-                imgEl.src = fullImgPath;
+                // 仲間（NPC）の画像パスも同様にフォルダパスを付与してセット
+                if (companion.image_path) {
+                    imgEl.src = `images/chara/${companion.image_path}`;
+                } else {
+                    imgEl.src = "placeholder.jpg";
+                }
                 imgEl.alt = companion.name;
             }
         });
