@@ -1,7 +1,7 @@
 // 💡 共通設定ファイルから db を読み込む
 import { db, collection, doc, addDoc, getDocs, setDoc, getDoc, updateDoc, deleteDoc, query, where, orderBy } from './firebase-config.js';
 // 💡 共通ファイルを読み込む1行を追加
-import { loadAnimalMaster, getCharacterFileName, setCharacterSrc, setupPlayerMaster, logoutPlayerMaster } from './game-master.js';
+import { loadAnimalMaster, getCharacterFileName, setCharacterSrc, loadGenreMaster, setupPlayerMaster, logoutPlayerMaster } from './game-master.js';
 
 const ADMIN_PASSWORD = "admin1234"; 
 
