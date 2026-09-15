@@ -96,6 +96,7 @@
                                 <th>問題文</th>
                                 <th>選択肢（カンマ区切り）</th>
                                 <th>正解</th>
+                                <th>解説文</th>
                                 <th>操作</th>
                             </tr>
                         </thead>
@@ -122,6 +123,7 @@
                         <input type="text" id="new-q-text" placeholder="問題文 (例: 1たす2は なにかな？)">
                         <input type="text" id="new-q-choices" placeholder="選択肢をカンマ「,」で区切って入力 (例: 1,2,3,4 ) ※○×なら「○,×」 ※直接入力なら空欄でOK">
                         <input type="text" id="new-q-answer" placeholder="正解の文字 (例: 3 ) ※選択肢の中のどれかと完全に一致させてね">
+                        <textarea id="new-q-explanation" placeholder="解説文 (例: 正解は3！ <b>底辺×高さ÷2</b> で計算しよう！)" style="width: 100%; min-height: 60px; padding: 8px; box-sizing: border-box;"></textarea>
                         <button onclick="addQuestionFromAdmin()" style="background-color: #4CAF50; width: 100%; margin-top: 5px;">このクイズを追加する</button>
                     </div>
                 </div>
