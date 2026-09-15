@@ -74,8 +74,8 @@ window.addEventListener('DOMContentLoaded', async () => {
     // ★ 受け取った本物のユーザー名を使って仲間データを読み込み
     await setupPartyAndRender(currentUser);
 
-    // 最初の問題を表示
-    loadQuestion(currentQuestionIndex);
+    // ② ★【Firestore本番接続】本物のクイズデータをFirebaseから条件検索して10問セット
+    await loadRealQuestions(currentUser, currentGenre);
 
     // ★ 地図に戻るボタンのイベント設定（ユーザー名を引き継ぐ）
     setupBackToMapButton();
@@ -156,6 +156,74 @@ async function setupPartyAndRender(userName) {
     }
 }
 
+// ==========================================
+// ★【確定版】Firestoreから条件に合うクイズを取得して10問選出する関数
+// ==========================================
+async function loadRealQuestions(userName, genre) {
+    try {
+        let userGrade = 4; // デフォルト値（小4）
+        
+        // 1. 共通マスタ（currentPlayerData）から学年(grade)を通信レスで最速取得！
+        if (currentPlayerData && currentPlayerData.grade !== undefined) {
+            userGrade = currentPlayerData.grade; // 数値型(int64)を取得
+        }
+
+        // 2. questions コレクションから「ジャンル」と「学年」が一致する問題を検索
+        const qQuestions = query(
+            collection(db, "questions"), 
+            where("genre", "==", genre),
+            where("grade", "==", userGrade)
+        );
+        const querySnapshot = await getDocs(qQuestions);
+        
+        let allMatchedQuestions = [];
+        querySnapshot.forEach((docSnap) => {
+            allMatchedQuestions.push({
+                id: docSnap.id,
+                ...docSnap.data()
+            });
+        });
+
+        // 3. もし問題が1問も見つからなかった場合の安全対策
+        if (allMatchedQuestions.length === 0) {
+            alert("もんだいが見つかりませんでした。テスト用のもんだいで開始します。");
+            currentQuestions = [...mockQuestions]; 
+            maxQuestions = currentQuestions.length;
+            
+            // ローディング画面を非表示にして開始
+            const loadingScreen = document.getElementById('ai-loading-screen');
+            if (loadingScreen) loadingScreen.classList.add('hidden');
+            
+            loadQuestion(currentQuestionIndex);
+            return;
+        }
+
+        // 4. 問題が10問以上たくさんあった場合はランダムに10問を選出（シャッフル）
+        for (let i = allMatchedQuestions.length - 1; i > 0; i--) {
+            const r = Math.floor(Math.random() * (i + 1));
+            [allMatchedQuestions[i], allMatchedQuestions[r]] = [allMatchedQuestions[r], allMatchedQuestions[i]];
+        }
+        
+        // 先頭から最大10問を切り取って本番用の配列にセット
+        currentQuestions = allMatchedQuestions.slice(0, 10);
+        maxQuestions = currentQuestions.length;
+
+        // 5. ★データの準備がすべて整ったら、ローディング画面を消して満を持して1問目を出題！
+        const loadingScreen = document.getElementById('ai-loading-screen');
+        if (loadingScreen) {
+            loadingScreen.classList.add('hidden');
+        }
+        
+        loadQuestion(currentQuestionIndex);
+
+    } catch (error) {
+        console.error("クイズデータの取得に失敗しました:", error);
+        alert("つうしんエラーが発生しました。");
+        // エラー時もフリーズしないようにローディングは消す
+        const loadingScreen = document.getElementById('ai-loading-screen');
+        if (loadingScreen) loadingScreen.classList.add('hidden');
+    }
+}
 
 // ==========================================
 // 4. クイズの出題処理
