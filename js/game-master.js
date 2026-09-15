@@ -6,6 +6,7 @@ import { db, collection, doc, addDoc, getDocs, setDoc, getDoc, updateDoc, delete
 
 // 各画面で共有するための変数
 export let animalMasterData = [];     // 💡 動物マスタ
+export let genreMasterData = [];      // ★ ジャンルマスタ
 export let currentLoginUser = null;   // 💡 ログイン中のユーザー名（例: "うさぎまる"）
 export let currentPlayerData = null;  // 💡 ログイン中のユーザーの全データ（grade, lv, wins, animal 等）
 
@@ -42,6 +43,24 @@ export function setCharacterSrc(imgElement, fileName) {
         imgElement.src = "images/" + fileName;
     } else {
         imgElement.src = "images/chara/" + fileName;
+    }
+}
+
+// 💡 共通関数：Firebaseからジャンルマスタをまとめてロードする
+export async function loadGenreMaster() {
+    try {
+        // すでにロード済みなら通信せずに今のデータを返す（高速化）
+        if (genreMasterData.length > 0) return genreMasterData;
+
+        const querySnapshot = await getDocs(collection(db, "genre"));
+        genreMasterData = [];
+        querySnapshot.forEach((docSnap) => {
+            genreMasterData.push(docSnap.data());
+        });
+        return genreMasterData;
+    } catch (e) {
+        console.error("ジャンルマスタのロードに失敗:", e);
+        return [];
     }
 }
 
