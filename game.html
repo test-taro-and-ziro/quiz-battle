@@ -16,44 +16,49 @@
              1. 上部ヘッダーエリア（進行度ゲージ ＆ タイマーゲージ）
              ========================================== -->
         <header class="game-header">
-            <!-- クイズの進行度表示 ＋ 進行ゲージ -->
-            <div class="progress-container">
-                <div class="progress-box">
-                    <span class="label">もんだい</span>
-                    <span id="current-question-num" class="count">1</span> / 10
-                </div>
-                <div class="question-bar-bg">
-                    <div id="question-bar-fill" class="question-bar-fill" style="width: 10%;"></div>
-                </div>
-            </div>
             
-            <!-- 残り時間 ＋ タイマーゲージ -->
-            <div class="timer-container">
-                <div class="timer-box">
-                    <span class="label">のこりじかん</span>
+            <!-- 上段：もんだい ＆ のこりじかん -->
+            <div class="header-top-row">
+                <!-- クイズの進行度表示 ＋ 進行ゲージ -->
+                <div class="progress-container">
+                    <div class="progress-box">
+                        <span class="label">もんだい</span>
+                        <span id="current-question-num" class="count">1</span> / 10
+                    </div>
+                    <div class="question-bar-bg">
+                        <div id="question-bar-fill" class="question-bar-fill" style="width: 10%;"></div>
+                    </div>
                 </div>
-                <div class="timer-bar-bg">
-                    <div id="timer-bar-fill" class="timer-bar-fill" style="width: 100%;"></div>
+                
+                <!-- 残り時間 ＋ タイマーゲージ -->
+                <div class="timer-container">
+                    <div class="timer-box">
+                        <span class="label">のこりじかん</span>
+                    </div>
+                    <div class="timer-bar-bg">
+                        <div id="timer-bar-fill" class="timer-bar-fill" style="width: 100%;"></div>
+                    </div>
                 </div>
             </div>
-        </header>
 
-        <!-- ★【引っ越し先】もんだい・のこりじかんのすぐ下に配置 -->
-        <div class="quota-container">
-            <div class="quota-text-info">
-                <span>みんなの合計: <strong id="total-score">0</strong> ポイント</span>
-                <span>ノルマ: <strong id="clear-quota">300</strong> ポイント</span>
+            <!-- 下段：みんなの合計スコアゲージ（同じ枠内に入りました） -->
+            <div class="quota-container">
+                <div class="quota-text-info">
+                    <span>みんなの合計: <strong id="total-score">0</strong> ポイント</span>
+                    <span>ノルマ: <strong id="clear-quota">300</strong> ポイント</span>
+                </div>
+                <div class="quota-bar-bg">
+                    <div id="quota-bar-fill" class="quota-bar-fill" style="width: 0%;"></div>
+                </div>
             </div>
-            <!-- みんなの合計スコアゲージ -->
-            <div class="quota-bar-bg">
-                <div id="quota-bar-fill" class="quota-bar-fill" style="width: 0%;"></div>
-            </div>
-        </div>
+
+        </header>
 
         <!-- ==========================================
              2. メインエリア（クイズ出題・回答・解説）
              ========================================== -->
         <main class="quiz-area">
+
 
             <!-- クイズの属性情報（ジャンル・学年バッジ） -->
             <div class="quiz-meta-info">
