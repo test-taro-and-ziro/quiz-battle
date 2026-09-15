@@ -37,12 +37,12 @@ const maxQuestions = 10;
 let playerScore = 0;
 let npc1Score = 0;
 let npc2Score = 0;
-const clearQuota = 300; // 問題数が増えたのでノルマを調整
 
 // ★ URLパラメータから受け取るクエスト情報用の変数
 let currentUser = "";  // ユーザー名
 let currentQuest = ""; // クエスト名
 let currentGenre = ""; // ジャンル（math, Japanese など）
+let clearQuota = 300; // 問題数が増えたのでノルマを調整
 
 // 仲間データ管理
 let activeCompanions = [];
@@ -52,14 +52,18 @@ const DEFAULT_NPC_ID = "p72A7WPl8OtG5Ht7hhXC";
 // 3. 画面起動時の処理
 // ==========================================
 window.addEventListener('DOMContentLoaded', async () => {
-    document.getElementById('clear-quota').textContent = clearQuota;
-    document.getElementById('res-quota-score').textContent = clearQuota;
-
     // ★ URLパラメータ（?user=〇〇&quest=〇〇&genre=〇〇）の解析と受け取り
     const urlParams = new URLSearchParams(window.location.search);
     currentUser = urlParams.get('user');
     currentQuest = urlParams.get('quest');
     currentGenre = urlParams.get('genre');
+    const currentGenre = urlParams.get('norma');
+    if (currentGenre) {
+        clearQuota = parseInt(currentGenre, 10); // clearQuotaに直接セット！
+    }    
+    document.getElementById('clear-quota').textContent = clearQuota;
+    document.getElementById('res-quota-score').textContent = clearQuota;
+
     // 万が一、ユーザー名が取れなかった場合は安全のためにトップ画面に戻す
     if (!currentUser) {
         alert("もういちどログインしなおしてね！");
