@@ -25,10 +25,13 @@ const mockQuestions = [
 // ==========================================
 // 2. ゲームの状態管理（ステート）
 // ==========================================
+// ★【New】エラー解決のため、現在のダミーデータを本番用配列名として定義します
+let currentQuestions = mockQuestions;
+
 let currentQuestionIndex = 0; 
-let currentScore = 100;       
+let currentScore = 30;       
 let timerInterval = null;     
-const maxQuestions = mockQuestions.length; 
+const maxQuestions = 10; 
 
 // スコア記録用
 let playerScore = 0;
