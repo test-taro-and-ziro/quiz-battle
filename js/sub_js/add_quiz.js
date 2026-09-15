@@ -6,8 +6,10 @@
 // ==========================================
 // 👶 幼児向け（grade: 0）クイズデータ
 // ==========================================
+export const bulkQuestionsData = [];
+
 // 🟥 【こくご：japanese】
-export const bulkQuestionsData = [
+bulkQuestionsData.push(...[
     { grade: 0, genre: "japanese", type: "select", text: "「ねこ」の さいしょの もじは なあに？", choices: ["ね", "こ", "い", "う"], answer: "ね", explanation: "せいかいは「ね」！<br><b>ね</b>・こ のさいしょのもじは<b>「ね」</b>だね！" },
     { grade: 0, genre: "japanese", type: "select", text: "「ぞう」の おおきい はなは どこにある？", choices: ["かお", "おなか", "あし", "おしり"], answer: "かお", explanation: "せいかいは「かお」！<br>おはなが ながーい ぞうさんは、<b>かお</b>に はながあるよ！" },
     { grade: 0, genre: "japanese", type: "which", text: "「いぬ」を はんたいから よむと 「ぬい」になる。○か×か？", choices: ["○", "×"], answer: "○", explanation: "せいかいは ○（まる）！<br>うしろから よむと <b>ぬ・い</b> になるね！おもしろいね！" },
@@ -33,7 +35,7 @@ export const bulkQuestionsData = [
     { grade: 0, genre: "japanese", type: "select", text: "あめが ふったときに さすものは なあに？", choices: ["かさ", "くつ", "ぼうし", "かばん"], answer: "かさ", explanation: "せいかいは「かさ」！<br>雨（あめ）の日は <b>かさ</b>をさして おでかけしよう！" },
     { grade: 0, genre: "japanese", type: "select", text: "「めがね」を かける場所（ばしょ）は どこかな？", choices: ["め", "くち", "みみ", "あし"], answer: "め", explanation: "せいかいは「め」！<br>おめめの まえに <b>めがね</b>を かけて よく見えるようにするよ！" },
     { grade: 0, genre: "japanese", type: "direct", text: "「くるま」の さいごの もじは なあに？ひらがな1もじでいれてね。", choices: [], answer: "ま", explanation: "せいかいは「ま」だよ！<br>く・る・<b>ま</b> の さいごは <b>「ま」</b> だね！" }
-];
+]);
 // 🟦 【さんすう：math】
 bulkQuestionsData.push(...[
     { grade: 0, genre: "math", type: "select", text: "りんごが 3こ あります。2こ もらうと、ぜんぶで なんこ？", choices: ["5こ", "4こ", "1こ", "6こ"], answer: "5こ", explanation: "せいかいは「5こ」だよ！<br>あわせるからたしざんだね。<b>3 ＋ 2 ＝ 5</b> になるよ！" },
