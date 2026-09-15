@@ -80,7 +80,7 @@ async function deleteAllQuestionsFromAdmin() {
         let deleteCount = 0;
 
         // ループで1件ずつ確実に削除
-        for (const docSnap of querySnapshot) {
+        for (const docSnap of querySnapshot.docs) {
             await deleteDoc(doc(db, "questions", docSnap.id));
             deleteCount++;
         }
