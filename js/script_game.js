@@ -43,6 +43,7 @@ let currentUser = "";  // ユーザー名
 let currentQuest = ""; // クエスト名
 let currentGenre = ""; // ジャンル（math, Japanese など）
 let clearQuota = 300; // 問題数が増えたのでノルマを調整
+let userGrade = 4; // ★【New】学年情報を保存しておくグローバル変数（初期値は小4）
 
 // 仲間データ管理
 let activeCompanions = [];
@@ -94,6 +95,10 @@ async function setupPartyAndRender(userName) {
         let partyIds = [];
         let playerFileName = "placeholder.jpg";
         if (userData) {
+            // ★ ここで取得した学年（grade）をグローバル変数にガチッと保存！
+            if (userData.grade !== undefined) {
+                userGrade = userData.grade;
+            }
             // 実データのフィールド名「companions」からIDリストを取得
             if (userData.companions && Array.isArray(userData.companions)) {
                 partyIds = [...userData.companions];
@@ -161,13 +166,6 @@ async function setupPartyAndRender(userName) {
 // ==========================================
 async function loadRealQuestions(userName, genre) {
     try {
-        let userGrade = 4; // デフォルト値（小4）
-        
-        // 1. 共通マスタ（currentPlayerData）から学年(grade)を通信レスで最速取得！
-        if (currentPlayerData && currentPlayerData.grade !== undefined) {
-            userGrade = currentPlayerData.grade; // 数値型(int64)を取得
-        }
-
         // 2. questions コレクションから「ジャンル」と「学年」が一致する問題を検索
         const qQuestions = query(
             collection(db, "questions"), 
