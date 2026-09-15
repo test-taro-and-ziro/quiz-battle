@@ -355,7 +355,7 @@ function handleAnswer(userAnswer, correctAnswer) {
     document.getElementById('quiz-inputs').classList.add('hidden');
     document.getElementById('timer-bar-fill').style.width = '0%';
 
-    const isCorrect = (userAnswer === correctAnswer);
+    let isCorrect = (userAnswer === correctAnswer);
     // もし〇×クイズ（ボタンから "true" または "false" の文字列が届いた）の場合
     if (userAnswer === "true" || userAnswer === "false") {
         // ボタンから届いた文字を、本物の true / false （Boolean型）に変換してデータと比べます
