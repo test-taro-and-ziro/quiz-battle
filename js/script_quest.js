@@ -183,12 +183,12 @@ function selectQuest(dungeon) {
 
     // 日本語表示用の対応マップ
     const genreLabels = {
-        math: { label: '➕ さんすう（算数）', className: 'btn-math' },
-        japanese: { label: '📖 こくご（国語）', className: 'btn-japanese' },
-        english: { label: '🔤 えいご（英語）', className: 'btn-english' },
-        science: { label: '🧪 りか（理科）', className: 'btn-science' },
-        social: { label: '🗺️ しゃかい（社会）', className: 'btn-social' },
-        moral: { label: '🤝 どうとく（道徳）', className: 'btn-moral' }
+        math: { label: '➕ 算数（さんすう）', className: 'btn-math' },
+        japanese: { label: '📖 国語（こくご）', className: 'btn-japanese' },
+        english: { label: '🔤 英語（えいご）', className: 'btn-english' },
+        science: { label: '🧪 理科（りか）', className: 'btn-science' },
+        social: { label: '🗺️ 社会（しゃかい）', className: 'btn-social' },
+        moral: { label: '🤝 道徳（どうとく）', className: 'btn-moral' }
     };
 
     availableGenres.forEach(genreKey => {
