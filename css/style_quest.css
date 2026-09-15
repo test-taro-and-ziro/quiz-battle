@@ -205,6 +205,21 @@ html, body {
     animation: popup 0.2s ease-out;
 }
 
+/* 📝 モーダル内のクリアノルマ表示用スタイル */
+.window-norma-text {
+    font-size: 14px;
+    font-weight: bold;
+    color: #e11d48; /* 子どもたちの目を引く明るい赤・ピンク系 */
+    background: #fff1f2; /* 優しい薄赤の背景座布団 */
+    padding: 6px 12px;
+    border-radius: 10px;
+    display: inline-block;
+    margin: 4px 0 12px 0;
+}
+#selected-quest-norma {
+    font-size: 18px; /* 数字だけ少し大きく際立たせる */
+}
+
 @keyframes popup {
     from { transform: scale(0.8); opacity: 0; }
     to { transform: scale(1); opacity: 1; }
