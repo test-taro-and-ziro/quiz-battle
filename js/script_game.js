@@ -15,9 +15,9 @@ const mockQuestions = [
     { id: "q3", type: "select", genre: "Japanese", grade: 4, text: "「一生懸命」と同じ意味の言葉はどれ？", choices: ["必死になって", "てきとうに", "のんびりと", "おこりながら"], answer: "必死になって", explanation: "正解は「必死になって」です！" },
     { id: "q4", type: "direct", genre: "math", grade: 4, text: "25 × 4 の答えはいくつ？", choices: [], answer: "100", explanation: "25×4は100です！" },
     { id: "q5", type: "select", genre: "math", grade: 0, text: "りんごが 3こ あります。2こ もらうと、ぜんぶで なんこ？", choices: ["5こ", "4こ", "1こ", "6こ"], answer: "5こ", explanation: "3+2は5になるよ。" },
-    { id: "q6", type: "which", genre: "math", grade: 4, text: "三角形の内角の和（3つの角をたした数）は 180度 である。マルかバツか？", choices: ["〇", "×"], answer: "〇", explanation: "正解は〇！どんな三角形でも、3つの角を合わせると絶対に180度になるよ。" },
+    { id: "q6", type: "which", genre: "math", grade: 4, text: "三角形の内角の和（3つの角をたした数）は 180度 である。マルかバツか？", choices: ["〇", "×"], answer: true, explanation: "正解は〇！どんな三角形でも、3つの角を合わせると絶対に180度になるよ。" },
     { id: "q7", type: "select", genre: "Japanese", grade: 4, text: "「ノートに文字を（　）。」カッコに入る正しい言葉は？", choices: ["書く", "歩く", "食べる", "話す"], answer: "書く", explanation: "ノートには文字を「書く」のが正しいね。" },
-    { id: "q8", type: "which", genre: "moral", grade: 4, text: "友達が困っているときは、気づかないふりをするのが良い。マルかバツか？", choices: ["〇", "×"], answer: "×", explanation: "バツです！困っている友達がいたら、「どうしたの？」と声をかけてあげよう。" },
+    { id: "q8", type: "which", genre: "moral", grade: 4, text: "友達が困っているときは、気づかないふりをするのが良い。マルかバツか？", choices: ["〇", "×"], answer: false, explanation: "バツです！困っている友達がいたら、「どうしたの？」と声をかけてあげよう。" },
     { id: "q9", type: "direct", genre: "math", grade: 4, text: "1分間は、何秒かな？（数字だけでこたえてね）", choices: [], answer: "60", explanation: "正解は60秒です！ちなみに1時間は60分だよ。" },
     { id: "q10", type: "select", genre: "math", grade: 4, text: "81 ÷ 9 のこたえは？", choices: ["7", "8", "9", "10"], answer: "9", explanation: "九九の「くく はちじゅういち」を逆算すると9になるよ！" }
 ];
@@ -290,15 +290,21 @@ function loadQuestion(index) {
             inputsContainer.appendChild(btn);
         });
     } else if (q.type === "which") {
-        // ★【New】〇×の時だけコンテナを横並び（ox-row）にするクラスを追加！
+        // ★ 〇×の時だけコンテナを横並び（ox-row）にするクラスを追加！
         inputsContainer.classList.add('ox-row');
         
-        const oxChoices = ["〇", "×"];
+        // 画面の見た目は「〇」「×」のまま、裏側で "true" / "false" を判定に送る仕掛けにします
+        const oxChoices = [
+            { text: "〇", value: "true" },
+            { text: "×", value: "false" }
+        ];
+        
         oxChoices.forEach(choice => {
             const btn = document.createElement('button');
             btn.className = 'choice-btn ox-btn';
-            btn.textContent = choice;
-            btn.addEventListener('click', () => handleAnswer(choice, q.answer));
+            btn.textContent = choice.text; // 画面には「〇」や「×」を表示
+            // ボタンを押したときに、裏側の値（"true" または "false"）を判定に送ります
+            btn.addEventListener('click', () => handleAnswer(choice.value, q.answer));
             inputsContainer.appendChild(btn);
         });
     } else if (q.type === "direct") {
@@ -350,6 +356,12 @@ function handleAnswer(userAnswer, correctAnswer) {
     document.getElementById('timer-bar-fill').style.width = '0%';
 
     const isCorrect = (userAnswer === correctAnswer);
+    // もし〇×クイズ（ボタンから "true" または "false" の文字列が届いた）の場合
+    if (userAnswer === "true" || userAnswer === "false") {
+        // ボタンから届いた文字を、本物の true / false （Boolean型）に変換してデータと比べます
+        const userBool = (userAnswer === "true");
+        isCorrect = (userBool === correctAnswer); 
+    }
     const resultMessage = document.getElementById('result-message');
     
     let addedPlayerScore = 0;
