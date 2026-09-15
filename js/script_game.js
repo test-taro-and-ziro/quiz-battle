@@ -180,6 +180,7 @@ function loadQuestion(index) {
     const inputsContainer = document.getElementById('quiz-inputs');
     inputsContainer.innerHTML = ''; 
     inputsContainer.classList.remove('hidden');
+    inputsContainer.classList.remove('ox-row'); // ★ 毎回横並びクラスをリセットする
 
     // クイズ形式による初期値（制限時間カウンタ）の分岐
     let maxTimerValue = 30; // 通常（select, which）は30
@@ -197,6 +198,9 @@ function loadQuestion(index) {
             inputsContainer.appendChild(btn);
         });
     } else if (q.type === "which") {
+        // ★【New】〇×の時だけコンテナを横並び（ox-row）にするクラスを追加！
+        inputsContainer.classList.add('ox-row');
+        
         const oxChoices = ["〇", "×"];
         oxChoices.forEach(choice => {
             const btn = document.createElement('button');
