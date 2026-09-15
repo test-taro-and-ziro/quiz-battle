@@ -259,27 +259,46 @@ body {
     margin-bottom: 10px;    /* ★ 下のゲージとのスキマを 15px から 10px に縮めました */
 }
 
+/* キャラクターカードの四角枠設定 */
 .character-card {
     flex: 1;
     background: #f9fafb;
-    border: 1px solid #f3f4f6;
+    border: 2px solid #e5e7eb;
     border-radius: 12px;
-    padding: 8px;
-    text-align: center;
+    padding: 0;                /* 余白をゼロにして枠いっぱいに */
+    overflow: hidden;          /* はみ出た画像をカット */
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 画像ラッパーを四角形にして全画面に広げる */
+.chara-img-wrapper {
+    width: 100%;
+    height: 100px;             /* スマホの高さに合わせて適宜調整 */
+    position: relative;
+    background: #eaeaea;
 }
 
 .chara-img-wrapper img {
-    width: 45px;
-    height: 45px;
-    object-fit: contain;
-    background: #eee;
-    border-radius: 50%;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;         /* ★ 丸枠を廃止し、四角い枠いっぱいに画像を表示！ */
+    border-radius: 0;          /* 丸みをリセット */
+}
+
+.chara-info {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 4px;
+    text-align: center;
+    border-top: 1px solid #e5e7eb;
 }
 
 .chara-name {
     font-size: 0.8rem;
-    margin: 4px 0 2px 0;
-    color: #555;
+    font-weight: bold;
+    margin: 0;
+    color: #333;
 }
 
 .chara-score {
@@ -306,6 +325,32 @@ body {
     background: #eab308;
     height: 100%;
     transition: width 0.4s ease;
+}
+
+/* ★【New】ポイントがフワッと飛び出すポップアップ演出 */
+.point-popup {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #eab308;            /* ゴールド色 */
+    text-shadow: -2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff; /* 文字の白縁取り */
+    z-index: 10;
+    animation: floatUp 2s ease-out forwards; /* 2秒かけてアニメーション */
+}
+
+/* 不正解のときは青文字にする用 */
+.point-popup.zero {
+    color: #3b82f6;
+}
+
+@keyframes floatUp {
+    0% { top: 60%; opacity: 0; scale: 0.5; }
+    20% { top: 30%; opacity: 1; scale: 1.2; }
+    80% { top: 20%; opacity: 1; }
+    100% { top: 0%; opacity: 0; }
 }
 
 /* ==========================================
