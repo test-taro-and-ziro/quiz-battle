@@ -12,13 +12,15 @@ body {
 #game-container {
     max-width: 600px;
     margin: 0 auto;
-    min-height: 100vh;
+    height: 100vh;          /* ★ min-height から height に変更し、画面ぴったりに固定 */
+    height: 100dvh;         /* ★ スマホのメニューバーを計算に入れた最新の高さ指定 */
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     box-sizing: border-box;
-    padding: 15px;
+    padding: 10px;          /* ★ 上下の余白を 15px から 10px に少し詰めました */
     position: relative;
+    overflow: hidden;       /* ★ 万が一のハミ出しも強制カットしてスクロールを防ぐ */
 }
 
 .hidden {
@@ -111,11 +113,11 @@ body {
    2. メインエリア（クイズ・解説）
    ========================================== */
 .quiz-area {
-    flex-grow: 1;
-    margin: 15px 0;
+    flex-grow: index1;
+    margin: 10px 0;         /* ★ 上下のスキマ（外余白）を 15px から 10px に縮めました */
     background: #ffffff;
     border-radius: 16px;
-    padding: 20px;
+    padding: 15px;          /* ★ 内側の余白を 20px から 15px に少しスリムにしました */
     box-shadow: 0 4px 10px rgba(0,0,0,0.08);
     display: flex;
     flex-direction: column;
@@ -246,7 +248,7 @@ body {
 .status-area {
     background: #ffffff;
     border-radius: 16px;
-    padding: 15px;
+    padding: 10px;          /* ★ 内側の余白を 15px から 10px に縮めました */
     box-shadow: 0 -4px 10px rgba(0,0,0,0.05);
 }
 
@@ -254,7 +256,7 @@ body {
     display: flex;
     justify-content: space-between;
     gap: 10px;
-    margin-bottom: 15px;
+    margin-bottom: 10px;    /* ★ 下のゲージとのスキマを 15px から 10px に縮めました */
 }
 
 .character-card {
