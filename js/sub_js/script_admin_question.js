@@ -138,6 +138,42 @@ async function addQuestionFromAdmin() {
     } catch (e) { alert("追加に失敗しました。"); }
 }
 
+// 一括登録関数
+async function addBulkQuestionsFromAdmin() {
+    if (!confirm(`用意されたクイズ問題（計 ${bulkQuestionsData.length} 問）を一括で追加登録します。よろしいですか？`)) return;
+
+    let successCount = 0;
+    let errorCount = 0;
+
+    try {
+        console.log("一括バルク登録スタート...");
+
+        for (const q of bulkQuestionsData) {
+            await addDoc(collection(db, "questions"), {
+                grade: q.grade,
+                genre: q.genre,
+                type: q.type,
+                text: q.text,
+                choices: q.choices,
+                answer: q.answer,
+                explanation: q.explanation || "" // 💡 explanation フィールドを追加して保存
+            });
+            successCount++;
+        }
+
+        alert(`🎉 一括登録が完了しました！\n成功: ${successCount}件 / 失敗: ${errorCount}件`);
+
+        // クイズ一覧テーブルを最新に更新
+        if (typeof window.renderAdminQuestionList === 'function') {
+            await window.renderAdminQuestionList();
+        }
+
+    } catch (e) {
+        console.error("一括登録中に致命的なエラーが発生しました", e);
+        alert(`一括インサートの途中でエラーが発生しました。\n登録済みの件数: ${successCount}件`);
+    }
+}
+
 // 🔥 【新設】クイズコレクションの全件一括削除プログラム
 async function deleteAllQuestionsFromAdmin() {
     // 誤操作によるデータ全消去を防ぐための厳格な三段階確認
@@ -178,3 +214,4 @@ window.saveAdminQuestion = saveAdminQuestion;
 window.deleteAdminQuestion = deleteAdminQuestion;
 window.addQuestionFromAdmin = addQuestionFromAdmin;
 window.deleteAllQuestionsFromAdmin = deleteAllQuestionsFromAdmin;
+window.addBulkQuestionsFromAdmin = addBulkQuestionsFromAdmin;
