@@ -113,7 +113,7 @@ body {
    2. メインエリア（クイズ・解説）
    ========================================== */
 .quiz-area {
-    flex-grow: index1;
+    flex-grow: 1;
     margin: 10px 0;         /* ★ 上下のスキマ（外余白）を 15px から 10px に縮めました */
     background: #ffffff;
     border-radius: 16px;
