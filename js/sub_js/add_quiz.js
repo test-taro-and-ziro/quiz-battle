@@ -66,4 +66,4 @@ async function addBulkQuestionsFromAdmin() {
 
 // HTML（onclick）から呼び出せるように追加公開
 window.addBulkQuestionsFromAdmin = addBulkQuestionsFromAdmin;
-window.deleteAllQuestionsFromAdmin = deleteAllQuestionsFromAdmin;
+
