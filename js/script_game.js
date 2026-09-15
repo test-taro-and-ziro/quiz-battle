@@ -4,7 +4,7 @@
 // 💡 共通設定ファイルから db を読み込む
 import { db, collection, doc, addDoc, getDocs, setDoc, getDoc, updateDoc, deleteDoc, query, where, orderBy } from './firebase-config.js';
 // 💡 共通マスタファイルからお仕事をインポート
-import { loadAnimalMaster, getCharacterFileName, setCharacterSrc, setupPlayerMaster } from './game-master.js';
+import { loadAnimalMaster, getCharacterFileName, setCharacterSrc, setupPlayerMaster, loadGenreMaster } from './game-master.js';
 
 // ==========================================
 // 1. 本物のFirebase構造に合わせたダミーデータ
