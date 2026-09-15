@@ -278,17 +278,14 @@ function handleAnswer(userAnswer, correctAnswer) {
         resultMessage.className = "result-text incorrect"; 
         addedPlayerScore = 0; 
     }
-
     playerScore += addedPlayerScore;
-    document.getElementById('player-score').textContent = playerScore;
 
     // ==========================================
-    // ★【確定版】NPC2人の自動回答シミュレーション
-    // 得意(60%) / 苦手(10%) / それ以外(35%) の確率で判定
+    // ★ NPC2人の自動回答シミュレーション
     // ==========================================
-    const currentGenre = mockQuestions[currentQuestionIndex].genre; // 現在の問題のジャンル（mathなど）
+    const currentGenre = currentQuestions[currentQuestionIndex].genre; // 現在の問題のジャンル（mathなど）
     let npcScores = [0, 0]; // なかま1、なかま2が得るポイントのキープ用
-
+     
     activeCompanions.forEach((companion, index) => {
         // ① 得意・苦手・それ以外の確率（正解率）を決定
         let successRate = 0.40; // デフォルト：それ以外（40%）
@@ -316,9 +313,40 @@ function handleAnswer(userAnswer, correctAnswer) {
     // 算出したポイントをそれぞれのトータルスコアに加算して画面に反映
     npc1Score += npcScores[0];
     npc2Score += npcScores[1];
-    document.getElementById('npc1-score').textContent = npc1Score;
-    document.getElementById('npc2-score').textContent = npc2Score;
+
     // ==========================================
+    // ★ 2秒間のポイントポップアップ演出ロジック
+    // ==========================================
+    const popups = [
+        { el: document.getElementById('player-popup'), score: addedPlayerScore },
+        { el: document.getElementById('npc1-popup'), score: npcScores[0] },
+        { el: document.getElementById('npc2-popup'), score: npcScores[1] }
+    ];
+
+    popups.forEach(pop => {
+        if (pop.el) {
+            // 前のアニメーションをリセットするため一度クローンして差し替え
+            const newEl = pop.el.cloneNode(true);
+            pop.el.parentNode.replaceChild(newEl, pop.el);
+            
+            // テキストのセットと色の切り替え
+            if (pop.score > 0) {
+                newEl.textContent = `+${pop.score}pt`;
+                newEl.classList.remove('zero');
+            } else {
+                newEl.textContent = `＋0pt`;
+                newEl.classList.add('zero');
+            }
+            
+            // 表示開始
+            newEl.classList.remove('hidden');
+            
+            // 2秒後（2000ミリ秒後）に自動で隠す
+            setTimeout(() => {
+                newEl.classList.add('hidden');
+            }, 2000);
+        }
+    });
 
     // 合計ポイントとフッターゲージの更新
     const totalScore = playerScore + npc1Score + npc2Score;
@@ -326,7 +354,7 @@ function handleAnswer(userAnswer, correctAnswer) {
     const progressPercent = Math.min((totalScore / clearQuota) * 100, 100);
     document.getElementById('quota-bar-fill').style.width = `${progressPercent}%`;
 
-    const q = mockQuestions[currentQuestionIndex];
+    const q = currentQuestions[currentQuestionIndex];
     document.getElementById('explanation-text').textContent = q.explanation;
     document.getElementById('explanation-area').classList.remove('hidden');
 
