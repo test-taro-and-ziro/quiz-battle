@@ -1,8 +1,6 @@
 // ==========================================
-// 💡【新設】クイズ大量登録（一括インサート）プログラム
+// 💡 一括登録用クイズ
 // ==========================================
-// ? 共通設定ファイルから db を読み込む
-import { db, collection, doc, addDoc, getDocs, setDoc, getDoc, updateDoc, deleteDoc, query, where, orderBy } from '../firebase-config.js';
 
 // 📝 大量に登録したいクイズデータの配列（1レコード1行仕様）
 export const bulkQuestionsData = [
