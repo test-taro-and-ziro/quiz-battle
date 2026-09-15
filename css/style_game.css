@@ -30,13 +30,12 @@ body {
    ========================================== */
 .game-header {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: #ffffff;
-    padding: 12px 15px;
+    flex-direction: column; /* 縦に並べる */
+    background: #ffffff;    /* 綺麗な白枠 */
+    padding: 15px;
     border-radius: 12px;
     box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-    gap: 20px;
+    gap: 15px;              /* 上段と下段の間のすきま */
 }
 
 .progress-container, .timer-container {
@@ -44,6 +43,13 @@ body {
     display: flex;
     flex-direction: column;
     gap: 4px;
+}
+
+/* みんなの合計の箱（白背景に統一、余計な枠をリセット） */
+.quota-container {
+    background: transparent; /* 背景を透明にしてヘッダーの白に馴染ませる */
+    padding: 0;              /* 内側の余白をリセット */
+    width: 100%;
 }
 
 .progress-box, .timer-box {
@@ -89,6 +95,15 @@ body {
     height: 100%;
     width: 100%;
     transition: width 0.1s linear;
+}
+
+/* もんだい・のこりじかんを横並びにするための新しいクラス */
+.header-top-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
 }
 
 /* ==========================================
@@ -260,13 +275,6 @@ body {
     font-size: 0.95rem;
     font-weight: bold;
     margin: 0;
-}
-
-.quota-container {
-    background: #f3f4f6;
-    padding: 10px;
-    border-radius: 12px;
-    margin-top: 10px;
 }
 
 .quota-text-info {
