@@ -79,13 +79,22 @@
 
             <!-- タブ3: クイズ管理 -->
             <div id="tab-questions" class="admin-tab-content">
-                <h2>クイズ問題の管理（1問1レコード）</h2>
-                <!-- 📄 admin.html のクイズ管理タブ内、ボタンを追加したい場所に追記 -->
-                <div style="margin-top: 15px; border-top: 1px dashed #ccc; padding-top: 15px;">
-                    <button onclick="addBulkQuestionsFromAdmin()" style="background-color: #e67e22; width: 100%;">
-                        🔥 【テスト用】クイズ問題をまとめて大量登録する
-                    </button>
+                <!-- 💡 見出しと2つのボタンを横並びにするフレックスボックス構造 -->
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 10px;">
+                    <h2 style="margin: 0;">クイズ問題の管理（1問1レコード）</h2>
+                    
+                    <div style="display: flex; gap: 8px; align-items: center;">
+                        <!-- オレンジ色：一括登録ボタン -->
+                        <button onclick="addBulkQuestionsFromAdmin()" style="background-color: #e67e22; width: auto; margin: 0; padding: 6px 14px; font-size: 13px; white-space: nowrap;">
+                            🔥 クイズ問題をまとめて一括登録
+                        </button>
+                        <!-- 赤色：すべて削除ボタン（新設） -->
+                        <button onclick="deleteAllQuestionsFromAdmin()" style="background-color: #e53e3e; width: auto; margin: 0; padding: 6px 14px; font-size: 13px; white-space: nowrap;">
+                            🗑️ すべての問題を削除
+                        </button>
+                    </div>
                 </div>
+  
                 <div class="table-responsive">
                     <table class="admin-table">
                         <thead>
