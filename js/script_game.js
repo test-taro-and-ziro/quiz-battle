@@ -182,31 +182,47 @@ async function loadRealQuestions(userName, genre) {
             });
         });
 
-        // 3. もし問題が1問も見つからなかった場合の安全対策
-        if (allMatchedQuestions.length === 0) {
-            alert("もんだいが見つかりませんでした。テスト用のもんだいで開始します。");
-            currentQuestions = [...mockQuestions]; 
-            maxQuestions = currentQuestions.length;
-            
-            // ローディング画面を非表示にして開始
-            const loadingScreen = document.getElementById('ai-loading-screen');
-            if (loadingScreen) loadingScreen.classList.add('hidden');
-            
-            loadQuestion(currentQuestionIndex);
-            return;
-        }
-
-        // 4. 問題が10問以上たくさんあった場合はランダムに10問を選出（シャッフル）
+        // 3. マッチした本物の問題をまずはランダムにシャッフル（並び替え）
         for (let i = allMatchedQuestions.length - 1; i > 0; i--) {
             const r = Math.floor(Math.random() * (i + 1));
             [allMatchedQuestions[i], allMatchedQuestions[r]] = [allMatchedQuestions[r], allMatchedQuestions[i]];
         }
-        
-        // 先頭から最大10問を切り取って本番用の配列にセット
-        currentQuestions = allMatchedQuestions.slice(0, 10);
-        maxQuestions = currentQuestions.length;
 
-        // 5. ★データの準備がすべて整ったら、ローディング画面を消して満を持して1問目を出題！
+        // 4. ★ 10問になるように、足りない分をテスト用データから自動補完するロジック
+        let finalQuestions = [...allMatchedQuestions];
+
+        // もし本物の問題が10問未満だったら、10問になるまでテストデータを詰め込む
+        if (finalQuestions.length < 10) {
+            console.log(`本番の問題が足りないため（現在${finalQuestions.length}問）、テストデータから補完します。`);
+            
+            // テストデータを念のためシャッフルしてから追加する
+            let tempMock = [...mockQuestions];
+            for (let i = tempMock.length - 1; i > 0; i--) {
+                const r = Math.floor(Math.random() * (i + 1));
+                [tempMock[i], tempMock[r]] = [tempMock[r], tempMock[i]];
+            }
+
+            // 10問に到達するまで、シャッフルしたテストデータを1問ずつ合流させる
+            for (let i = 0; i < tempMock.length; i++) {
+                if (finalQuestions.length >= 10) break;
+                
+                // すでに配列に入っている問題とIDが被っていないかチェック（重複防止の安全策）
+                const isDuplicate = finalQuestions.some(q => q.id === tempMock[i].id);
+                if (!isDuplicate) {
+                    finalQuestions.push(tempMock[i]);
+                }
+            }
+
+            // 万が一、テストデータを足しても10問に満たない場合は、同じテストデータから再度補完
+            while (finalQuestions.length < 10) {
+                finalQuestions.push(mockQuestions[Math.floor(Math.random() * mockQuestions.length)]);
+            }
+        }
+
+        // 5. 確実に10問になった配列の、先頭から10問を切り取って本番用の配列にセット！
+        currentQuestions = finalQuestions.slice(0, 10);
+
+        // 6. データの準備がすべて整ったら、ローディング画面を消して満を持して1問目を出題！
         const loadingScreen = document.getElementById('ai-loading-screen');
         if (loadingScreen) {
             loadingScreen.classList.add('hidden');
@@ -217,7 +233,6 @@ async function loadRealQuestions(userName, genre) {
     } catch (error) {
         console.error("クイズデータの取得に失敗しました:", error);
         alert("つうしんエラーが発生しました。");
-        // エラー時もフリーズしないようにローディングは消す
         const loadingScreen = document.getElementById('ai-loading-screen');
         if (loadingScreen) loadingScreen.classList.add('hidden');
     }
