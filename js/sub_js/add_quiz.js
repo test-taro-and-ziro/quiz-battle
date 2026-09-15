@@ -4,65 +4,48 @@
 // ? 共通設定ファイルから db を読み込む
 import { db, collection, doc, addDoc, getDocs, setDoc, getDoc, updateDoc, deleteDoc, query, where, orderBy } from '../firebase-config.js';
 
-// 📝 大量に登録したいクイズデータの配列
-// ※テスト用にサンプルを記述しています。登録したい問題に合わせて自由に増減・編集してください！
+// 📝 大量に登録したいクイズデータの配列（HTML装飾をあらかじめ組み込んでいます）
 const bulkQuestionsData = [
     {
-        grade: 1,
+        grade: 4,
         genre: "math",
         type: "select", // 四択
-        text: "1たす2は なにかな？",
-        choices: ["1", "2", "3", "4"],
-        answer: "3"
+        text: "三角形の面積を求める公式はどれ？",
+        choices: ["底辺×高さ÷2", "半径×半径×3.14", "縦×横", "底辺×高さ×2"],
+        answer: "底辺×高さ÷2",
+        explanation: "正解は「底辺×高さ÷2」だよ！<br>「÷2」をするのを<b>絶対に忘れないように</b>しようね！"
     },
     {
-        grade: 1,
+        grade: 4,
         genre: "japanese",
+        type: "select", // 四択
+        text: "「一生懸命」と同じ意味の言葉はどれ？",
+        choices: ["必死になって", "てきとうに", "のんびりと", "おこりながら"],
+        answer: "必死になって",
+        explanation: "「一生懸命」は、命をかけるくらい<span style='color:red; font-weight:bold;'>全力でがんばる</span>という意味の四字熟語だよ。"
+    },
+    {
+        grade: 4,
+        genre: "moral",
         type: "which", // ○×
-        text: "「こんにちは」の さいごの文字は「は」である。○か×か？",
+        text: "友達が困っているときは、声をかけずに放っておくのが正しい行動である。○か×か？",
         choices: ["○", "×"],
-        answer: "○"
-    },
-    {
-        grade: 2,
-        genre: "math",
-        type: "direct", // 直接入力
-        text: "かけざん九九の問題だよ。「二人が（ににんが）」のつぎの数字はなに？",
-        choices: [], // 直接入力なので空配列
-        answer: "4"
-    },
-    {
-        grade: 3,
-        genre: "science",
-        type: "select",
-        text: "ひまわりの花は、どの方角を向いて咲くことが多いかな？",
-        choices: ["東", "西", "南", "北"],
-        answer: "東"
-    },
-    {
-        grade: 6,
-        genre: "history",
-        type: "select",
-        text: "1192年（または1185年）に鎌倉幕府を開いたのはだれ？",
-        choices: ["源頼朝", "足利尊氏", "織田信長", "徳川家康"],
-        answer: "源頼朝"
+        answer: "×",
+        explanation: "正解は×（バツ）だよ！<br>なにか手伝えることがないか、<b>「どうしたの？」</b>と優しく声をかけてあげよう。"
     }
-    // 💡 ここに同じ形式で中身を何十件、何百件とカンマ区切りで並べるだけで大量登録できます！
+    // 💡 今後、データをさらに大量投入したい場合は、この下に同じ形式で追加していけます！
 ];
 
-// ボタン押下時に実行される一括登録関数
+// 一括登録関数
 async function addBulkQuestionsFromAdmin() {
-    // 誤操作防止の二段階確認
     if (!confirm(`用意されたクイズ問題（計 ${bulkQuestionsData.length} 問）を一括で追加登録します。よろしいですか？`)) return;
 
     let successCount = 0;
     let errorCount = 0;
 
     try {
-        // 大量登録中はボタンの連打を防ぐために簡易アラートかコンソールで進行を通知
-        console.log("一括登録スタート...");
+        console.log("一括バルク登録スタート...");
 
-        // 配列をループして順番に addDoc を実行
         for (const q of bulkQuestionsData) {
             await addDoc(collection(db, "questions"), {
                 grade: q.grade,
@@ -70,23 +53,25 @@ async function addBulkQuestionsFromAdmin() {
                 type: q.type,
                 text: q.text,
                 choices: q.choices,
-                answer: q.answer
+                answer: q.answer,
+                explanation: q.explanation || "" // 💡 explanation フィールドを追加して保存
             });
             successCount++;
         }
 
         alert(`🎉 一括登録が完了しました！\n成功: ${successCount}件 / 失敗: ${errorCount}件`);
 
-        // クイズ管理画面の一覧テーブルがすでに読み込まれていれば、最新の状態に再描画する
+        // クイズ一覧テーブルを最新に更新
         if (typeof window.renderAdminQuestionList === 'function') {
             await window.renderAdminQuestionList();
         }
 
     } catch (e) {
         console.error("一括登録中に致命的なエラーが発生しました", e);
-        alert(`処理の途中でエラーが発生しました。\nそこまでに登録できた件数: ${successCount}件`);
+        alert(`一括インサートの途中でエラーが発生しました。\n登録済みの件数: ${successCount}件`);
     }
 }
 
-// HTML（onclick）から呼び出せるように公開登録
+// HTMLへの公開
 window.addBulkQuestionsFromAdmin = addBulkQuestionsFromAdmin;
+
