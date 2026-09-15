@@ -77,10 +77,13 @@ window.addEventListener('DOMContentLoaded', async () => {
     setupBackToMapButton();
 });
 
-// ★ なかまデータの取得と画面反映ロジック
+// ==========================================
+// ★ なかまと【自キャラ共通関数連動】のデータ取得・画像画面反映ロジック
+// ==========================================
 async function setupPartyAndRender(userId) {
     try {
         let partyIds = [];
+        let playerImgFile = "placeholder.jpg"; // 初期値
         
         // ① usersコレクションからユーザー情報を取得
         const userDocRef = doc(db, "users", userId);
@@ -88,64 +91,75 @@ async function setupPartyAndRender(userId) {
         
         if (userDocSnap.exists()) {
             const userData = userDocSnap.data();
+            
             // current_party 配列があれば取得
             if (userData.current_party && Array.isArray(userData.current_party)) {
                 partyIds = [...userData.current_party];
             }
+
+            // ★【スマート化】共通関数 getCharacterFileName をフル活用！
+            // ユーザーの animal (例: "rabbit") と gender (例: "male") をそのまま共通関数に渡すだけ！
+            const userAnimal = userData.animal;
+            const userGender = userData.gender;
+            
+            // game-master.js の共通関数が、一瞬で「images/chara/うさぎ男の子.png」のようなフルパスを返してくれます
+            playerImgFile = getCharacterFileName(userAnimal, userGender);
         }
         
-        // ② 仲間が2人に満たない場合は、仕様通り「おさるさん」のIDで埋める（自動補完）
+        // ② 【自キャラの画像反映】共通関数が解決してくれたパスをそのままsrcにセット
+        const playerImgEl = document.getElementById('player-img');
+        if (playerImgEl) {
+            playerImgEl.src = images/chara/playerImgFile;
+            playerImgEl.alt = "じぶん";
+        }
+        
+        // ③ 仲間が2人に満たない場合は、仕様通り「おさるさん」のIDで埋める（自動補完）
         while (partyIds.length < 2) {
             partyIds.push(DEFAULT_NPC_ID);
         }
-        
-        // 安全のため最大2人枠に固定
         partyIds = partyIds.slice(0, 2);
         
-        // ③ companions コレクションからそれぞれの仲間データを取得
+        // ④ companions コレクションからそれぞれの仲間データを取得
         activeCompanions = [];
         for (let i = 0; i < partyIds.length; i++) {
             const npcId = partyIds[i];
             const npcDocRef = doc(db, "companions", npcId);
-            const npcDocSnap = await getDoc(npcId === DEFAULT_NPC_ID ? doc(db, "companions", "dummy") : npcDocRef); // 安全策
+            const npcDocSnap = await getDoc(npcId === DEFAULT_NPC_ID ? doc(db, "companions", "dummy") : npcDocRef);
             
             if (npcDocSnap.exists()) {
-                // データをステートに保持
                 activeCompanions.push({
                     id: npcId,
                     ...npcDocSnap.data()
                 });
             } else {
-                // もしIDが存在しないエラー等の場合も、安全のためにデフォルトおさるさんをセット
                 activeCompanions.push({
                     id: DEFAULT_NPC_ID,
                     name: "おさるさん",
-                    image_path: "monkey_01", // game-masterで逆引きできるキー
+                    image_path: "monkey_01",
                     good_genres: [],
-                    bad_genres: ["math", "Japanese", "moral"] // すべて苦手
+                    bad_genres: ["math", "Japanese", "moral"]
                 });
             }
         }
         
-        // ④ 取得したデータをHTML画面（下部フッター）に反映
+        // ⑤ 取得したなかま2人のデータをHTML画面（下部フッター）に反映
         activeCompanions.forEach((companion, index) => {
-            const num = index + 1; // なかま1 または なかま2
-            
-            // 名前のセット
+            const num = index + 1;
             const nameEl = document.getElementById(`npc${num}-name`);
             if (nameEl) nameEl.textContent = companion.name;
             
-            // 画像のセット（game-master.js の逆引き関数を活用）
             const imgEl = document.getElementById(`npc${num}-img`);
             if (imgEl) {
-                const fullImgPath = getCharacterFileName(companion.image_path);
+                // ※仲間（NPC）の画像に関しては、これまで通りimage_path（引数1つ）で解決するロジック、
+                // もしくは必要に応じて getCharacterFileName を呼び出す既存の形を維持します
+                const fullImgPath = getCharacterFileName(companion.image_path, "male"); // 必要に応じて調整
                 imgEl.src = fullImgPath;
                 imgEl.alt = companion.name;
             }
         });
 
     } catch (error) {
-        console.error("なかまデータの読み込みに失敗しました:", error);
+        console.error("キャラデータの読み込みに失敗しました:", error);
     }
 }
 
