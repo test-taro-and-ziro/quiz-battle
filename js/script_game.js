@@ -283,7 +283,7 @@ function handleAnswer(userAnswer, correctAnswer) {
     // 得意(60%) / 苦手(10%) / それ以外(35%) の確率で判定
     // ==========================================
     const currentGenre = mockQuestions[currentQuestionIndex].genre; // 現在の問題のジャンル（mathなど）
-    let npcScores =; // なかま1、なかま2が得るポイントのキープ用
+    let npcScores = [0, 0]; // なかま1、なかま2が得るポイントのキープ用
 
     activeCompanions.forEach((companion, index) => {
         // ① 得意・苦手・それ以外の確率（正解率）を決定
