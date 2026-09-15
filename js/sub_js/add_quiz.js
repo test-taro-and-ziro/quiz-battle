@@ -62,6 +62,42 @@ async function addBulkQuestionsFromAdmin() {
     }
 }
 
-// HTMLへの公開
-window.addBulkQuestionsFromAdmin = addBulkQuestionsFromAdmin;
+// 📄 js/sub_js/add_quiz.js の一番下に以下の関数を追加します
 
+// 🔥 【新設】クイズコレクションの全件一括削除プログラム
+async function deleteAllQuestionsFromAdmin() {
+    // 誤操作によるデータ全消去を防ぐための厳格な三段階確認
+    if (!confirm("⚠️ 【警告】本当にすべてのクイズ問題を削除しますか？\nこの操作は取り消せません。")) return;
+    const finalCheck = prompt("削除を確定するには、半角で「del」と入力してください。");
+    if (finalCheck !== "del") {
+        alert("文字が一致しなかったため、削除をキャンセルしました。");
+        return;
+    }
+
+    try {
+        // 現在画面に表示されている、またはDBにあるすべてのクイズドキュメントを取得
+        const querySnapshot = await getDocs(collection(db, "questions"));
+        let deleteCount = 0;
+
+        // ループで1件ずつ確実に削除
+        for (const docSnap of querySnapshot) {
+            await deleteDoc(doc(db, "questions", docSnap.id));
+            deleteCount++;
+        }
+
+        alert(`🗑️ すべてのクイズ問題（計 ${deleteCount} 件）を完全に削除しました。`);
+
+        // クイズ一覧テーブルを最新の空状態に再描画
+        if (typeof window.renderAdminQuestionList === 'function') {
+            await window.renderAdminQuestionList();
+        }
+
+    } catch (e) {
+        console.error("一括削除中にエラーが発生しました", e);
+        alert("削除処理の途中でエラーが発生しました。一部のデータが残っている可能性があります。");
+    }
+}
+
+// HTML（onclick）から呼び出せるように追加公開
+window.addBulkQuestionsFromAdmin = addBulkQuestionsFromAdmin;
+window.deleteAllQuestionsFromAdmin = deleteAllQuestionsFromAdmin;
