@@ -174,7 +174,7 @@ function selectQuest(dungeon) {
     // ダンジョン名を表示
     document.getElementById('selected-quest-name').textContent = dungeon.name;
     // 💡 データベースから読み込んだノルマ（norma）の値をモーダルにセット！
-    document.getElementById('selected-quest-norma').textContent = dungeon.norma";
+    document.getElementById('selected-quest-norma').textContent = dungeon.norma;
     
     const genreContainer = document.getElementById('genre-list-container');
     genreContainer.innerHTML = ''; 
