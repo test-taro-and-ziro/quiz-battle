@@ -89,6 +89,7 @@ async function setupPartyAndRender(userName) {
     try {
         // 動物マスタのロード（すでに取得済みなら内部で即返されます）
         await loadAnimalMaster();
+        await loadGenreMaster(); // ★ 起動時に自動でジャンルデータをキャッシュします
 
         // 🌟 共通関数を実行。すでにログイン・地図画面で取得済みなら、Firebaseへの通信は行わずキャッシュを即座に返します！（二重取得の廃止）
         const userData = await setupPlayerMaster(userName);
@@ -256,12 +257,20 @@ function loadQuestion(index) {
     const qProgress = ((index + 1) / 10) * 100;
     document.getElementById('question-bar-fill').style.width = `${qProgress}%`;
     
-    // 属性の翻訳表示
-    let genreJA = q.genre;
-    if (q.genre === "math") genreJA = "さんすう";
-    if (q.genre === "Japanese") genreJA = "こくご";
-    if (q.genre === "moral") genreJA = "どうとく";
-    let gradeJA = q.grade === 0 ? "ようじ" : `小${q.grade}`;
+    // --- ★【完全自動化】ジャンルマスタから動的に表示を切り替えるロジック ---
+    let genreJA = q.genre; // 見つからなかった場合のバックアップ    
+    // キャッシュされたジャンルマスタから、現在の問題の科目(value)に一致するドキュメントを検索
+    // ※実データが小文字の "english" 等になっているため、toLowerCase() で安全に比較します
+    const matchedGenre = genreMasterData.find(g => g.value.toLowerCase() === q.genre.toLowerCase());
+    if (matchedGenre) {
+        // ユーザーの学年(userGrade)が 0 (幼児) の場合はひらがな(label)、それ以外は漢字(label_junior)を自動適用！
+        if (userGrade === 0) {
+            genreJA = matchedGenre.label;        // 例: "えいご"
+        } else {
+            genreJA = matchedGenre.label_junior; // 例: "英語"
+        }
+    }
+    let gradeJA = userGrade === 0 ? "ようじ" : `小${userGrade}`; // プレイヤーの本物の学年を表示
     
     document.getElementById('quiz-genre').textContent = genreJA;
     document.getElementById('quiz-grade').textContent = gradeJA;
