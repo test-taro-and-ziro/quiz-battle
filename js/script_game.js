@@ -447,7 +447,8 @@ function handleAnswer(userAnswer, correctAnswer) {
     document.getElementById('quota-bar-fill').style.width = `${progressPercent}%`;
 
     const q = currentQuestions[currentQuestionIndex];
-    document.getElementById('explanation-text').textContent = q.explanation;
+    // document.getElementById('explanation-text').textContent = q.explanation;
+    document.getElementById('explanation-text').innerHTML = q.explanation;
     document.getElementById('explanation-area').classList.remove('hidden');
 
     const nextBtn = document.getElementById('next-question-btn');
