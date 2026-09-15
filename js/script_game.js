@@ -4,8 +4,6 @@
 // 💡 共通設定ファイルから db を読み込む
 import { db, collection, doc, addDoc, getDocs, setDoc, getDoc, updateDoc, deleteDoc, query, where, orderBy } from './firebase-config.js';
 // 💡 共通ファイルを読み込む1行を追加
-// import { loadAnimalMaster, getCharacterFileName, setCharacterSrc, loadGenreMaster, setupPlayerMaster, logoutPlayerMaster } from './game-master.js';
-// ⭕【修正版】末尾に「, loadGenreMaster, genreMasterData」が確実に入っているか確認し、差し替えます
 import { loadAnimalMaster, getCharacterFileName, setCharacterSrc, loadGenreMaster, genreMasterData, setupPlayerMaster, logoutPlayerMaster } from './game-master.js';
 
 // ==========================================
@@ -293,22 +291,23 @@ function loadQuestion(index) {
 
     // ボタン・入力エリアの生成（引数から余計な変数を削除してシンプルに）
     if (q.type === "select") {
-        q.choices.forEach(choice => {
-            // ★【New】選択肢の配列を安全にコピーしてランダムにシャッフルする処理
-            let shuffledChoices = [...q.choices];
-            for (let i = shuffledChoices.length - 1; i > 0; i--) {
-                const r = Math.floor(Math.random() * (i + 1));
-                [shuffledChoices[i], shuffledChoices[r]] = [shuffledChoices[r], shuffledChoices[i]];
-            }
-            // シャッフルされた新しい並び順でボタンを生成！
-            shuffledChoices.forEach(choice => {
-                const btn = document.createElement('button');
-                btn.className = 'choice-btn';
-                btn.textContent = choice;
-                btn.addEventListener('click', () => handleAnswer(choice, q.answer));
-                inputsContainer.appendChild(btn);
-            });
+        // ① 元のループ（q.choices.forEach）は削除し、まず配列を安全にコピーします
+        let shuffledChoices = [...q.choices];
+        
+        // ② コピーした配列をランダムにシャッフルします
+        for (let i = shuffledChoices.length - 1; i > 0; i--) {
+            const r = Math.floor(Math.random() * (i + 1));
+            [shuffledChoices[i], shuffledChoices[r]] = [shuffledChoices[r], shuffledChoices[i]];
         }
+
+        // ③ シャッフルされた新しい並び順（shuffledChoices）で4つのボタンを生成します！
+        shuffledChoices.forEach(choice => {
+            const btn = document.createElement('button');
+            btn.className = 'choice-btn';
+            btn.textContent = choice;
+            btn.addEventListener('click', () => handleAnswer(choice, q.answer));
+            inputsContainer.appendChild(btn);
+        });
     } else if (q.type === "which") {
         // ★ 〇×の時だけコンテナを横並び（ox-row）にするクラスを追加！
         inputsContainer.classList.add('ox-row');
