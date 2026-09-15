@@ -40,6 +40,7 @@ body {
 
 .progress-container, .timer-container {
     flex: 1;
+    width: 100%; /* ★ 上段の横幅を100%いっぱいに広げる指定を追加します */
     display: flex;
     flex-direction: column;
     gap: 4px;
