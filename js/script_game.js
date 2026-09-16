@@ -4,7 +4,7 @@
 // 💡 共通設定ファイルから db を読み込む
 import { db, collection, doc, addDoc, getDocs, setDoc, getDoc, updateDoc, deleteDoc, query, where, orderBy } from './firebase-config.js';
 // 💡 共通ファイルを読み込む1行を追加
-import { loadAnimalMaster, getCharacterFileName, setCharacterSrc, loadGenreMaster, genreMasterData, setupPlayerMaster, logoutPlayerMaster } from './game-master.js';
+import { loadAnimalMaster, getCharacterFileName, setCharacterSrc, loadGenreMaster, genreMasterData, loadGradeMaster, gradeMasterData, setupPlayerMaster, logoutPlayerMaster } from './game-master.js';
 
 // ==========================================
 // 1. 本物のFirebase構造に合わせたダミーデータ
@@ -280,14 +280,17 @@ function loadQuestion(index) {
     }
     document.getElementById('quiz-genre').textContent = genreJA;
 
-    // クイズデータの grade に応じて表示を切り替える
+    // ✨ 学年マスタから問題の grade（数値）に一致するデータを抽出する
     const gradeBadgeEl = document.getElementById('quiz-grade');
     if (gradeBadgeEl) {
-        if (question.grade === 0) {
-            gradeBadgeEl.textContent = "幼児";
+        // マスタデータの value（数値型）と q.grade（数値型）を比較
+        const matchedGrade = gradeMasterData.find(g => g.value === q.grade);
+        if (matchedGrade) {
+            // 一致するものがあれば、データベースに登録されている label（"4年生", "幼児" など）を表示
+            gradeBadgeEl.textContent = matchedGrade.label;
         } else {
-            // 例：4 なら「小4」、5 なら「小5」と動的に変動させる
-            gradeBadgeEl.textContent = `小${question.grade}`;
+            // 万が一マスタから見つからなかった場合のバックアップ表示
+            gradeBadgeEl.textContent = q.grade === 0 ? "幼児" : `${question.grade}年生`;
         }
     }
 
