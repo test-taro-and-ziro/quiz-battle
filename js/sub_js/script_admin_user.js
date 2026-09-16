@@ -93,7 +93,7 @@ async function renderAdminUserList() {
                 }
             };
             // 🌟 削除ボタンのクリックイベントを追加（シンプル版）
-            tr.querySelector(`#btn-delete-${docId}`).onclick = function() {
+            tr.querySelector(`#btn-delete-${docId}`).onclick = async function() {
                  if (!confirm(`⚠️ 本当にユーザー「${username}」を削除してもよろしいですか？\nこの操作は取り消せません。`)) return;
 
                 try {
