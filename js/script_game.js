@@ -290,7 +290,7 @@ function loadQuestion(index) {
             gradeBadgeEl.textContent = matchedGrade.label;
         } else {
             // 万が一マスタから見つからなかった場合のバックアップ表示
-            gradeBadgeEl.textContent = q.grade === 0 ? "幼児" : `${question.grade}年生`;
+            gradeBadgeEl.textContent = q.grade === 0 ? "幼児" : `${q.grade}年生`;
         }
     }
 
