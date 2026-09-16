@@ -167,14 +167,22 @@ async function setupPartyAndRender(userName) {
 // ==========================================
 async function loadRealQuestions(userName, genre) {
     try {
-        // 2. questions コレクションから「ジャンル」と「学年」が一致する問題を検索
+        // ① プレイヤーの学年に応じて、検索対象にする学年リストを動的に組み立てる
+        let targetGrades = [userGrade];
+        if (userGrade > 0) {
+            // 1年生以上の場合は、ひとつ下の学年（1年生なら0＝幼児）を追加する
+            targetGrades.push(userGrade - 1);
+        }
+        // ※ 幼児（userGrade === 0）の場合は、targetGrades は [0] のままになります
+
+        // 2. questions コレクションから「ジャンル」と「対象学年リストのいずれか」が一致する問題を検索
         const qQuestions = query(
             collection(db, "questions"), 
             where("genre", "==", genre),
-            where("grade", "==", userGrade)
+            where("grade", "in", targetGrades) // ★ ここを in クエリに変更！
         );
         const querySnapshot = await getDocs(qQuestions);
-        
+
         let allMatchedQuestions = [];
         querySnapshot.forEach((docSnap) => {
             allMatchedQuestions.push({
