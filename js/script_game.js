@@ -370,20 +370,30 @@ function loadQuestion(index) {
         inputsContainer.appendChild(group);
     }
 
-    // タイマーの開始（0になるまで減る）
-    currentScore = maxTimerValue;
+    // ==========================================
+    // ⏰ タイマーの開始（0になるまでなめらかに減る）
+    // ==========================================
+    currentScore = maxTimerValue; // 例: 30秒 または 40秒
     document.getElementById('timer-bar-fill').style.width = '100%';
     
     clearInterval(timerInterval);
+    // ✨【修正】1秒間に50回（20ミリ秒ごと）の超高速ループに変更して、なめらかさを表現します
     timerInterval = setInterval(() => {
         if (currentScore > 0) {
-            currentScore--;
+            // 20ミリ秒は「0.02秒」なので、0.02 ずつ細かく引き算をします
+            currentScore -= 0.02;
             
-            // 残り時間ゲージをリアルタイムに縮小（100% から 0% まで）
+            // もしマイナスにいってしまったら0でストップさせる安全処理
+            if (currentScore < 0) currentScore = 0;
+            
+            // 残り時間ゲージをリアルタイムに縮小（100% から 0% まで超滑らかに連動）
             const timerPercent = (currentScore / maxTimerValue) * 100;
             document.getElementById('timer-bar-fill').style.width = `${timerPercent}%`;
+        } else {
+            // ✨ 0秒になったら自動でタイマーの引き算ループだけをストップさせます
+            clearInterval(timerInterval);
         }
-    }, 333); 
+    }, 20);
 }
 
 // ==========================================
