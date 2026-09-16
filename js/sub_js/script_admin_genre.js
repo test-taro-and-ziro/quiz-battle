@@ -20,10 +20,10 @@ async function renderAdminGenreList() {
             const data = docSnap.data();
             const tr = document.createElement('tr');
             
-            // 💡 新しいフィールド「Label_junior」を入力欄としてテーブル列に追加
+            // 💡 新しいフィールド「label_junior」を入力欄としてテーブル列に追加
             tr.innerHTML = `
-                <td><input type="text" id="ad-gen-lab-${id}" value="${data.Label || ''}"></td>
-                <td><input type="text" id="ad-gen-lab-jun-${id}" value="${data.Label_junior || ''}" placeholder="例: 英語"></td>
+                <td><input type="text" id="ad-gen-lab-${id}" value="${data.label || ''}"></td>
+                <td><input type="text" id="ad-gen-lab-jun-${id}" value="${data.label_junior || ''}" placeholder="例: 英語"></td>
                 <td><input type="text" id="ad-gen-val-${id}" value="${data.value || ''}"></td>
                 <td>
                     <button onclick="saveAdminGenre('${id}')">保存</button>
@@ -49,14 +49,14 @@ async function saveAdminGenre(id) {
     const val = document.getElementById(`ad-gen-val-${id}`).value.trim();
 
     if (!label || !val) {
-        alert("表示名(Label)と送信値(value)は必須入力です！");
+        alert("表示名(label)と送信値(value)は必須入力です！");
         return;
     }
     try {
-        // 💡 スクリーンショットの定義通り「Label」「Label_junior」「value」でFirebaseを更新
+        // 💡 スクリーンショットの定義通り「label」「label_junior」「value」でFirebaseを更新
         await updateDoc(doc(db, "genre", id), { 
-            Label: label, 
-            Label_junior: labelJunior,
+            label: label, 
+            label_junior: labelJunior,
             value: val 
         });
         alert("科目マスターデータを更新しました！🎉");
@@ -80,14 +80,14 @@ async function addGenreFromAdmin() {
     const val = document.getElementById('new-gen-value').value.trim();
 
     if (!label || !val) {
-        alert("表示名(Label)と送信値(value)を入力してね！");
+        alert("表示名(label)と送信値(value)を入力してね！");
         return;
     }
     try {
         // 💡 新規追加時も3つのフィールドで登録
         await addDoc(collection(db, "genre"), { 
-            Label: label, 
-            Label_junior: labelJunior,
+            label: label, 
+            label_junior: labelJunior,
             value: val 
         });
         document.getElementById('new-gen-label').value = '';
