@@ -206,12 +206,37 @@ body {
     cursor: pointer;
 }
 
+/* ==========================================
+   ✨ 解説エリアを画面中央に浮かせるポップアップ化
+   ========================================== */
+
+/* 1. 解説ボックス全体の浮かせ処理 */
 .explanation-box {
-    background: #fef2f2;
-    border: 2px dashed #f87171;
-    border-radius: 12px;
-    padding: 15px;
-    margin-top: auto;
+    /* 画面の決まった位置に固定して最前面に浮かせる */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* 画面の真ん中にぴったり合わせる */
+    z-index: 100; /* キャラクターやクイズより手前に表示 */
+
+    /* ポップアップの見た目（お好みに合わせて調整してください） */
+    width: 90%;
+    max-width: 500px;
+    background-color: #ffffff;
+    border: 3px solid #ffcc00; /* かわいい黄色の枠線例 */
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3); /* 後ろに影をつけて立体感をつける */
+    
+    /* 縦に並べる設定 */
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* 2. 非表示クラスの制御（JSと連動） */
+.explanation-box.hidden {
+    display: none !important;
 }
 
 .result-text {
