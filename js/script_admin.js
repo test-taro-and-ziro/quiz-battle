@@ -37,7 +37,7 @@ window.switchAdminTab = function(tabId) {
 // ==========================================
 // 💡 画面ロック用ポップアップ（オーバーレイ）の制御関数
 // ==========================================
-function showOverlay(message) {
+window.showOverlay = function(message) {
     let overlay = document.getElementById('admin-lock-overlay');
     if (!overlay) {
         overlay = document.createElement('div');
@@ -55,7 +55,7 @@ function showOverlay(message) {
         <div style="font-size:12px; color:#666; font-weight:normal; margin-top:8px;">そのまま少々お待ちください...</div>
     `;
 }
-function hideOverlay() {
+window.hideOverlay = function() {
     const overlay = document.getElementById('admin-lock-overlay');
     if (overlay) overlay.remove();
 }
