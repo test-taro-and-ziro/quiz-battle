@@ -7,6 +7,7 @@ import { db, collection, doc, addDoc, getDocs, setDoc, getDoc, updateDoc, delete
 // 各画面で共有するための変数
 export let animalMasterData = [];     // 💡 動物マスタ
 export let genreMasterData = [];      // ★ ジャンルマスタ
+export let gradeMasterData = [];      // ✨【追加】学年マスタ
 export let currentLoginUser = null;   // 💡 ログイン中のユーザー名（例: "うさぎまる"）
 export let currentPlayerData = null;  // 💡 ログイン中のユーザーの全データ（grade, lv, wins, animal 等）
 
@@ -60,6 +61,25 @@ export async function loadGenreMaster() {
         return genreMasterData;
     } catch (e) {
         console.error("ジャンルマスタのロードに失敗:", e);
+        return [];
+    }
+}
+
+// ✨【追加】共通関数：Firebaseから学年マスタをまとめてロードする
+export async function loadGradeMaster() {
+    try {
+        // すでにロード済みなら通信せずに今のデータを返す（高速化）
+        if (gradeMasterData.length > 0) return gradeMasterData;
+
+        // ※ コレクション名は画像に基づき、お使いの実際のコレクション名（例: "grades" など）に合わせてください
+        const querySnapshot = await getDocs(collection(db, "grades"));
+        gradeMasterData = [];
+        querySnapshot.forEach((docSnap) => {
+            gradeMasterData.push(docSnap.data());
+        });
+        return gradeMasterData;
+    } catch (e) {
+        console.error("学年マスタのロードに失敗:", e);
         return [];
     }
 }
