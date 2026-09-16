@@ -179,9 +179,11 @@
                 <h2>科目（ジャンル）マスターの管理（ドキュメントID自動生成）</h2>
                 <div class="table-responsive">
                     <table class="admin-table">
+                        <!-- 📄 admin.html の科目管理テーブルの見出し部分を書き換え -->
                         <thead>
                             <tr>
                                 <th>表示名 (label)</th>
+                                <th>表示名（小学生用） (Label_junior)</th> <!-- 💡列を追加 -->
                                 <th>送信値 (value)</th>
                                 <th>操作</th>
                             </tr>
@@ -196,6 +198,7 @@
                 <div class="card" style="margin-top: 15px; background: #fff;">
                     <h3>➕ 新しい科目（ジャンル）を追加</h3>
                     <div style="display: flex; gap: 10px;">
+                        <input type="text" id="new-gen-label-junior" placeholder="小学生用表示名 (例: 英語)">
                         <input type="text" id="new-ge-label" placeholder="表示名 (例: さんすう)">
                         <input type="text" id="new-ge-value" placeholder="送信値 (例: math)">
                         <button onclick="addGenreFromAdmin()" style="background-color: #4CAF50; width: auto; white-space: nowrap;">この科目を追加する</button>
