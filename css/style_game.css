@@ -97,7 +97,8 @@ body {
     background: #ef4444;
     height: 100%;
     width: 100%;
-    transition: width 0.1s linear;
+    /* ✨ JSの超高速な更新と喧嘩しないよう、アニメーションをなしにします */
+    transition: none;
 }
 
 /* もんだい・のこりじかんを横並びにするための新しいクラス */
