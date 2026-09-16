@@ -33,3 +33,29 @@ window.switchAdminTab = function(tabId) {
     const targetContent = document.getElementById(tabId);
     if (targetContent) targetContent.classList.add('active');
 };
+
+// ==========================================
+// 💡 画面ロック用ポップアップ（オーバーレイ）の制御関数
+// ==========================================
+function showOverlay(message) {
+    let overlay = document.getElementById('admin-lock-overlay');
+    if (!overlay) {
+        overlay = document.createElement('div');
+        overlay.id = 'admin-lock-overlay';
+        overlay.style = 'position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.6); z-index:99999; display:flex; justify-content:center; align-items:center; cursor:wait;';
+        const box = document.createElement('div');
+        box.id = 'admin-lock-box';
+        box.style = 'background:#fff; padding:30px 50px; border-radius:10px; box-shadow:0 4px 15px rgba(0,0,0,0.3); text-align:center; font-size:18px; font-weight:bold; color:#333;';
+        overlay.appendChild(box);
+        document.body.appendChild(overlay);
+    }
+    document.getElementById('admin-lock-box').innerHTML = `
+        <div style="font-size:32px; margin-bottom:10px;">⏳</div>
+        <div>${message}</div>
+        <div style="font-size:12px; color:#666; font-weight:normal; margin-top:8px;">そのまま少々お待ちください...</div>
+    `;
+}
+function hideOverlay() {
+    const overlay = document.getElementById('admin-lock-overlay');
+    if (overlay) overlay.remove();
+}
