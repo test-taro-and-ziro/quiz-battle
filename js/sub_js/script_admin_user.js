@@ -49,7 +49,8 @@ async function renderAdminUserList() {
                 <td><input type="text" id="admin-comps-${docId}" value="${companionsText}" placeholder="例: lion,rabbit_01" style="width:110px;"></td>
                 <td><input type="text" id="admin-equip-${docId}" value="${equipmentText}" placeholder="例: lion (最大2つ)" style="width:110px;"></td>
                 
-                <td><button id="btn-save-${docId}">保存</button></td>
+                <td><button id="btn-save-${docId}">保存</button>
+                <button id="btn-delete-${docId}" style="background:#e53e3e;">削除</button>
             `;
             
             // 保存ボタンのクリックイベント
@@ -89,6 +90,20 @@ async function renderAdminUserList() {
                 } catch(err) { 
                     console.error(err);
                     alert("更新に失敗しました。"); 
+                }
+            };
+            // 🌟 削除ボタンのクリックイベントを追加（シンプル版）
+            tr.querySelector(`#btn-delete-${docId}`).onclick = function() {
+                 if (!confirm(`⚠️ 本当にユーザー「${username}」を削除してもよろしいですか？\nこの操作は取り消せません。`)) return;
+
+                try {
+                    // Firebaseの「users」コレクションから直接このドキュメントを削除
+                    await deleteDoc(doc(db, "users", docId));
+                    alert(`🗑️ ユーザー「${username}」を削除しました。`);
+                    await renderAdminUserList(); // 画面を再描画して最新にする
+                } catch (err) {
+                    console.error(err);
+                    alert("ユーザーの削除に失敗しました。");
                 }
             };
             tbody.appendChild(tr);
