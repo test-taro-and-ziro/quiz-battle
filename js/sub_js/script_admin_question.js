@@ -141,7 +141,10 @@ async function addQuestionFromAdmin() {
 // 一括登録関数
 async function addBulkQuestionsFromAdmin() {
     if (!confirm(`用意されたクイズ問題（計 ${bulkQuestionsData.length} 問）を一括で追加登録します。よろしいですか？`)) return;
-
+    
+    // 🌟 画面全体をロック
+    showOverlay(`大量のクイズデータを一括登録しています<br>（計 ${bulkQuestionsData.length} 問）`);
+    
     let successCount = 0;
     let errorCount = 0;
 
@@ -161,6 +164,7 @@ async function addBulkQuestionsFromAdmin() {
             successCount++;
         }
 
+        hideOverlay(); // 🌟 ロック解除
         alert(`🎉 一括登録が完了しました！\n成功: ${successCount}件 / 失敗: ${errorCount}件`);
 
         // クイズ一覧テーブルを最新に更新
@@ -169,6 +173,7 @@ async function addBulkQuestionsFromAdmin() {
         }
 
     } catch (e) {
+        hideOverlay(); // 🌟 ロック解除
         console.error("一括登録中に致命的なエラーが発生しました", e);
         alert(`一括インサートの途中でエラーが発生しました。\n登録済みの件数: ${successCount}件`);
     }
@@ -184,6 +189,9 @@ async function deleteAllQuestionsFromAdmin() {
         return;
     }
 
+    // 🌟 画面全体をロック
+    showOverlay("すべてのクイズ問題を安全に消去しています");
+    
     try {
         // 現在画面に表示されている、またはDBにあるすべてのクイズドキュメントを取得
         const querySnapshot = await getDocs(collection(db, "questions"));
@@ -195,6 +203,7 @@ async function deleteAllQuestionsFromAdmin() {
             deleteCount++;
         }
 
+        hideOverlay(); // 🌟 ロック解除
         alert(`🗑️ すべてのクイズ問題（計 ${deleteCount} 件）を完全に削除しました。`);
 
         // クイズ一覧テーブルを最新の空状態に再描画
@@ -203,6 +212,7 @@ async function deleteAllQuestionsFromAdmin() {
         }
 
     } catch (e) {
+        hideOverlay(); // 🌟 ロック解除
         console.error("一括削除中にエラーが発生しました", e);
         alert("削除処理の途中でエラーが発生しました。一部のデータが残っている可能性があります。");
     }
