@@ -465,10 +465,4 @@ html, body {
 .btn-science { background: #a855f7; } /* 理科：むらさき */
 .btn-social { background: #b45309; }  /* 社会：茶色 */
 .btn-genre-default { background: #6b7280; } /* その他：グレー */
-.btn-etc {
-    background-color: #8B5A2B; /* どんぐり・木のちゃいろ */
-    color: #FFFFFF;
-}
-.btn-etc:hover {
-    background-color: #A0522D; /* ホバー時のすこし明るい茶色 */
-}
+.btn-etc { background-color: #8B5A2B; } /* どんぐり・木のちゃいろ */
