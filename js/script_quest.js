@@ -187,7 +187,8 @@ function selectQuest(dungeon) {
         english: { label: '🔤 英語（えいご）', className: 'btn-english' },
         science: { label: '🧪 理科（りか）', className: 'btn-science' },
         social: { label: '🗺️ 社会（しゃかい）', className: 'btn-social' },
-        moral: { label: '🤝 道徳（どうとく）', className: 'btn-moral' }
+        moral: { label: '🤝 道徳（どうとく）', className: 'btn-moral' },
+        etc: { label: '🎨 その他（そのた）', className: 'btn-etc' }
     };
 
     availableGenres.forEach(genreKey => {
