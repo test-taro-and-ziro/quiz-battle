@@ -464,5 +464,8 @@ html, body {
 .btn-moral { background: #84cc16; }   /* 道徳：きみどり */
 .btn-science { background: #a855f7; } /* 理科：むらさき */
 .btn-social { background: #b45309; }  /* 社会：茶色 */
-.btn-genre-default { background: #6b7280; } /* その他：グレー */
-.btn-etc { background-color: #8B5A2B; } /* どんぐり・木のちゃいろ */
+.btn-etc { background-color: #8B5A2B; } /* その他：どんぐり・木のちゃいろ */
+.btn-logical { background-color: #5C6BC0; } /* なぞとき（パズルをイメージした青紫系） */
+.btn-creative { background-color: #FFA726; } /* ひらめき（電球をイメージしたオレンジ・ゴールド系） */
+.btn-tricky { background-color: #AB47BC; } /* ひっかけ（罠や裏道をイメージした深みのある赤・ワイン系） */
+.btn-genre-default { background: #6b7280; } /* 上記以外：グレー */
