@@ -278,12 +278,21 @@ function loadQuestion(index) {
             genreJA = matchedGenre.label_junior; // 例: "英語"
         }
     }
-    let gradeJA = userGrade === 0 ? "ようじ" : `小${userGrade}`; // プレイヤーの本物の学年を表示
-    
     document.getElementById('quiz-genre').textContent = genreJA;
-    document.getElementById('quiz-grade').textContent = gradeJA;
+
+    // クイズデータの grade に応じて表示を切り替える
+    const gradeBadgeEl = document.getElementById('quiz-grade');
+    if (gradeBadgeEl) {
+        if (question.grade === 0) {
+            gradeBadgeEl.textContent = "幼児";
+        } else {
+            // 例：4 なら「小4」、5 なら「小5」と動的に変動させる
+            gradeBadgeEl.textContent = `小${question.grade}`;
+        }
+    }
+
+    // クイズ
     document.getElementById('quiz-text').textContent = q.text;
-    
     document.getElementById('explanation-area').classList.add('hidden');
     
     const inputsContainer = document.getElementById('quiz-inputs');
