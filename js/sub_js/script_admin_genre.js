@@ -8,7 +8,7 @@ import { db, collection, doc, addDoc, getDocs, setDoc, getDoc, updateDoc, delete
 async function renderAdminGenreList() {
     const tbody = document.getElementById('admin-genre-list');
     if (!tbody) return;
-    tbody.innerHTML = '<tr><td colspan="3">データを読み込み中...</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="4">データを読み込み中...</td></tr>';
 
     try {
         // 💡スクリーンショットの定義通り、コレクション名「genre」から取得します
@@ -32,7 +32,7 @@ async function renderAdminGenreList() {
             `;
             tbody.appendChild(tr);
         });
-        
+
         if (tbody.children.length === 0) {
             tbody.innerHTML = '<tr><td colspan="4">科目マスターデータがありません。新しく追加してください。</td></tr>';
         }
@@ -103,4 +103,3 @@ window.renderAdminGenreList = renderAdminGenreList;
 window.saveAdminGenre = saveAdminGenre;
 window.deleteAdminGenre = deleteAdminGenre;
 window.addGenreFromAdmin = addGenreFromAdmin;
-
