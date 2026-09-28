@@ -46,12 +46,12 @@ async function renderAdminQuestionList() {
             // 💡 4. ジャンルマスタ（genreMasterData）を回して、プルダウンの選択肢を動的に組み立てる
             let genreOptionsHtml = '';
             genreMasterData.forEach(g => {
-                const gValue = g.value || '';
-                const gLabel = g.label || gValue;
+                const gValue = g.value || ''; // データベースの値を表す「creative」など
+                const gLabel = g.label_junior || gValue; // 💡 表示名はご指定の「label_junior（発想力など）」を使用！                
                 const isSelected = (gValue === currentGenre) ? 'selected' : '';
                 genreOptionsHtml += `<option value="${gValue}" ${isSelected}>${gLabel}</option>`;
             });
-
+            
             const tr = document.createElement('tr');
             tr.innerHTML = `
                 <td><select id="ad-q-grade-${id}" class="admin-select-grade">${gradeOptionsHtml}</select></td>
