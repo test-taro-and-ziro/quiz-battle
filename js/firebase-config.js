@@ -15,7 +15,8 @@ import {
   deleteDoc,  // 削除機能
   query,      // 🌟 フィールド検索で使用
   where,      // 🌟 フィールド検索で使用
-  orderBy     // 🌟 フィールド検索で使用
+  orderBy,    // 🌟 フィールド検索で使用
+  limit       // 検索上限
 } from 'https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js';
 
 // ご自身のFirebaseプロジェクトの設定値
