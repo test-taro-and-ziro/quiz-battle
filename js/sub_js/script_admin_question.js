@@ -84,19 +84,23 @@ async function renderAdminQuestionList() {
     }
 }
 
-// クイズ問題の個別編集・保存
+// ==========================================
+// 💡 クイズの個別保存処理（Firebase上書き更新）
+// ==========================================
 async function saveAdminQuestion(id) {
-    const genre = document.getElementById(`ad-q-genre-${id}`).value.trim();
+    const grade = document.getElementById(`ad-q-grade-${id}`).value;
+    const genre = document.getElementById(`ad-q-genre-${id}`).value;
     const type = document.getElementById(`ad-q-type-${id}`).value; 
     const text = document.getElementById(`ad-q-text-${id}`).value.trim();
     const choicesStr = document.getElementById(`ad-q-choices-${id}`).value.trim();
     const answer = document.getElementById(`ad-q-answer-${id}`).value.trim();
     const explanation = document.getElementById(`ad-q-explanation-${id}`).value.trim(); // 💡解説の取得
-
+    // カンマ区切りの文字列を配列に戻す
     const choicesArray = choicesStr ? choicesStr.split(',').map(s => s.trim()) : [];
 
     try {
         await updateDoc(doc(db, "questions", id), {
+            grade: Number(grade), 
             genre: genre,
             type: type, 
             text: text,
