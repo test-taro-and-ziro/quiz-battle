@@ -1,10 +1,11 @@
 // ==========================================
 // 👶 全学年むけクイズデータ
 // ==========================================
-import { bulkQuestionsData } from './add_quiz.js';
-
+// 💡 親から配列を関数として受け取る
+export function loadQuestions0(targetArray) {
+	
 // 🟥 【こくご：japanese】
-bulkQuestionsData.push(...[
+targetArray.push(...[
 	{ grade: 0, genre: "japanese", type: "select", text: "「ねこ」の さいしょの もじは なあに？", choices: ["ね", "こ", "い", "う"], answer: "ね", explanation: "せいかいは「ね」！<br><b>ね</b>・こ のさいしょのもじは<b>「ね」</b>だね！" },
 	{ grade: 0, genre: "japanese", type: "which", text: "「いぬ」を はんたいから よむと「ぬい」に なる。まるか ばつか？", choices: [true, false], answer: true, explanation: "せいかいは「まる（true）」！<br>はんたいから ひとつずつ よむと <b>ぬ・い</b> に なるね！" },
 	{ grade: 0, genre: "japanese", type: "select", text: "「りんご」の なかの もじ（まんなか）は なあに？", choices: ["ん", "り", "ご", "め"], answer: "ん", explanation: "せいかいは「ん」！<br>り・<b>ん</b>・ご の まんなかは <b>「ん」</b> だね！" },
@@ -77,7 +78,7 @@ bulkQuestionsData.push(...[
 	{ grade: 6, genre: "japanese", type: "which", text: "「郷愁（きょうしゅう）」の 「郷」という 漢字の 音読み（おんよみ）は 「キョウ（またはゴウ）」である。まるか ばつか？", choices: [true, false], answer: true, explanation: "正解は「まる（true）」！故郷（こきょう）や 郷土（きょうど）の ように、「キョウ」 と読むのが 基本（きほん）だよ！" }
 ]);
 // 🟦 【さんすう：math】
-bulkQuestionsData.push(...[
+targetArray.push(...[
 	{ grade: 0, genre: "math", type: "select", text: "クッキーが 3こ あります。1こ たべたら、のこりは なんこに なるかな？", choices: ["2こ", "1こ", "3こ", "4こ"], answer: "2こ", explanation: "せいかいは「2こ」！<br>3こから 1こ ひくと <b>2こ</b> になるね！" },
 	{ grade: 0, genre: "math", type: "which", text: "「5」は「3」よりも 大きい（おおきい） かずである。まるか ばつか？", choices: [true, false], answer: true, explanation: "せいかいは「まる（true）」！<br>かずの じゅんばんで <b>5のほうが あとに くる</b>から、大きいよ！" },
 	{ grade: 0, genre: "math", type: "select", text: "「● ● ● ● ●」 ほし（●）は ぜんぶで なんこ あるかな？", choices: ["5こ", "4こ", "6こ", "3こ"], answer: "5こ", explanation: "せいかいは「5こ」！<br>ひとつずつ かぞえると 1、2、3、4、<b>5こ</b> だね！" },
@@ -150,7 +151,7 @@ bulkQuestionsData.push(...[
 	{ grade: 6, genre: "math", type: "which", text: "角柱（かくちゅう）や 円柱（えんちゅう）の 体積（たいせき）を 求める 公式は、共通して（きょうつうして） 【 底面積（ていめんせき） × 高さ 】 である。まるか ばつか？", choices: [true, false], answer: true, explanation: "正解は「まる（true）」！<br>柱（はしら）の カタチをした 立体の 体積は、すべて <b>底面の 広さに 高さを 掛ける（かける）</b> ことで 求められる（もとめられる）よ！" }
 ]);
 // 🟦 【理科：science】
-bulkQuestionsData.push(...[
+targetArray.push(...[
 	{ grade: 0, genre: "science", type: "select", text: "おそらに でる、まあるくて きいろい、よるに ピカピカ ひかる ものは なあに？", choices: ["つき", "たいよう", "くも", "にじ"], answer: "つき", explanation: "せいかいは「つき」！<br>よるの おそらを あかるく てらしてくれる <b>お月（つき）さま</b> だね！" },
 	{ grade: 0, genre: "science", type: "which", text: "「あり」の あし（足）の かずは 4ほん である。まるか ばつか？", choices: [true, false], answer: false, explanation: "せいかいは「ばつ（false）」！<br>ありの あしは <b>6ほん</b> あるよ！むしの なかま（昆虫）は みんな あしが 6ほん なんだ！" },
 	{ grade: 0, genre: "science", type: "select", text: "はるに さく、ピンク色の きれいな はなで、ひらひらと はなびらが まう き（木）は なあに？", choices: ["さくら", "ひまわり", "どんぐり", "あさがお"], answer: "さくら", explanation: "せいかいは「さくら」！<br>はるに なると、がっこうや こうえんに <b>さくら</b>が たくさん さくよ！" },
@@ -223,7 +224,7 @@ bulkQuestionsData.push(...[
 	{ grade: 6, genre: "science", type: "which", text: "電気の（でんきの） 利用（りよう）クイズ！ 手回し（てまわし） 発電機（はつでんき）を 使うと（つかうと）、私たちの 手を 動かす（うごかす） 力を 「電気」に 変換して（へんかんして） 貯める（ためる）ことができる。まるか ばつか？", choices: [true, false], answer: true, explanation: "正解は「まる（true）」！<br>動かす 力（運動エネルギー）を <b>電気エネルギー</b> に 変えて（かえて）、<b>「コンデンサー（蓄電器・ちくでんき）」</b> という 道具（どうぐ）に 貯めて（ためて） 使うことができるよ！" }
 ]);
 // 🟦 【社会：social】
-bulkQuestionsData.push(...[
+targetArray.push(...[
 	{ grade: 0, genre: "social", type: "select", text: "パトカーや パトロールカーは、みんなの 街（まち）の 安全（あんぜん）を 守る（まもる） どこから くるかな？", choices: ["こうばん（交番）・警察署", "しょうぼうしょ（消防署）", "びょういん（病院）", "がっこう（学校）"], answer: "こうばん（交番）・警察署", explanation: "せいかいは「こうばん（交番）・警察署」！<br>おまわりさんが <b>こうばん（交番）</b> から パトカーに のって、みんなの 街を まもってくれているよ！" },
 	{ grade: 0, genre: "social", type: "which", text: "おうちの ゴミは、いつでも 好きな（すきな） 日に 好きなだけ 出して（だして） よい。まるか ばつか？", choices: [true, false], answer: false, explanation: "せいかいは「ばつ（false）」！<br>ゴミは 街を きれいにするために、<b>きめられた 曜日（ようび）や 時間（じかん）</b> に だす ルールが あるよ！" },
 	{ grade: 0, genre: "social", type: "select", text: "おてがみ（手紙）や ハガキを おうちに 届けて（とどけて）くれる、あかい バイクや 車に のった 人は 誰（だれ）かな？", choices: ["郵便（ゆうびん）やさん", "おまわりさん", "しょうぼうしさん", "お医者さん"], answer: "郵便（ゆうびん）やさん", explanation: "せいかいは「郵便（ゆうびん）やさん」！<br>あかい ポストに いれた おてがみを、<b>郵便やさん</b> が 遠く（とおく）まで はこんでくれるよ！" },
@@ -296,7 +297,7 @@ bulkQuestionsData.push(...[
 	{ grade: 6, genre: "social", type: "which", text: "日本の 裁判所（さいばんしょ）は、国会（こっかい）や 内閣（ないかく）から 命令（めいれい）を 受けて（うけて）、その 通り（とおり）に 判決（はんけつ）を 下さなければ（くださなければ） ならない。まるか ばつか？", choices: [true, false], answer: false, explanation: "正解は「ばつ（false）」！<br>裁判所は 他の（ほかの） 機関から 邪魔（じゃま）されずに 正しい（ただしい） 法律の 判断（はんだん）を するために、完全に 独立（どくりつ）している <b>「司法権（しほうけん）の 独立」</b> が 保たれて（たもたれて）いるよ！" }
 ]);
 // 🟥 【道徳：moral】
-bulkQuestionsData.push(...[
+targetArray.push(...[
 	{ grade: 0, genre: "moral", type: "select", text: "おともだちから おもちゃを かりるときは、なんて いって からのほうが いいかな？", choices: ["かして", "ちょうだい", "だめ", "ありがとう"], answer: "かして", explanation: "せいかいは「かして」！<br>すなおに <b>「かして」</b> といえば、おともだちも えがおで かしてくれるよ！" },
 	{ grade: 0, genre: "moral", type: "which", text: "おともだちが びょうきや ケガで おやすみ（お休み）の ときは、げんきに なってね と おもうきもちが 大切（たいせつ）である。まるか ばつか？", choices: [true, false], answer: true, explanation: "せいかいは「まる（true）」！<br>おともだちを <b>おもいやる 優しい（やさしい） きもち</b> は、とっても すてきだね！" },
 	{ grade: 0, genre: "moral", type: "select", text: "おうちの ひとに ごはんを つくってもらったり、なにかを してもらったときに いう 魔法の（まほうの） ことばは なあに？", choices: ["ありがとう", "ごめんなさい", "こんにちは", "バイバイ"], answer: "ありがとう", explanation: "せいかいは「ありがとう」！<br><b>「ありがとう」</b> と おつたえすると、みんなが とっても 幸せな（しあわせな） きもちに なるよ！" },
@@ -369,7 +370,7 @@ bulkQuestionsData.push(...[
 	{ grade: 6, genre: "moral", type: "which", text: "家族（かぞく）の 期待（きたい）や 願いに 応える（こたえる）ために、自分の 進路や 将来の 夢を 完全に 諦めて、親の 言う 通りだけに 生きるのが 最高の 孝行である。まるか ばつか？", choices: [true, false], answer: false, explanation: "正解は「ばつ（false）」！<br>家族への 敬愛（けいあい）の 念を 持ちつつも、自分の <b>人生を 自分の 意志で 切り拓く 自立の 姿勢</b> を 見せることも、素晴らしい 恩返しだよ！" }
 ]);
 // 🟥 【英語：english】
-bulkQuestionsData.push(...[
+targetArray.push(...[
 	{ grade: 0, genre: "english", type: "select", text: "「りんご」は えいごで なあに？", choices: ["apple（アップル）", "banana（バナナ）", "cat（キャット）", "dog（ドッグ）"], answer: "apple（アップル）", explanation: "せいかいは「apple（アップル）」！<br>あかくて おいしい <b>apple</b> だね！" },
 	{ grade: 0, genre: "english", type: "which", text: "どうぶつの「いぬ」は えいごで「dog（ドッグ）」という。まるか ばつか？", choices: [true, false], answer: true, explanation: "せいかいは「まる（true）」！<br>ワンワン なく どうぶつは <b>dog</b> だよ！" },
 	{ grade: 0, genre: "english", type: "select", text: "「ねこ」は えいごで なあに？", choices: ["cat（キャット）", "dog（ドッグ）", "fox（フォックス）", "bear（ベア）"], answer: "cat（キャット）", explanation: "せいかいは「cat（キャット）」！<br>ニャーオと なく かわいい <b>cat</b> だね！" },
@@ -442,7 +443,7 @@ bulkQuestionsData.push(...[
 	{ grade: 6, genre: "english", type: "which", text: "「国際（こくさい）的な」を 意味（いみ）する 英語は 「international（インターナショナル）」である。まるか ばつか？", choices: [true, false], answer: true, explanation: "正解は「まる（true）」！<br>世界（せかい）中の 国々と 繋がる（つながる） 様子（ようす）を 表す（あらわす） カッコいい 言葉（ことば）だね！" }
 ]);
 // 🟥 【その他：etc】
-bulkQuestionsData.push(...[
+targetArray.push(...[
 	{ grade: 0, genre: "etc", type: "select", text: "あさがおの はなを さかせるために、まいにち あげるものは なあに？", choices: ["みず", "おかし", "おもちゃ", "ジュース"], answer: "みず", explanation: "せいかいは「みず」！<br>あさがおも のどが かわくから、まいにち <b>みず</b>を あげようね！" },
 	{ grade: 0, genre: "etc", type: "which", text: "「カスタネット」を たたたきとき、あかい ほうが うえに なるように もつ。まるか ばつか？", choices: [true, false], answer: true, explanation: "せいかいは「まる（true）」！<br>あかい ほうが <b>うえ（おとうさん ゆびがわ）</b>に なるように もつよ！" },
 	{ grade: 0, genre: "etc", type: "select", text: "こうえん（公園）に ある、おしり（お尻）を つけて、まえ（前）と うしろ（後ろ）に びゅーんと ゆらして あそぶ ゆうぐ（遊具）は なあに？", choices: ["ブランコ", "すべりだい", "てつぼう", "さくひん"], answer: "ブランコ", explanation: "せいかいは「ブランコ」！<br>しっかりと <b>くなり（鎖）</b>を にぎって、たのしく あそぼうね！" },
@@ -515,7 +516,7 @@ bulkQuestionsData.push(...[
 	{ grade: 6, genre: "etc", type: "which", text: "図工（ずこう）で「クレイアニメ（粘土を動かして作るアニメーション）」を 作るときは、粘土（ねんど）の カタチを 少しずつ（すこしずつ） 動かして（うごかして） 写真（しゃしん）を たくさん 撮り（とり）、それを 順番に（じゅんばんに） 早く（はやく） つなげて 見せる。まるか ばつか？", choices: [true, false], answer: true, explanation: "正解は「まる（true）」！<br>これを <b>「コマ撮り（こまどり・ストップモーション）」</b> といい、少しずつ 変化（へんか）させた 写真が 繋がる（つながる） ことで、まるで 粘土が <b>本当に（ほんとうに） 生きて（いきて） 動いて（うごいて）いるように</b> 見えるんだよ！" }
 ]);
 // 🟥 【論理的思考力：logical】
-bulkQuestionsData.push(...[
+targetArray.push(...[
 	{ grade: 0, genre: "logical", type: "which", text: "くまくんは うさぎちゃんより おおきいです。うさぎちゃんは ねこちゃんより おおきいです。いちばん おおきいのは「くまくん」である。まるか ばつか？", choices: [true, false], answer: true, explanation: "せいかいは「まる（true）」！<br>じゅんばんに ならべると、<b>くま ＞ うさぎ ＞ ねこ</b> に なるから、くまくんが いちばん おおきいね！" },
 	{ grade: 0, genre: "logical", type: "select", text: "あか、あお、きいろの ぼうしが あります。たろうくんは あかでは ありません。じろうくんは あおです。さぶろうくんの ぼうしは なにいろかな？", choices: ["あか", "あお", "きいろ"], answer: "あか", explanation: "せいかいは「あか」！<br>じろうくんが「あお」だから、のこりは あかと きいろ。たろうくんは「あかではない」ので きいろ、だから さぶろうくんが <b>「あか」</b>になるよ！" },
 	{ grade: 0, genre: "logical", type: "which", text: "あか、あお、きいろの くるまが ならんでいます。あかの くるまは、あおの くるまの まえに あります。きいろの くるまは いちばん うしろです。いちばん まえに あるのは「あかの くるま」である。まるか ばつか？", choices: [true, false], answer: true, explanation: "せいかいは「まる（true）」！<br>まえから <b>あか ➔ あお ➔ きいろ</b> の じゅんばんに流通（りゅうつう）するから、あかの くるまが いちばん まえだね！" },
@@ -580,7 +581,7 @@ bulkQuestionsData.push(...[
 	{ grade: 6, genre: "logical", type: "which", text: "帽子が 5個（赤3、青2）あります。3人の 生徒（A, B, C）が 縦一列に 並び、後ろの 人だけが 前の 人の 帽子を 見えるように かぶせました（Cが一番後ろ）。Cが「わからない」と言い、それを聞いた Bも「わからない」と言いました。このとき一番前の Aは 自分が「赤」であると 特定できる。まるか ばつか？", choices: [true, false], answer: true, explanation: "正解は「まる（true）」！<br>Cがわからないことから前2人は青・青ではない。Bがわからないことから、Aが青ならBは自分を赤と断定できたはず。よってAは自分が <b>赤</b> だと論理的に特定できるよ！" }
 ]);
 // 🟥 【発想力：creative】
-bulkQuestionsData.push(...[
+targetArray.push(...[
 	{ grade: 0, genre: "creative", type: "select", text: "「とり」と「けもの」を がったい（合体）させたら、どんな どうぶつに なるかな？ むかしの おはなしに でてくるよ！", choices: ["グリフィン（とりとライオン）", "きりん", "くじら", "カラス"], answer: "グリフィン（とりとライオン）", explanation: "せいかいは「グリフィン」！<br>ちがう いきものの <b>かっこいい ところを むすびつけた</b>、まほうの どうぶつなんだ！" },
 	{ grade: 0, genre: "creative", type: "which", text: "まる（○）と さんかく（△）を くみあわせると、「おうち（家）」の かたちを つくることが できる。まるか ばつか？", choices: [true, false], answer: true, explanation: "せいかいは「まる（true）」！<br>さんかくを <b>屋根（やね）</b>、まるを <b>窓（まど）</b>に すると、かわいい おうちが ひらめくね！" },
 	{ grade: 0, genre: "creative", type: "select", text: "おそらの「くも（雲）」を みていたら、ある どうぶつの かたちに みえてきました。おみみが ながくて、ぴょんぴょん はねる どうぶつは なあに？", choices: ["うさぎ", "ぞう", "へび", "ライオン"], answer: "うさぎ", explanation: "せいかいは「うさぎ」！<br>くもの かたちを <b>じぶんの しっている どうぶつ</b>に みたてる、たのしい ひらめきだね！" },
@@ -639,7 +640,7 @@ bulkQuestionsData.push(...[
 	{ grade: 6, genre: "creative", type: "select", text: "雨（あめ）の 日に、濡れた（ぬれた） 傘を（かさを） バサバサと 振らなくても（ふらなくても）、水滴（すいてき）が 水玉に（みずたまに） なって コロコロと 転がり落ちる（ころがりおちる） 「超はっすい（超撥水）加工（かこう）」の 傘。自然界（しぜんかい）の どの 葉っぱ（はっぱ）の 仕組みを ヒントに ひらめいたかな？", choices: ["ハス（蓮）の葉", "サクラ（桜）の葉", "アサガオの葉", "イチョウの葉"], answer: "ハス（蓮）の葉", explanation: "正解は「ハス（蓮）の葉」！<br>ハスの 葉の 表面（ひょうめん）に ある <b>目に見えない 小さな（ちいさな） 凸凹（でこぼこ）が 水を はじく「ロータス効果（こうか）」</b>を、最新の（さいしんの） 傘の 生地（きじ）に 結びつけたんだよ！" }
 ]);
 // 🟥 【水平思考力：tricky】
-bulkQuestionsData.push(...[
+targetArray.push(...[
 	{ grade: 0, genre: "tricky", type: "select", text: "トラックと パトカーと 自転車（じてんしゃ）が はしっています。急（きゅう）にとまる（止まる）ことが できるのは どれかな？", choices: ["どれも急にはとまれない", "トラック", "パトカー", "自転車"], answer: "どれも急にはとまれない", explanation: "せいかいは「どれも急にはとまれない」！<br>のりものは <b>「急（きゅう）には とまれない」</b> という ひっかけ クイズでした！あぶないから 気をつけてね！" },
 	{ grade: 0, genre: "tricky", type: "which", text: "カマキリと、ハサミと、きりかぶ。このなかで「き（木）」から できているのは ハサミである。まるか ばつか？", choices: [true, false], answer: false, explanation: "せいかいは「ばつ（false）」！<br>なまえに「き」が つく「きりかぶ」が 木から できているよ！ハサミは <b>鉄（てつ）</b> だね！" },
 	{ grade: 0, genre: "tricky", type: "select", text: "コップの なかに、おみずが いっぱい はいっています。これを ひっくり返したら（ひっくりかえしたら）、おみずは どうなるかな？", choices: ["こぼれて空っぽになる", "こおって氷になる", "あかくなる", "そらにとんでいく"], answer: "こぼれて空っぽになる", explanation: "せいかいは「こぼれて空っぽになる」！<br>あたりまえだけど、<b>ひっくり返したら こぼれちゃう</b>よね！だまされなかったかな？" },
@@ -698,3 +699,4 @@ bulkQuestionsData.push(...[
 	{ grade: 6, genre: "tricky", type: "which", text: "日本（にほん）の 法律（ほうりつ）では、20歳（はたち）に なると お酒（おさけ）を 飲む（のむ）ことができます。では、21歳に なった 人が、お酒を 飲むときに ぜったいに 必要な（ひつような） 行動（こうどう）は「年齢（ねんれい）を 証明（しょうめい）する カードを 店に 見せること」である。まるか ばつか？", choices: [true, false], answer: false, explanation: "正解は「ばつ（false）」！<br>カードを 見せる（みせる）ことよりも、お酒を 飲むために ぜったいに 必要なのは <b>「口を 開けて（あけて） 飲み込む（のみこむ）こと」</b> という、究極の（きゅうきょくの） 身体（からだ）の ひっかけ クイズでした！" }
 ]);
 
+}
