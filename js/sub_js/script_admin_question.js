@@ -18,7 +18,9 @@ async function renderAdminQuestionList() {
         const gradeMap = {};
         gradeSnapshot.forEach(d => { gradeMap[d.data().value] = d.data().label; });
 
-        const querySnapshot = await getDocs(collection(db, "questions"), limit(100));
+        // 💡 query() でコレクションと limit() を囲うのが正しいルールです！
+        const q = query(collection(db, "questions"), limit(100));
+        const querySnapshot = await getDocs(q);
         tbody.innerHTML = '';
 
         querySnapshot.forEach((docSnap) => {
