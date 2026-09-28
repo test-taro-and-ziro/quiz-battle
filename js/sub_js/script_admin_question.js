@@ -25,7 +25,6 @@ async function renderAdminQuestionList() {
         const querySnapshot = await getDocs(q);
         
         tbody.innerHTML = '';
-
         querySnapshot.forEach((docSnap) => {
             const id = docSnap.id; // 自動生成されたID
             const data = docSnap.data();
