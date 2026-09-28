@@ -19,11 +19,6 @@ async function renderAdminQuestionList() {
         // 💡 1. 共通マスタから最新の学年データをロードする（通信を最適化）
         await loadGradeMaster();
         
-        // 先に学年用の表示名マスターをサッと取得
-        //const gradeSnapshot = await getDocs(collection(db, "grades"));
-        //const gradeMap = {};
-        //gradeSnapshot.forEach(d => { gradeMap[d.data().value] = d.data().label; });
-
         // 💡 2. query と limit(100) を使って、安全にクイズデータを100件取得
         const q = query(collection(db, "questions"), limit(100));
         const querySnapshot = await getDocs(q);
@@ -47,7 +42,6 @@ async function renderAdminQuestionList() {
                 gradeOptionsHtml += `<option value="${g.value}" ${isSelected}>${g.label || g.Label}</option>`;
             });
 
-            
             const tr = document.createElement('tr');
             tr.innerHTML = `
                 <td>
