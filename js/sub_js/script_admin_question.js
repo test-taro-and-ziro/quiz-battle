@@ -19,7 +19,30 @@ async function renderAdminQuestionList() {
         // 💡 1. 共通マスタから学年とジャンルの最新データを両方ロードする
         await loadGradeMaster();
         await loadGenreMaster();
+
+        // ==========================================
+        // 💡 新規登録フォームのプルダウンをマスタ連動にする
+        // ==========================================
+        const newGradeSelect = document.getElementById('new-q-grade');
+        if (newGradeSelect) {
+            let options = '<option value="">-- 対象の学年を選んでね --</option>';
+            gradeMasterData.forEach(g => {
+                options += `<option value="${g.value}">${g.label}</option>`;
+            });
+            newGradeSelect.innerHTML = options;
+        }
         
+        const newGenreSelect = document.getElementById('new-q-genre');
+        if (newGenreSelect) {
+            let options = '<option value="">-- ジャンルを選んでね --</option>';
+            genreMasterData.forEach(g => {
+                const gValue = g.value || '';
+                const gLabel = g.label_junior || gValue;
+                options += `<option value="${gValue}">${gLabel}</option>`;
+            });
+            newGenreSelect.innerHTML = options;
+        }
+                
         // 💡 2. query と limit(100) を使って、安全にクイズデータを100件取得
         const q = query(collection(db, "questions"), limit(100));
         const querySnapshot = await getDocs(q);
@@ -122,44 +145,53 @@ async function deleteAdminQuestion(id) {
     } catch (e) { alert("削除に失敗しました。"); }
 }
 
-// 新しいクイズの追加
-async function addQuestionFromAdmin() {
-    const gradeVal = document.getElementById('new-q-grade').value;
-    const genre = document.getElementById('new-q-genre').value.trim();
+// ==========================================
+// 💡 新しいクイズの追加処理
+// ==========================================
+window.addQuestionFromAdmin = async function() {
+    const grade = document.getElementById('new-q-grade').value;
+    const genre = document.getElementById('new-q-genre').value; 
     const type = document.getElementById('new-q-type').value; 
     const text = document.getElementById('new-q-text').value.trim();
     const choicesStr = document.getElementById('new-q-choices').value.trim();
     const answer = document.getElementById('new-q-answer').value.trim();
     const explanation = document.getElementById('new-q-explanation').value.trim(); // 💡解説の取得
 
-    if (gradeVal === "" || !genre || !text || !answer) {
+    // 未選択チェック（空文字のプレースホルダーが選ばれている場合を弾く）
+    if (grade === "" || genre === "" || !text || !answer) {
         alert("学年、ジャンル、問題文、正解は必ず入力・選択してね！");
         return;
     }
-
+    showOverlay("新しいクイズを登録しています...");
     const choicesArray = choicesStr ? choicesStr.split(',').map(s => s.trim()) : [];
 
     try {
         await addDoc(collection(db, "questions"), {
-            grade: parseInt(gradeVal),
+            grade: Number(grade), 
             genre: genre,
             type: type, 
             text: text,
             choices: choicesArray,
             answer: answer,
-            explanation: explanation // 💡新規追加時に保存
+            explanation: explanation 
         });
 
-        // フォームのリセット
+        // フォームのリセット（プルダウンは空文字にせず、初期位置の空文字へ戻す）
+        document.getElementById('new-q-grade').value = '';
         document.getElementById('new-q-genre').value = '';
         document.getElementById('new-q-text').value = '';
         document.getElementById('new-q-choices').value = '';
         document.getElementById('new-q-answer').value = '';
-        document.getElementById('new-q-explanation').value = ''; // 解説入力欄をクリア
+        document.getElementById('new-q-explanation').value = ''; 
 
-        await renderAdminQuestionList(); 
+        hideOverlay(); 
         alert("新しいクイズ問題を1件追加しました！🎉");
-    } catch (e) { alert("追加に失敗しました。"); }
+        await renderAdminQuestionList(); 
+    } catch (e) { 
+        hideOverlay(); 
+        console.error(e);
+        alert("追加に失敗しました。"); 
+    }
 }
 
 // 一括登録関数
