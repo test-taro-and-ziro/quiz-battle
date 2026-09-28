@@ -220,7 +220,7 @@ body {
     z-index: 100; /* キャラクターやクイズより手前に表示 */
 
     /* ポップアップの見た目（お好みに合わせて調整してください） */
-    width: 90%;
+    width: 80%;
     max-width: 500px;
     background-color: #ffffff;
     border: 3px solid #ffcc00; /* かわいい黄色の枠線例 */
