@@ -2,7 +2,7 @@
 // 管理者画面（admin.html）親コントロール
 // ==========================================
 // 💡 共通設定ファイルから db を読み込む
-import { db, collection, doc, addDoc, getDocs, setDoc, getDoc, updateDoc, deleteDoc, query, where, orderBy } from '../firebase-config.js';
+import { db, collection, doc, addDoc, getDocs, setDoc, getDoc, updateDoc, deleteDoc, query, where, orderBy, limit } from '../firebase-config.js';
 import { bulkQuestionsData } from '../quiz_js/add_quiz.js'; // 💡クイズ用のフォルダ内にあるadd_quiz.jsからデータを読み込む！
 // ==========================================
 // 3️⃣【クイズ管理】専用プログラム（英単語type ＆ 解説対応版）
