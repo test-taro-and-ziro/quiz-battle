@@ -3,7 +3,10 @@
 // ==========================================
 // 💡 共通設定ファイルから db を読み込む
 import { db, collection, doc, addDoc, getDocs, setDoc, getDoc, updateDoc, deleteDoc, query, where, orderBy, limit } from '../firebase-config.js';
-import { bulkQuestionsData } from '../quiz_js/add_quiz.js'; // 💡クイズ用のフォルダ内にあるadd_quiz.jsからデータを読み込む！
+// 💡 共通ファイルを読み込む1行を追加
+import { loadAnimalMaster, getCharacterFileName, setCharacterSrc, loadGenreMaster, genreMasterData, loadGradeMaster, gradeMasterData, setupPlayerMaster, logoutPlayerMaster } from '../game-master.js';
+// 💡クイズ用のフォルダ内にあるadd_quiz.jsからデータを読み込む！
+import { bulkQuestionsData } from '../quiz_js/add_quiz.js';
 // ==========================================
 // 3️⃣【クイズ管理】専用プログラム（英単語type ＆ 解説対応版）
 // ==========================================
@@ -13,14 +16,18 @@ async function renderAdminQuestionList() {
     tbody.innerHTML = '<tr><td colspan="8">データを読み込み中...</td></tr>';
 
     try {
+        // 💡 1. 共通マスタから最新の学年データをロードする（通信を最適化）
+        await loadGradeMaster();
+        
         // 先に学年用の表示名マスターをサッと取得
-        const gradeSnapshot = await getDocs(collection(db, "grades"));
-        const gradeMap = {};
-        gradeSnapshot.forEach(d => { gradeMap[d.data().value] = d.data().label; });
+        //const gradeSnapshot = await getDocs(collection(db, "grades"));
+        //const gradeMap = {};
+        //gradeSnapshot.forEach(d => { gradeMap[d.data().value] = d.data().label; });
 
-        // 💡 query() でコレクションと limit() を囲うのが正しいルールです！
+        // 💡 2. query と limit(100) を使って、安全にクイズデータを100件取得
         const q = query(collection(db, "questions"), limit(100));
         const querySnapshot = await getDocs(q);
+        
         tbody.innerHTML = '';
 
         querySnapshot.forEach((docSnap) => {
@@ -29,12 +36,26 @@ async function renderAdminQuestionList() {
             
             // choices配列を「カンマ区切り」の文字に戻して表示する
             const choicesText = data.choices ? data.choices.join(',') : '';
-            const gradeLabel = gradeMap[data.grade] || (data.grade + "の学年値");
             const typeValue = data.type || 'select'; 
+            //const gradeLabel = gradeMap[data.grade] || (data.grade + "の学年値");
+            const currentGrade = data.grade !== undefined ? Number(data.grade) : 0; 
 
+            // 💡 3. Firebaseから取得した学年マスタ（gradeMasterData）を回して、プルダウンの選択肢を動的に組み立てる
+            let gradeOptionsHtml = '';
+            gradeMasterData.forEach(g => {
+                const isSelected = (Number(g.value) === currentGrade) ? 'selected' : '';
+                gradeOptionsHtml += `<option value="${g.value}" ${isSelected}>${g.label || g.Label}</option>`;
+            });
+
+            
             const tr = document.createElement('tr');
             tr.innerHTML = `
-                <td><small>${gradeLabel} (${data.grade})</small></td>
+                <td>
+                    <!-- 💡 動的に作った選択肢をここにハメ込みます -->
+                    <select id="ad-q-grade-${id}" class="admin-select-grade">
+                        ${gradeOptionsHtml}
+                    </select>
+                </td>
                 <td><input type="text" id="ad-q-genre-${id}" value="${data.genre || ''}" style="width:70px;"></td>
                 <td>
                     <select id="ad-q-type-${id}">
