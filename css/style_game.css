@@ -276,7 +276,7 @@ body {
 .explanation-box:has(.result-text.correct)::before {
     content: "〇";
     position: absolute;
-    top: 45%;
+    top: 47%;
     left: 50%;
     transform: translate(-50%, -50%);
     font-size: 11rem;          /* 巨大なサイズ */
@@ -290,7 +290,7 @@ body {
 .explanation-box:has(.result-text.incorrect)::before {
     content: "×";
     position: absolute;
-    top: 50%;                  /* ×の見た目のバランスを中央に合わせる微調整 */
+    top: 48%;                  /* ×の見た目のバランスを中央に合わせる微調整 */
     left: 50%;
     transform: translate(-50%, -50%);
     font-size: 18rem;          /* 巨大なサイズ */
