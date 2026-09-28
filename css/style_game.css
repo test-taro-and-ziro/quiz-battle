@@ -269,6 +269,38 @@ body {
 }
 
 /* ==========================================
+   ✨ 解説ポップアップの背景に巨大な「〇」「×」を表示
+   ========================================== */
+
+/* 正解（.correct）の文字がポップアップ内にあるとき、ポップアップの背景に大きな「〇」を浮かせる */
+.explanation-box:has(.result-text.correct)::before {
+    content: "〇";
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 11rem;          /* 巨大なサイズ */
+    font-weight: bold;
+    color: rgba(34, 197, 94, 0.12); /* 綺麗な緑色を「不透明度12%」にして透かす（文字の邪魔をしない） */
+    z-index: -1;               /* 解説文やボタンの後ろ（背景）に配置 */
+    pointer-events: none;      /* マウス操作の邪魔をしない */
+}
+
+/* 不正解（.incorrect）の文字がポップアップ内にあるとき、ポップアップの背景に大きな「×」を浮かせる */
+.explanation-box:has(.result-text.incorrect)::before {
+    content: "×";
+    position: absolute;
+    top: 43%;                  /* ×の見た目のバランスを中央に合わせる微調整 */
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 13rem;          /* 巨大なサイズ */
+    font-weight: bold;
+    color: rgba(239, 68, 68, 0.12); /* 鮮やかな赤色を「不透明度12%」にして透かす */
+    z-index: -1;               /* 解説文やボタンの後ろ（背景）に配置 */
+    pointer-events: none;      /* マウス操作の邪魔をしない */
+}
+
+/* ==========================================
    3. フッターエリア（ステータス・ノルマゲージ）
    ========================================== */
 .status-area {
