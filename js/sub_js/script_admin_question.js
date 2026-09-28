@@ -16,8 +16,9 @@ async function renderAdminQuestionList() {
     tbody.innerHTML = '<tr><td colspan="8">データを読み込み中...</td></tr>';
 
     try {
-        // 💡 1. 共通マスタから最新の学年データをロードする（通信を最適化）
+        // 💡 1. 共通マスタから学年とジャンルの最新データを両方ロードする
         await loadGradeMaster();
+        await loadGenreMaster();
         
         // 💡 2. query と limit(100) を使って、安全にクイズデータを100件取得
         const q = query(collection(db, "questions"), limit(100));
@@ -32,8 +33,8 @@ async function renderAdminQuestionList() {
             // choices配列を「カンマ区切り」の文字に戻して表示する
             const choicesText = data.choices ? data.choices.join(',') : '';
             const typeValue = data.type || 'select'; 
-            //const gradeLabel = gradeMap[data.grade] || (data.grade + "の学年値");
             const currentGrade = data.grade !== undefined ? Number(data.grade) : 0; 
+            const currentGenre = data.genre || ''; // 現在設定されているジャンル文字列（例: "japanese"）
 
             // 💡 3. Firebaseから取得した学年マスタ（gradeMasterData）を回して、プルダウンの選択肢を動的に組み立てる
             let gradeOptionsHtml = '';
@@ -42,15 +43,19 @@ async function renderAdminQuestionList() {
                 gradeOptionsHtml += `<option value="${g.value}" ${isSelected}>${g.label || g.Label}</option>`;
             });
 
+            // 💡 4. ジャンルマスタ（genreMasterData）を回して、プルダウンの選択肢を動的に組み立てる
+            let genreOptionsHtml = '';
+            genreMasterData.forEach(g => {
+                const gValue = g.value || '';
+                const gLabel = g.label || gValue;
+                const isSelected = (gValue === currentGenre) ? 'selected' : '';
+                genreOptionsHtml += `<option value="${gValue}" ${isSelected}>${gLabel}</option>`;
+            });
+
             const tr = document.createElement('tr');
             tr.innerHTML = `
-                <td>
-                    <!-- 💡 動的に作った選択肢をここにハメ込みます -->
-                    <select id="ad-q-grade-${id}" class="admin-select-grade">
-                        ${gradeOptionsHtml}
-                    </select>
-                </td>
-                <td><input type="text" id="ad-q-genre-${id}" value="${data.genre || ''}" style="width:70px;"></td>
+                <td><select id="ad-q-grade-${id}" class="admin-select-grade">${gradeOptionsHtml}</select></td>
+                <td><select id="ad-q-genre-${id}" class="admin-select-genre">${genreOptionsHtml}</select></td>
                 <td>
                     <select id="ad-q-type-${id}">
                         <option value="select" ${typeValue === 'select' || typeValue === '四択' ? 'selected' : ''}>四択</option>
