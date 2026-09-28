@@ -18,7 +18,7 @@ async function renderAdminQuestionList() {
         const gradeMap = {};
         gradeSnapshot.forEach(d => { gradeMap[d.data().value] = d.data().label; });
 
-        const querySnapshot = await getDocs(collection(db, "questions"));
+        const querySnapshot = await getDocs(collection(db, "questions"), limit(100));
         tbody.innerHTML = '';
 
         querySnapshot.forEach((docSnap) => {
