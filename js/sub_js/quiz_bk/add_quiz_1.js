@@ -126,7 +126,7 @@ bulkQuestionsData.push(...[
 // 🔤 【えいご：english】
 bulkQuestionsData.push(...[
     { grade: 0, genre: "english", type: "select", text: "えいごで 「アップル」といえば、なんの フルーツかな？", choices: ["りんご", "みかん", "ばなな", "ぶどう"], answer: "りんご", explanation: "せいかいは「りんご」！<br>まっかな りんごは えいごで <b>Apple（アップル）</b> っていうんだよ！" },
-    { grade: 0, genre: "english", type: "select", text: "えいごで 「ドッグ」と なく どうぶつは なあに？", choices: ["いぬ", "ねこ", "うさぎ", "くま"], answer: "いぬ", explanation: "せいかいは「いぬ」！<br>いぬさんは えいごで <b>Dog（ドッグ）</b> っていうんだよ。ワンワン！" },
+    { grade: 0, genre: "english", type: "select", text: "えいごで 「ドッグ」といえば、どうぶつは なあに？", choices: ["いぬ", "ねこ", "うさぎ", "くま"], answer: "いぬ", explanation: "せいかいは「いぬ」！<br>いぬさんは えいごで <b>Dog（ドッグ）</b> っていうんだよ。ワンワン！" },
     { grade: 0, genre: "english", type: "select", text: "えいごで 「レッド」といえば、なにいろの ことかな？", choices: ["あか", "あお", "きいろ", "みどり"], answer: "あか", explanation: "せいかいは「あか」！<br>しょうぼうしゃの <span style='color:#e74c3c; font-weight:bold;'>赤（あか）いろは えいごで Red（レッド）</span> だよ！" },
     { grade: 0, genre: "english", type: "select", text: "えいごで 「ブルー」といえば、なにいろの ことかな？", choices: ["あお", "あか", "きいろ", "しろ"], answer: "あお", explanation: "せいかいは「あお」！<br>おそらや ひろいうみの <span style='color:#3498db; font-weight:bold;'>青（あお）いろは えいごで Blue（ブルー）</span> だよ！" },
     { grade: 0, genre: "english", type: "which", text: "えいごで 「ハロー」と いわれたら、あいさつの おへんじをする。○か×か？", choices: [true, false], answer: true, explanation: "せいかいは ○（まる）！<br><b>Hello（ハロー）</b> は「こんにちは」だから、元気にハローとおかえししよう！" },
@@ -180,7 +180,7 @@ bulkQuestionsData.push(...[
     { grade: 4, genre: "math", type: "select", text: "長方形（ちょうほうけい）の面（めん）積（せき）を求めるための正しい公式（こうしき）はどれ？", choices: ["たて × よこ", "たて ＋ よこ", "一辺 × 一辺", "底辺 × 高さ ÷ 2"], answer: "たて × よこ", explanation: "正解は「たて × よこ」！<br>面（めん）積（せき）（ひろさ）の基本（きほん）だね。ちなみに「一辺×一辺」は<b>正方形の公式（こうしき）</b>だよ！" },
     { grade: 4, genre: "math", type: "which", text: "「平（へい）行（こう）四辺形（しへんけい）」の向かい合う辺の長さは、それぞれ等しい。○か×か？", choices: [true, false], answer: true, explanation: "正解は ○（まる）！<br>平（へい）行（こう）四辺形（しへんけい）は、向かい合う<b>2組の辺がどちらも平（へい）行（こう）</b>で、長さも同じになるよ！" },
     { grade: 4, genre: "math", type: "select", text: "時速60kmのスピードで走る車が、2時間で進むと何km先まで行けるかな？", choices: ["120km", "30km", "60km", "180km"], answer: "120km", explanation: "正解は「120km」！<br>時速60kmとは「1時間に60km進む」という意味なので、<b>60 × 2 = 120km</b> になるよ！" },
-    { grade: 4, genre: "math", type: "select", text: "角（かく）度（ど）の問題だよ。1つの「直角（ちょっかく）」は何（なん）度（ど）のことかな？", choices: ["90度", "180度", "45度", "360度"], answer: "90度", explanation: "正解は「90度（90°）」！<br>ノートの角（かど）のような正しくまっすぐな直角は<b>90度</b>、半分にすると45度になるよ。" },
+    { grade: 4, genre: "math", type: "select", text: "角度（かくど）の問題だよ。1つの「直角（ちょっかく）」は何度のことかな？", choices: ["90度", "180度", "45度", "360度"], answer: "90度", explanation: "正解は「90度（90°）」！<br>ノートの角（かど）のような正しくまっすぐな直角は<b>90度</b>、半分にすると45度になるよ。" },
     { grade: 4, genre: "math", type: "select", text: "わり算の「あまり」の問題だよ。「45 ÷ 6」の正しい答えはどれ？", choices: ["7 あまり 3", "7 あまり 2", "6 あまり 9", "8 あまり 1"], answer: "7 あまり 3", explanation: "正解は「7 あまり 3」！<br>かけ算九九で考えると <b>6 × 7 = 42</b>。引き算して 45 - 42 = 3 なので、あまりは3になるね！" },
     { grade: 4, genre: "math", type: "which", text: "分数（ぶんすう）の問題だよ。「5分の3」は「5分の2」よりも小さい。○か×か？", choices: [true, false], answer: false, explanation: "正解は ×（バツ）！<br>下の数が同じなら、上の数（分子（ぶんし））が<b>大きいほう（5分の3）が全体の量（りょう）も大きくなる</b>よ！" },
     { grade: 4, genre: "math", type: "select", text: "1.4 ＋ 0.8 の正しい計（けい）算（さん）結（けっ）果（か）はどれかな？", choices: ["2.2", "1.2", "2.0", "1.12"], answer: "2.2", explanation: "正解は「2.2」！<br>小数のたし算だね。位（くらい）をそろえて、<b>14 ＋ 8 = 22</b> と同じように考えて小数点を打とう！" },
