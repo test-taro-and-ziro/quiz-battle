@@ -86,3 +86,33 @@ button:hover { background-color: #2b6cb0; }
 .admin-table th { background-color: #edf2f7; }
 .admin-table input { padding: 4px; margin: 0; font-size: 14px; }
 .admin-table button { padding: 4px 8px; margin: 0; font-size: 12px; width: auto; }
+
+/* 新しいクイズ追加エリア用 */
+.admin-new-question-card {
+    margin-top: 15px;
+    background: #fff;
+}
+.admin-new-question-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.admin-form-row {
+    display: flex;
+    gap: 10px;
+}
+.admin-select-flex {
+    flex: 1;
+}
+.admin-textarea-new-explanation {
+    width: 100%;
+    min-height: 60px;
+    padding: 8px;
+    box-sizing: border-box;
+}
+.admin-btn-submit-question {
+    background-color: #4CAF50;
+    color: white;
+    width: 100%;
+    margin-top: 5px;
+}
