@@ -454,10 +454,8 @@ function handleAnswer(userAnswer, correctAnswer) {
 
         // ③ 正解していたら、回答速度ボーナスを含めたポイントを算出
         if (isNpcCorrect) {
-            // 回答の速さはランダム（残り時間ボーナスを 5〜15ポイントの間でランダムに付与）
-            const npcTimeBonus = Math.floor(Math.random() * 11) + 5; 
             // 基礎ポイント10 ＋ スピードボーナス
-            npcScores[index] = 10 + npcTimeBonus; 
+            npcScores[index] = 10 + Math.floor(Math.random() * 6); 
         } else {
             npcScores[index] = 0; // 不正解なら0ポイント
         }
