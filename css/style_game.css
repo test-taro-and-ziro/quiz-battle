@@ -290,10 +290,10 @@ body {
 .explanation-box:has(.result-text.incorrect)::before {
     content: "×";
     position: absolute;
-    top: 46%;                  /* ×の見た目のバランスを中央に合わせる微調整 */
+    top: 50%;                  /* ×の見た目のバランスを中央に合わせる微調整 */
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 16rem;          /* 巨大なサイズ */
+    font-size: 18rem;          /* 巨大なサイズ */
     font-weight: bold;
     color: rgba(239, 68, 68, 0.12); /* 鮮やかな赤色を「不透明度12%」にして透かす */
     z-index: -1;               /* 解説文やボタンの後ろ（背景）に配置 */
