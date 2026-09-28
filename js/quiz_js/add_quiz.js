@@ -6,6 +6,10 @@
 // 配列を空っぽで宣言
 export const bulkQuestionsData = [];
 
-// 各ファイルをインポートすることで、中身の push 処理を強制的に実行させる
-import './add_quiz_0.js';
-import './add_quiz_2.js';
+// 各学年の「中身」をインポートする（関数やオブジェクトとして読み込む）
+import { loadQuestions0 } from './add_quiz_0.js';
+import { loadQuestions2 } from './add_quiz_2.js';
+
+// 配列へ追加を実行する
+loadQuestions0(bulkQuestionsData);
+loadQuestions2(bulkQuestionsData);
