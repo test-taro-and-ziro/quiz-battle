@@ -2,7 +2,7 @@
 // 👶 全学年むけクイズデータ
 // ==========================================
 // 💡 親から配列を関数として受け取る
-export function loadQuestions0(targetArray) {
+export function loadQuestions2(targetArray) {
 	
 // 🟥 【こくご：japanese】
 targetArray.push(...[
