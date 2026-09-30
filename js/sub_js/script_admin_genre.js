@@ -11,8 +11,9 @@ async function renderAdminGenreList() {
     tbody.innerHTML = '<tr><td colspan="4">データを読み込み中...</td></tr>';
 
     try {
-        // 💡スクリーンショットの定義通り、コレクション名「genre」から取得します
-        const querySnapshot = await getDocs(collection(db, "genre"));
+        // 💡 コレクション名「genre」から取得します
+        const q = query(collection(db, "genre"),orderBy("order", "asc"));        
+        const querySnapshot = await getDocs(q);
         tbody.innerHTML = '';
 
         querySnapshot.forEach((docSnap) => {
