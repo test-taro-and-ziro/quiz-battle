@@ -27,7 +27,17 @@ targetArray.push(...[
     { grade: 0, genre: "japanese", type: "select", text: "おてがみを かくときに つかうものは どれかな？", choices: ["えんぴつ", "はさみ", "すぷーん", "とけい"], answer: "えんぴつ", explanation: "せいかいは「えんぴつ」！<br><b>えんぴつ</b>を使って、じを かきかき しようね！" },
     { grade: 0, genre: "japanese", type: "which", text: "「くり」と「すいか」は、どちらも さいしょの文字が「く」である。○か×か？", choices: [true, false], answer: false, explanation: "せいかいは ×（ばつ）！<br>すいかの さいしょのもじは <b>「す」</b> だからちがうね！" },
     { grade: 0, genre: "japanese", type: "select", text: "あめが ふったときに さすものは なあに？", choices: ["かさ", "くつ", "ぼうし", "かばん"], answer: "かさ", explanation: "せいかいは「かさ」！<br>雨（あめ）の日は <b>かさ</b>をさして おでかけしよう！" },
-    { grade: 0, genre: "japanese", type: "select", text: "「めがね」を かける場所（ばしょ）は どこかな？", choices: ["め", "くち", "みみ", "あし"], answer: "め", explanation: "せいかいは「め」！<br>おめめの まえに <b>めがね</b>を かけて よく見えるようにするよ！" }
+    { grade: 0, genre: "japanese", type: "select", text: "「めがね」を かける場所（ばしょ）は どこかな？", choices: ["め", "くち", "みみ", "あし"], answer: "め", explanation: "せいかいは「め」！<br>おめめの まえに <b>めがね</b>を かけて よく見えるようにするよ！" },
+	{ grade: 0, genre: "japanese", type: "select", text: "「ねこ」の さいしょの もじは なあに？", choices: ["ね", "こ", "い", "う"], answer: "ね", explanation: "せいかいは「ね」！<br><b>ね</b>・こ のさいしょのもじは<b>「ね」</b>だね！" },
+	{ grade: 0, genre: "japanese", type: "which", text: "「いぬ」を はんたいから よむと「ぬい」に なる。まるか ばつか？", choices: [true, false], answer: true, explanation: "せいかいは「まる（true）」！<br>はんたいから ひとつずつ よむと <b>ぬ・い</b> に なるね！" },
+	{ grade: 0, genre: "japanese", type: "select", text: "「りんご」の なかの もじ（まんなか）は なあに？", choices: ["ん", "り", "ご", "め"], answer: "ん", explanation: "せいかいは「ん」！<br>り・<b>ん</b>・ご の まんなかは <b>「ん」</b> だね！" },
+	{ grade: 0, genre: "japanese", type: "which", text: "「ぞう」の なまえに「てんてん（゛）」は つかない。まるか ばつか？", choices: [true, false], answer: false, explanation: "せいかいは「ばつ（false）」！<br>「そう」に てんてんを つけて <b>「ぞう」</b> に なるよ！" },
+	{ grade: 0, genre: "japanese", type: "select", text: "「〇〇〇」にあてはまる ことばは なあに？ 【ごはんを たべるときは 「〇〇〇〇〇〇」】", choices: ["いただきます", "ごちそうさま", "こんにちは", "ありがとう"], answer: "いただきます", explanation: "せいかいは「いただきます」！<br>ごはんを つくってくれた ひとに かんしゃして <b>いただきます</b> を いおうね！" },
+	{ grade: 0, genre: "japanese", type: "which", text: "「すいか」の さいごの もじは「か」である。まるか ばつか？", choices: [true, false], answer: true, explanation: "せいかいは「まる（true）」！<br>す・い・<b>か</b> の さいごは <b>「か」</b> だね！" },
+	{ grade: 0, genre: "japanese", type: "select", text: "「くま」と「まる」を がったいさせると、どんな ことばに なるかな？", choices: ["くまる", "まくま", "まるく", "くまま"], answer: "くまる", explanation: "せいかいは「くまる」！<br>くま ＋ まる ➔ <b>くまる</b> に なるね！" },
+	{ grade: 0, genre: "japanese", type: "which", text: "「ちいさい つ（っ）」を つかう ことばは 「きって」である。まるか ばつか？", choices: [true, false], answer: true, explanation: "せいかいは「まる（true）」！<br><b>きって</b> は 「っ」が はいるよ！" },
+	{ grade: 0, genre: "japanese", type: "select", text: "「う、お、え、あ、〇」 〇に はいる もじは なあに？", choices: ["い", "か", "ん", "た"], answer: "い", explanation: "せいかいは「い」！<br>あ・<b>い</b>・う・え・お の なかまだね！" },
+	{ grade: 0, genre: "japanese", type: "which", text: "「バナナ」は カタカナで 書く（かく）。まるか ばつか？", choices: [true, false], answer: true, explanation: "せいかいは「まる（true）」！<br>外国（がいこく）から きた たべものは <b>カタカナ</b> で 書くよ！" },
 ]);
 // 🟦 【さんすう：math】
 targetArray.push(...[
@@ -54,29 +64,31 @@ targetArray.push(...[
     { grade: 0, genre: "math", type: "select", text: "サイコロの いちばん おおきい め（かず）は なあに？", choices: ["6", "5", "4", "3"], answer: "6", explanation: "せいかいは「6」！<br>しかくいサイコロには <b>1から6までの かず</b>が かいてあるよ！" },
     { grade: 0, genre: "math", type: "which", text: "2こ のイチゴと、2こ のミカン。あわせると 5こ になる。○か×か？", choices: [true, false], answer: false, explanation: "せいかいは ×（ばつ）！<br>2 と 2 を あわせると <b>2 + 2 = 4こ</b> になるね！" },
     { grade: 0, genre: "math", type: "select", text: "ドーナツが 6こ あって、2こ もらうと ぜんぶで なんこ？", choices: ["8こ", "7こ", "6こ", "9こ"], answer: "8こ", explanation: "せいかいは「8こ」！<br>6こ に 2こ を たしざんすると <b>6 + 2 = 8</b> になるね！" },
-    { grade: 0, genre: "math", type: "select", text: "ノートが 3さつ あって、3さつ つかうと のこりは なんさつ？", choices: ["0さつ", "1さつ", "2さつ", "3さつ"], answer: "0さつ", explanation: "せいかいは「0さつ」！<br><b>3つ から 3つ を ひく</b>と、ぜんぶ なくなっちゃうね！" }
-]);
-// 🟩 【どうとく：moral】
-targetArray.push(...[
-    { grade: 0, genre: "moral", type: "select", text: "ともだちの おもちゃを つかいたいとき、なんて 言う？", choices: ["かして,という", "だまって とる", "おこる", "なきだす"], answer: "かして,という", explanation: "せいかいは「かして,という」だよ！<br>だまってとるとおともだちがかなしむから、<b>「かして」</b>といってやさしくじゅんばんをまとうね。" },
-    { grade: 0, genre: "moral", type: "select", text: "ごはんを たべるとき、さいしょに いう あいさつは？", choices: ["ごちそうさま", "いただきます", "こんにちは", "ありがとう"], answer: "いただきます", explanation: "せいかいは「いただきます」だよ！<br>たべのものいのちや、つくってくれたひとに<span style='color:#ff7675; font-weight:bold;'>「ありがとう」のきもち</span>をこめていうたいせつなあいさつだね。" },
-    { grade: 0, genre: "moral", type: "select", text: "おうちの ひとに プレゼントを もらったよ。なんて いう？", choices: ["ありがとう", "ごめんなさい", "こんにちは", "バイバイ"], answer: "ありがとう", explanation: "せいかいは「ありがとう」！<br>うれしいことを してもらったときは <b>「ありがとう」</b> と おつたえしようね！" },
-    { grade: 0, genre: "moral", type: "select", text: "おともだちの あしを うっかり ふんじゃった！なんて いう？", choices: ["ごめんなさい", "ありがとう", "やったー", "わはは"], answer: "ごめんなさい", explanation: "せいかいは「ごめんなさい」！<br>わるいことを しちゃったときは <b>すぐ「ごめんなさい」</b> が できると かっこいいよ！" },
-    { grade: 0, genre: "moral", type: "which", text: "よる おそいじかんに、おうちの なかで ドタバタ はしってもよい。○か×か？", choices: [true, false], answer: false, explanation: "せいかいは ×（ばつ）！<br>よるは みんなくつろぐ じかんだよ。おうちの なかでは <span style='color:#3498db; font-weight:bold;'>しずかに すごそうね</span>。" },
-    { grade: 0, genre: "moral", type: "select", text: "あさ おきたとき、おうちの ひとに する あいさつは？", choices: ["おはよう", "おやすみ", "さようなら", "いただきます"], answer: "おはよう", explanation: "せいかいは「おはよう」！<br>あさいちばんの <b>「おはよう！」</b> は とっても きもちがいいね！" },
-    { grade: 0, genre: "moral", type: "select", text: "ごはんを たべおわったあとに いう あいさつは？", choices: ["ごちそうさま", "いただきます", "こんにちは", "おじゃまします"], answer: "ごちそうさま", explanation: "せいかいは「ごごちそうさま」！<br>つくってくれた ひとや、おやさいさんに <b>「ごちそうさま」</b> っていおうね！" },
-    { grade: 0, genre: "moral", type: "which", text: "おもちゃで あそんだあとは、そのままにして つぎのあそびをする。○か×か？", choices: [true, false], answer: false, explanation: "せいかいは ×（ばつ）！<br>あそんだ あとは <b>「おかたづけ」</b> を してから つぎの あそびを しようね！" },
-    { grade: 0, genre: "moral", type: "select", text: "おともだちが つかっている おもちゃを じぶんも つかいたいとき、どうする？", choices: ["かして、ときく", "むりやりとる", "なげつける", "だまってとる"], answer: "かして、ときく", explanation: "せいかいは「かして、ときく」だよ！<br>やさしく <b>「かーしーてー」</b> って おはなし してみようね！" },
-    { grade: 0, genre: "moral", type: "select", text: "そとから おうちに かえってきた（かえってきた）ら、さいしょに することは？", choices: ["てあらい・うがい", "テレビをみる", "おやつをたべる", "ねる"], answer: "てあらい・うがい", explanation: "せいかいは「てあらい・うがい」！<br>バイキンを やっつけるために <span style='color:#2ecc71; font-weight:bold;'>ガラガラ・ブクブク</span> しようね！" },
-    { grade: 0, genre: "moral", type: "which", text: "どうろを わたるときは、みぎ と ひだり を しっかり みてから わたる。○か×か？", choices: [true, false], answer: true, explanation: "せいかいは ○（まる）！<br>くるまが こないか <b>みぎ・ひだり・みぎ</b> を しっかり みて、てをあげて わたろうね！" },
-    { grade: 0, genre: "moral", type: "select", text: "ろうかや おおへやの なかは、どうやって いどうする？", choices: ["あるく", "はしる", "すべりだいする", "ジャンプする"], answer: "あるく", explanation: "せいかいは「あるく」！<br>おうちの なかで はしると ごっつんこして <b>あぶないから、あるこうね</b>！" },
-    { grade: 0, genre: "moral", type: "which", text: "おともだちが ころんで ないていたら、わらって いじめる。○か×か？", choices: [true, false], answer: false, explanation: "せいかいは ×（ばつ）！<br>おともだちが いたいときは <b>「だいじょうぶ？」</b> って たすけてあげようね。" },
-    { grade: 0, genre: "moral", type: "select", text: "おともだちの おうちに あそびに いったとき、おへやに はいるまえに いう あいさつは？", choices: ["おじゃまします", "ありがとう", "ごめんなさい", "バイバイ"], answer: "おじゃまします", explanation: "せいかいは「おじゃまします」！<br>よそのおうちにはいるときは <b>「おじゃまします」</b> と げんきにいおうね！" },
-    { grade: 0, genre: "moral", type: "select", text: "みんなで つかう おもちゃは、どうやって つかうと いいかな？", choices: ["なかよくつかう", "ひとりでどくせんする", "なげつける", "こわす"], answer: "なかよくつかう", explanation: "せいかいは「なかよくつかう」！<br>みんなで <b>じゅんばんに こうたいしながら</b> なかよくあそぼうね！" }
+    { grade: 0, genre: "math", type: "select", text: "ノートが 3さつ あって、3さつ つかうと のこりは なんさつ？", choices: ["0さつ", "1さつ", "2さつ", "3さつ"], answer: "0さつ", explanation: "せいかいは「0さつ」！<br><b>3つ から 3つ を ひく</b>と、ぜんぶ なくなっちゃうね！" },
+	{ grade: 0, genre: "math", type: "select", text: "クッキーが 3こ あります。1こ たべたら、のこりは なんこに なるかな？", choices: ["2こ", "1こ", "3こ", "4こ"], answer: "2こ", explanation: "せいかいは「2こ」！<br>3こから 1こ ひくと <b>2こ</b> になるね！" },
+	{ grade: 0, genre: "math", type: "which", text: "「5」は「3」よりも 大きい（おおきい） かずである。まるか ばつか？", choices: [true, false], answer: true, explanation: "せいかいは「まる（true）」！<br>かずの じゅんばんで <b>5のほうが あとに くる</b>から、大きいよ！" },
+	{ grade: 0, genre: "math", type: "select", text: "「● ● ● ● ●」 ほし（●）は ぜんぶで なんこ あるかな？", choices: ["5こ", "4こ", "6こ", "3こ"], answer: "5こ", explanation: "せいかいは「5こ」！<br>ひとつずつ かぞえると 1、2、3、4、<b>5こ</b> だね！" },
+	{ grade: 0, genre: "math", type: "which", text: "「4」の つぎの かず（1つ 大きい かず）は「6」である。まるか ばつか？", choices: [true, false], answer: false, explanation: "せいかいは「ばつ（false）」！<br>4の つぎの かずは <b>「5」</b> だよ！" },
+	{ grade: 0, genre: "math", type: "select", text: "あかい ミニカーが 2だい、あおい ミニカーが 2だい あります。あわせて なんだいに なるかな？", choices: ["4だい", "2だい", "3だい", "5だい"], answer: "4だい", explanation: "せいかいは「4だい」！<br>2 ＋ 2 ＝ <b>4だい</b> になるね！" },
+	{ grade: 0, genre: "math", type: "which", text: "ドーナツが 1こも ない とき、かずは「0（ぜろ）」と いう。まるか ばつか？", choices: [true, false], answer: true, explanation: "せいかいは「まる（true）」！<br>なにも ない ときは <b>「0」</b> とあらわすよ！" },
+	{ grade: 0, genre: "math", type: "select", text: "「10」より 1つ すくない かずは なあに？", choices: ["9", "8", "10", "7"], answer: "9", explanation: "せいかいは「9」！<br>10の 1つ まえの かずは <b>「9」</b> だね！" },
+	{ grade: 0, genre: "math", type: "which", text: "さんかく（△）の カタチの かど（尖っているところ）は 4つ ある。まるか ばつか？", choices: [true, false], answer: false, explanation: "せいかいは「ばつ（false）」！<br>さんかくの かどは <b>3つ</b> だよ！" },
+	{ grade: 0, genre: "math", type: "select", text: "アメを 6こ 持っています。おともだちに 3こ あげたら、のこりは なんこかな？", choices: ["3こ", "2こ", "4こ", "6こ"], answer: "3こ", explanation: "せいかいは「3こ」！<br>6こから 3こ ひくと <b>3こ</b> だね！" },
+	{ grade: 0, genre: "math", type: "which", text: "「2、4、6、8、〇」 〇に はいる かずは「10」である。まるか ばつか？", choices: [true, false], answer: true, explanation: "せいかいは「まる（true）」！<br>2ずつ 増える（ふえる） かずだから、8の つぎは <b>10</b> だよ！" }
 ]);
 // 🔬 【りか：science】
 targetArray.push(...[
-    { grade: 0, genre: "science", type: "select", text: "おそらに キラキラ ひかる、よるに みえるものは なあに？", choices: ["ほし", "たいよう", "くも", "にじ"], answer: "ほし", explanation: "せいかいは「ほし」！<br>よるの おそらには <b>キラキラひかる おほしさま</b>が たくさんみえるよ！" },
+	{ grade: 0, genre: "science", type: "select", text: "おそらに でる、まあるくて きいろい、よるに ピカピカ ひかる ものは なあに？", choices: ["つき", "たいよう", "くも", "にじ"], answer: "つき", explanation: "せいかいは「つき」！<br>よるの おそらを あかるく てらしてくれる <b>お月（つき）さま</b> だね！" },
+	{ grade: 0, genre: "science", type: "which", text: "「あり」の あし（足）の かずは 4ほん である。まるか ばつか？", choices: [true, false], answer: false, explanation: "せいかいは「ばつ（false）」！<br>ありの あしは <b>6ほん</b> あるよ！むしの なかま（昆虫）は みんな あしが 6ほん なんだ！" },
+	{ grade: 0, genre: "science", type: "select", text: "はるに さく、ピンク色の きれいな はなで、ひらひらと はなびらが まう き（木）は なあに？", choices: ["さくら", "ひまわり", "どんぐり", "あさがお"], answer: "さくら", explanation: "せいかいは「さくら」！<br>はるに なると、がっこうや こうえんに <b>さくら</b>が たくさん さくよ！" },
+	{ grade: 0, genre: "science", type: "which", text: "おみず（水）を こおり（氷）の お部屋に いれて つめたく すると、こおりに なる。まるか ばつか？", choices: [true, false], answer: true, explanation: "せいかいは「まる（true）」！<br>水は <b>つめたく すると こおりに</b> なって、あつく すると ゆげに なるよ！" },
+	{ grade: 0, genre: "science", type: "select", text: "どうぶつクイズ！ おはなが とても ながくて、お水を ぶわーっと ふく どうぶつは なあに？", choices: ["ぞう", "きりん", "くま", "うさぎ"], answer: "ぞう", explanation: "せいかいは「ぞう」！<br><b>ぞうさん</b>の ながい おはなは、ごはんを たべたり お水を のんだり するのに べんりなんだよ！" },
+	{ grade: 0, genre: "science", type: "which", text: "メダカは、お水の なかでも いきが できる。まるか ばつか？", choices: [true, false], answer: true, explanation: "せいかいは「まる（true）」！<br>お魚（さかな）は <b>エラ</b> を つかって、お水の なかでも じょうずに いきが できるんだよ！" },
+	{ grade: 0, genre: "science", type: "select", text: "あきに なると、こうえんの 地面（じめん）に たくさん おちている、ぼうしを かぶった ちゃいろい き（木）の みは なあに？", choices: ["どんぐり", "まつぼっくり", "くり", "りんご"], answer: "どんぐり", explanation: "せいかいは「どんぐり」！<br>りすくんや くまくんも 大すきな <b>どんぐり</b>が たくさん みつかるよ！" },
+	{ grade: 0, genre: "science", type: "which", text: "いぬの おみみは、うしろの おと（音）を きく とき、うごかす ことが できる。まるか ばつか？", choices: [true, false], answer: true, explanation: "せいかいは「まる（true）」！<br>いぬや ねこは、おとが する ほうに <b>おみみを ピクピクとうごかして</b> よく きいているよ！" },
+	{ grade: 0, genre: "science", type: "select", text: "おそらに かかる、あか、あお、きいろ など、7つの いろが ならんだ きれいな はし（橋）のような ものは なあに？", choices: ["にじ", "くも", "かみなり", "たいよう"], answer: "にじ", explanation: "せいかいは「にじ」！<br>雨（あめ）が あがった あとに、お日（ひ）さまの 光（ひかり）が お水に あたると <b>にじ</b>が でるよ！" },
+	{ grade: 0, genre: "science", type: "which", text: "ひまわりの はなは、よる（夜）に なると パッと さく。まるか ばつか？", choices: [true, false], answer: false, explanation: "せいかいは「ばつ（false）」！<br>ひまわりは <b>お昼（おひる）の あかるい たいよう</b>が 大すきで、お日さまの ほうを むいて さくよ！" },
+	{ grade: 0, genre: "science", type: "select", text: "おそらに キラキラ ひかる、よるに みえるものは なあに？", choices: ["ほし", "たいよう", "くも", "にじ"], answer: "ほし", explanation: "せいかいは「ほし」！<br>よるの おそらには <b>キラキラひかる おほしさま</b>が たくさんみえるよ！" },
     { grade: 0, genre: "science", type: "select", text: "はるに さく、ピンクいろの きれいな おはなは なあに？", choices: ["さくら", "ひまわり", "どんぐり", "あさがお"], answer: "さくら", explanation: "せいかいは「さくら」！<br>あったかくなると <b>さくら</b>のはなが さいて、とってもきれいだね！" },
     { grade: 0, genre: "science", type: "which", text: "かえるさんは、みずの なかでも およぐことができる。○か×か？", choices: [true, false], answer: true, explanation: "せいかいは ○（まる）！<br>かえるさんは <b>みずのなかも、つちの うえも</b> どちらもだいとくいだよ！" },
     { grade: 0, genre: "science", type: "select", text: "あおむしさんが おおきくなると、なんの むしに へんしん するかな？", choices: ["ちょうちょ", "かぶとむし", "ばった", "あり"], answer: "ちょうちょ", explanation: "せいかいは「ちょうちょ」！<br>あおむしさんは <b>きれいな はねの ちょうちょ</b> に へんしんするよ！" },
@@ -93,6 +105,16 @@ targetArray.push(...[
 ]);
 // 🗺️ 【しゃかい：social】
 targetArray.push(...[
+	{ grade: 0, genre: "social", type: "select", text: "パトカーや パトロールカーは、みんなの 街（まち）の 安全（あんぜん）を 守る（まもる） どこから くるかな？", choices: ["こうばん（交番）・警察署", "しょうぼうしょ（消防署）", "びょういん（病院）", "がっこう（学校）"], answer: "こうばん（交番）・警察署", explanation: "せいかいは「こうばん（交番）・警察署」！<br>おまわりさんが <b>こうばん（交番）</b> から パトカーに のって、みんなの 街を まもってくれているよ！" },
+	{ grade: 0, genre: "social", type: "which", text: "おうちの ゴミは、いつでも 好きな（すきな） 日に 好きなだけ 出して（だして） よい。まるか ばつか？", choices: [true, false], answer: false, explanation: "せいかいは「ばつ（false）」！<br>ゴミは 街を きれいにするために、<b>きめられた 曜日（ようび）や 時間（じかん）</b> に だす ルールが あるよ！" },
+	{ grade: 0, genre: "social", type: "select", text: "おてがみ（手紙）や ハガキを おうちに 届けて（とどけて）くれる、あかい バイクや 車に のった 人は 誰（だれ）かな？", choices: ["郵便（ゆうびん）やさん", "おまわりさん", "しょうぼうしさん", "お医者さん"], answer: "郵便（ゆうびん）やさん", explanation: "せいかいは「郵便（ゆうびん）やさん」！<br>あかい ポストに いれた おてがみを、<b>郵便やさん</b> が 遠く（とおく）まで はこんでくれるよ！" },
+	{ grade: 0, genre: "social", type: "which", text: "横断歩道（おうだんほどう）を わたるときは、信号（しんごう）が 「あお（青）」に なってから わたる。まるか ばつか？", choices: [true, false], answer: true, explanation: "せいかいは「まる（true）」！<br>あおに なっても、右（みぎ）と 左（ひだり）を <b>よく 見て（みて）から</b> わたろうね！" },
+	{ grade: 0, genre: "social", type: "select", text: "お買い物（おかいもの）を するときに、おみせ（お店）の 人に わたす 大切な（たいせつな） ものは なあに？", choices: ["お金（おかね）", "おもちゃ", "はっぱ", "えんぴつ"], answer: "お金（おかね）", explanation: "せいかいは「お金（おかね）」！<br>お菓子（おかし）や おもちゃを もらう 代わりに（かわりに）、<b>お金</b> を 正しく（ただしく） わたそうね！" },
+	{ grade: 0, genre: "social", type: "which", text: "バスや 電車（でんしゃ）の なかでは、大きなお声（おおきなおこえ）で 走り回って（はしりまわって） あそんでも よい。まるか ばつか？", choices: [true, false], answer: false, explanation: "せいかいは「ばつ（false）」！<br>みんなが のる のりもの だから、<b>静かに（しずかに） すわって</b> 順番（じゅんばん）を まとうね！" },
+	{ grade: 0, genre: "social", type: "select", text: "おうちの まわり（周り）に ある、すべりだい や ブランコが あって みんなで あそべる 広い（ひろい） 場所（ばしょ）は なあに？", choices: ["こうえん（公園）", "えき（駅）", "こうじょう（工場）", "おみせ"], answer: "こうえん（公園）", explanation: "せいかいは「こうえん（公園）」！<br>みんなの <b>こうえん</b> だから、仲良く（なかよく） 順番こ（じゅんばんこ）で つかおうね！" },
+	{ grade: 0, genre: "social", type: "which", text: "街に ある 信号機（しんごうき）の 「きいろ（黄色）」は、いそいで 走って（はしって） わたれ という 意味（いみ）である。まるか ばつか？", choices: [true, false], answer: false, explanation: "せいかいは「ばつ（false）」！<br>きいろは 「もうすぐ あか（赤）に なるから <b>とまれ</b>」 という 意味（いみ）だよ！あぶないから わたっちゃ だめだよ！" },
+	{ grade: 0, genre: "social", type: "select", text: "火事（かじ）が おきた ときに、あかい 消防車（しょうぼうしゃ）に のって 急いで（いそいで） 消し（けし）に きてくれる 人は 誰かな？", choices: ["消防士（しょうぼうし）さん", "おまわりさん", "運転手（うんてんしゅ）さん", "先生（せんせい）"], answer: "消防士（しょうぼうし）さん", explanation: "せいかいは「消防士（しょうぼうし）さん」！<br>お水を たくさん 積んだ（つんだ） 消防車で、<b>消防士さん</b> が カッコよく 火を 消してくれるよ！" },
+	{ grade: 0, genre: "social", type: "which", text: "スーパーマーケット や おみせ（お店）に ある ものは、お金を 払う（はらう） 前に（まえに） たべても よい。まるか ばつか？", choices: [true, false], answer: false, explanation: "せいかいは「ばつ（false）」！<br>レジで ちゃんと <b>お金を 払って（はらって）から</b>、おうちや 食べられる 場所で たべようね！" },
     { grade: 0, genre: "social", type: "select", text: "まちの あんぜんを まもってくれる、あかい くるまは なあに？", choices: ["しょうぼうしゃ", "ぱとかー", "きゅうきゅうしゃ", "たくしー"], answer: "しょうぼうしゃ", explanation: "せいかいは「しょうぼうしゃ」！<br>かじ のときに <span style='color:#e74c3c; font-weight:bold;'>あかいしょうぼうしゃ</span> が ビュービューはしってひをけすよ！" },
     { grade: 0, genre: "social", type: "select", text: "おてがみや ハガキを おうちに とどけてくれるのは だれかな？", choices: ["ゆうびんやさん", "はいしゃさん", "おまわりさん", "やきゅうしゅ"], answer: "ゆうびんやさん", explanation: "せいかいは「ゆうびんやさん」！<br>カバンに たくさんのおてがみをいれて、<b>おうちにとどけてくれる</b>よ！" },
     { grade: 0, genre: "social", type: "which", text: "しんごうが「あお）」のときは、すすんでもよい。○か×か？", choices: [true, false], answer: true, explanation: "せいかいは ○（まる）！<br>あおはすすむ、<b>あかはとまる</b>。しっかりまもって わたろうね！" },
@@ -110,6 +132,16 @@ targetArray.push(...[
 ]);
 // 🔤 【えいご：english】
 targetArray.push(...[
+	{ grade: 0, genre: "english", type: "select", text: "「りんご」は えいごで なあに？", choices: ["apple（アップル）", "banana（バナナ）", "cat（キャット）", "dog（ドッグ）"], answer: "apple（アップル）", explanation: "せいかいは「apple（アップル）」！<br>あかくて おいしい <b>apple</b> だね！" },
+	{ grade: 0, genre: "english", type: "which", text: "どうぶつの「いぬ」は えいごで「dog（ドッグ）」という。まるか ばつか？", choices: [true, false], answer: true, explanation: "せいかいは「まる（true）」！<br>ワンワン なく どうぶつは <b>dog</b> だよ！" },
+	{ grade: 0, genre: "english", type: "select", text: "「ねこ」は えいごで なあに？", choices: ["cat（キャット）", "dog（ドッグ）", "fox（フォックス）", "bear（ベア）"], answer: "cat（キャット）", explanation: "せいかいは「cat（キャット）」！<br>ニャーオと なく かわいい <b>cat</b> だね！" },
+	{ grade: 0, genre: "english", type: "which", text: "「ありがとう」は えいごで「Hello（ハロー）」という。まるか ばつか？", choices: [true, false], answer: false, explanation: "せいかいは「ばつ（false）」！<br>「ありがとう」は <b>Thank you（サンキュー）</b> だよ！Hello は「こんにちは」だね！" },
+	{ grade: 0, genre: "english", type: "select", text: "あさ、おともだちとあったときに いう えいごの あいさつは なあに？", choices: ["Good morning（グッドモーニング）", "Good night（グッドナイト）", "Goodbye（バイバイ）", "Thank you（サンキュー）"], answer: "Good morning（グッドモーニング）", explanation: "せいかいは「Good morning（グッドモーニング）」！<br>あさ おきたら げんきよく <b>Good morning!</b> と いおうね！" },
+	{ grade: 0, genre: "english", type: "which", text: "すうじの「1」は えいごで「one（ワン）」と よむ。まるか ばつか？", choices: [true, false], answer: true, explanation: "せいかいは「まる（true）」！<br>1 は えいごで <b>one（ワン）</b> だよ！" },
+	{ grade: 0, genre: "english", type: "select", text: "えのぐの「あか（赤）」は えいごで なあに？", choices: ["red（レッド）", "blue（ブルー）", "yellow（イエロー）", "green（グリーン）"], answer: "red（レッド）", explanation: "せいかいは「red（レッド）」！<br>いちごや トマトの いろは <b>red</b> だね！" },
+	{ grade: 0, genre: "english", type: "which", text: "「バイバイ（さようなら）」は えいごで「Goodbye（グッドバイ）」という。まるか ばつか？", choices: [true, false], answer: true, explanation: "せいかいは「まる（true）」！<br>おともだちと わかれる ときは <b>Goodbye!</b> と いおうね！" },
+	{ grade: 0, genre: "english", type: "select", text: "すうじの「3」は えいごで なあに？", choices: ["three（スリー）", "one（ワン）", "two（ツー）", "four（フォー）"], answer: "three（スリー）", explanation: "せいかいは「three（スリー）」！<br>one、two、<b>three!</b> の three だね！" },
+	{ grade: 0, genre: "english", type: "which", text: "えのぐの「あお（青）」は えいごで「yellow（イエロー）」という。まるか ばつか？", choices: [true, false], answer: false, explanation: "せいかいは「ばつ（false）」！<br>「あお」は <b>blue（ブルー）</b> だよ！yellow は「きいろ」だね！" },
     { grade: 0, genre: "english", type: "select", text: "えいごで 「アップル」といえば、なんの フルーツかな？", choices: ["りんご", "みかん", "ばなな", "ぶどう"], answer: "りんご", explanation: "せいかいは「りんご」！<br>まっかな りんごは えいごで <b>Apple（アップル）</b> っていうんだよ！" },
     { grade: 0, genre: "english", type: "select", text: "えいごで 「ドッグ」といえば、どうぶつは なあに？", choices: ["いぬ", "ねこ", "うさぎ", "くま"], answer: "いぬ", explanation: "せいかいは「いぬ」！<br>いぬさんは えいごで <b>Dog（ドッグ）</b> っていうんだよ。ワンワン！" },
     { grade: 0, genre: "english", type: "select", text: "えいごで 「レッド」といえば、なにいろの ことかな？", choices: ["あか", "あお", "きいろ", "みどり"], answer: "あか", explanation: "せいかいは「あか」！<br>しょうぼうしゃの <span style='color:#e74c3c; font-weight:bold;'>あかいろは えいごで Red（レッド）</span> だよ！" },
@@ -124,9 +156,47 @@ targetArray.push(...[
     { grade: 0, genre: "english", type: "select", text: "えいごで 「イエロー」といえば、なんの いろかな？", choices: ["きいろ", "みどり", "ピンク", "くろ"], answer: "きいろ", explanation: "せいかいは「きいろ」！<br>あまくて おいしいレモンやバナナは <b>Yellow（イエロー）</b> だね！" },
     { grade: 0, genre: "english", type: "select", text: "みんながだいすきなどうぶつ 「くま」さんを、えいごでいうと なあに？", choices: ["Bear", "Lion", "Tiger", "Fox"], answer: "Bear", explanation: "せいかいは「Bear（ベア）」！<br>もりにおおきなくまさんは <b>Bear（ベア）</b> というんだよ！" }
 ]);
-
-// 🟥 【その他】
+// 🟩 【どうとく：moral】
 targetArray.push(...[
+	{ grade: 0, genre: "moral", type: "select", text: "おともだちから おもちゃを かりるときは、なんて いって からのほうが いいかな？", choices: ["かして", "ちょうだい", "だめ", "ありがとう"], answer: "かして", explanation: "せいかいは「かして」！<br>すなおに <b>「かして」</b> といえば、おともだちも えがおで かしてくれるよ！" },
+	{ grade: 0, genre: "moral", type: "which", text: "おともだちが びょうきや ケガで おやすみ（お休み）の ときは、げんきに なってね と おもうきもちが 大切（たいせつ）である。まるか ばつか？", choices: [true, false], answer: true, explanation: "せいかいは「まる（true）」！<br>おともだちを <b>おもいやる 優しい（やさしい） きもち</b> は、とっても すてきだね！" },
+	{ grade: 0, genre: "moral", type: "select", text: "おうちの ひとに ごはんを つくってもらったり、なにかを してもらったときに いう 魔法の（まほうの） ことばは なあに？", choices: ["ありがとう", "ごめんなさい", "こんにちは", "バイバイ"], answer: "ありがとう", explanation: "せいかいは「ありがとう」！<br><b>「ありがとう」</b> と おつたえすると、みんなが とっても 幸せな（しあわせな） きもちに なるよ！" },
+	{ grade: 0, genre: "moral", type: "which", text: "こうえん（公園）の ブランコは、じぶん（自分）が あきたい（飽きたい）まで ひとりじめ して ずっと あそんでよい。まるか ばつか？", choices: [true, false], answer: false, explanation: "せいかいは「ばつ（false）」！<br>みんなの ブランコだから、おともだちが 待って（まって）いたら <b>「じゅんばんこ」</b> で かわろうね！" },
+	{ grade: 0, genre: "moral", type: "select", text: "おともだちの あしを うっかり ふんじゃった！ すぐに いう 大切な（たいせつな） ことばは なあに？", choices: ["ごめんなさい", "ありがとう", "こんにちは", "やったあ"], answer: "ごめんなさい", explanation: "せいかいは「ごめんなさい」！<br>わるいことを しちゃったときは、すなすぐに <b>「ごめんなさい」</b> と あやまろうね！" },
+	{ grade: 0, genre: "moral", type: "which", text: "おうちを でるとき、おうちの ひとに 「いってきます」と げんきよく あいさつを する。まるか ばつか？", choices: [true, false], answer: true, explanation: "せいかいは「まる（true）」！<br>げんきな あいさつを すると、おうちの ひとも <b>安心（あんしん）して</b> おくりだせるよ！" },
+	{ grade: 0, genre: "moral", type: "select", text: "あそんだ あとの おもちゃは、どうするのが 正しい（ただしい）かな？", choices: ["きちんとお片付け（おかたづけ）する", "そのままにして寝ちゃう", "おにわにぜんぶ捨てる", "こわしてあそぶ"], answer: "きちんとお片付け（おかたづけ）する", explanation: "せいかいは「きちんとお片付け（おかたづけ）する」！<br>つぎに あそぶ ときに <b>こまらないように</b>、ちゃんともとの場所に もどそうね！" },
+	{ grade: 0, genre: "moral", type: "which", text: "どうぶつ村の いきもの（虫や お花）は、むやみに いじめて 命（いのち）を 大切に しなくてもよい。まるか ばつか？", choices: [true, false], answer: false, explanation: "せいかいは「ばつ（false）」！<br>ちいさな 虫（むし）も お花（はな）も、みんな <b>一生懸命（いっしょうけんめい） 生きて（いき（ている） 大切な 命</b> だよ！" },
+	{ grade: 0, genre: "moral", type: "select", text: "がっこう（学校）や 幼稚園（ようちえん）で、あさ（朝） せんせい（先生）や おともだちに 会った（あった）ときの あいさつは なあに？", choices: ["おはようございます", "さようなら", "いただきます", "おやすみなさい"], answer: "おはようございます", explanation: "せいかいは「おはようございます」！<br>朝一番（あさいちばん）に <b>「おはよう！」</b> と げんきに いうと、1日が 楽しく（たのしく） スタートできるよ！" },
+	{ grade: 0, genre: "moral", type: "which", text: "ごはんを たべるとき、きらいな（嫌いな） お野菜（おやさい）があっても、ひとくちは がんばって たべてみる。まるか ばつか？", choices: [true, false], answer: true, explanation: "せいかいは「まる（true）」！<br>からだを <b>大きく（おおきく） 元気に（げんきに）</b> するために、つくってくれた 人のことも おもって チャレンジしてみよう！" },	
+    { grade: 0, genre: "moral", type: "select", text: "ともだちの おもちゃを つかいたいとき、なんて 言う？", choices: ["かして,という", "だまって とる", "おこる", "なきだす"], answer: "かして,という", explanation: "せいかいは「かして,という」だよ！<br>だまってとるとおともだちがかなしむから、<b>「かして」</b>といってやさしくじゅんばんをまとうね。" },
+    { grade: 0, genre: "moral", type: "select", text: "ごはんを たべるとき、さいしょに いう あいさつは？", choices: ["ごちそうさま", "いただきます", "こんにちは", "ありがとう"], answer: "いただきます", explanation: "せいかいは「いただきます」だよ！<br>たべのものいのちや、つくってくれたひとに<span style='color:#ff7675; font-weight:bold;'>「ありがとう」のきもち</span>をこめていうたいせつなあいさつだね。" },
+    { grade: 0, genre: "moral", type: "select", text: "おうちの ひとに プレゼントを もらったよ。なんて いう？", choices: ["ありがとう", "ごめんなさい", "こんにちは", "バイバイ"], answer: "ありがとう", explanation: "せいかいは「ありがとう」！<br>うれしいことを してもらったときは <b>「ありがとう」</b> と おつたえしようね！" },
+    { grade: 0, genre: "moral", type: "select", text: "おともだちの あしを うっかり ふんじゃった！なんて いう？", choices: ["ごめんなさい", "ありがとう", "やったー", "わはは"], answer: "ごめんなさい", explanation: "せいかいは「ごめんなさい」！<br>わるいことを しちゃったときは <b>すぐ「ごめんなさい」</b> が できると かっこいいよ！" },
+    { grade: 0, genre: "moral", type: "which", text: "よる おそいじかんに、おうちの なかで ドタバタ はしってもよい。○か×か？", choices: [true, false], answer: false, explanation: "せいかいは ×（ばつ）！<br>よるは みんなくつろぐ じかんだよ。おうちの なかでは <span style='color:#3498db; font-weight:bold;'>しずかに すごそうね</span>。" },
+    { grade: 0, genre: "moral", type: "select", text: "あさ おきたとき、おうちの ひとに する あいさつは？", choices: ["おはよう", "おやすみ", "さようなら", "いただきます"], answer: "おはよう", explanation: "せいかいは「おはよう」！<br>あさいちばんの <b>「おはよう！」</b> は とっても きもちがいいね！" },
+    { grade: 0, genre: "moral", type: "select", text: "ごはんを たべおわったあとに いう あいさつは？", choices: ["ごちそうさま", "いただきます", "こんにちは", "おじゃまします"], answer: "ごちそうさま", explanation: "せいかいは「ごごちそうさま」！<br>つくってくれた ひとや、おやさいさんに <b>「ごちそうさま」</b> っていおうね！" },
+    { grade: 0, genre: "moral", type: "which", text: "おもちゃで あそんだあとは、そのままにして つぎのあそびをする。○か×か？", choices: [true, false], answer: false, explanation: "せいかいは ×（ばつ）！<br>あそんだ あとは <b>「おかたづけ」</b> を してから つぎの あそびを しようね！" },
+    { grade: 0, genre: "moral", type: "select", text: "おともだちが つかっている おもちゃを じぶんも つかいたいとき、どうする？", choices: ["かして、ときく", "むりやりとる", "なげつける", "だまってとる"], answer: "かして、ときく", explanation: "せいかいは「かして、ときく」だよ！<br>やさしく <b>「かーしーてー」</b> って おはなし してみようね！" },
+    { grade: 0, genre: "moral", type: "select", text: "そとから おうちに かえってきた（かえってきた）ら、さいしょに することは？", choices: ["てあらい・うがい", "テレビをみる", "おやつをたべる", "ねる"], answer: "てあらい・うがい", explanation: "せいかいは「てあらい・うがい」！<br>バイキンを やっつけるために <span style='color:#2ecc71; font-weight:bold;'>ガラガラ・ブクブク</span> しようね！" },
+    { grade: 0, genre: "moral", type: "which", text: "どうろを わたるときは、みぎ と ひだり を しっかり みてから わたる。○か×か？", choices: [true, false], answer: true, explanation: "せいかいは ○（まる）！<br>くるまが こないか <b>みぎ・ひだり・みぎ</b> を しっかり みて、てをあげて わたろうね！" },
+    { grade: 0, genre: "moral", type: "select", text: "ろうかや おおへやの なかは、どうやって いどうする？", choices: ["あるく", "はしる", "すべりだいする", "ジャンプする"], answer: "あるく", explanation: "せいかいは「あるく」！<br>おうちの なかで はしると ごっつんこして <b>あぶないから、あるこうね</b>！" },
+    { grade: 0, genre: "moral", type: "which", text: "おともだちが ころんで ないていたら、わらって いじめる。○か×か？", choices: [true, false], answer: false, explanation: "せいかいは ×（ばつ）！<br>おともだちが いたいときは <b>「だいじょうぶ？」</b> って たすけてあげようね。" },
+    { grade: 0, genre: "moral", type: "select", text: "おともだちの おうちに あそびに いったとき、おへやに はいるまえに いう あいさつは？", choices: ["おじゃまします", "ありがとう", "ごめんなさい", "バイバイ"], answer: "おじゃまします", explanation: "せいかいは「おじゃまします」！<br>よそのおうちにはいるときは <b>「おじゃまします」</b> と げんきにいおうね！" },
+    { grade: 0, genre: "moral", type: "select", text: "みんなで つかう おもちゃは、どうやって つかうと いいかな？", choices: ["なかよくつかう", "ひとりでどくせんする", "なげつける", "こわす"], answer: "なかよくつかう", explanation: "せいかいは「なかよくつかう」！<br>みんなで <b>じゅんばんに こうたいしながら</b> なかよくあそぼうね！" }
+]);
+
+// 🟥 【その他：etc】
+targetArray.push(...[
+	{ grade: 0, genre: "etc", type: "select", text: "あさがおの はなを さかせるために、まいにち あげるものは なあに？", choices: ["みず", "おかし", "おもちゃ", "ジュース"], answer: "みず", explanation: "せいかいは「みず」！<br>あさがおも のどが かわくから、まいにち <b>みず</b>を あげようね！" },
+	{ grade: 0, genre: "etc", type: "which", text: "「カスタネット」を たたたきとき、あかい ほうが うえに なるように もつ。まるか ばつか？", choices: [true, false], answer: true, explanation: "せいかいは「まる（true）」！<br>あかい ほうが <b>うえ（おとうさん ゆびがわ）</b>に なるように もつよ！" },
+	{ grade: 0, genre: "etc", type: "select", text: "こうえん（公園）に ある、おしり（お尻）を つけて、まえ（前）と うしろ（後ろ）に びゅーんと ゆらして あそぶ ゆうぐ（遊具）は なあに？", choices: ["ブランコ", "すべりだい", "てつぼう", "さくひん"], answer: "ブランコ", explanation: "せいかいは「ブランコ」！<br>しっかりと <b>くなり（鎖）</b>を にぎって、たのしく あそぼうね！" },
+	{ grade: 0, genre: "etc", type: "which", text: "あお（青）しんごう（信号）の ときは、みち（道）を わたっても よい。まるか ばつか？", choices: [true, false], answer: true, explanation: "せいかいは「まる（true）」！<br>あおに なっても、みぎ（右）と ひだり（左）を <b>よく みてから</b> わたろうね！" },
+	{ grade: 0, genre: "etc", type: "select", text: "がっこう（学校）に いくとき、教科書（きょうかしょ）や ノートを いれる、せなかに しょる おおきな かばんは なあに？", choices: ["ランドセル", "ポシェット", "ふくろ", "むしカゴ"], answer: "ランドセル", explanation: "せいかいは「ランドセル」！<br>まいにち <b>たくさんのお勉強（べんきょう）道具（どうぐ）</b>を はこんでくれるよ！" },
+	{ grade: 0, genre: "etc", type: "which", text: "はさみを おともだちに かす（貸す）ときは、は（刃）の ほうを じぶん（自分）が にぎって わたす。まるか ばつか？", choices: [true, false], answer: true, explanation: "せいかいは「まる（true）」！<br>あぶなくないように、<b>にぎる ほう（持ち手）</b>を おともだちに むけて わたそうね！" },
+	{ grade: 0, genre: "etc", type: "select", text: "おうちを でるとき、おうちの ひとに いう あいさつは なあに？", choices: ["いってきます", "ただいま", "ありがとう", "おやすみなさい"], answer: "いってきます", explanation: "せいかいは「いってきます」！<br>げんきよく <b>「いってきます！」</b>と いってから おでかけ しようね！" },
+	{ grade: 0, genre: "etc", type: "which", text: "ごはんを たべた あと、むしば（虫歯）に ならないように、は（歯）を みがく。まるか ばつか？", choices: [true, false], answer: true, explanation: "せいかいは「まる（true）」！<br>むしばに ならないように、まいにち <b>はぶらし</b> で しっかり みがこうね！" },
+	{ grade: 0, genre: "etc", type: "select", text: "うんどうかい（運動会）で、あかい（赤い） ボールを おおきな（大きな） カゴの なかに たくさん いれる きょうぎ（競技）は なあに？", choices: ["たまいれ", "かけっこ", "つなひき", "おんど"], answer: "たまいれ", explanation: "せいかいは「たまいれ」！<br>みんなで ちから（力）を あわせて <b>カゴを めがけて</b> なげるのが たのしいね！" },
+	{ grade: 0, genre: "etc", type: "which", text: "たいじゅう（体重）を はかる ときは、どたどたと はしりまわり（走り回り）ながら はかる。まるか ばつか？", choices: [true, false], answer: false, explanation: "せいかいは「ばつ（false）」！<br>ただしく はかるために、たいじゅう計の うえでは <b>しずかに ぴたっと とまる</b> のが せいかいだよ！" },
 	{ grade: 0, genre: "etc", type: "select", text: "あさがおの はなを さかせるために、まいにち あげるものは なあに？", choices: ["みず", "おかし", "おもちゃ", "ジュース"], answer: "みず", explanation: "せいかいは「みず」！<br>あさがおも のどが かわくから、まいにち <b>みず</b>を あげようね！" },
 	{ grade: 0, genre: "etc", type: "which", text: "「カスタネット」を たたたきとき、あかい ほうが うえに なるように もつ。まるか ばつか？", choices: [true, false], answer: true, explanation: "せいかいは「まる」！<br>あかい ほうが <b>うえ（おとうさん ゆびがわ）</b>に なるように もつよ！" },
 	{ grade: 0, genre: "etc", type: "select", text: "こうえん（公園）に ある、おしり（お尻）を つけて、まえ（前）と うしろ（後ろ）に びゅーんと ゆらして あそぶ ゆうぐ（遊具）は なあに？", choices: ["ブランコ", "すべりだい", "てつぼう", "さくひん"], answer: "ブランコ", explanation: "せいかいは「ブランコ」！<br>しっかりと <b>くさり（鎖）</b>を にぎって、たのしく あそぼうね！" },
@@ -139,8 +209,18 @@ targetArray.push(...[
 	{ grade: 0, genre: "etc", type: "direct", text: "ごはんを たべた あと、は（歯）を ピカピカに するために つかう ぶらし（ブラシ）を なにという？（ひらがな5もじで こたえてね）", choices: [], answer: "はぶらし", explanation: "せいかいは「はぶらし」！<br>むしば（虫歯）に ならないように、まいにち <b>しあげ（仕上げ）</b>まで しっかり みがこうね！" }
 ]);
 
-// 🟥 【なぞとき】
+// 🟥 【論理的思考力：logical】
 targetArray.push(...[
+	{ grade: 0, genre: "logical", type: "which", text: "くまくんは うさぎちゃんより おおきいです。うさぎちゃんは ねこちゃんより おおきいです。いちばん おおきいのは「くまくん」である。まるか ばつか？", choices: [true, false], answer: true, explanation: "せいかいは「まる（true）」！<br>じゅんばんに ならべると、<b>くま ＞ うさぎ ＞ ねこ</b> に なるから、くまくんが いちばん おおきいね！" },
+	{ grade: 0, genre: "logical", type: "select", text: "あか、あお、きいろの ぼうしが あります。たろうくんは あかでは ありません。じろうくんは あおです。さぶろうくんの ぼうしは なにいろかな？", choices: ["あか", "あお", "きいろ"], answer: "あか", explanation: "せいかいは「あか」！<br>じろうくんが「あお」だから、のこりは あかと きいろ。たろうくんは「あかではない」ので きいろ、だから さぶろうくんが <b>「あか」</b>になるよ！" },
+	{ grade: 0, genre: "logical", type: "which", text: "あか、あお、きいろの くるまが ならんでいます。あかの くるまは、あおの くるまの まえに あります。きいろの くるまは いちばん うしろです。いちばん まえに あるのは「あかの くるま」である。まるか ばつか？", choices: [true, false], answer: true, explanation: "せいかいは「まる（true）」！<br>まえから <b>あか ➔ あお ➔ きいろ</b> の じゅんばんに流通（りゅうつう）するから、あかの くるまが いちばん まえだね！" },
+	{ grade: 0, genre: "logical", type: "select", text: "どうぶつたちが いえ（家）の まえに ならんでいます。いぬの いえは ねこの いえの となりです。くまの いえは いちばん みぎです。ねこの いえが いちばん ひだりなら、まんなかは だれの いえかな？", choices: ["いぬ", "ねこ", "くま"], answer: "いぬ", explanation: "せいかいは「いぬ」！<br>ひだりから <b>ねこ ➔ いぬ ➔ くま</b> の じゅんばんに なるから、まんなかは <b>いぬ</b> の いえだね！" },
+	{ grade: 0, genre: "logical", type: "which", text: "いぬくん、さるくん、きつねくんが かけっこを しました。いぬくんは さるくんより はやいです。きつねくんは いちばん おそいです。いちばん はやいのは「いぬくん」である。まるか ばつか？", choices: [true, false], answer: true, explanation: "せいかいは「まる（true）」！<br>はやい じゅまんばは <b>いぬ ➔ さる ➔ きつね</b> に なるから、いぬくんが いちばん はやいね！" },
+	{ grade: 0, genre: "logical", type: "select", text: "あか、あお、みどりの おはじきが あります。あかのおはじきは みどりの となりです。あおのおはじきは いちばん ひだりです。みどりが いちばん みぎなら、まんなかは なにいろかな？", choices: ["あか", "あお", "みどり"], answer: "あか", explanation: "せいかいは「あか」！<br>ひだりから <b>あお ➔ あか ➔ みどり</b> の じゅんばんに なるから、まんなかは <b>あか</b> だね！" },
+	{ grade: 0, genre: "logical", type: "which", text: "りんごの ほうが バナナより おおいです。バナナの ほうが みかんより おおいです。いちばん すくないのは「りんご」である。まるか ばつか？", choices: [true, false], answer: false, explanation: "せいかいは「ばつ（false）」！<br>おおい じゅんばんに ならべると <b>りんご ➔ バナナ ➔ みかん</b> だから、いちばん すくないのは みかんだよ！" },
+	{ grade: 0, genre: "logical", type: "select", text: "どうぶつ村の もちつき 大会です。うさぎ、くま、さるが ならんでいます。くまは うさぎの すぐうしろです。さるは いちばん まえです。まんなかに いるのは どの どうぶつかな？", choices: ["うさぎ", "くま", "さる"], answer: "うさぎ", explanation: "せいかいは「うさぎ」！<br>いちばん まえが「さる」で、くまが「うさぎの すぐうしろ」だから、<b>さる ➔ うさぎ ➔ くま</b> の じゅんばんになって、まんなかは <b>うさぎ</b> だよ！" },
+	{ grade: 0, genre: "logical", type: "which", text: "たろうくんは じろうくんより 背（せ）が たかいです。じろうくんは さぶろうくんより 背が たかいです。いちばん 背が たかいのは「たろうくん」である。まるか ばつか？", choices: [true, false], answer: true, explanation: "せいかいは「まる（true）」！<br>たかい じゅんばんに ならべると <b>たろう ＞ じろう ＞ さぶろう</b> だから、たろうくんが いちばん たかいね！" },
+	{ grade: 0, genre: "logical", type: "select", text: "しろ、くろ、みどりの ボールが あります。Aくんは しろを もっています。Bくんは くろでは ありません。Cくんは なにいろの ボールを もっているかな？", choices: ["みどり", "しろ", "くろ"], answer: "くろ", explanation: "せいかいは「くろ」！<br>Aくんが「しろ」だから、のこりは くろと みどり。Bくんは「くろではない」ので みどり、だから Cくんが <b>「くろ」</b>を もっているよ！" },
 	{ grade: 0, genre: "logical", type: "which", text: "くまくんは うさぎちゃんより おおきいです。うさぎちゃんは ねこちゃんより おおきいです。いちばん おおきいのは「くまくん」である。まるか ばつか？", choices: [true, false], answer: true, explanation: "せいかいは「まる（true）」！<br>じゅんばんに ならべると、<b>くま ＞ うさぎ ＞ ねこ</b> に なるから、くまくんが いちばん おおきいね！" },
 	{ grade: 0, genre: "logical", type: "select", text: "あか、あお、きいろの ぼうしが あります。たろうくんは あかでは ありません。じろうくんは あおです。さぶろうくんの ぼうしは なにいろかな？", choices: ["あか", "あお", "きいろ"], answer: "あか", explanation: "せいかいは「あか」！<br>じろうくんが「あお」だから、のこりは あかと きいろ。たろうくんは「あかではない」ので きいろ、だから さぶろうくんが <b>「あか」</b>になるよ！" },
 	{ grade: 0, genre: "logical", type: "which", text: "あか、あお、きいろの くるまが ならんでいます。あかの くるまは、あおの くるまの まえに あります。きいろの くるまは いちばん うしろです。いちばん まえに あるのは「あかの くるま」である。まるか ばつか？", choices: [true, false], answer: true, explanation: "せいかいは「まる（true）」！<br>まえから <b>あか ➔ あお ➔ きいろ</b> の じゅんばんに なるから、あかの くるまが いちばん まえだね！" },
@@ -151,8 +231,16 @@ targetArray.push(...[
 	{ grade: 0, genre: "logical", type: "select", text: "あか、あお、みどりの おはじきが あります。あかのおはじきは みどりの となりです。あおのおはじきは いちばん ひだりです。みどりが いちばん みぎなら、まんなかは なにいろかな？", choices: ["あか", "あお", "みどり"], answer: "あか", explanation: "せいかいは「あか」！<br>ひだりから <b>あお ➔ あか ➔ みどり</b> の じゅんばんに なるから、まんなかは <b>あか</b> だね！" }
 ]);
 
-// 🟥 【ひらめき】
+// 🟥 【発想力：creative】
 targetArray.push(...[
+	{ grade: 0, genre: "creative", type: "select", text: "「とり」と「けもの」を がったい（合体）させたら、どんな どうぶつに なるかな？ むかしの おはなしに でてくるよ！", choices: ["グリフィン（とりとライオン）", "きりん", "くじら", "カラス"], answer: "グリフィン（とりとライオン）", explanation: "せいかいは「グリフィン」！<br>ちがう いきものの <b>かっこいい ところを むすびつけた</b>、まほうの どうぶつなんだ！" },
+	{ grade: 0, genre: "creative", type: "which", text: "まる（○）と さんかく（△）を くみあわせると、「おうち（家）」の かたちを つくることが できる。まるか ばつか？", choices: [true, false], answer: true, explanation: "せいかいは「まる（true）」！<br>さんかくを <b>屋根（やね）</b>、まるを <b>窓（まど）</b>に すると、かわいい おうちが ひらめくね！" },
+	{ grade: 0, genre: "creative", type: "select", text: "おそらの「くも（雲）」を みていたら、ある どうぶつの かたちに みえてきました。おみみが ながくて、ぴょんぴょん はねる どうぶつは なあに？", choices: ["うさぎ", "ぞう", "へび", "ライオン"], answer: "うさぎ", explanation: "せいかいは「うさぎ」！<br>くもの かたちを <b>じぶんの しっている どうぶつ</b>に みたてる、たのしい ひらめきだね！" },
+	{ grade: 0, genre: "creative", type: "which", text: "「ドーナツ」の かたちと、じてんしゃの「タイヤ」の かたちは、まんなかに あなが あいているところが にている。まるか ばつか？", choices: [true, false], answer: true, explanation: "せいかいは「まる（true）」！<br>ちがう ものだけど、<b>「まんなかに あなが ある まる」</b> という かたちが そっくりだね！" },
+	{ grade: 0, genre: "creative", type: "select", text: "どうぶつ村の えんぴつです。まあるい えんぴつは つくえから ころころ おちちゃいます。おちないように するには、どんな かたちに すれば いいかな？", choices: ["しかくい えんぴつ", "ほしがたの えんぴつ", "ながーい えんぴつ", "おもい えんぴつ"], answer: "しかくい えんぴつ", explanation: "せいかいは「しかくい えんぴつ」！<br><b>しかく（四角）や さんかく（三角）</b>の かたちに すると、つくえの うえで ぴったり とまるんだよ！" },
+	{ grade: 0, genre: "creative", type: "which", text: "「めがね（眼鏡）」の かたちと、すうじの「8」の かたちは、まるが 2つ ならんでいるところが にている。まるか ばつか？", choices: [true, false], answer: true, explanation: "せいかいは「まる（true）」！<br>よこに むけると <b>めがね</b>、たてに むけると <b>すうじの 8</b> に みえるね！" },
+	{ grade: 0, genre: "creative", type: "select", text: "おうちの なかで、「かさ（傘）」を さかさまに して おくと、どんな つかいかたが ひらめくかな？", choices: ["ぬいぐるみを入れるカゴ", "ごはんを食べるお皿", "お水を飲むコップ", "お絵かきをするノート"], answer: "ぬいぐるみを入れるカゴ", explanation: "せいかいは「ぬいぐるみを入れるカゴ」！<br>ふつうの つかいかたを かえると、<b>ものを いれる べんりな いれもの</b>に へんしん するよ！" },
+	{ grade: 0, genre: "creative", type: "which", text: "みかんの カタチと、ボールの カタチは、どちらも「まあるい」ところが むすびついている。まるか ばつか？", choices: [true, false], answer: true, explanation: "せいかいは「まる（true）」！<br>どちらも <b>ころころ ころがる まあるい カタチ</b> だね！" },
 	{ grade: 0, genre: "creative", type: "select", text: "「とり」と「けもの」を がったい（合体）させたら、どんな どうぶつに なるかな？ むかしの おはなしに でてくるよ！", choices: ["グリフィン（とりとライオン）", "きりん", "くじら", "カラス"], answer: "グリフィン（とりとライオン）", explanation: "せいかいは「グリフィン」！<br>ちがう いきものの <b>かっこいい ところを むすびつけた</b>、まほうの どうぶつなんだ！" },
 	{ grade: 0, genre: "creative", type: "which", text: "まる（○）と さんかく（△）を くみあわせると、「おうち（家）」の かたちを つくることが できる。まるか ばつか？", choices: [true, false], answer: true, explanation: "せいかいは「まる（true）」！<br>さんかくを <b>屋根（やね）</b>、まるを <b>窓（まど）</b>に すると、かわいい おうちが ひらめくね！" },
 	{ grade: 0, genre: "creative", type: "select", text: "おそらの「くも（雲）」を みていたら、ある どうぶつの かたちに みえてきました。おみみが ながくて、ぴょんぴょん はねる どうぶつは なあに？", choices: ["うさぎ", "ぞう", "へび", "ライオン"], answer: "うさぎ", explanation: "せいかいは「うさぎ」！<br>くもの かたちを <b>じぶんの しっている どうぶつ</b>に みたてる、たのしい ひらめきだね！" },
@@ -163,8 +251,16 @@ targetArray.push(...[
 	{ grade: 0, genre: "creative", type: "which", text: "「めがね（眼鏡）」の かたちと、すうじの「8」の かたちは、まるが 2つ ならんでいるところが にている。まるか ばつか？", choices: [true, false], answer: true, explanation: "せいかいは「まる（true）」！<br>よこに むけると <b>めがね</b>、たてに むけると <b>すうじの 8</b> に みえるね！" }
 ]);
 
-// 🟥 【ひっかけ】
+// 🟥 【水平思考力：tricky】
 targetArray.push(...[
+	{ grade: 0, genre: "tricky", type: "select", text: "トラックと パトカーと 自転車（じてんしゃ）が はしっています。急（きゅう）にとまる（止まる）ことが できるのは どれかな？", choices: ["どれも急にはとまれない", "トラック", "パトカー", "自転車"], answer: "どれも急にはとまれない", explanation: "せいかいは「どれも急にはとまれない」！<br>のりものは <b>「急（きゅう）には とまれない」</b> という ひっかけ クイズでした！あぶないから 気をつけてね！" },
+	{ grade: 0, genre: "tricky", type: "which", text: "カマキリと、ハサミと、きりかぶ。このなかで「き（木）」から できているのは ハサミである。まるか ばつか？", choices: [true, false], answer: false, explanation: "せいかいは「ばつ（false）」！<br>なまえに「き」が つく「きりかぶ」が 木から できているよ！ハサミは <b>鉄（てつ）</b> だね！" },
+	{ grade: 0, genre: "tricky", type: "select", text: "コップの なかに、おみずが いっぱい はいっています。これを ひっくり返したら（ひっくりかえしたら）、おみずは どうなるかな？", choices: ["こぼれて空っぽになる", "こおって氷になる", "あかくなる", "そらにとんでいく"], answer: "こぼれて空っぽになる", explanation: "せいかいは「こぼれて空っぽになる」！<br>あたりまえだけど、<b>ひっくり返したら こぼれちゃう</b>よね！だまされなかったかな？" },
+	{ grade: 0, genre: "tricky", type: "which", text: "リンゴ、バナナ、パイナップル。このなかで「き（木）」に なっているのは バナナである。まるか ばつか？", choices: [true, false], answer: false, explanation: "せいかいは「ばつ（false）」！<br>バナナは 木ではなく、とても おおきな <b>「くさ（草）」</b>に なっているという、有名な ひっかけ クイズだよ！" },
+	{ grade: 0, genre: "tricky", type: "select", text: "おそらの 上（うえ）に、まあるくて あかるい たいようが あります。夜（よる）に なると、たいようは どこに いくかな？", choices: ["ちきゅうの反対側にまわる", "海の中に沈んで消える", "宇宙のゴミ箱にすてられる", "お月さまに変身する"], answer: "ちきゅうの反対側にまわる", explanation: "せいかいは「ちきゅうの反対側にまわる」！<br>たいようが 消えた（きえた）のではなく、<b>ちきゅうが まわって 反対側（はんたいがわ）に いっただけ</b> なんだよ！" },
+	{ grade: 0, genre: "tricky", type: "which", text: "おうちの なかで、ねこちゃんが 3びき いました。1ぴきが お部屋（へや）の すみに かくれました。お部屋の なかに いる ねこちゃんは 2ひきである。まるか ばつか？", choices: [true, false], answer: true, explanation: "せいかいは「まる（true）」！<br>かくれたけれど、<b>お部屋（へや）の なかからは 出て（でて）いない</b> から、あわせて 3びきの ままだよ！" },
+	{ grade: 0, genre: "tricky", type: "select", text: "コップが 3つ あります。1つだけ お水が はいっていません。お水が はいっている コップを ひっくり返したら、お水は どうなるかな？", choices: ["こぼれる", "氷になる", "なにもおきない", "お湯になる"], answer: "こぼれる", explanation: "せいかいは「こぼれる」！<br>お水が はいっている コップを ひっくり返した（ひっくりかえした）のだから、<b>もちろん お水は こぼれちゃう</b> よ！" },
+	{ grade: 0, genre: "tricky", type: "which", text: "おにぎりを 3こ 作りました（つくりました）。全部（ぜんぶ） 食べたら（たべたら）、のこりは 0こに なる。まるか ばつか？", choices: [true, false], answer: true, explanation: "せいかいは「まる（true）」！<br>全部（ぜんぶ） 食べたのだから、<b>お皿（おさら）の 上には なにも 残らない（のこらない）</b> よね！" },
 	{ grade: 0, genre: "tricky", type: "select", text: "トラックと パトカーと 自転車（じてんしゃ）が はしっています。急（きゅう）にとまる（止まる）ことが できるのは どれかな？", choices: ["どれも急にはとまれない", "トラック", "パトカー", "自転車"], answer: "どれも急にはとまれない", explanation: "せいかいは「どれも急にはとまれない」！<br>のりものは <b>「急（きゅう）には とまれない」</b> という ひっかけ クイズでした！あぶないから 気をつけてね！" },
 	{ grade: 0, genre: "tricky", type: "select", text: "コップの なかに、おみずが いっぱい はいっています。これを ひっくり返したら（ひっくりかえしたら）、おみずは どうなるかな？", choices: ["こぼれて空っぽになる", "こおって氷になる", "あかくなる", "そらにとんでいく"], answer: "ここぼれて空っぽになる", explanation: "せいかいは「こぼれて空っぽになる」！<br>あたりまえだけど、<b>ひっくり返したら こぼれちゃう</b>よね！だまされなかったかな？" },
 	{ grade: 0, genre: "tricky", type: "which", text: "リンゴ、バナナ、パイナップル。このなかで「き（木）」に なっているのは バナナである。まるか ばつか？", choices: [true, false], answer: false, explanation: "せいかいは「ばつ（false）」！<br>バナナは 木ではなく、とても おおきな <b>「くさ（草）」</b>に なっているという、有名な ひっかけ クイズだよ！" },
