@@ -53,12 +53,17 @@ async function saveAdminGenre(id) {
         alert("表示名(label)と送信値(value)は必須入力です！");
         return;
     }
+    
+    // ▼ 追加：並び順（order）を取得
+    const order = parseInt(document.getElementById(`ad-gen-order-${id}`).value) || 0;
+    
     try {
         // 💡 スクリーンショットの定義通り「label」「label_junior」「value」でFirebaseを更新
         await updateDoc(doc(db, "genre", id), { 
             label: label, 
             label_junior: labelJunior,
-            value: val 
+            value: val,
+            order: order
         });
         alert("科目マスターデータを更新しました！🎉");
         await renderAdminGenreList();
@@ -77,7 +82,7 @@ async function deleteAdminGenre(id) {
 // 新しい科目の追加
 async function addGenreFromAdmin() {
     const label = document.getElementById('new-gen-label').value.trim();
-    const labelJunior = document.getElementById('new-gen-label-junior').value.trim(); // 💡取得
+    const labelJunior = document.getElementById('new-gen-label-junior').value.trim();
     const val = document.getElementById('new-gen-value').value.trim();
 
     if (!label || !val) {
@@ -86,7 +91,7 @@ async function addGenreFromAdmin() {
     }
 
     // ▼ 修正：並び順（order）を追加
-    const order = parseInt(document.getElementById('new-gen-order').value) || 0;  // ← 追加
+    const order = parseInt(document.getElementById('new-gen-order').value) || 0;
     
     try {
         // 💡 新規追加時も3つのフィールドで登録
