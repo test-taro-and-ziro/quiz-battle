@@ -25,6 +25,7 @@ async function renderAdminGenreList() {
                 <td><input type="text" id="ad-gen-lab-${id}" value="${data.label || ''}"></td>
                 <td><input type="text" id="ad-gen-lab-jun-${id}" value="${data.label_junior || ''}" placeholder="例: 英語"></td>
                 <td><input type="text" id="ad-gen-val-${id}" value="${data.value || ''}"></td>
+                <td><input type="number" id="ad-gen-order-${id}" value="${data.order || 0}"></td>
                 <td>
                     <button onclick="saveAdminGenre('${id}')">保存</button>
                     <button onclick="deleteAdminGenre('${id}')" style="background:#e53e3e;">削除</button>
