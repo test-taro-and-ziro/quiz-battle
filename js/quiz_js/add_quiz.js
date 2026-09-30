@@ -9,7 +9,15 @@ export const bulkQuestionsData = [];
 // 各学年の「中身」をインポートする（関数やオブジェクトとして読み込む）
 import { loadQuestions0 } from './add_quiz_0.js';
 import { loadQuestions2 } from './add_quiz_2.js';
+import { loadQuestions4 } from './add_quiz_4.js';
+import { loadQuestions5 } from './add_quiz_5.js';
+
+import { loadQuestionsetc } from './add_quiz_etc.js';
 
 // 配列へ追加を実行する
 loadQuestions0(bulkQuestionsData);
 loadQuestions2(bulkQuestionsData);
+loadQuestions4(bulkQuestionsData);
+loadQuestions5(bulkQuestionsData);
+
+loadQuestionsetc(bulkQuestionsData);
