@@ -2,7 +2,7 @@
 // 🎒 小学校4年生向け（grade: 4）クイズデータ追加
 // ==========================================
 // 💡 親から配列を関数として受け取る
-export function loadQuestions0(targetArray) {
+export function loadQuestions4(targetArray) {
 
 // 🟥 【こくご：japanese】
 targetArray.push(...[
