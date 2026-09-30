@@ -12,8 +12,10 @@ async function renderAdminGradeList() {
     tbody.innerHTML = '<tr><td colspan="3">読み込み中...</td></tr>';
     
     try {
-        const querySnapshot = await getDocs(collection(db, "grades"));
+        const q = query(collection(db, "grades"), orderBy("value", "asc") );
+        const querySnapshot = await getDocs(q);
         tbody.innerHTML = '';
+
         if (formGradeSelect) formGradeSelect.innerHTML = '<option value="">-- 対象の学年を選んでね --</option>';
         
         const gradeList = [];
