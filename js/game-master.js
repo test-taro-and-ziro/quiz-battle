@@ -73,8 +73,9 @@ export async function loadGradeMaster() {
         // すでにロード済みなら通信せずに今のデータを返す（高速化）
         if (gradeMasterData.length > 0) return gradeMasterData;
 
-        // ※ コレクション名は画像に基づき、お使いの実際のコレクション名（例: "grades" など）に合わせてください
-        const querySnapshot = await getDocs(collection(db, "grades"));
+        const q = query(collection(db, "grades"), orderBy("value", "asc"));
+        const querySnapshot = await getDocs(q);
+        
         gradeMasterData = [];
         querySnapshot.forEach((docSnap) => {
             gradeMasterData.push(docSnap.data());
