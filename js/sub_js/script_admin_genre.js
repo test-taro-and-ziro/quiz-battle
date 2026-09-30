@@ -12,7 +12,7 @@ async function renderAdminGenreList() {
 
     try {
         // 💡 コレクション名「genre」から取得します
-        const q = query(collection(db, "genre"), orderBy("order", "asc"), orderBy("value", "asc"));
+        const q = query(collection(db, "genre"), orderBy("order", "asc"));
         const querySnapshot = await getDocs(q);
         tbody.innerHTML = '';
 
