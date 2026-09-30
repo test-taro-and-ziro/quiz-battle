@@ -8,7 +8,7 @@ import { db, collection, doc, addDoc, getDocs, setDoc, getDoc, updateDoc, delete
 async function renderAdminGenreList() {
     const tbody = document.getElementById('admin-genre-list');
     if (!tbody) return;
-    tbody.innerHTML = '<tr><td colspan="4">データを読み込み中...</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="5">データを読み込み中...</td></tr>';
 
     try {
         // 💡 コレクション名「genre」から取得します
@@ -36,11 +36,11 @@ async function renderAdminGenreList() {
         });
 
         if (tbody.children.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="4">科目マスターデータがありません。新しく追加してください。</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="5">科目マスターデータがありません。新しく追加してください。</td></tr>';
         }
     } catch (e) {
         console.error(e);
-        tbody.innerHTML = '<tr><td colspan="4" style="color:red;">科目データの取得に失敗しました。</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="5" style="color:red;">科目データの取得に失敗しました。</td></tr>';
     }
 }
 
