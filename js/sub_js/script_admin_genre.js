@@ -84,12 +84,17 @@ async function addGenreFromAdmin() {
         alert("表示名(label)と送信値(value)を入力してね！");
         return;
     }
+
+    // ▼ 修正：並び順（order）を追加
+    const order = parseInt(document.getElementById('new-gen-order').value) || 0;  // ← 追加
+    
     try {
         // 💡 新規追加時も3つのフィールドで登録
         await addDoc(collection(db, "genre"), { 
             label: label, 
             label_junior: labelJunior,
-            value: val 
+            value: val,
+            order: order
         });
         document.getElementById('new-gen-label').value = '';
         document.getElementById('new-gen-label-junior').value = ''; // クリア
