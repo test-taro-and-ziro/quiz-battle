@@ -53,7 +53,9 @@ export async function loadGenreMaster() {
         // すでにロード済みなら通信せずに今のデータを返す（高速化）
         if (genreMasterData.length > 0) return genreMasterData;
 
-        const querySnapshot = await getDocs(collection(db, "genre"));
+        const q = query(collection(db, "genre"), orderBy("order", "asc"));
+        const querySnapshot = await getDocs(q);
+        
         genreMasterData = [];
         querySnapshot.forEach((docSnap) => {
             genreMasterData.push(docSnap.data());
