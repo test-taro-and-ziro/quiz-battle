@@ -213,8 +213,7 @@ function selectQuest(dungeon) {
     const bossUnlocked = availableGenres.every(t => userTreasures.includes(t));
     if (bossUnlocked) {
         const bossBtn = document.createElement('button');
-        bossBtn.classList.add('btn-genre');
-        bossBtn.style.backgroundColor = '#8B0000'; // ボス感のある赤
+        bossBtn.classList.add('btn-boss');
         bossBtn.textContent = "👑 ボスステージ";
         bossBtn.addEventListener('click', () => {
             goToGame("boss"); // ジャンルを boss として送る
