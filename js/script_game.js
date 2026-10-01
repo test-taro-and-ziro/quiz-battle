@@ -133,7 +133,7 @@ async function setupPartyAndRender(userName) {
                 activeCompanions.push({ id: npcId, ...npcDocSnap.data() });
             } else {
                 activeCompanions.push({
-                    id: DEFAULT_NPC_ID, name: "おさるさん", image_path: "monkey_01",
+                    id: DEFAULT_NPC_ID, name: "ありさん", image_path: "sub_default.jpg",
                     good_genres: [], bad_genres: ["math", "Japanese", "moral"]
                 });
             }
