@@ -42,7 +42,7 @@ let npc2Score = 0;
 
 // ★ URLパラメータから受け取るクエスト情報用の変数
 let currentUser = "";  // ユーザー名
-let currentQuest = ""; // クエスト名
+let currentQuest = ""; // ダンジョンID
 let currentGenre = ""; // ジャンル（math, Japanese など）
 let clearQuota = 300; // 問題数が増えたのでノルマを調整
 let userGrade = 4; // ★【New】学年情報を保存しておくグローバル変数（初期値は小4）
@@ -178,7 +178,7 @@ async function loadRealQuestions(userName, genre) {
             // ダンジョンマスタをロード（キャッシュ対応）
             await loadDungeonMaster();    
             // ID に一致するダンジョン情報を取得
-            const dungeonData = dungeonMasterData.find(d => d.id === currentquest);
+            const dungeonData = dungeonMasterData.find(d => d.id === currentQuest);
             // ボス戦 → ダンジョンの rewards の科目すべて
             genreList = Object.keys(dungeonData.rewards);  
         } else {
