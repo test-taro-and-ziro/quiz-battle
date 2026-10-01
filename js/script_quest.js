@@ -4,8 +4,8 @@
 // 💡 共通設定ファイルから db を読み込む
 import { db, collection, doc, addDoc, getDocs, setDoc, getDoc, updateDoc, deleteDoc, query, where, orderBy, limit } from './firebase-config.js';
 // 💡 共通ファイルを読み込む1行を追加
-import { loadAnimalMaster, getCharacterFileName, setCharacterSrc, setCompanionSrc, loadGenreMaster, loadGradeMaster, loadCompanionMaster, setupPlayerMaster, logoutPlayerMaster } from './game-master.js';
-import { animalMasterData, genreMasterData, gradeMasterData, companionMasterData, currentLoginUser, currentPlayerData } from './game-master.js';
+import { loadAnimalMaster, getCharacterFileName, setCharacterSrc, setCompanionSrc, loadGenreMaster, loadGradeMaster, loadCompanionMaster, loadDungeonMaster, setupPlayerMaster, logoutPlayerMaster } from './game-master.js';
+import { animalMasterData, genreMasterData, gradeMasterData, companionMasterData, dungeonMasterData, currentLoginUser, currentPlayerData } from './game-master.js';
 
 let currentUser = null;
 let treasureMasterData = [];
@@ -30,7 +30,10 @@ window.addEventListener('DOMContentLoaded', async () => {
     await loadTreasureMaster();
     // 「Dungeons」コレクション（マスターデータ）をすべて読み込む [js]
     await loadDungeonMaster(); 
-  
+
+    // ダンジョンボタンの自動生成を実行
+    renderDungeonMenu();
+    
     // 3. 共通関数を使ってプレイヤー情報を準備
     const userData = await setupPlayerMaster(currentUser);
 
@@ -56,24 +59,6 @@ async function loadTreasureMaster() {
         });
     } catch (e) {
         console.error("秘宝マスタのロードに失敗しました:", e);
-    }
-}
-
-// 💡 Firestoreからダンジョンマスタをロードし、メニューボタンを自動生成する関数
-async function loadDungeonMaster() {
-    try {
-        const q = query(collection(db, "dungeons"), orderBy("order", "asc"));
-        const querySnapshot = await getDocs(q);
-        
-        dungeonMasterData = [];
-        querySnapshot.forEach((docSnap) => {
-            dungeonMasterData.push(docSnap.data());
-        });
-
-        // ボタンの自動生成を実行
-        renderDungeonMenu();
-    } catch (e) {
-        console.error("ダンジョンマスタのロードに失敗しました:", e);
     }
 }
 
@@ -238,7 +223,7 @@ function goToGame(genre) {
     // 💡 選択されたダンジョンデータからノルマ（norma）を取得（万が一空ならデフォルト値「10000」に）
     const normaValue = selectedDungeon.norma || "10000";
     // 次のゲーム本編（game.html）へ引き継いでジャンプ！
-    window.location.href = `game.html?user=${encodeURIComponent(currentUser)}&quest=${encodeURIComponent(selectedDungeon.name)}&genre=${encodeURIComponent(genre)}&norma=${encodeURIComponent(normaValue)}`;
+    window.location.href = `game.html?user=${encodeURIComponent(currentUser)}&quest=${encodeURIComponent(selectedDungeon.id)}&genre=${encodeURIComponent(genre)}&norma=${encodeURIComponent(normaValue)}`;
 }
 
 // 🛑 新設：ログアウトボタンが押されたときに確認する関数
