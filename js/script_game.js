@@ -48,7 +48,7 @@ let userGrade = 4; // ★【New】学年情報を保存しておくグローバ�
 
 // 仲間データ管理
 let activeCompanions = [];
-const DEFAULT_NPC_ID = "p72A7WPl8OtG5Ht7hhXC"; 
+const DEFAULT_NPC_ID = "default";
 
 // ==========================================
 // 3. 画面起動時の処理
@@ -129,7 +129,7 @@ async function setupPartyAndRender(userName) {
         });
         // 足りない場合は default を補完
         while (activeCompanions.length < 2) {
-            const defaultNpc = companionMasterData.find(c => c.id === "default");
+            const defaultNpc = companionMasterData.find(c => c.id === DEFAULT_NPC_ID);
             if (defaultNpc) activeCompanions.push(defaultNpc);
             else break;
         }
