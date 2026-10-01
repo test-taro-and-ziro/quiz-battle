@@ -543,17 +543,42 @@ function showResult() {
     if (totalScore >= clearQuota) {
         resultTitle.textContent = "STAGE CLEAR!! 🎉";
         resultTitle.className = "clear-title";
+        rewardArea.classList.remove('hidden');
 
-            // ダンジョンマスタをロード（キャッシュ対応）
+        // ダンジョンマスタをロード（キャッシュ対応）
         await loadDungeonMaster();    
         // ID に一致するダンジョン情報を取得
         const dungeonData = dungeonMasterData.find(d => d.id === currentQuest);
         const treasureId = dungeonData.rewards[currentGenre];
-            
-        
-        rewardArea.classList.remove('hidden');
-        rewardContent.innerHTML = `<p>🏅 ひほう<strong>「たいようのメダル」</strong>をみつけた！</p>
-                                   <p>🐾 <strong>おさるさん</strong> がなかまに加わりたそうにこちらを見ている！（後日対応）</p>`;
+
+        // 🌟 共通関数。Firebaseへの通信は行わずキャッシュを即座に返します！（二重取得の廃止）
+        const userData = await setupPlayerMaster(userName);
+
+        // ★ 重複チェック
+        if (!userData.treasures.includes(treasureId)) {
+            // ★ 25% の確率で獲得
+            const getChance = Math.random() < 0.25;
+            if (getChance) {
+                // ★ treasures がなければ作成
+                if (!userData.treasures) {userData.treasures = [];}
+                userData.treasures.push(treasureId);
+                // ★ Firestore に保存
+                const playerRef = doc(db, "players", userData.userName);
+                await updateDoc(playerRef, {treasures: userData.treasures});
+
+                rewardContent.innerHTML = `
+                    <p>🏅 ひほう<strong>「${gotTreasure}」</strong>をてにいれた！</p>
+                `;
+            } else {
+                rewardContent.innerHTML = `
+                    <p>😢 今回は秘宝を見つけられなかった…</p>
+                `;
+            }
+        } else {
+            rewardContent.innerHTML = `
+                <p>📘 ひほう<strong>「${gotTreasure}」</strong>はすでに持っているようだ…</p>
+            `;
+        }
     } else {
         resultTitle.textContent = "GAME OVER... 😢";
         resultTitle.className = "failed-title";
