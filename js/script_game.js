@@ -165,17 +165,24 @@ async function loadRealQuestions(userName, genre) {
     try {
         // ① プレイヤーの学年に応じて、検索対象にする学年リストを動的に組み立てる
         let targetGrades = [userGrade];
-        if (userGrade > 0) {
+        if (userGrade > 0 && genre !== "boss") {
             // 1年生以上の場合は、ひとつ下の学年（1年生なら0＝幼児）を追加する
             targetGrades.push(userGrade - 1);
         }
         // ※ 幼児（userGrade === 0）の場合は、targetGrades は [0] のままになります
 
         // 2. questions コレクションから「ジャンル」と「対象学年リストのいずれか」が一致する問題を検索
+        let genreList = [];
+        if (genre === "boss") {
+            // ボス戦 → ダンジョンの rewards の科目すべて
+            genreList = Object.keys(dungeonData.rewards);  
+        } else {
+            genreList = [genre];
+        }
         const qQuestions = query(
             collection(db, "questions"), 
-            where("genre", "==", genre),
-            where("grade", "in", targetGrades) // ★ ここを in クエリに変更！
+            where("genre", "in", genreList),
+            where("grade", "in", targetGrades)
         );
         const querySnapshot = await getDocs(qQuestions);
 
