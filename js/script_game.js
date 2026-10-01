@@ -553,14 +553,14 @@ async function showResult() {
 
         // 🌟 共通関数。Firebaseへの通信は行わずキャッシュを即座に返します！（二重取得の廃止）
         const userData = await setupPlayerMaster(currentUser);
-
+        // ★ treasures がなければ作成
+        if (!userData.treasures) {userData.treasures = [];}
+            
         // ★ 重複チェック
         if (!userData.treasures.includes(treasureId)) {
             // ★ 25% の確率で獲得
             const getChance = Math.random() < 0.25;
-            if (getChance) {
-                // ★ treasures がなければ作成
-                if (!userData.treasures) {userData.treasures = [];}
+            if (getChance) {                
                 userData.treasures.push(treasureId);
                 // ★ Firestore に保存
                 const playerRef = doc(db, "users", userData.docId);
