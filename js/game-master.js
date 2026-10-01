@@ -37,13 +37,22 @@ export function getCharacterFileName(animalValue, genderValue) {
     return "placeholder.jpg";
 }
 
-// 💡 共通関数：画像パスを判別して正しくセットする
+// 💡 共通関数：画像パスを判別して正しくセットする（プレイヤー）
 export function setCharacterSrc(imgElement, fileName) {
     if (!imgElement) return;
     if (fileName === "placeholder.jpg") {
         imgElement.src = "images/" + fileName;
     } else {
         imgElement.src = "images/chara/" + fileName;
+    }
+}
+// 💡 共通関数：画像パスを判別して正しくセットする（仲間）
+export function setCompanionSrc(imgElement, fileName) {
+    if (!imgElement) return;
+    if (fileName === "placeholder.jpg") {
+        imgElement.src = "images/" + fileName;
+    } else {
+        imgElement.src = "images/sub/" + fileName;
     }
 }
 
