@@ -147,11 +147,11 @@ async function setupPartyAndRender(userName) {
             
             const imgEl = document.getElementById(`npc${num}-img`);
             if (imgEl) {
-                imgEl.onerror = () => setCharacterSrc(imgEl, "placeholder.jpg");
+                imgEl.onerror = () => setCompanionSrc(imgEl, "placeholder.jpg");
                 if (companion.image_path) {
-                    setCharacterSrc(imgEl, companion.image_path.includes('.') ? companion.image_path : "placeholder.jpg");
+                    setCompanionSrc(imgEl, companion.image_path.includes('.') ? companion.image_path : "placeholder.jpg");
                 } else {
-                    setCharacterSrc(imgEl, "placeholder.jpg");
+                    setCompanionSrc(imgEl, "placeholder.jpg");
                 }
                 imgEl.alt = companion.name;
             }
