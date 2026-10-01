@@ -444,16 +444,16 @@ function handleAnswer(userAnswer, correctAnswer) {
     // ==========================================
     // ★ NPC2人の自動回答シミュレーション
     // ==========================================
-    const currentGenre = currentQuestions[currentQuestionIndex].genre; // 現在の問題のジャンル（mathなど）
+    const questionGenre = currentQuestions[currentQuestionIndex].genre; // 現在の問題のジャンル（mathなど）
     let npcScores = [0, 0]; // なかま1、なかま2が得るポイントのキープ用
      
     activeCompanions.forEach((companion, index) => {
         // ① 得意・苦手・それ以外の確率（正解率）を決定
         let successRate = 0.40; // デフォルト：それ以外（40%）
         
-        if (companion.good_genres && companion.good_genres.includes(currentGenre)) {
+        if (companion.good_genres && companion.good_genres.includes(questionGenre)) {
             successRate = 0.60; // 得意（60%）
-        } else if (companion.bad_genres && companion.bad_genres.includes(currentGenre)) {
+        } else if (companion.bad_genres && companion.bad_genres.includes(questionGenre)) {
             successRate = 0.20; // 苦手（20%）
         }
 
@@ -543,6 +543,13 @@ function showResult() {
     if (totalScore >= clearQuota) {
         resultTitle.textContent = "STAGE CLEAR!! 🎉";
         resultTitle.className = "clear-title";
+
+            // ダンジョンマスタをロード（キャッシュ対応）
+        await loadDungeonMaster();    
+        // ID に一致するダンジョン情報を取得
+        const dungeonData = dungeonMasterData.find(d => d.id === currentQuest);
+        const treasureId = dungeonData.rewards[currentGenre];
+            
         
         rewardArea.classList.remove('hidden');
         rewardContent.innerHTML = `<p>🏅 ひほう<strong>「たいようのメダル」</strong>をみつけた！</p>
