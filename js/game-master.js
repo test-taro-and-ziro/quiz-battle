@@ -162,7 +162,11 @@ export async function setupPlayerMaster(username) {
             currentLoginUser = username;
             // 一致するユーザーが見つかった場合（通常は1件だけヒットします）
             const userDoc = querySnapshot.docs[0]; 
-            currentPlayerData = userDoc.data(); // 💡 共通変数にガチッと保存！
+            currentPlayerData = {
+                ...userDoc.data(),
+                docId: userDoc.id   // ← ★ これを追加するだけ！
+            };
+
             return currentPlayerData;
         } else {
             console.error("ユーザーデータが見つかりません:", username);
