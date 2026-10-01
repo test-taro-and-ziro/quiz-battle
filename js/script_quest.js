@@ -208,6 +208,20 @@ function selectQuest(dungeon) {
         genreContainer.appendChild(btn);
     });
 
+    // 💡 ボス解放判定
+    const userTreasures = currentPlayerData.treasures || [];
+    const bossUnlocked = availableGenres.every(t => userTreasures.includes(t));
+    if (bossUnlocked) {
+        const bossBtn = document.createElement('button');
+        bossBtn.classList.add('btn-genre');
+        bossBtn.style.backgroundColor = '#8B0000'; // ボス感のある赤
+        bossBtn.textContent = "👑 ボスステージ";
+        bossBtn.addEventListener('click', () => {
+            goToGame("boss"); // ジャンルを boss として送る
+        });
+        genreContainer.appendChild(bossBtn);
+    }
+
     document.getElementById('genre-modal-overlay').style.display = 'flex';
 }
 
