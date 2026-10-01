@@ -211,7 +211,9 @@ function selectQuest(dungeon) {
 
     // 💡 ボス解放判定
     const userTreasures = currentPlayerData.treasures || [];
-    const bossUnlocked = availableGenres.every(t => userTreasures.includes(t));
+    const requiredTreasures = Object.values(dungeon.rewards || {});
+
+    const bossUnlocked = requiredTreasures.every(t => userTreasures.includes(t));
     if (bossUnlocked) {
         const bossBtn = document.createElement('button');
         bossBtn.classList.add('btn-boss');
