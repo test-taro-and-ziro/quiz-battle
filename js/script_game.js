@@ -118,46 +118,36 @@ async function setupPartyAndRender(userName) {
             playerImgEl.alt = "じぶん";
         }
 
-        // マスタロード（すでに取得済みなら内部で即返されます）
-        await loadCompanionMaster(); 
-
-        // 仲間が足りない場合はおさるさんで補完
-        while (partyIds.length < 2) {
-            partyIds.push(DEFAULT_NPC_ID);
-        }
-        partyIds = partyIds.slice(0, 2);
-        
-        // 仲間2人のマスタ情報をFirebase（companions）から取得
+        // ==========================================
+        // ユーザ所持の仲間を検索して追加
+        // ==========================================
         activeCompanions = [];
-        for (let i = 0; i < partyIds.length; i++) {
-            const npcId = partyIds[i];
-            const npcDocRef = doc(db, "companions", npcId);
-            const npcDocSnap = await getDoc(npcId === DEFAULT_NPC_ID ? doc(db, "companions", "dummy") : npcDocRef);
-            
-            if (npcDocSnap.exists()) {
-                activeCompanions.push({ id: npcId, ...npcDocSnap.data() });
-            } else {
-                activeCompanions.push({
-                    id: DEFAULT_NPC_ID, name: "ありさん", image_path: "sub_default.jpg",
-                    good_genres: [], bad_genres: ["math", "Japanese", "moral"]
-                });
-            }
+        partyIds.forEach(id => {
+            const npc = companionMasterData.find(c => c.id === id);
+            if (npc) activeCompanions.push(npc);
+        });
+        // 足りない場合は default を補完
+        while (activeCompanions.length < 2) {
+            const defaultNpc = companionMasterData.find(c => c.id === "default");
+            if (defaultNpc) activeCompanions.push(defaultNpc);
+            else break;
         }
-        
         // なかま2人の画面反映（画像がないNPCは自動で準備中 placeholder.jpg に差し替え）
         activeCompanions.forEach((companion, index) => {
             const num = index + 1;
+
+            // 名前反映
             const nameEl = document.getElementById(`npc${num}-name`);
             if (nameEl) nameEl.textContent = companion.name;
-            
+
+            // 画像反映
             const imgEl = document.getElementById(`npc${num}-img`);
             if (imgEl) {
                 imgEl.onerror = () => setCompanionSrc(imgEl, "placeholder.jpg");
-                if (companion.image_path) {
-                    setCompanionSrc(imgEl, companion.image_path.includes('.') ? companion.image_path : "placeholder.jpg");
-                } else {
-                    setCompanionSrc(imgEl, "placeholder.jpg");
-                }
+
+                const fileName = companion.img || "placeholder.jpg";
+                setCompanionSrc(imgEl, fileName);
+
                 imgEl.alt = companion.name;
             }
         });
