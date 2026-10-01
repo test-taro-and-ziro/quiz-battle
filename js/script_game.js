@@ -174,6 +174,10 @@ async function loadRealQuestions(userName, genre) {
         // 2. questions コレクションから「ジャンル」と「対象学年リストのいずれか」が一致する問題を検索
         let genreList = [];
         if (genre === "boss") {
+            // ダンジョンマスタをロード（キャッシュ対応）
+            await loadDungeonMaster();    
+            // ID に一致するダンジョン情報を取得
+            const dungeonData = dungeonMasterData.find(d => d.id === currentquest);
             // ボス戦 → ダンジョンの rewards の科目すべて
             genreList = Object.keys(dungeonData.rewards);  
         } else {
