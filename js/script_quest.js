@@ -9,7 +9,6 @@ import { animalMasterData, genreMasterData, gradeMasterData, companionMasterData
 
 let currentUser = null;
 let treasureMasterData = [];
-let dungeonMasterData = []; // 💡 データベースから読み込んだダンジョン情報を保存する配列
 let selectedDungeon = null; // 💡 現在プレイヤーが選択したダンジョンのデータ
 
 // 💡 画面が起動した時の処理
