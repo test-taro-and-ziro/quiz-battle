@@ -77,7 +77,7 @@ export async function loadGenreMaster() {
     }
 }
 
-// ✨【追加】共通関数：Firebaseから学年マスタをまとめてロードする
+// ✨ 共通関数：Firebaseから学年マスタをまとめてロードする
 export async function loadGradeMaster() {
     try {
         // すでにロード済みなら通信せずに今のデータを返す（高速化）
@@ -116,6 +116,16 @@ export async function loadCompanionMaster() {
         console.error("仲間マスタのロードに失敗:", e);
         return [];
     }
+}
+// 💡 共通関数：仲間IDから仲間情報を取得する（存在しない場合は default を返す）
+export function getCompanionById(id) {
+    // 一致する仲間を検索
+    const found = companionMasterData.find(c => c.id === id);
+    if (found) return found;
+
+    // 見つからない場合は default 仲間を返す
+    const defaultNpc = companionMasterData.find(c => c.id === "default");
+    return defaultNpc || null;
 }
 
 // 💡 共通関数：ユーザー情報をFirebaseから一度だけ取得して共通変数にセットする
