@@ -567,7 +567,7 @@ async function showResult() {
                 await updateDoc(playerRef, {treasures: userData.treasures});
 
                 rewardContent.innerHTML = `
-                    <p>🏅 ひほう<strong>「${gotTreasure}」</strong>をてにいれた！</p>
+                    <p>🏅 秘宝をてにいれた！地図の画面で確認してね</p>
                 `;
             } else {
                 rewardContent.innerHTML = `
@@ -576,7 +576,7 @@ async function showResult() {
             }
         } else {
             rewardContent.innerHTML = `
-                <p>📘 ひほう<strong>「${gotTreasure}」</strong>はすでに持っているようだ…</p>
+                <p>📘 秘宝はすでに持っているようだ…</p>
             `;
         }
     } else {
