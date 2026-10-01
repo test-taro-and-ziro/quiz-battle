@@ -552,7 +552,7 @@ async function showResult() {
         const treasureId = dungeonData.rewards[currentGenre];
 
         // 🌟 共通関数。Firebaseへの通信は行わずキャッシュを即座に返します！（二重取得の廃止）
-        const userData = await setupPlayerMaster(userName);
+        const userData = await setupPlayerMaster(currentUser);
 
         // ★ 重複チェック
         if (!userData.treasures.includes(treasureId)) {
