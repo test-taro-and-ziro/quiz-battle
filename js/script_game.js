@@ -87,9 +87,10 @@ window.addEventListener('DOMContentLoaded', async () => {
 // ==========================================
 async function setupPartyAndRender(userName) {
     try {
-        // ロード（すでに取得済みなら内部で即返されます）
+        // マスタロード（すでに取得済みなら内部で即返されます）
         await loadAnimalMaster();
         await loadGenreMaster();
+        await loadCompanionMaster(); 
 
         // 🌟 共通関数を実行。すでにログイン・地図画面で取得済みなら、Firebaseへの通信は行わずキャッシュを即座に返します！（二重取得の廃止）
         const userData = await setupPlayerMaster(userName);
@@ -116,7 +117,10 @@ async function setupPartyAndRender(userName) {
             setCharacterSrc(playerImgEl, playerFileName);
             playerImgEl.alt = "じぶん";
         }
-        
+
+        // マスタロード（すでに取得済みなら内部で即返されます）
+        await loadCompanionMaster(); 
+
         // 仲間が足りない場合はおさるさんで補完
         while (partyIds.length < 2) {
             partyIds.push(DEFAULT_NPC_ID);
