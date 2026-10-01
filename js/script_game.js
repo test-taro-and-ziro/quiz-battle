@@ -528,7 +528,7 @@ function handleAnswer(userAnswer, correctAnswer) {
 // ==========================================
 // 6. 結果確認（リザルト）画面の表示処理
 // ==========================================
-function showResult() {
+async function showResult() {
     document.getElementById('res-player-score').textContent = playerScore;
     document.getElementById('res-npc1-score').textContent = npc1Score;
     document.getElementById('res-npc2-score').textContent = npc2Score;
