@@ -563,7 +563,7 @@ async function showResult() {
                 if (!userData.treasures) {userData.treasures = [];}
                 userData.treasures.push(treasureId);
                 // ★ Firestore に保存
-                const playerRef = doc(db, "users", userData.userName);
+                const playerRef = doc(db, "users", userData.name);
                 await updateDoc(playerRef, {treasures: userData.treasures});
 
                 rewardContent.innerHTML = `
