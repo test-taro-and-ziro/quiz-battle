@@ -2,13 +2,14 @@
 // アニマルクエスト：ゲーム全体共通マスタ管理ファイル
 // ==========================================
 // 💡 共通設定ファイルから db を読み込む
-import { db, collection, doc, addDoc, getDocs, setDoc, getDoc, updateDoc, deleteDoc, query, where, orderBy } from './firebase-config.js';
+import { db, collection, doc, addDoc, getDocs, setDoc, getDoc, updateDoc, deleteDoc, query, where, orderBy, limit } from './firebase-config.js';
 
 // 各画面で共有するための変数
 export let animalMasterData = [];     // 💡 動物マスタ
 export let genreMasterData = [];      // ★ ジャンルマスタ
 export let gradeMasterData = [];      // ✨ 学年マスタ
 export let companionMasterData = [];  // 💡 仲間マスタ
+export let dungeonMasterData = [];    // 💡 ダンジョンマスタ
 export let currentLoginUser = null;   // 💡 ログイン中のユーザー名（例: "うさぎまる"）
 export let currentPlayerData = null;  // 💡 ログイン中のユーザーの全データ（grade, lv, wins, animal 等）
 
@@ -114,6 +115,31 @@ export async function loadCompanionMaster() {
         return companionMasterData;
     } catch (e) {
         console.error("仲間マスタのロードに失敗:", e);
+        return [];
+    }
+}
+
+// 💡 共通関数：Firebaseからダンジョンマスタをまとめてロードする
+export async function loadDungeonMaster() {
+    try {
+        // すでにロード済みなら通信せずキャッシュを返す（高速化）
+        if (dungeonMasterData.length > 0) return dungeonMasterData;
+
+        const q = query(collection(db, "dungeons"), orderBy("order", "asc"));
+        const querySnapshot = await getDocs(q);
+
+        dungeonMasterData = [];
+        querySnapshot.forEach((docSnap) => {
+            dungeonMasterData.push({
+                id: docSnap.id,     // ★ ID を必ず保持する（重要）
+                ...docSnap.data()
+            });
+        });
+
+        return dungeonMasterData;
+
+    } catch (e) {
+        console.error("ダンジョンマスタのロードに失敗しました:", e);
         return [];
     }
 }
