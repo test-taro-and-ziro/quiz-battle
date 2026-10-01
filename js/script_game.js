@@ -87,12 +87,13 @@ window.addEventListener('DOMContentLoaded', async () => {
 // ==========================================
 async function setupPartyAndRender(userName) {
     try {
-        // 動物マスタのロード（すでに取得済みなら内部で即返されます）
+        // ロード（すでに取得済みなら内部で即返されます）
         await loadAnimalMaster();
-        await loadGenreMaster(); // ★ 起動時に自動でジャンルデータをキャッシュします
+        await loadGenreMaster();
 
         // 🌟 共通関数を実行。すでにログイン・地図画面で取得済みなら、Firebaseへの通信は行わずキャッシュを即座に返します！（二重取得の廃止）
         const userData = await setupPlayerMaster(userName);
+        
         let partyIds = [];
         let playerFileName = "placeholder.jpg";
         if (userData) {
