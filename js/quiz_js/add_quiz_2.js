@@ -1,21 +1,27 @@
 // ==========================================
 // 👶 小学校2年生向け（grade: 2）クイズデータ追加
-// ==========================================
 // 💡 親から配列を関数として受け取る
 export function loadQuestions2(targetArray) {
 	
 // 🟥 【こくご：japanese】
 targetArray.push(...[
-	{ grade: 2, genre: "japanese", type: "select", text: "「新しい」の 反対（はんたい）の 意味（いみ）を 持つ（もつ） 言葉（ことば）は どれかな？", choices: ["古い（ふるい）", "美しい（うつくしい）", "長い（ながい）", "高い（たかい）"], answer: "古い（ふるい）", explanation: "正解は「古い（ふるい）」！<br>新（あたら）しい ⇔ <b>古（ふる）い</b> は 反対の 意味に なるよ！" },
-	{ grade: 2, genre: "japanese", type: "which", text: "「毎日（まいにち）」の 「毎」の 漢字は、1年生（ねんせい）で 習う（ならう）。まるか ばつか？", choices: [true, false], answer: false, explanation: "正解は「ばつ（false）」！<br>「毎」は <b>2年生（にねんせい）</b> で 新しく 習う 漢字だよ！" },
-	{ grade: 2, genre: "japanese", type: "select", text: "同じ（おなじ） 漢字の 仲間（なかま）クイズ！ 「草」や「花」の 一番（いちばん） 上（うえ）に ついている パーツ（部首：ぶしゅ）の名前は何かな？", choices: ["くさかんむり", "さんずい", "きへん", "にんべん"], answer: "くさかんむり", explanation: "正解は「くさかんむり」！<br>植物（しょくぶつ）に 関係（かんけい）する 漢字には <b>「くさかんむり」</b> が つくよ！" },
-	{ grade: 2, genre: "japanese", type: "which", text: "「聞く（きく）」という 漢字の 中（なか）には、「耳（みみ）」という 漢字が 入って（はいって）いる。まるか ばつか？", choices: [true, false], answer: true, explanation: "正解は「まる（true）」！<br>門（もん）の 中で <b>「耳（みみ）」</b> を すます カタチから できた 漢字だよ！" },
-	{ grade: 2, genre: "japanese", type: "select", text: "カタカナの 「シ」と 一番（いちばん） カタチが 似ていて（にていて） 間違え（まちがえ）やすい カタカナは どれかな？", choices: ["ツ", "ソ", "ン", "ノ"], answer: "ツ", explanation: "正解は「ツ」！<br><b>「シ」</b> は 下から 上に、<b>「ツ」</b> は 上から 下に 書くから 気をつけよう！" },
-	{ grade: 2, genre: "japanese", type: "which", text: "「話す（はなす）」の 反対の 言葉は 「言う（いう）」である。まるか ばつか？", choices: [true, false], answer: false, explanation: "正解は「ばつ（false）」！<br>「話す」の 反対は、じっと 黙る（だまる） 意味の <b>「黙る（だまる）」</b> などが 近いよ！" },
-	{ grade: 2, genre: "japanese", type: "select", text: "主語（しゅご：『だれが』『なにが』）を 選んで（えらんで）ね。 【犬が 元気に 走る。】", choices: ["犬が", "元気に", "走る", "なし"], answer: "犬が", explanation: "正解は「犬が」！<br>文の なかで <b>「〜が・〜は」</b> にあたる 部分（ぶぶん）を 主語（しゅご）と いうよ！" },
-	{ grade: 2, genre: "japanese", type: "which", text: "「海（うみ）」という 漢字の 左側（ひだりがわ）に ある パーツは 「さんずい」である。まるか ばつか？", choices: [true, false], answer: true, explanation: "正解は「まる（true）」！<br>水（みず）に 関係する 漢字には <b>「さんずい（氵）」</b> が つくよ！" },
-	{ grade: 2, genre: "japanese", type: "select", text: "「日記（にっき）」の 「記」の 漢字の 読みかたは なあに？ 【楽しい 思い出を ノートに 〇す】", choices: ["しる（す）", "はな（す）", "よ（む）", "か（く）"], answer: "しる（す）", explanation: "正解は「しる（す）」！<br>日記（にっき）に 記録（きろく）して <b>書き記す（しるす）</b> という 意味だよ！" },
-	{ grade: 2, genre: "japanese", type: "which", text: "「北（きた）」の 反対の 方角（ほうがく）を あらわす 漢字は 「東」である。まるか ばつか？", choices: [true, false], answer: false, explanation: "正解は「ばつ（false）」！<br>北（きた）の 反対は <b>「南（みなみ）」</b> だよ！" }
+	{ grade: 2, genre: "japanese", type: "select", text: "「新（あたら）しい」の はんたいの ことばは どれかな？", choices: ["古（ふる）い", "うつくしい", "ながい", "たかい"], answer: "古（ふる）い", explanation: "せいかいは「古（ふる）い」！<br>新（あたら）しい ⇔ <b>古（ふる）い</b> は はんたいの いみだよ！" },
+	{ grade: 2, genre: "japanese", type: "select", text: "草 や 花 の うえに ついている ぶしゅの なまえは なあに？", choices: ["くさかんむり", "さんずい", "きへん", "にんべん"], answer: "くさかんむり", explanation: "せいかいは「くさかんむり」！<br>しょくぶつに かんけいする かんじには <b>くさかんむり</b> が つくよ！" },
+	{ grade: 2, genre: "japanese", type: "which", text: "「聞（き）く」という かんじの なかには、耳 が はいっている。まるか ばつか？", choices: [true, false], answer: true, explanation: "せいかいは「まる」！<br>もんの なかで <b>耳</b> を すます かたちから できた かんじだよ！" },
+	{ grade: 2, genre: "japanese", type: "which", text: "「話す（はなす）」の はんたいは「言う（いう）」である。まるか ばつか？", choices: [true, false], answer: false, explanation: "せいかいは「ばつ」！<br>「話す（はなす）」の はんたいは <b>黙る（だまる）</b> が ちかいよ！" },
+	{ grade: 2, genre: "japanese", type: "select", text: "しゅご（だれが・なにが）を えらんでね。【犬 が げんきに はしる。】", choices: ["犬 が", "げんきに", "はしる", "なし"], answer: "犬 が", explanation: "せいかいは「犬 が」！<br>ぶんの なかで <b>〜が・〜は</b> に あたる ところを しゅご と いうよ！" },
+	{ grade: 2, genre: "japanese", type: "which", text: "「海（うみ）」の ひだりがわに ある ぶしゅは「さんずい」である。まるか ばつか？", choices: [true, false], answer: true, explanation: "せいかいは「まる」！<br>みずに かんけいする かんじには <b>さんずい</b> が つくよ！" },
+	{ grade: 2, genre: "japanese", type: "select", text: "「日記（にっき）」の「記（き）」の よみかたは なあに？【たのしい おもいでを ノートに ○す】", choices: ["しるす", "はなす", "よむ", "かく"], answer: "しるす", explanation: "せいかいは「しるす」！<br>にっきに きろくして <b>かきしるす</b> という いみだよ！" },
+	{ grade: 2, genre: "japanese", type: "which", text: "「北（きた）」の はんたいの ほうがくは「東（ひがし）」である。まるか ばつか？", choices: [true, false], answer: false, explanation: "せいかいは「ばつ」！<br>北（きた）の はんたいは <b>南（みなみ）</b> だよ！" },
+	{ grade: 2, genre: "japanese", type: "select", text: "「海（うみ）」の 左 がわに ついている ぶしゅ は どれかな？", choices: ["さんずい", "くさかんむり", "きへん", "にんべん"], answer: "さんずい", explanation: "せいかいは「さんずい」！<br>水 に かんけいする 漢字 に よく つくよ！" },
+	{ grade: 2, genre: "japanese", type: "select", text: "「話す（はなす）」の かんじ に ふくまれている ぶしゅ は どれ？", choices: ["ごんべん", "さんずい", "くさかんむり", "てへん"], answer: "ごんべん", explanation: "せいかいは「ごんべん」！<br>ことば に かんけいする 漢字 に つくよ！" },
+	{ grade: 2, genre: "japanese", type: "which", text: "「記（き）」という かんじ は、なにか を しるす とき に つかう。まるか ばつか？", choices: [true, false], answer: true, explanation: "せいかいは「まる」！<br>日記（にっき）など で つかう 漢字 だよ！" },
+	{ grade: 2, genre: "japanese", type: "select", text: "「林（はやし）」という かんじ は、木 が いくつ ならんでいる すがた かな？", choices: ["2本", "3本", "4本", "1本"], answer: "2本", explanation: "せいかいは「2本」！<br>木 が 2つ ならんだ かたち だよ！" },
+	{ grade: 2, genre: "japanese", type: "which", text: "「明（あか）るい」という かんじ は、日 と 月 が くみあわさって できている。まるか ばつか？", choices: [true, false], answer: true, explanation: "せいかいは「まる」！<br>日 と 月 が そろって あかるさ を あらわすよ！" },
+	{ grade: 2, genre: "japanese", type: "select", text: "「空（そら）」の かんじ に ふくまれている ぶしゅ は どれ？", choices: ["あなかんむり", "くさかんむり", "ごんべん", "てへん"], answer: "あなかんむり", explanation: "せいかいは「あなかんむり」！<br>あな の かたち から できた 部首 だよ！" },
+	{ grade: 2, genre: "japanese", type: "direct", text: "「木」が 3つ あつまった かんじ を なんと よむ？（ひらがな3もじ）", choices: [], answer: "もり", explanation: "せいかいは「もり」！<br>木 が 3つ あつまって できた 漢字 だよ！" },
+	{ grade: 2, genre: "japanese", type: "which", text: "「体（からだ）」という かんじ は、にんべん が ついている。まるか ばつか？", choices: [true, false], answer: true, explanation: "せいかいは「まる」！<br>にんべん は 人 に かんけいする 漢字 に つくよ！" },
+	{ grade: 2, genre: "japanese", type: "select", text: "「村（むら）」という かんじ の 左 がわ に ついている ぶしゅ は なに？", choices: ["きへん", "さんずい", "ごんべん", "くさかんむり"], answer: "きへん", explanation: "せいかいは「きへん」！<br>木 に かんけいする 漢字 に つくよ！" }
 ]);
 // 🟦 【さんすう：math】
 targetArray.push(...[
