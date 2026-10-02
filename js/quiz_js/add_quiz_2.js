@@ -25,16 +25,26 @@ targetArray.push(...[
 ]);
 // 🟦 【さんすう：math】
 targetArray.push(...[
-	{ grade: 2, genre: "math", type: "select", text: "かけ算（ざん）の 九九（くく）クイズ！ 【 二（に）が 8、二五（にご）が 10、二六（にろく）が 12 】 では、二七（にしち）は いくつかな？", choices: ["14", "16", "15", "12"], answer: "14", explanation: "正解は「14」！<br>2の だんは 2ずつ 増えて（ふえて）いくから、12 ＋ 2 ＝ <b>14</b> だね！" },
-	{ grade: 2, genre: "math", type: "which", text: "長さ（ながさ）の 単位（たんい）の クイズです。「1センチメートル」は「10ミリメートル」と同じ 長さである。まるか ばつか？", choices: [true, false], answer: true, explanation: "正解は「まる（true）」！<br>定規（じょうぎ）の 小さな（ちいさな） 10目盛り（めもり）分が <b>1センチメートル</b> になるよ！" },
-	{ grade: 2, genre: "math", type: "select", text: "【 130 ➔ 140 ➔ 150 ➔ 〇 ➔ 170 】 〇に 入る（はいる） 正しい（ただしい） 数は どれかな？", choices: ["160", "155", "165", "200"], answer: "160", explanation: "正解は「160」！<br>10ずつ 増える 規則（きそく）に なっているから、150の 次は <b>160</b> だよ！" },
-	{ grade: 2, genre: "math", type: "which", text: "時間の 単位クイズ！ 「1時間」は「60分」ですが、「1分」は「100秒（びょう）」である。まるか ばつか？", choices: [true, false], answer: false, explanation: "正解は「ばつ（false）」！<br>「1分」は 100秒ではなく <b>「60秒」</b> だよ！時計の 長いはりが 1目盛り 動く 時間だね！" },
-	{ grade: 2, genre: "math", type: "select", text: "ひっ算（さん）の 計算クイズ！ 【 45 ＋ 28 ＝ 〇 】 〇に 入る 数は なあに？", choices: ["73", "63", "72", "65"], answer: "73", explanation: "正解は「73」！<br>一の位（5+8=13）で 1くり上がって（くりあがって）、十の位は 1+4+2=7。あわせて <b>73</b> だね！" },
-	{ grade: 2, genre: "math", type: "which", text: "水（みず）のかさを 表す 単位クイズ！ 「1リットル」は「1000ミリリットル」と同じ 量（りょう）である。まるか ばつか？", choices: [true, false], answer: true, explanation: "正解は「まる（true）」！<br>ミリは「1000分の1」という意味（いみ）だから、1000つ集まると（あつまると） <b>1リットル</b> になるよ！" },
-	{ grade: 2, genre: "math", type: "select", text: "九九の クイズ！ 5の だんの 計算で、答えが「35」に なるのは 5に 何を 掛けた（かけた） ときかな？", choices: ["7", "6", "8", "5"], answer: "7", explanation: "正解は「7」！<br>五七（ごしち） <b>三十五（さんじゅうご）</b> だね！" },
-	{ grade: 2, genre: "math", type: "which", text: "三角形（さんかくけい）の カタチの 辺（まっすぐな線）の 数は、頂点（ちょうてん：かど）の 数よりも 多い。まるか ばつか？", choices: [true, false], answer: false, explanation: "正解は「ばつ（false）」！<br>三角形は 辺の数も 3本、頂点の数も 3つで <b>同じ（おなじ）</b> だよ！" },
-	{ grade: 2, genre: "math", type: "select", text: "箱の中に（はこのなかに） クッキーが 24個（こ） 入っています。1人に 4個ずつ 配ると（くばると）、何人（なんにん）に 配れるかな？", choices: ["6人", "5人", "7人", "8人"], answer: "6人", explanation: "正解は「6人」！<br>かけ算の 九九の 4の だんで、4 × <b>6</b> ＝ 24 になるから 6人に 配れるよ！" },
-	{ grade: 2, genre: "math", type: "which", text: "ひっ算の ひき算クイズ！ 【 82 ‐ 37 ＝ 45 】 この 計算の 答えは 正しい。まるか ばつか？", choices: [true, false], answer: true, explanation: "正解は「まる（true）」！<br>一の位（2から7はひけないので）十の位から 10借りて（かりて） 12-7=5。十の位は 7-3=4。あわせて <b>45</b> で合っているよ！" }
+	{ grade: 2, genre: "math", type: "select", text: "かけ算（さん）の 九九（くく）クイズ！【 2 × 4 が 8、2 × 5 が 10、2 × 6 が 12 】では、2 × 7 は いくつかな？", choices: ["14", "16", "15", "12"], answer: "14", explanation: "せいかいは「14」！<br>2の だんは 2ずつ ふえていくから、12＋2＝<b>14</b> だね！" },
+	{ grade: 2, genre: "math", type: "which", text: "長さ（ながさ）の たんいの クイズです。「1センチメートル」は「10ミリメートル」と 同じ 長さである。まるか ばつか？", choices: [true, false], answer: true, explanation: "せいかいは「まる」！<br>じょうぎの 小さな 10めもりぶんが <b>1センチメートル</b> になるよ！" },
+	{ grade: 2, genre: "math", type: "select", text: "【 130 ➔ 140 ➔ 150 ➔ 〇 ➔ 170 】〇に 入る 正しい 数は どれかな？", choices: ["160", "155", "165", "200"], answer: "160", explanation: "せいかいは「160」！<br>10ずつ ふえる きそくに なっているから、150の つぎは <b>160</b> だよ！" },
+	{ grade: 2, genre: "math", type: "which", text: "「1じかん」は「60分（ふん）」ですが、「1分（ふん）」は「100びょう」である。まるか ばつか？", choices: [true, false], answer: false, explanation: "せいかいは「ばつ」！<br>「1分（ふん）」は 100びょうではなく <b>60びょう</b> だよ！とけいの 長い（ながい） はりが 1めもり うごく じかんだね！" },
+	{ grade: 2, genre: "math", type: "select", text: "ひっ算（さん）の けいさんクイズ！【 45＋28＝〇 】〇に はいる かずは なあに？", choices: ["73", "63", "72", "65"], answer: "73", explanation: "せいかいは「73」！<br>一のくらい（5＋8＝13）で 1くり上がって、十のくらいは 1＋4＋2＝7。あわせて <b>73</b> だね！" },
+	{ grade: 2, genre: "math", type: "which", text: "水の かさを あらわす たんいクイズ！「1リットル」は「1000ミリリットル」と 同じ（おなじ） りょうである。まるか ばつか？", choices: [true, false], answer: true, explanation: "せいかいは「まる」！<br>ミリは「1000分の1」という いみだから、1000あつまると <b>1リットル</b> になるよ！" },
+	{ grade: 2, genre: "math", type: "select", text: "九九（くく）の クイズ！5の だんで、答え（こたえ）が「35」に なるのは 5に なにを かけた ときかな？", choices: ["7", "6", "8", "5"], answer: "7", explanation: "せいかいは「7」！<br>5 × 7 <b>35</b> だね！" },
+	{ grade: 2, genre: "math", type: "which", text: "三角形（さんかっけい）の カタチの へんの 数（かず）は、ちょうてんの 数より 多い。まるか ばつか？", choices: [true, false], answer: false, explanation: "せいかいは「ばつ」！<br>三角形（さんかっけい）は へんも 3本、ちょうてんも 3つで <b>同じ（おなじ）</b> だよ！" },
+	{ grade: 2, genre: "math", type: "select", text: "はこの 中に クッキーが 24こ 入っています。1人に 4こずつ くばると、なん人に くばれるかな？", choices: ["6人", "5人", "7人", "8人"], answer: "6人", explanation: "せいかいは「6人」！<br>九九（くく）の 4の だんで、4×<b>6</b>＝24 だから 6人に くばれるよ！" },
+	{ grade: 2, genre: "math", type: "which", text: "ひき算（さん）クイズ！【 82−37＝45 】この けいさんの 答え（こたえ）は 正しい。まるか ばつか？", choices: [true, false], answer: true, explanation: "せいかいは「まる」！<br>一のくらいは 12−7＝5、十のくらいは 7−3＝4。あわせて <b>45</b> で あっているよ！" },
+	{ grade: 2, genre: "math", type: "select", text: "15＋8 の 答え（こたえ）は どれかな？", choices: ["23", "22", "24", "21"], answer: "23", explanation: "せいかいは「23」！<br>15に 8を たすと <b>23</b> だよ！" },
+	{ grade: 2, genre: "math", type: "which", text: "12−7 の 答え（こたえ）は 5 である。まるか ばつか？", choices: [true, false], answer: true, explanation: "せいかいは「まる」！<br>12から 7を ひくと <b>5</b> だよ！" },
+	{ grade: 2, genre: "math", type: "select", text: "9＋6 の 答え（こたえ）は どれかな？", choices: ["14", "15", "13", "16"], answer: "15", explanation: "せいかいは「15」！<br>9に 6を たすと <b>15</b> だね！" },
+	{ grade: 2, genre: "math", type: "which", text: "20−9 の 答え（こたえ）は 11 である。まるか ばつか？", choices: [true, false], answer: true, explanation: "せいかいは「まる」！<br>20から 9を ひくと <b>11</b> だよ！" },
+	{ grade: 2, genre: "math", type: "select", text: "7＋8 の 答え（こたえ）は どれ？", choices: ["14", "15", "16", "13"], answer: "15", explanation: "せいかいは「15」！<br>7に 8を たすと <b>15</b> だよ！" },
+	{ grade: 2, genre: "math", type: "which", text: "18−5 の 答え（こたえ）は 13 である。まるか ばつか？", choices: [true, false], answer: true, explanation: "せいかいは「まる」！<br>18から 5を ひくと <b>13</b> だよ！" },
+	{ grade: 2, genre: "math", type: "select", text: "25＋7 の 答え（こたえ）は どれかな？", choices: ["31", "32", "33", "30"], answer: "32", explanation: "せいかいは「32」！<br>25に 7を たすと <b>32</b> だね！" },
+	{ grade: 2, genre: "math", type: "which", text: "30−18 の 答え（こたえ）は 12 である。まるか ばつか？", choices: [true, false], answer: true, explanation: "せいかいは「まる」！<br>30から 18を ひくと <b>12</b> だよ！" },
+	{ grade: 2, genre: "math", type: "select", text: "14＋9 の 答え（こたえ）は どれ？", choices: ["22", "23", "24", "21"], answer: "23", explanation: "せいかいは「23」！<br>14に 9を たすと <b>23</b> だよ！" },
+	{ grade: 2, genre: "math", type: "which", text: "27−8 の 答え（こたえ）は 19 である。まるか ばつか？", choices: [true, false], answer: true, explanation: "せいかいは「まる」！<br>27から 8を ひくと <b>19</b> だよ！" }
 ]);
 // 🟦 【理科：science】
 targetArray.push(...[
