@@ -116,3 +116,30 @@ button:hover { background-color: #2b6cb0; }
     width: 100%;
     margin-top: 5px;
 }
+
+// ==========================================
+// 仲間マスタ
+// ==========================================
+.genre-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.genre-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.genre-row input {
+    flex: 1;
+}
+
+.btn-delete {
+    background: #e53e3e;
+    color: white;
+    border: none;
+    padding: 4px 8px;
+    cursor: pointer;
+}
