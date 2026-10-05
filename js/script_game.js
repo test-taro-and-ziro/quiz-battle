@@ -60,12 +60,6 @@ window.addEventListener('DOMContentLoaded', async () => {
     currentUser = urlParams.get('user');
     currentQuest = urlParams.get('quest');
     currentGenre = urlParams.get('genre');
-    const currentNorma = urlParams.get('norma');
-    if (currentNorma) {
-        clearQuota = parseInt(currentNorma, 10); // clearQuotaに直接セット！
-    }    
-    document.getElementById('clear-quota').textContent = clearQuota;
-    document.getElementById('res-quota-score').textContent = clearQuota;
 
     // 万が一、ユーザー名が取れなかった場合は安全のためにトップ画面に戻す
     if (!currentUser) {
@@ -74,8 +68,21 @@ window.addEventListener('DOMContentLoaded', async () => {
         return;
     }
 
-    // ダンジョン名を画面左上に表示
-    document.getElementById("dungeon-title").textContent = currentQuest;
+    // ★ ここからダンジョン名を取得する処理
+    await loadDungeonMaster();
+    const dungeonData = dungeonMasterData.find(d => d.id === currentQuest);
+    // 万が一、ダンジョン情報が取れなかった場合はクエスト選択画面に戻す
+    if (dungeonData) {
+        // ダンジョン情報を画面に表示
+        document.getElementById("dungeon-title").textContent = dungeonData.name;
+        document.getElementById('clear-quota').textContent = dungeonData.norma;
+        document.getElementById('res-quota-score').textContent = dungeonData.norma;
+    } else {
+        // 万が一、ダンジョン情報が取れなかった場合はクエスト選択画面に戻す
+        alert("ダンジョン情報が見つかりません。もういちど選んでね！");
+        window.location.href = `quest.html?user=${currentUser}`;
+        return;
+    }
         
     // ★ 受け取った本物のユーザー名を使って仲間データを読み込み
     await setupPartyAndRender(currentUser);
