@@ -136,7 +136,7 @@ window.deleteGeniusItem = function(id, index) {
 // ==========================================
 // 保存処理（リスト → 配列に再構築）
 // ==========================================
-window.saveAdminCompanion = async function(id) {
+async function saveAdminCompanion(id) {
     try {
         const name = document.getElementById(`com-name-${id}`).value.trim();
         const img = document.getElementById(`com-img-${id}`).value.trim();
@@ -164,7 +164,7 @@ window.saveAdminCompanion = async function(id) {
 // ==========================================
 // 仲間削除
 // ==========================================
-window.deleteAdminCompanion = async function(id) {
+async function deleteAdminCompanion(id) {
     if (!confirm("本当に削除しますか？")) return;
 
     await deleteDoc(doc(db, "companions", id));
@@ -175,7 +175,7 @@ window.deleteAdminCompanion = async function(id) {
 // ==========================================
 // 新規追加
 // ==========================================
-window.addCompanionFromAdmin = async function() {
+async function addCompanionFromAdmin(){
     try {
         const name = document.getElementById("new-comp-name").value.trim();
         const id = document.getElementById("new-comp-id").value.trim();
@@ -207,3 +207,8 @@ window.addCompanionFromAdmin = async function() {
     }
 };
 
+// 親ファイルやHTMLへのグローバル公開登録
+window.renderAdminCompanionList = renderAdminCompanionList;
+window.saveAdminCompanion = saveAdminCompanion;
+window.deleteAdminCompanion = deleteAdminCompanion;
+window.addCompanionFromAdmin = addCompanionFromAdmin;
