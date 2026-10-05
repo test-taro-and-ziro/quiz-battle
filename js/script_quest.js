@@ -222,7 +222,7 @@ function goToGame(genre) {
     // 💡 選択されたダンジョンデータからノルマ（norma）を取得（万が一空ならデフォルト値「10000」に）
     const normaValue = selectedDungeon.norma || "10000";
     // 次のゲーム本編（game.html）へ引き継いでジャンプ！
-    window.location.href = `game.html?user=${encodeURIComponent(currentUser)}&quest=${encodeURIComponent(selectedDungeon.id)}&genre=${encodeURIComponent(genre)}&norma=${encodeURIComponent(normaValue)}`;
+    window.location.href = `game.html?user=${encodeURIComponent(currentUser)}&quest=${encodeURIComponent(selectedDungeon.id)}&genre=${encodeURIComponent(genre)}`;
 }
 
 // 🛑 新設：ログアウトボタンが押されたときに確認する関数
