@@ -212,7 +212,7 @@
 
             <!-- 💡【新設】タブ6: 仲間管理 -->
             <div id="tab-companions" class="admin-tab-content">
-                <h2>仲間マスターの管理（ドキュメントID自動生成）</h2>
+                <h2>仲間マスターの管理</h2>
                 <div class="table-responsive">
                     <table class="admin-table">
                         <thead>
@@ -220,8 +220,8 @@
                                 <th>名前 (name)</th>
                                 <th>識別ID (id)</th>
                                 <th>画像名 (img)</th>
-                                <th>得意科目 (good_genres ※カンマ区切り)</th>
-                                <th>苦手科目 (bad_genres ※カンマ区切り)</th>
+                                <th>得意科目 (good)</th>
+                                <th>天才科目 (genius)</th>
                                 <th>操作</th>
                             </tr>
                         </thead>
@@ -230,6 +230,7 @@
                         </tbody>
                     </table>
                 </div>
+            
                 <div class="card" style="margin-top: 15px; background: #fff;">
                     <h3>➕ 新しい仲間を追加</h3>
                     <div style="display: flex; flex-direction: column; gap: 10px;">
@@ -237,9 +238,10 @@
                             <input type="text" id="new-comp-name" placeholder="名前 (例: うさ美)" style="flex: 1;">
                             <input type="text" id="new-comp-id" placeholder="識別ID (例: rabbit_01)" style="flex: 1;">
                             <input type="text" id="new-comp-img" placeholder="画像名 (例: rabbit.jpg)" style="flex: 1;">
-                        </div>
-                        <input type="text" id="new-comp-good" placeholder="得意科目をカンマ区切りで入力 (例: math, japanese )">
-                        <input type="text" id="new-comp-bad" placeholder="苦手科目をカンマ区切りで入力 (例: math, japanese )">
+                        </div>            
+                        <textarea id="new-comp-good" rows="4"></textarea>
+                        <textarea id="new-comp-genius" rows="4"></textarea>
+
                         <button onclick="addCompanionFromAdmin()" style="background-color: #4CAF50; width: 100%;">この仲間を追加する</button>
                     </div>
                 </div>
