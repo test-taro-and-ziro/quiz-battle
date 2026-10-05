@@ -228,7 +228,7 @@ function logout() {
 }
 
 // ユーザ削除
-function deleteUser() {
+async function deleteUser() {
 
     if (!currentUser) {
         alert("ユーザ情報が見つかりません。");
@@ -238,21 +238,28 @@ function deleteUser() {
     if (!confirm("本当にこのユーザを削除しますか？")) return;
 
     try {
-        // Firestore の users コレクションから削除
-        deleteDoc(doc(db, "users", currentUser))
-            .then(() => {
-                alert("ユーザを削除しました。");
+        // 名前で検索
+        const q = query(collection(db, "users"), where("name", "==", currentUser));
+        const snapshot = await getDocs(q);
 
-                // ログアウトと同じ処理
-                resetTopScreen();
-            })
-            .catch((error) => {
-                console.error(error);
-                alert("削除に失敗しました。");
-            });
+        if (snapshot.empty) {
+            alert("ユーザが見つかりませんでした。");
+            return;
+        }
 
-    } catch (e) {
-        console.error(e);
+        // 1件目のドキュメントIDを取得
+        const userDoc = snapshot.docs[0];
+        const userId = userDoc.id;
+
+        // 削除
+        await deleteDoc(doc(db, "users", userId));
+
+        alert("ユーザを削除しました。");
+
+        resetTopScreen();
+
+    } catch (error) {
+        console.error(error);
         alert("削除に失敗しました。");
     }
 }
