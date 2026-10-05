@@ -40,7 +40,7 @@ async function renderAdminCompanionList() {
 
         tr.innerHTML = `
             <td><input type="text" id="com-name-${id}" value="${data.name || ""}"></td>
-            <td>${id}</td>
+            <td><input type="text" id="com-id-${id}" value="${data.id || ""}"></td>
             <td><input type="text" id="com-img-${id}" value="${data.img || ""}"></td>
 
             <!-- 得意科目リスト -->
@@ -48,7 +48,6 @@ async function renderAdminCompanionList() {
                 <div id="good-list-${id}" class="reward-list"></div>
                 <button onclick="addGoodItem('${id}')" class="btn-add">＋追加</button>
             </td>
-
             <!-- 天才科目リスト -->
             <td>
                 <div id="genius-list-${id}" class="reward-list"></div>
