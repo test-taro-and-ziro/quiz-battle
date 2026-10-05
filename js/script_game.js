@@ -272,10 +272,6 @@ function loadQuestion(index) {
     // 画面要素の更新
     document.getElementById('current-question-num').textContent = index + 1;
     
-    // 進行度ゲージの更新
-    const qProgress = ((index + 1) / 10) * 100;
-    document.getElementById('question-bar-fill').style.width = `${qProgress}%`;
-    
     // --- ★【完全自動化】ジャンルマスタから動的に表示を切り替えるロジック ---
     let genreJA = q.genre; // 見つからなかった場合のバックアップ    
     // キャッシュされたジャンルマスタから、現在の問題の科目(value)に一致するドキュメントを検索
