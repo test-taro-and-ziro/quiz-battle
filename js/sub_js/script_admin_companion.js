@@ -15,7 +15,7 @@ let companionsCache = {};
 // ==========================================
 // 仲間一覧を読み込み & 描画
 // ==========================================
-export async function renderAdminCompanionList() {
+async function renderAdminCompanionList() {
     
     await loadGenreMaster(); // ジャンル情報
 
