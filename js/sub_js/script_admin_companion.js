@@ -203,6 +203,13 @@ async function addCompanionFromAdmin(){
         alert("新しい仲間を追加しました！");
         renderAdminCompanionList();
 
+        // 入力欄をクリア
+        document.getElementById("new-comp-name").value = "";
+        document.getElementById("new-comp-id").value = "";
+        document.getElementById("new-comp-img").value = "";
+        document.getElementById("new-comp-good").value = "";
+        document.getElementById("new-comp-genius").value = "";
+            
     } catch (e) {
         console.error(e);
         alert("追加に失敗しました");
