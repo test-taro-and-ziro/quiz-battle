@@ -1,12 +1,10 @@
 // ==========================================
-// 6️⃣【💡新設：仲間管理】専用プログラム
+// 6️⃣【仲間管理】専用プログラム
 // ==========================================
-// 💡 共通設定ファイルから db を読み込む
-import { db, collection, doc, addDoc, getDocs, setDoc, getDoc, updateDoc, deleteDoc, query, where, orderBy } from '../firebase-config.js';
 
-// ? 共通設定ファイルから db を読み込む
+// 💡 共通設定ファイルから db を読み込む
 import { db, collection, doc, addDoc, getDocs, setDoc, getDoc, updateDoc, deleteDoc, query, where, orderBy, limit } from '../firebase-config.js';
-// ? 共通ファイルを読み込む1行を追加
+// 💡 共通ファイルを読み込む1行を追加
 import { loadAnimalMaster, getCharacterFileName, setCharacterSrc, setCompanionSrc, loadGenreMaster, loadGradeMaster, loadCompanionMaster, loadDungeonMaster, 
         setupPlayerMaster, logoutPlayerMaster,
         animalMasterData, genreMasterData, gradeMasterData, companionMasterData, dungeonMasterData, currentLoginUser, currentPlayerData } from '../game-master.js';
