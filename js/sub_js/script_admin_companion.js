@@ -139,6 +139,7 @@ async function saveAdminCompanion(id) {
     try {
         const name = document.getElementById(`com-name-${id}`).value.trim();
         const img = document.getElementById(`com-img-${id}`).value.trim();
+        const newId = document.getElementById(`com-id-${id}`).value.trim();
 
         const goodInputs = [...document.querySelectorAll(`#good-list-${id} input`)];
         const good = goodInputs.map(i => i.value.trim()).filter(v => v !== "");
@@ -149,6 +150,7 @@ async function saveAdminCompanion(id) {
         await updateDoc(doc(db, "companions", id), {
             name,
             img,
+            id: newId,
             good,
             genius
         });
@@ -193,6 +195,7 @@ async function addCompanionFromAdmin(){
         await setDoc(doc(db, "companions", id), {
             name,
             img,
+            id,
             good,
             genius
         });
