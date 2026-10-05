@@ -30,23 +30,24 @@
         
                 <!-- 左：ダンジョン名 -->
                 <div id="dungeon-title" class="dungeon-title"></div>
-        
-                <!-- 中央：のこりじかん（テキストのみ） -->
-                <div class="timer-label">のこりじかん</div>
-        
-                <!-- 右：問題番号 -->
-                <div class="progress-box">
-                    <span class="label">現在：</span>
-                    <span id="current-question-num" class="count">4</span> / 10 問目
+            
+                <!-- 右：クエスト情報（2階建て） -->
+                <div class="quest-info">
+            
+                    <!-- 上段：のこりじかん ＋ 問題数 -->
+                    <div class="quest-info-top">
+                        <span class="timer-label">のこりじかん</span>
+                        <span class="progress-box">
+                            現在：<span id="current-question-num" class="count">1</span> / 10 問目
+                        </span>
+                    </div>
+            
+                    <!-- 下段：ゲージ -->
+                    <div class="timer-bar-bg"><div id="timer-bar-fill" class="timer-bar-fill"></div></div>
+            
                 </div>
-                <!-- 下段：ゲージ（横いっぱい） -->
-                <div class="timer-bar-bg">
-                    <div id="timer-bar-fill" class="timer-bar-fill"></div>
-                </div>    
-        
             </div>
         
-
             <!-- 下段：みんなの合計スコアゲージ（同じ枠内に入りました） -->
             <div class="quota-container">
                 <div class="quota-text-info">
