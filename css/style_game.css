@@ -79,19 +79,6 @@ body {
     font-size: 1.3rem;
 }
 
-/* 問題進捗ゲージ（青系） */
-.question-bar-bg {
-    background: #e5e7eb;
-    height: 8px;
-    border-radius: 4px;
-    overflow: hidden;
-}
-.question-bar-fill {
-    background: #3b82f6;
-    height: 100%;
-    transition: width 0.3s ease;
-}
-
 /* タイマーゲージ（赤系・リアルタイム連動） */
 .timer-bar-bg {
     background: #e5e7eb;
