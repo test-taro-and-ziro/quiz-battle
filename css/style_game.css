@@ -39,22 +39,38 @@ body {
     box-shadow: 0 4px 6px rgba(0,0,0,0.05);
     gap: 15px;              /* 上段と下段の間のすきま */
 }
-/* もんだい・のこりじかんを横並びにするための新しいクラス */
+/* 上段：ダンジョン名＋クエスト情報 */
 .header-top-row {
     display: flex;
     align-items: center;
-    justify-content: space-between; /* ★ 3つを左右にきれいに配置 */
+    justify-content: space-between;
     gap: 20px;
 }
+/* クエスト情報の箱（2階建て） */
+.quest-info {
+    display: flex;
+    flex-direction: column; /* ★ 2階建てにする */
+    gap: 6px;
+    flex: 1;                /* ★ ダンジョン名の右側を広く使う */
+}
+/* クエスト情報の上段（のこりじかん＋問題数） */
+.quest-info-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* ★ 左右にきれいに配置 */
+    white-space: nowrap;
+}
+
 .dungeon-title {
     font-size: 20px;
     font-weight: bold;
     white-space: nowrap; /* 折り返し防止 */
 }
 
+/* のこりじかん */
 .timer-label {
+    font-size: 1rem;
     font-weight: bold;
-    white-space: nowrap;
 }
 .timer-box {
     display: flex;
@@ -70,21 +86,19 @@ body {
     height: 14px;
     background-color: #ddd;
     border-radius: 5px;
-    margin-top: -4px; /* 必要なら微調整 */
 }
+
 .timer-bar-fill {
     height: 14px;
     background-color: #4ade80;
     border-radius: 5px;
     width: 100%;
-    transition: width 0.3s ease;
-    // transition: none;
 }
 
+/* 問題数（フォント統一） */
 .progress-box {
-    display: flex;
-    align-items: center;
-    gap: 6px;
+    font-size: 1rem;
+    font-weight: bold;
     white-space: nowrap;
 }
 
