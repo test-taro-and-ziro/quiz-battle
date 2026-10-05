@@ -446,15 +446,17 @@ function handleAnswer(userAnswer, correctAnswer) {
     // ==========================================
     const questionGenre = currentQuestions[currentQuestionIndex].genre; // 現在の問題のジャンル（mathなど）
     let npcScores = [0, 0]; // なかま1、なかま2が得るポイントのキープ用
-     
-    activeCompanions.forEach((companion, index) => {
-        // ① 得意・苦手・それ以外の確率（正解率）を決定
-        let successRate = 0.40; // デフォルト：それ以外（40%）
+
         
-        if (companion.good_genres && companion.good_genres.includes(questionGenre)) {
-            successRate = 0.60; // 得意（60%）
-        } else if (companion.bad_genres && companion.bad_genres.includes(questionGenre)) {
-            successRate = 0.20; // 苦手（20%）
+    activeCompanions.forEach((companion, index) => {
+        // ① 天才・得意・それ以外の確率（正解率）を決定
+        let successRate = 0.20; // デフォルト：それ以外（20%）
+        // 天才（genius）60%
+        if (companion.genius && companion.genius.includes(questionGenre)) {
+            successRate = 0.60;    
+        // 得意（good）40%
+        } else if (companion.good && companion.good.includes(questionGenre)) {
+            successRate = 0.40;
         }
 
         // ② 確率の抽選
