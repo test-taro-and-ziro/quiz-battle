@@ -64,18 +64,20 @@ body {
     white-space: nowrap;
 }
 .timer-box {
-    font-size: 1rem;
-    font-weight: bold;
     display: flex;
-    align-items: flex-end;
+    align-items: center;
+    height: auto;        /* ★ これが最重要：縦に伸びない */
+    white-space: nowrap; /* 折り返し防止 */
+    padding: 0;          /* 不要な余白を消す */
+    margin: 0;           /* 不要な余白を消す */
 }
 /* タイマーゲージ（赤系・リアルタイム連動） */
 .timer-bar-bg {
-    width: 100%;
+    flex: 1;             /* ★ 横いっぱいに広げる */
     height: 14px;
     background-color: #ddd;
     border-radius: 5px;
-    margin-top: 6px;
+    margin: 0 10px;      /* 左右に少し余白 */
 }
 .timer-bar-fill {
     height: 14px;
@@ -102,10 +104,6 @@ body {
 .score-highlight {
     color: #e11d48;
     font-size: 1.3rem;
-}
-.label {
-    font-size: 0.75rem;
-    color: #666;
 }
 
 /* ==========================================
