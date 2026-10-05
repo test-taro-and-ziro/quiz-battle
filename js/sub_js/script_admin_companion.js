@@ -45,12 +45,12 @@ async function renderAdminCompanionList() {
 
             <!-- 得意科目リスト -->
             <td>
-                <div id="good-list-${id}" class="reward-list"></div>
+                <div id="good-list-${id}" class="genre-list"></div>
                 <button onclick="addGoodItem('${id}')" class="btn-add">＋追加</button>
             </td>
             <!-- 天才科目リスト -->
             <td>
-                <div id="genius-list-${id}" class="reward-list"></div>
+                <div id="genius-list-${id}" class="genre-list"></div>
                 <button onclick="addGeniusItem('${id}')" class="btn-add">＋追加</button>
             </td>
 
@@ -77,7 +77,7 @@ function renderGoodList(id) {
 
     companionsCache[id].good.forEach((item, index) => {
         const row = document.createElement("div");
-        row.className = "reward-row";
+        row.className = "genre-row";
 
         row.innerHTML = `
             <input type="text" id="good-${id}-${index}" value="${item}">
@@ -96,7 +96,7 @@ function renderGeniusList(id) {
 
     companionsCache[id].genius.forEach((item, index) => {
         const row = document.createElement("div");
-        row.className = "reward-row";
+        row.className = "genre-row";
 
         row.innerHTML = `
             <input type="text" id="genius-${id}-${index}" value="${item}">
