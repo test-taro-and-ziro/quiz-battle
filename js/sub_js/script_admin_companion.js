@@ -15,6 +15,14 @@ import { loadAnimalMaster, getCharacterFileName, setCharacterSrc, setCompanionSr
 let companionsCache = {};
 
 // ==========================================
+// 初期化：ジャンルマスタをロードしてから仲間一覧を描画
+// ==========================================
+export async function initCompanionAdmin() {
+    await loadGenreMaster();   // ← 必須（ジャンル情報を共通関数から取得）
+    await renderAdminCompanionList();
+}
+
+// ==========================================
 // 仲間一覧を読み込み & 描画
 // ==========================================
 export async function renderAdminCompanionList() {
@@ -136,25 +144,28 @@ window.deleteGeniusItem = function(id, index) {
 // 保存処理（リスト → 配列に再構築）
 // ==========================================
 window.saveAdminCompanion = async function(id) {
-    const name = document.getElementById(`com-name-${id}`).value.trim();
-    const img = document.getElementById(`com-img-${id}`).value.trim();
+    try {
+        const name = document.getElementById(`com-name-${id}`).value.trim();
+        const img = document.getElementById(`com-img-${id}`).value.trim();
 
-    // good の再構築
-    const goodInputs = [...document.querySelectorAll(`#good-list-${id} input`)];
-    const good = goodInputs.map(i => i.value.trim()).filter(v => v !== "");
+        const goodInputs = [...document.querySelectorAll(`#good-list-${id} input`)];
+        const good = goodInputs.map(i => i.value.trim()).filter(v => v !== "");
 
-    // genius の再構築
-    const geniusInputs = [...document.querySelectorAll(`#genius-list-${id} input`)];
-    const genius = geniusInputs.map(i => i.value.trim()).filter(v => v !== "");
+        const geniusInputs = [...document.querySelectorAll(`#genius-list-${id} input`)];
+        const genius = geniusInputs.map(i => i.value.trim()).filter(v => v !== "");
 
-    await updateDoc(doc(db, "companions", id), {
-        name,
-        img,
-        good,
-        genius
-    });
+        await updateDoc(doc(db, "companions", id), {
+            name,
+            img,
+            good,
+            genius
+        });
 
-    alert("仲間データを保存しました！");
+        alert("仲間データを保存しました！");
+    } catch (e) {
+        console.error(e);
+        alert("保存に失敗しました");
+    }
 };
 
 // ==========================================
@@ -172,28 +183,34 @@ window.deleteAdminCompanion = async function(id) {
 // 新規追加
 // ==========================================
 window.addCompanionFromAdmin = async function() {
-    const name = document.getElementById("new-comp-name").value.trim();
-    const id = document.getElementById("new-comp-id").value.trim();
-    const img = document.getElementById("new-comp-img").value.trim();
+    try {
+        const name = document.getElementById("new-comp-name").value.trim();
+        const id = document.getElementById("new-comp-id").value.trim();
+        const img = document.getElementById("new-comp-img").value.trim();
 
-    const good = document.getElementById("new-comp-good")
-        .value.split("\n")
-        .map(v => v.trim())
-        .filter(v => v !== "");
+        const good = document.getElementById("new-comp-good")
+            .value.split("\n")
+            .map(v => v.trim())
+            .filter(v => v !== "");
 
-    const genius = document.getElementById("new-comp-genius")
-        .value.split("\n")
-        .map(v => v.trim())
-        .filter(v => v !== "");
+        const genius = document.getElementById("new-comp-genius")
+            .value.split("\n")
+            .map(v => v.trim())
+            .filter(v => v !== "");
 
-    await setDoc(doc(db, "companions", id), {
-        name,
-        img,
-        good,
-        genius
-    });
+        await setDoc(doc(db, "companions", id), {
+            name,
+            img,
+            good,
+            genius
+        });
 
-    alert("新しい仲間を追加しました！");
-    renderAdminCompanionList();
+        alert("新しい仲間を追加しました！");
+        renderAdminCompanionList();
+
+    } catch (e) {
+        console.error(e);
+        alert("追加に失敗しました");
+    }
 };
 
