@@ -25,29 +25,28 @@
              ========================================== -->
         <header class="game-header">
 
-            <!-- 上段：もんだい ＆ のこりじかん -->
+            <!-- 上段：ダンジョン名 ＋ のこりじかん ＋ もんだい -->
             <div class="header-top-row">
-                
-                <!-- 上段：ダンジョン名 -->
+        
+                <!-- 左：ダンジョン名 -->
                 <div id="dungeon-title" class="dungeon-title"></div>
-
-                <!-- クイズの進行度表示 ＋ 進行ゲージ -->
-                <div class="progress-container">
-                    <div class="progress-box">
-                        <span class="label">もんだい</span>
-                        <span id="current-question-num" class="count">1</span> / 10
-                    </div>
+        
+                <!-- 中央：のこりじかん -->
+                <div class="timer-box">
+                    <span class="label">のこりじかん</span>
                 </div>
-                
-                <!-- 残り時間 ＋ タイマーゲージ -->
-                <div class="timer-container">
-                    <div class="timer-box">
-                        <span class="label">のこりじかん</span>
-                    </div>
-                    <div class="timer-bar-bg">
-                        <div id="timer-bar-fill" class="timer-bar-fill" style="width: 100%;"></div>
-                    </div>
+        
+                <!-- 右：もんだい -->
+                <div class="progress-box">
+                    <span class="label">もんだい</span>
+                    <span id="current-question-num" class="count">1</span> / 10
                 </div>
+        
+            </div>
+        
+            <!-- 下段：のこりじかんゲージ（横いっぱい） -->
+            <div class="timer-bar-bg">
+                <div id="timer-bar-fill" class="timer-bar-fill"></div>
             </div>
 
             <!-- 下段：みんなの合計スコアゲージ（同じ枠内に入りました） -->
