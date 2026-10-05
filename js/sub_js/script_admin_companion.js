@@ -15,17 +15,12 @@ import { loadAnimalMaster, getCharacterFileName, setCharacterSrc, setCompanionSr
 let companionsCache = {};
 
 // ==========================================
-// 初期化：ジャンルマスタをロードしてから仲間一覧を描画
-// ==========================================
-export async function initCompanionAdmin() {
-    await loadGenreMaster();   // ← 必須（ジャンル情報を共通関数から取得）
-    await renderAdminCompanionList();
-}
-
-// ==========================================
 // 仲間一覧を読み込み & 描画
 // ==========================================
 export async function renderAdminCompanionList() {
+    
+    await loadGenreMaster(); // ジャンル情報
+
     const querySnapshot = await getDocs(collection(db, "companions"));
     const tbody = document.getElementById("admin-companion-list");
     tbody.innerHTML = "";
