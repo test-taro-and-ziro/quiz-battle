@@ -125,18 +125,6 @@ button.btn-start:active {
     border-bottom: 2px solid rgba(0, 0, 0, 0.2);
 }
 
-/* やりなおすボタンなどの、小さなサブボタン用（btn-minor） */
-.btn-minor {
-    background-color: #f9fafb;
-    font-size: 11px; 
-    padding: 4px 8px; 
-    border: none; 
-    color: #4a5568; 
-    border-radius: 4px; 
-    width: auto; 
-    margin: 0;
-}
-
 /* 💡 ログイン後のキャラクター情報の外枠をスリムに固定 */
 .char-confirm-window {
     width: 85%;
@@ -174,23 +162,36 @@ button.btn-start:active {
     object-fit: cover;
 }
 
+/* やりなおすボタンなどの、小さなサブボタン用（btn-minor） */
+.btn-minor {
+    flex: 1; /* 横幅を均等に分ける */
+    background-color: #999;
+    color: #fff;
+    border: none;
+    padding: 10px 0;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
 /* ユーザ削除ボタン */
 .logout-delete-wrapper {
     display: flex;
-    align-items: center;
-    gap: 8px; /* ボタン間の余白 */
+    justify-content: space-between; /* 均等配置 */
+    gap: 8px;
     margin-top: 15px;
 }
 
-/* 小さめの削除ボタン */
+/* ユーザ削除ボタン（半分幅） */
 .btn-delete-user {
+    flex: 1; /* 横幅を均等に分ける */
     background-color: #e53e3e;
     color: #fff;
     border: none;
-    padding: 6px 10px;
-    font-size: 0.8rem;
-    border-radius: 4px;
+    padding: 10px 0;
+    border-radius: 6px;
     cursor: pointer;
+    font-size: 0.9rem;
 }
 .btn-delete-user:hover {
     background-color: #c53030;
