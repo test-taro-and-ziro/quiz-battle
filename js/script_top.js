@@ -30,9 +30,6 @@ window.addEventListener('DOMContentLoaded', async () => { // asyncを追加
     }
 });
 
-// 💡 動物データを取得してドロップダウンを組み立てる関数
-let animalMasterData = []; // 読み込んだ動物データを一時保存しておく配列
-
 function initDeviceId() {
     deviceId = localStorage.getItem('quiz_battle_device_id');
     if (!deviceId) {
