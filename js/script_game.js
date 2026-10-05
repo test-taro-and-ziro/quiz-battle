@@ -74,6 +74,9 @@ window.addEventListener('DOMContentLoaded', async () => {
         return;
     }
 
+    // ダンジョン名を画面左上に表示
+    document.getElementById("dungeon-title").textContent = currentQuest;
+        
     // ★ 受け取った本物のユーザー名を使って仲間データを読み込み
     await setupPartyAndRender(currentUser);
 
