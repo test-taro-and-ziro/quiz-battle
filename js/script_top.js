@@ -230,6 +230,36 @@ function logout() {
     resetTopScreen();
 }
 
+// ユーザ削除
+function deleteUser() {
+
+    if (!currentUser) {
+        alert("ユーザ情報が見つかりません。");
+        return;
+    }
+
+    if (!confirm("本当にこのユーザを削除しますか？")) return;
+
+    try {
+        // Firestore の users コレクションから削除
+        deleteDoc(doc(db, "users", currentUser))
+            .then(() => {
+                alert("ユーザを削除しました。");
+
+                // ログアウトと同じ処理
+                resetTopScreen();
+            })
+            .catch((error) => {
+                console.error(error);
+                alert("削除に失敗しました。");
+            });
+
+    } catch (e) {
+        console.error(e);
+        alert("削除に失敗しました。");
+    }
+}
+
 // 💡 管理者画面を開いた時にすべてのデータを読み込むよう拡張
 async function openAdminScreen() {
     const pass = prompt("管理者パスワードを入力してください：");
