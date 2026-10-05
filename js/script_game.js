@@ -451,12 +451,12 @@ function handleAnswer(userAnswer, correctAnswer) {
     activeCompanions.forEach((companion, index) => {
         // ① 天才・得意・それ以外の確率（正解率）を決定
         let successRate = 0.15; // デフォルト：それ以外（15%）
-        // 天才（genius）70%
+        // 天才（genius）80%
         if (companion.genius && companion.genius.includes(questionGenre)) {
-            successRate = 0.70;    
-        // 得意（good）45%
+            successRate = 0.80;    
+        // 得意（good）40%
         } else if (companion.good && companion.good.includes(questionGenre)) {
-            successRate = 0.45;
+            successRate = 0.40;
         }
 
         // ② 確率の抽選
