@@ -275,5 +275,6 @@ window.handleRegister = handleRegister;
 window.startGame = startGame;
 window.cancelLogin = resetTopScreen; // やりなおすボタン用
 window.logout = logout;
+window.deleteUser = deleteUser;
 window.openAdminScreen = openAdminScreen;
 window.previewCharacter = previewCharacter;
