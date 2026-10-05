@@ -179,10 +179,12 @@ button.btn-start:active {
     background-color: #e53e3e;
     color: #fff;
     border: none;
-    padding: 10px 14px;
-    border-radius: 6px;
+    padding: 6px 10px;       /* 小さくする */
+    font-size: 0.8rem;       /* 文字サイズを小さく */
+    border-radius: 4px;
     cursor: pointer;
-    margin-left: 8px;
+    margin-left: 8px;        /* ログアウトの右側に配置 */
+    vertical-align: middle;  /* ボタンの高さを揃える */
 }
 .btn-delete-user:hover {
     background-color: #c53030;
