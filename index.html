@@ -58,9 +58,10 @@
             </div>
             <!-- 💡 ボタンもCSSの「btn-start」の自動調整（幅85%・最大320px）が効くようになり、はみ出さずに美しく収まります -->
             <button class="btn-start" onclick="startGame()" style="background-color: #ff9800; width: 100%;">ゲームをはじめる</button>
-            <br>
-            <button class="btn-minor" onclick="cancelLogin()" style="margin-top: 15px; background-color: #999;">ログアウト</button>
-            <button id="btn-delete-user" class="btn-delete-user" onclick="deleteUser()">ユーザ削除</button>
+            <div class="logout-delete-wrapper">
+                <button class="btn-minor" onclick="cancelLogin()" style="background-color: #999;">ログアウト</button>
+                <button id="btn-delete-user" class="btn-delete-user" onclick="deleteUser()">ユーザ削除</button>
+            </div>
         </div>
     </div>
 
