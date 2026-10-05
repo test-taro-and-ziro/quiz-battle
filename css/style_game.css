@@ -57,7 +57,8 @@ body {
 .quest-info-top {
     display: flex;
     align-items: center;
-    justify-content: space-between; /* ★ 左右にきれいに配置 */
+    justify-content: flex-start; /* ★ 左寄せにする */
+    gap: 20px;                   /* ★ 適度な間隔を追加 */
     white-space: nowrap;
 }
 
