@@ -24,17 +24,17 @@
              1. 上部ヘッダーエリア（進行度ゲージ ＆ タイマーゲージ）
              ========================================== -->
         <header class="game-header">
-            
+            <!-- 上段：ダンジョン名 -->
+            <div id="dungeon-title" class="dungeon-title"></div>
+
             <!-- 上段：もんだい ＆ のこりじかん -->
             <div class="header-top-row">
+                
                 <!-- クイズの進行度表示 ＋ 進行ゲージ -->
                 <div class="progress-container">
                     <div class="progress-box">
                         <span class="label">もんだい</span>
                         <span id="current-question-num" class="count">1</span> / 10
-                    </div>
-                    <div class="question-bar-bg">
-                        <div id="question-bar-fill" class="question-bar-fill" style="width: 10%;"></div>
                     </div>
                 </div>
                 
