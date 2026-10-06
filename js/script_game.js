@@ -548,14 +548,20 @@ async function showResult() {
     const rewardArea = document.getElementById('reward-area');
     const rewardContent = document.getElementById('reward-content');
 
+    // ★ クリア判定
     if (totalScore >= clearQuota) {
         resultTitle.textContent = "STAGE CLEAR!! 🎉";
         resultTitle.className = "clear-title";
         rewardArea.classList.remove('hidden');
 
-        // ★ 秘宝獲得処理を呼び出し、返ってきたHTMLをセット
-        rewardContent.innerHTML = await getTreasureReward();
-            
+        // ★ ボスステージ判定（ジャンルが boss ならボス）
+        if (currentGenre === "boss") {
+            // ★ ランクアップ処理を呼び出し、返ってきたHTMLをセット
+            rewardContent.innerHTML = await getBossReward();
+        } else {
+            // ★ 秘宝獲得処理を呼び出し、返ってきたHTMLをセット
+            rewardContent.innerHTML = await getTreasureReward();
+        }
     } else {
         resultTitle.textContent = "GAME OVER... 😢";
         resultTitle.className = "failed-title";
@@ -564,7 +570,31 @@ async function showResult() {
 
     document.getElementById('result-screen').classList.remove('hidden');
 }
-// 秘宝獲得処理
+// ボスステージ専用：ランクアップ処理
+async function getBossReward() {
+    // ★ ユーザーデータ取得
+    const userData = await setupPlayerMaster(currentUser);
+    // ★ rank がなければ初期化
+    if (!userData.rank) {userData.rank = 0;}
+
+    // ダンジョンマスタをロード（キャッシュ対応）
+    await loadDungeonMaster();    
+    // ID に一致するダンジョン情報を取得
+    const dungeonData = dungeonMasterData.find(d => d.id === currentQuest);
+
+    // ★ ランクアップ条件：ダンジョンランク > ユーザランク
+    if (dungeonData.rank > userData.rank) {
+        // Firestore 保存
+        userData.rank = dungeonData.rank;
+        const playerRef = doc(db, "users", userData.docId);
+        await updateDoc(playerRef, { rank: userData.rank });
+
+        return `<p>👑 ボスステージクリア！ランクが <strong>${userData.rank}</strong> にアップした！</p>`;
+    }
+    // ★ すでに同じ or 高いランクならアップなし
+    return `<p>👑 ボスをたおした！しかしランクはすでに十分高いようだ。</p>`;
+}
+// 通常ステージ用：秘宝獲得処理
 async function getTreasureReward() {
     // ダンジョンマスタをロード（キャッシュ対応）
     await loadDungeonMaster();    
