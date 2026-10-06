@@ -14,7 +14,7 @@
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
                 <!-- 💡 タブメニューに「科目管理」を追加して5つに拡張 -->
                 <div class="admin-tabs" style="display: flex; gap: 10px;">
-                    <button class="tab-btn active" onclick="switchAdminTab('tab-users')">ユーザー管理</button>
+                    <button class="tab-btn active" onclick="switchAdminTab('tab-users')">ユーザ管理</button>
                     <button class="tab-btn" onclick="switchAdminTab('tab-grades')">学年管理</button>
                     <button class="tab-btn" onclick="switchAdminTab('tab-questions')">クイズ管理</button>
                     <button class="tab-btn" onclick="switchAdminTab('tab-animals')">動物管理</button>
@@ -28,13 +28,13 @@
 
             <!-- タブ1: ユーザー管理 -->
             <div id="tab-users" class="admin-tab-content active">
-                <h2>全ユーザーデータ一覧</h2>
+                <h2>ユーザデータ管理</h2>
                 <div class="table-responsive">
                     <table class="admin-table">
                         <thead>
                             <tr>
                                 <th>おなまえ</th>
-                                <th>学年（ランク）</th>
+                                <th>学年</th>
                                 <th>せいべつ</th>
                                 <th>どうぶつ</th>
                                 <th>獲得秘宝 (treasures ※カンマ区切り)</th>
@@ -52,12 +52,12 @@
 
             <!-- タブ2: 学年管理 -->
             <div id="tab-grades" class="admin-tab-content">
-                <h2>学年選択肢の管理</h2>
+                <h2>学年管理</h2>
                 <div class="table-responsive">
                     <table class="admin-table">
                         <thead>
                             <tr>
-                                <th>送信値 (value)</th>
+                                <th>数値 (value)</th>
                                 <th>表示名 (label)</th>
                                 <th>操作</th>
                             </tr>
@@ -100,10 +100,10 @@
                         <thead>
                             <tr>
                                 <th>学年</th>
-                                <th>ジャンル</th>
-                                <th>タイプ</th>
+                                <th>科目</th>
+                                <th>クイズ形式</th>
                                 <th>問題文</th>
-                                <th>選択肢（カンマ区切り）</th>
+                                <th>選択肢<br>（カンマ区切り）</th>
                                 <th>正解</th>
                                 <th>解説文</th>
                                 <th>操作</th>
@@ -142,7 +142,7 @@
 
             <!-- タブ4: 動物管理 -->
             <div id="tab-animals" class="admin-tab-content">
-                <h2>動物マスターの管理（ドキュメントID自動生成）</h2>
+                <h2>動物管理</h2>
                 <div class="table-responsive">
                     <table class="admin-table">
                         <thead>
@@ -178,14 +178,14 @@
 
             <!-- 💡 タブ5: 科目管理 -->
             <div id="tab-genres" class="admin-tab-content">
-                <h2>科目（ジャンル）マスターの管理（ドキュメントID自動生成）</h2>
+                <h2>科目（ジャンル）管理</h2>
                 <div class="table-responsive">
                     <table class="admin-table">
                         <!-- 📄 admin.html の科目管理テーブルの見出し部分を書き換え -->
                         <thead>
                             <tr>
                                 <th>表示名 (label)</th>
-                                <th>小学生用表示名 (Label_junior)</th>
+                                <th>表示名 (Label_junior)<br>※小学生用</th>
                                 <th>送信値 (value)</th>
                                 <th>並び順 (order)</th>
                                 <th>操作</th>
@@ -202,7 +202,7 @@
                     <h3>➕ 新しい科目（ジャンル）を追加</h3>
                     <div style="display: flex; gap: 10px;">
                         <input type="text" id="new-gen-label" placeholder="表示名 (例: さんすう)">
-                        <input type="text" id="new-gen-label-junior" placeholder="小学生用表示名 (例: 英語)">
+                        <input type="text" id="new-gen-label-junior" placeholder="表示名 (例: 英語) ※小学生用">
                         <input type="text" id="new-gen-value" placeholder="送信値 (例: math)">
                         <input type="number" id="new-gen-order" placeholder="並び順 (例: 1)">
                         <button onclick="addGenreFromAdmin()" style="background-color: #4CAF50; width: auto; white-space: nowrap;">この科目を追加する</button>
@@ -212,13 +212,13 @@
 
             <!-- 💡 タブ6: 仲間管理 -->
             <div id="tab-companions" class="admin-tab-content">
-                <h2>仲間マスターの管理</h2>
+                <h2>仲間管理</h2>
                 <div class="table-responsive">
                     <table class="admin-table">
                         <thead>
                             <tr>
                                 <th>名前 (name)</th>
-                                <th>ID (id)</th>
+                                <th>識別ID (id)</th>
                                 <th>画像名 (img)</th>
                                 <th>得意科目 (good)</th>
                                 <th>天才科目 (genius)</th>
@@ -236,7 +236,7 @@
                     <div style="display: flex; flex-direction: column; gap: 10px;">
                         <div style="display: flex; gap: 10px;">
                             <input type="text" id="new-comp-name" placeholder="名前 (例: うさ美)" style="flex: 1;">
-                            <input type="text" id="new-comp-id" placeholder="ID (例: rabbit_01)" style="flex: 1;">
+                            <input type="text" id="new-comp-id" placeholder="識別ID (例: rabbit_01)" style="flex: 1;">
                             <input type="text" id="new-comp-img" placeholder="画像名 (例: rabbit.jpg)" style="flex: 1;">
                         </div>            
                         <textarea id="new-comp-good" rows="4" placeholder="1行に1科目を入力（例: math）"></textarea>
@@ -249,7 +249,7 @@
             
             <!-- 💡【確定版】タブ7: ダンジョン管理（キー・値ペアの可変システム） -->
             <div id="tab-dungeons" class="admin-tab-content">
-                <h2>ダンジョンマスターの管理（ドキュメントID手動入力指定）</h2>
+                <h2>ダンジョン管理</h2>
                 <div class="table-responsive">
                     <table class="admin-table">
                         <thead>
@@ -298,7 +298,7 @@
 
             <!-- 💡【新設】タブ8: 宝物管理 -->
             <div id="tab-treasures" class="admin-tab-content">
-                <h2>宝物マスターの管理（ドキュメントID自動生成）</h2>
+                <h2>宝物管理</h2>
                 <div class="table-responsive">
                     <table class="admin-table">
                         <thead>
