@@ -66,15 +66,18 @@ function renderDungeonMenu() {
     const container = document.getElementById('dungeon-list-container');
     container.innerHTML = ''; 
 
+    // ユーザランク取得
+    const userRank = currentPlayerData.rank || 0;
     dungeonMasterData.forEach(dungeon => {
+
+        // 💡 表示条件：ユーザランク + 1 >= ダンジョンランク
+        if ((userRank + 1) < dungeon.rank) {return;} // 表示なし
+        
         const btn = document.createElement('button');
         btn.classList.add('menu-item-btn');
         btn.textContent = `🚩 ${dungeon.name}`; 
         
-        btn.addEventListener('click', () => {
-            selectQuest(dungeon);
-        });
-
+        btn.addEventListener('click', () => {selectQuest(dungeon);});
         container.appendChild(btn);
     });
 }
