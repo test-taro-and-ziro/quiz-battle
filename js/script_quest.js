@@ -31,12 +31,8 @@ window.addEventListener('DOMContentLoaded', async () => {
     // 「Dungeons」コレクション（マスターデータ）をすべて読み込む [js]
     await loadDungeonMaster(); 
 
-    // ダンジョンボタンの自動生成を実行
-    renderDungeonMenu();
-    
     // 3. 共通関数を使ってプレイヤー情報を準備
-    const userData = await setupPlayerMaster(currentUser);
-
+    const userData = await setupPlayerMaster(currentUser);    
     if (userData) {
         renderPlayerStatus(userData);
         setupProfileModal(userData);
@@ -44,6 +40,9 @@ window.addEventListener('DOMContentLoaded', async () => {
         alert("キャラクター情報がみつかりませんでした。");
         window.location.href = 'index.html';
     }
+
+    // ダンジョンボタンの自動生成を実行
+    renderDungeonMenu();
 });
 
 // 💡 Firestoreから秘宝マスタをロードして order フィールド順に並べる関数
