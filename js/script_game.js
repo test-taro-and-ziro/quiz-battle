@@ -553,40 +553,9 @@ async function showResult() {
         resultTitle.className = "clear-title";
         rewardArea.classList.remove('hidden');
 
-        // ダンジョンマスタをロード（キャッシュ対応）
-        await loadDungeonMaster();    
-        // ID に一致するダンジョン情報を取得
-        const dungeonData = dungeonMasterData.find(d => d.id === currentQuest);
-        const treasureId = dungeonData.rewards[currentGenre];
-
-        // 🌟 共通関数。Firebaseへの通信は行わずキャッシュを即座に返します！（二重取得の廃止）
-        const userData = await setupPlayerMaster(currentUser);
-        // ★ treasures がなければ作成
-        if (!userData.treasures) {userData.treasures = [];}
+        // ★ 秘宝獲得処理を呼び出し、返ってきたHTMLをセット
+        rewardContent.innerHTML = await getTreasureReward();
             
-        // ★ 重複チェック
-        if (!userData.treasures.includes(treasureId)) {
-            // ★ 25% の確率で獲得
-            const getChance = Math.random() < 0.25;
-            if (getChance) {                
-                userData.treasures.push(treasureId);
-                // ★ Firestore に保存
-                const playerRef = doc(db, "users", userData.docId);
-                await updateDoc(playerRef, { treasures: userData.treasures });
-
-                rewardContent.innerHTML = `
-                    <p>🏅 秘宝をてにいれた！地図の画面で確認してね</p>
-                `;
-            } else {
-                rewardContent.innerHTML = `
-                    <p>😢 今回は秘宝を見つけられなかった…</p>
-                `;
-            }
-        } else {
-            rewardContent.innerHTML = `
-                <p>📘 秘宝はすでに持っているようだ…</p>
-            `;
-        }
     } else {
         resultTitle.textContent = "GAME OVER... 😢";
         resultTitle.className = "failed-title";
@@ -594,6 +563,33 @@ async function showResult() {
     }
 
     document.getElementById('result-screen').classList.remove('hidden');
+}
+// 秘宝獲得処理
+async function getTreasureReward() {
+    // ダンジョンマスタをロード（キャッシュ対応）
+    await loadDungeonMaster();    
+    // ID に一致するダンジョン情報を取得
+    const dungeonData = dungeonMasterData.find(d => d.id === currentQuest);
+    const treasureId = dungeonData.rewards[currentGenre];
+        
+    // 🌟 共通関数。Firebaseへの通信は行わずキャッシュを即座に返します！（二重取得の廃止）
+    const userData = await setupPlayerMaster(currentUser);
+    // ★ treasures がなければ作成
+    if (!userData.treasures) {userData.treasures = [];}
+
+    // ★ 重複チェック
+    if (userData.treasures.includes(treasureId)) {return `<p>📘 秘宝はすでに持っているようだ…</p>`;}
+
+    // ★ 25% 抽選
+    const getChance = Math.random() < 0.25;
+    if (!getChance) {return `<p>😢 今回は秘宝を見つけられなかった…</p>`;}
+
+    // ★ Firestore 保存
+    userData.treasures.push(treasureId);
+    const playerRef = doc(db, "users", userData.docId);
+    await updateDoc(playerRef, { treasures: userData.treasures });
+
+    return `<p>🏅 秘宝をてにいれた！地図の画面で確認してね</p>`;
 }
 
 // ==========================================
