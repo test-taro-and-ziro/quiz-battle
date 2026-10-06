@@ -593,7 +593,7 @@ async function getBossReward() {
         return `<p>👑 ボスステージクリア！ランクが <strong>${userData.rank}</strong> にアップした！</p>`;
     }
     // ★ すでに同じ or 高いランクならアップなし
-    return `<p>👑 ボスをたおした！しかしランクはすでに十分高いようだ。</p>`;
+    return `<p>👑 ボスをたおした！しかしランクは変わらなかった。</p>`;
 }
 // 通常ステージ用：秘宝獲得処理
 async function getTreasureReward() {
