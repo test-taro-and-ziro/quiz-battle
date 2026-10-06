@@ -44,7 +44,7 @@ let npc2Score = 0;
 let currentUser = "";  // ユーザー名
 let currentQuest = ""; // ダンジョンID
 let currentGenre = ""; // ジャンル（math, Japanese など）
-let clearQuota = 300; // 問題数が増えたのでノルマを調整
+let clearQuota = 1000; // 問題数が増えたのでノルマを調整
 let userGrade = 4; // ★【New】学年情報を保存しておくグローバル変数（初期値は小4）
 
 // 仲間データ管理
@@ -77,6 +77,7 @@ window.addEventListener('DOMContentLoaded', async () => {
         document.getElementById("dungeon-title").textContent = dungeonData.name;
         document.getElementById('clear-quota').textContent = dungeonData.norma;
         document.getElementById('res-quota-score').textContent = dungeonData.norma;
+        clearQuota = dungeonData.norma;
     } else {
         // 万が一、ダンジョン情報が取れなかった場合はクエスト選択画面に戻す
         alert("ダンジョン情報が見つかりません。もういちど選んでね！");
