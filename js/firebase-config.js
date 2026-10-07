@@ -26,7 +26,8 @@ const firebaseConfig = {
     projectId: "quiz-battle-b8b48",
     storageBucket: "quiz-battle-b8b48.firebasestorage.app",
     messagingSenderId: "883874950005",
-    appId: "1:883874950005:web:08b22a374ccb1e6133013c"
+    //appId: "1:883874950005:web:08b22a374ccb1e6133013c"
+    appId: "1:883874950005:web:40a1a0023532751a33013c"
 };
 
 // Initialize Firebase
