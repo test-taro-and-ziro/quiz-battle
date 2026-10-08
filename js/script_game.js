@@ -647,7 +647,7 @@ function setupBackToMapButton() {
         if (btn) {
             btn.addEventListener('click', () => {
                 // 安全にユーザー名エンコードしてURLパラメータを組み立てる
-                const targetUrl = `quest.html?user=${encodeURIComponent(currentUser)}`;
+                const targetUrl = `quest.html?temp=${encodeURIComponent(tempData.id)}`;
                 window.location.href = targetUrl;
             });
         }
