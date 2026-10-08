@@ -210,11 +210,18 @@ function showCharacterInfo(username, userData) {
     document.getElementById('char-name').textContent = username;    
     // ランクの表示名変換（0=幼児、それ以外=〇年生）
 
-        
-    const displayGrade = userData.grade === 0 ? "幼児" : userData.grade + "年生";
-    document.getElementById('char-rank').textContent = displayGrade;
+    // ★ 学年マスタから label を取得
+    let gradeLabel = "未設定";
+    const gradeItem = gradeMasterData.find(g => g.value == userData.grade);
+    if (gradeItem) {
+        gradeLabel = gradeItem.label;
+    }
+    document.getElementById('char-grade').textContent = gradeLabel;
 
- 　 // 💡 動物マスターからファイル名を逆引きして images/chara/ から読み込む
+    // ★ ランク表示
+    document.getElementById('char-rank').textContent = userData.rank ?? 0;
+
+    // 💡 動物マスターからファイル名を逆引きして images/chara/ から読み込む
     const fileName = getCharacterFileName(userData.animal, userData.gender);
     setCharacterSrc(document.getElementById('char-visual'), fileName);
     
