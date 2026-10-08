@@ -57,17 +57,19 @@ const DEFAULT_NPC_ID = "default";
 window.addEventListener('DOMContentLoaded', async () => {
     // ★ URLパラメータ（?user=〇〇）の解析と受け取り
     const urlParams = new URLSearchParams(window.location.search);
-    currentUser = urlParams.get('user');
+
+    // URLの「?temp=ドキュメントID」からプレイヤーの名前を読み取る
+    const urlParams = new URLSearchParams(window.location.search);
+    const docid = urlParams.get('temp');
+    // ★ temp コレクション読み取り（共通関数）
+    await prepareTempData(docid); // docID で読み取れる
+    currentUser = tempData.name;
     // 万が一、ユーザー名が取れなかった場合は安全のためにトップ画面に戻す
     if (!currentUser) {
         alert("もういちどログインしなおしてね！");
         window.location.href = 'index.html';
         return;
     }
-
-    // ★ temp コレクション読み取り（共通関数）
-    await prepareTempData(currentUser);
-
     // ★ tempData から値を復元
     currentQuest = tempData.dungeons_id;
     currentGenre = tempData.genre;
