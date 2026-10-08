@@ -248,7 +248,7 @@ async function goToGame(genre) {
     });
 
     // 💡 game.html へは「ユーザ名」だけ渡す
-    window.location.href = `game.html?user=${encodeURIComponent(currentUser)}`;
+    window.location.href = `game.html?temp=${encodeURIComponent(tempData.id)}`;
 }
 
 // 🛑 新設：ログアウトボタンが押されたときに確認する関数
