@@ -162,6 +162,14 @@ button.btn-start:active {
     object-fit: cover;
 }
 
+/* ユーザ削除ボタン */
+.logout-delete-wrapper {
+    display: flex;
+    justify-content: space-between; /* 均等配置 */
+    gap: 8px;
+    margin-top: 15px;
+}
+
 /* やりなおすボタンなどの、小さなサブボタン用（btn-minor） */
 .btn-minor {
     flex: 1; /* 横幅を均等に分ける */
@@ -172,14 +180,6 @@ button.btn-start:active {
     border-radius: 6px;
     cursor: pointer;
     font-size: 0.9rem;
-}
-
-/* ユーザ削除ボタン */
-.logout-delete-wrapper {
-    display: flex;
-    justify-content: space-between; /* 均等配置 */
-    gap: 8px;
-    margin-top: 15px;
 }
 
 /* ユーザ削除ボタン（半分幅） */
