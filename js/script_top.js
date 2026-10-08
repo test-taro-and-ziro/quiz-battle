@@ -15,7 +15,10 @@ window.addEventListener('DOMContentLoaded', async () => { // asyncを追加
     initDeviceId();
     resetTopScreen();
     await loadGradesFromDB(); // 💡 データベースから学年をロード
-    
+
+    // 「grade」コレクション（マスターデータ）をすべて読み込む [js]
+    await loadGradeMaster();
+
     // 💡 共通ファイルを呼び出してドロップダウンを組み立てる
     const animals = await loadAnimalMaster();
     const animalSelect = document.getElementById('char-animal-select');
@@ -206,6 +209,8 @@ function showCharacterInfo(username, userData) {
     // ユーザ名の表示
     document.getElementById('char-name').textContent = username;    
     // ランクの表示名変換（0=幼児、それ以外=〇年生）
+
+        
     const displayGrade = userData.grade === 0 ? "幼児" : userData.grade + "年生";
     document.getElementById('char-rank').textContent = displayGrade;
 
