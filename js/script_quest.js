@@ -92,9 +92,20 @@ function renderDungeonMenu() {
 
 // 💡 Firebaseからデータを読み込んで、左下の情報箱に表示する関数
 function renderPlayerStatus(userData) {
+    // ユーザ名
     document.getElementById('player-name').textContent = currentUser;
-    const displayGrade = userData.grade === 0 ? "幼児" : userData.grade + "年生";
-    document.getElementById('player-grade').textContent = "学年: " + displayGrade;
+
+    // ★ 学年マスタから label を取得
+    let gradeLabel = "未設定";
+    const gradeItem = gradeMasterData.find(g => g.value == userData.grade);
+    if (gradeItem) {
+        gradeLabel = gradeItem.label;
+    }
+    document.getElementById('player-grade').textContent = gradeLabel;
+
+    // ★ ランク表示
+    const rank = userData.rank ?? 0;
+    document.getElementById('player-rank').textContent = "ランク: " + rank;
 
     const fileName = getCharacterFileName(userData.animal, userData.gender);
     setCharacterSrc(document.getElementById('player-avatar'), fileName);
