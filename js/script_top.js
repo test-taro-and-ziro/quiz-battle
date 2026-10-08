@@ -59,6 +59,21 @@ function resetTopScreen() {
     // ✨ プレビュー画像も「準備中」のイメージに自動リセット！
     if (typeof previewCharacter === 'function') previewCharacter();
 
+    // tempDataをユーザ名で削除
+    try {
+        const q = query(tempRef, where("name", "==", currentUser));
+        const snap = await getDocs(q);
+        if (!snap.empty) {
+            const docRef = snap.docs[0].ref;
+            await deleteDoc(docRef);
+            console.log("temp を name で削除:", currentUser);
+            return;
+        }
+        console.log("削除対象の temp が見つかりません（name）:", currentUser);
+    } catch (e) {
+        console.error("name 削除失敗:", e);
+    }
+        
     // 🌟 共通の金庫（変数）の中身をきれいにリセット！
     currentUser = null;
     logoutPlayerMaster(); 
