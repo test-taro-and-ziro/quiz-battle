@@ -613,8 +613,9 @@ async function getBossReward() {
     const companionId = dungeonData.rewards["boss"];
     // ★ companions がなければ初期化
     if (!userData.companions) {userData.companions = [];}
+        
     // ★ すでに仲間を持っている場合は追加しない
-    if (userData.companions.includes(companionId)) {return `<p>👑 ボスをたおした！しかしランクはかわらなかった。</p>`;}
+    if (userData.companions.includes(companionId)) {return `<p>👑 ボスをたおした！ここの仲間（なかま）は、もう 一緒（いっしょ）にいるね。</p>`;}
 
     // ★ 10% の確率で仲間追加
     const getCompanionChance = Math.random() < 0.10;
