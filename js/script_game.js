@@ -602,7 +602,7 @@ async function getBossReward() {
         return `<p>👑 ボスステージクリア！ランクが <strong>${userData.rank}</strong> にアップした！</p>`;
     }
     // ★ すでに同じ or 高いランクならアップなし
-    return `<p>👑 ボスをたおした！しかしランクは変わらなかった。</p>`;
+    return `<p>👑 ボスをたおした！しかしランクはかわらなかった。</p>`;
 }
 // 通常ステージ用：秘宝獲得処理
 async function getTreasureReward() {
@@ -618,18 +618,18 @@ async function getTreasureReward() {
     if (!userData.treasures) {userData.treasures = [];}
 
     // ★ 重複チェック
-    if (userData.treasures.includes(treasureId)) {return `<p>📘 秘宝はすでに持っているようだ…</p>`;}
+    if (userData.treasures.includes(treasureId)) {return `<p>📘 秘宝（ひほう）はすでに持っているようだ…</p>`;}
 
     // ★ 25% 抽選
     const getChance = Math.random() < 0.25;
-    if (!getChance) {return `<p>😢 今回は秘宝を見つけられなかった…</p>`;}
+    if (!getChance) {return `<p>😢 こんかいは秘宝（ひほう）を見つけられなかった…</p>`;}
 
     // ★ Firestore 保存
     userData.treasures.push(treasureId);
     const playerRef = doc(db, "users", userData.docId);
     await updateDoc(playerRef, { treasures: userData.treasures });
 
-    return `<p>🏅 秘宝をてにいれた！地図の画面で確認してね</p>`;
+    return `<p>🏅 秘宝（ひほう）をてにいれた！地図（ちず）のユーザ情報で かくにんしてね</p>`;
 }
 
 // ==========================================
