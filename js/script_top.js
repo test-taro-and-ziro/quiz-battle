@@ -72,7 +72,9 @@ async function resetTopScreen() {
             console.error("トップ画面での temp 削除失敗:", e);
         }
     }
-     
+    // ★ パラメータを消す（ページは再読み込みしない）
+    history.replaceState(null, "", "index.html");
+    
     // 🌟 共通の金庫（変数）の中身をきれいにリセット！
     currentUser = null;
     logoutPlayerMaster(); 
