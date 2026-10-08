@@ -580,7 +580,9 @@ async function showResult() {
 
     document.getElementById('result-screen').classList.remove('hidden');
 }
+// ==========================================
 // ボスステージ専用：ランクアップ処理
+// ==========================================
 async function getBossReward() {
     // ★ ユーザーデータ取得
     const userData = await setupPlayerMaster(currentUser);
@@ -592,7 +594,9 @@ async function getBossReward() {
     // ID に一致するダンジョン情報を取得
     const dungeonData = dungeonMasterData.find(d => d.id === currentQuest);
 
+    // ==========================================
     // ★ ランクアップ条件：ダンジョンランク > ユーザランク
+    // ==========================================
     if (dungeonData.rank > userData.rank) {
         // Firestore 保存
         userData.rank = dungeonData.rank;
@@ -601,10 +605,40 @@ async function getBossReward() {
 
         return `<p>👑 ボスステージクリア！ランクが <strong>${userData.rank}</strong> にアップした！</p>`;
     }
+
+    // ==========================================
+    // ★ ランクアップしなかった場合 → 仲間追加判定
+    // ==========================================
+    // ★ 仲間IDは rewards["boss"] に格納されている
+    const companionId = dungeonData.rewards["boss"];
+    // ★ companions がなければ初期化
+    if (!userData.companions) {userData.companions = [];
+    // ★ すでに仲間を持っている場合は追加しない
+    if (userData.companions.includes(companionId)) {return `<p>👑 ボスをたおした！しかしランクはかわらなかった。</p>`;}
+
+    // ★ 10% の確率で仲間追加
+    const getCompanionChance = Math.random() < 0.10;
+    if (getCompanionChance) {
+        // 仲間追加
+        userData.companions.push(companionId);
+        // Firestore 保存
+        const playerRef = doc(db, "users", userData.docId);
+        await updateDoc(playerRef, { companions: userData.companions });
+
+        // ★ 仲間名を取得
+        await loadCompanionMaster(); 
+        const companionData = companionMasterData.find(c => c.id === companionId);
+        const companionName = companionData ? companionData.name : companionId;
+        
+        return `<p>🤝 あたらしい仲間（なかま） 「<strong>${companionName}</strong>」 がふえた！</p>`;
+    }
+                      
     // ★ すでに同じ or 高いランクならアップなし
     return `<p>👑 ボスをたおした！しかしランクはかわらなかった。</p>`;
 }
+// ==========================================
 // 通常ステージ用：秘宝獲得処理
+// ==========================================
 async function getTreasureReward() {
     // ダンジョンマスタをロード（キャッシュ対応）
     await loadDungeonMaster();    
