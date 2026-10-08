@@ -609,8 +609,16 @@ async function getBossReward() {
     // ==========================================
     // ★ ランクアップしなかった場合 → 仲間追加判定
     // ==========================================
-    // ★ 仲間IDは rewards["boss"] に格納されている
-    const companionId = dungeonData.rewards["boss"];
+    // ★ 仲間マスタをロード
+    await loadCompanionMaster();
+
+    // ★ このダンジョンで仲間になるキャラを検索
+    const companionData = companionMasterData.find(c => c.dungeons_id === dungeonData.id);
+    // ★ 仲間が設定されていないダンジョンの場合
+    if (!companionData) {return `<p>👑 ボスをたおした！しかし このダンジョンには 仲間（なかま）が いないようだ。</p>`;}
+
+    // ★ 仲間ID
+    const companionId = companionData.id;
     // ★ companions がなければ初期化
     if (!userData.companions) {userData.companions = [];}
         
@@ -620,22 +628,16 @@ async function getBossReward() {
     // ★ 10% の確率で仲間追加
     const getCompanionChance = Math.random() < 0.10;
     if (getCompanionChance) {
-        // 仲間追加
-        userData.companions.push(companionId);
+        userData.companions.push(companionId); // 仲間追加
         // Firestore 保存
         const playerRef = doc(db, "users", userData.docId);
         await updateDoc(playerRef, { companions: userData.companions });
 
-        // ★ 仲間名を取得
-        await loadCompanionMaster(); 
-        const companionData = companionMasterData.find(c => c.id === companionId);
-        const companionName = companionData ? companionData.name : companionId;
-        
-        return `<p>🤝 あたらしい仲間（なかま） 「<strong>${companionName}</strong>」 がふえた！</p>`;
+        return `<p>🤝 あたらしい仲間（なかま）「<strong>${companionData.name}</strong>」 がふえた！</p>`;
     }
                       
     // ★ すでに同じ or 高いランクならアップなし
-    return `<p>👑 ボスをたおした！しかしランクはかわらなかった。</p>`;
+    return `<p>👑 ボスをたおした！しかし ランクは あがらなかった。</p>`;
 }
 // ==========================================
 // 通常ステージ用：秘宝獲得処理
