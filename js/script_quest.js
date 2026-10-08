@@ -16,7 +16,8 @@ let selectedDungeon = null; // 💡 現在プレイヤーが選択したダン�
 window.addEventListener('DOMContentLoaded', async () => {
     // 1. URLの「?user=おなまえ」からプレイヤーの名前を読み取る
     const urlParams = new URLSearchParams(window.location.search);
-    currentUser = urlParams.get('user');
+    const docid = urlParams.get('docid');
+    currentUser = urlParams.get('userid');
 
     if (!currentUser) {
         // 名前が取れなければ安全のためにトップ画面に戻す
