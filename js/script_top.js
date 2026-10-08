@@ -222,7 +222,7 @@ async function startGame() {
     await prepareTempData(currentUser);
 
     // 💡 クエスト選択画面（quest.html）へ名前を引き継いでジャンプ！
-    window.location.href = 'quest.html?userid=' + encodeURIComponent(userData.id);
+    window.location.href = 'quest.html?docid=' + encodeURIComponent(userData.id);
 }
 
 // ログアウト（やりなおす）
