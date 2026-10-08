@@ -215,7 +215,7 @@ function previewCharacter() {
 }
 
 // 💡 「ゲームをはじめる」ボタンを押したとき（まずは地図画面 quest.html へ遷移！）
-function startGame() {
+async function startGame() {
     if (!currentUser) return;
 
     // temp コレクションにデータ登録
