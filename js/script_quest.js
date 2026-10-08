@@ -221,7 +221,7 @@ function cancelQuestSelect() {
 }
 
 // 💡 ジャンルボタンが押されたときの処理（game.html へ遷移）
-function goToGame(genre) {
+async function goToGame(genre) {
 
     // 💡 temp コレクション取得
     const tempRef = collection(db, "temp");
