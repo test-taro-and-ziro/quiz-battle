@@ -103,7 +103,7 @@ function renderPlayerStatus(userData) {
     if (gradeItem) {
         gradeLabel = gradeItem.label;
     }
-    document.getElementById('player-grade').textContent = gradeLabel;
+    document.getElementById('player-grade').textContent = "学年：" + gradeLabel;
 
     // ★ ランク表示
     const rank = userData.rank ?? 0;
