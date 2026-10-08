@@ -55,22 +55,25 @@ const DEFAULT_NPC_ID = "default";
 // 3. 画面起動時の処理
 // ==========================================
 window.addEventListener('DOMContentLoaded', async () => {
-    // ★ URLパラメータ（?user=〇〇）の解析と受け取り
-    const urlParams = new URLSearchParams(window.location.search);
 
     // URLの「?temp=ドキュメントID」からプレイヤーの名前を読み取る
     const urlParams = new URLSearchParams(window.location.search);
     const docid = urlParams.get('temp');
+    if (!docid) {
+        alert("ゲームデータが見つかりません。もういちどログインしてね！");
+        window.location.href = 'index.html';
+        return;
+    }
     // ★ temp コレクション読み取り（共通関数）
     await prepareTempData(docid); // docID で読み取れる
-    currentUser = tempData.name;
-    // 万が一、ユーザー名が取れなかった場合は安全のためにトップ画面に戻す
-    if (!currentUser) {
+    if (!tempData) {
+        // 名前が取れなければ安全のためにトップ画面に戻す
         alert("もういちどログインしなおしてね！");
         window.location.href = 'index.html';
         return;
     }
     // ★ tempData から値を復元
+    currentUser = tempData.name;
     currentQuest = tempData.dungeons_id;
     currentGenre = tempData.genre;
     
