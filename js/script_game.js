@@ -1,12 +1,12 @@
 // ==========================================
 // クエスト画面（game.html）専用プログラム
 // ==========================================
-// 💡 共通設定ファイルから db を読み込む
+// 共通設定ファイルから db を読み込む
 import { db, collection, doc, addDoc, getDocs, setDoc, getDoc, updateDoc, deleteDoc, query, where, orderBy, limit } from './firebase-config.js';
-// 💡 共通ファイルを読み込む1行を追加
+// 共通ファイルを読み込む1行を追加
 import { loadAnimalMaster, getCharacterFileName, setCharacterSrc, setCompanionSrc, loadGenreMaster, loadGradeMaster, loadCompanionMaster, loadDungeonMaster, 
-        setupPlayerMaster, logoutPlayerMaster,
-        animalMasterData, genreMasterData, gradeMasterData, companionMasterData, dungeonMasterData, currentLoginUser, currentPlayerData } from './game-master.js';
+        setupPlayerMaster, logoutPlayerMaster, prepareTempData,
+        animalMasterData, genreMasterData, gradeMasterData, companionMasterData, dungeonMasterData, currentLoginUser, currentPlayerData, tempData } from './game-master.js';
 
 // ==========================================
 // 1. 本物のFirebase構造に合わせたダミーデータ
@@ -55,12 +55,9 @@ const DEFAULT_NPC_ID = "default";
 // 3. 画面起動時の処理
 // ==========================================
 window.addEventListener('DOMContentLoaded', async () => {
-    // ★ URLパラメータ（?user=〇〇&quest=〇〇&genre=〇〇）の解析と受け取り
+    // ★ URLパラメータ（?user=〇〇）の解析と受け取り
     const urlParams = new URLSearchParams(window.location.search);
     currentUser = urlParams.get('user');
-    currentQuest = urlParams.get('quest');
-    currentGenre = urlParams.get('genre');
-
     // 万が一、ユーザー名が取れなかった場合は安全のためにトップ画面に戻す
     if (!currentUser) {
         alert("もういちどログインしなおしてね！");
@@ -68,6 +65,13 @@ window.addEventListener('DOMContentLoaded', async () => {
         return;
     }
 
+    // ★ temp コレクション読み取り（共通関数）
+    await prepareTempData(currentUser);
+
+    // ★ tempData から値を復元
+    currentQuest = tempData.dungeons_id;
+    currentGenre = tempData.genre;
+    
     // ★ ここからダンジョン名を取得する処理
     await loadDungeonMaster();
     const dungeonData = dungeonMasterData.find(d => d.id === currentQuest);
