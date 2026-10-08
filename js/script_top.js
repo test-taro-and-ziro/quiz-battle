@@ -64,7 +64,7 @@ async function resetTopScreen() {
     const docId = urlParams.get('temp');
 
     // パラメータが存在する場合、temp を削除
-    if (tempId) {
+    if (docId) {
         try {
             await deleteDoc(doc(db, "temp", docId));
             console.log("トップ画面起動時に temp を削除:", docId);
