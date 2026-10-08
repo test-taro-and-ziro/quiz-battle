@@ -59,6 +59,8 @@ function resetTopScreen() {
     // ✨ プレビュー画像も「準備中」のイメージに自動リセット！
     if (typeof previewCharacter === 'function') previewCharacter();
 
+console.log("削除対象の temp が見つかりません（name）:", currentUser);
+        
     // ユーザ名が存在（ログイン後）の場合、ゲームデータを削除
     if (currentUser) {
         try {
