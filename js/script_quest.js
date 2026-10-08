@@ -222,10 +222,25 @@ function cancelQuestSelect() {
 
 // 💡 ジャンルボタンが押されたときの処理（game.html へ遷移）
 function goToGame(genre) {
-    // 💡 選択されたダンジョンデータからノルマ（norma）を取得（万が一空ならデフォルト値「10000」に）
-    const normaValue = selectedDungeon.norma || "10000";
-    // 次のゲーム本編（game.html）へ引き継いでジャンプ！
-    window.location.href = `game.html?user=${encodeURIComponent(currentUser)}&quest=${encodeURIComponent(selectedDungeon.id)}&genre=${encodeURIComponent(genre)}`;
+
+    // 💡 temp コレクション取得
+    const tempRef = collection(db, "temp");
+    const q = query(tempRef, where("name", "==", currentUser));
+    const snap = await getDocs(q);
+    if (snap.empty) {
+        console.error("temp データが存在しません");
+        return;
+    }
+
+    // 💡 temp コレクションに「ダンジョンID」「ジャンル」を登録
+    const docRef = snap.docs[0].ref;
+    await updateDoc(docRef, {
+        dungeons_id: selectedDungeon.id,
+        genre: genre,
+    });
+
+    // 💡 game.html へは「ユーザ名」だけ渡す
+    window.location.href = `game.html?user=${encodeURIComponent(currentUser)}`;
 }
 
 // 🛑 新設：ログアウトボタンが押されたときに確認する関数
