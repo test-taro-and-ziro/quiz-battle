@@ -28,6 +28,7 @@ export async function prepareTempData(userName) {
         const docSnap = snap.docs[0];
         tempData = { id: docSnap.id, ...docSnap.data() };
         return tempData;
+    }
 
     // ③ 存在しない場合 → 新規作成
     const newDoc = await addDoc(tempRef, {
