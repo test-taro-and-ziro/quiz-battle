@@ -612,7 +612,7 @@ async function getBossReward() {
     // ★ 仲間IDは rewards["boss"] に格納されている
     const companionId = dungeonData.rewards["boss"];
     // ★ companions がなければ初期化
-    if (!userData.companions) {userData.companions = [];
+    if (!userData.companions) {userData.companions = [];}
     // ★ すでに仲間を持っている場合は追加しない
     if (userData.companions.includes(companionId)) {return `<p>👑 ボスをたおした！しかしランクはかわらなかった。</p>`;}
 
