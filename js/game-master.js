@@ -5,13 +5,48 @@
 import { db, collection, doc, addDoc, getDocs, setDoc, getDoc, updateDoc, deleteDoc, query, where, orderBy, limit } from './firebase-config.js';
 
 // 各画面で共有するための変数
-export let animalMasterData = [];     // 💡 動物マスタ
-export let genreMasterData = [];      // ★ ジャンルマスタ
-export let gradeMasterData = [];      // ✨ 学年マスタ
-export let companionMasterData = [];  // 💡 仲間マスタ
-export let dungeonMasterData = [];    // 💡 ダンジョンマスタ
-export let currentLoginUser = null;   // 💡 ログイン中のユーザー名（例: "うさぎまる"）
-export let currentPlayerData = null;  // 💡 ログイン中のユーザーの全データ（grade, lv, wins, animal 等）
+export let animalMasterData = [];      // 💡 動物マスタ
+export let genreMasterData = [];       // ★ ジャンルマスタ
+export let gradeMasterData = [];       // ✨ 学年マスタ
+export let companionMasterData = [];   // 💡 仲間マスタ
+export let dungeonMasterData = [];     // 💡 ダンジョンマスタ
+export let currentLoginUser = null;    // 💡 ログイン中のユーザー名（例: "うさぎまる"）
+export let currentPlayerData = null;   // 💡 ログイン中のユーザーの全データ（grade, lv, wins, animal 等）
+
+export let tempData = null;            // 💡 temp データを保持するグローバル変数
+
+// 💡 temp コレクションのデータを取得・作成・初期化する共通関数
+export async function prepareTempData(userName) {
+    const tempRef = collection(db, "temp");
+
+    // ① name で検索
+    const q = query(tempRef, where("name", "==", userName));
+    const snap = await getDocs(q);
+
+    // ② 既存データがある場合 → 初期化せずそのまま使う
+    if (!snap.empty) {
+        const docSnap = snap.docs[0];
+        tempData = { id: docSnap.id, ...docSnap.data() };
+        return tempData;
+
+    // ③ 存在しない場合 → 新規作成
+    const newDoc = await addDoc(tempRef, {
+        name: userName,
+        dungeons_id: "",
+        genre: ""
+    });
+
+    // ④ グローバル変数に格納
+    tempData = {
+        id: newDoc.id,
+        name: userName,
+        dungeons_id: "",
+        genre: ""
+    };
+
+    // ⑤ グローバル変数に格納
+    return tempData;
+}
 
 // 💡 共通関数：Firebaseから動物マスタをまとめてロードする [js]
 export async function loadAnimalMaster() {
