@@ -217,7 +217,10 @@ function previewCharacter() {
 // 💡 「ゲームをはじめる」ボタンを押したとき（まずは地図画面 quest.html へ遷移！）
 function startGame() {
     if (!currentUser) return;
-    
+
+    // temp コレクションにデータ登録
+    await prepareTempData(currentUser);
+
     // 💡 クエスト選択画面（quest.html）へ名前を引き継いでジャンプ！
     window.location.href = 'quest.html?user=' + encodeURIComponent(currentUser);
 }
