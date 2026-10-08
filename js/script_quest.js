@@ -46,7 +46,7 @@ window.addEventListener('DOMContentLoaded', async () => {
         setupProfileModal(userData);
     } else {
         alert("キャラクター情報がみつかりませんでした。");
-        window.location.href = 'index.html';
+        window.location.href = `index.html?temp=${encodeURIComponent(tempData.id)}`;
     }
 
     // ダンジョンボタンの自動生成を実行
@@ -254,7 +254,7 @@ async function goToGame(genre) {
 // 🛑 新設：ログアウトボタンが押されたときに確認する関数
 function logout() {
     if (confirm("ログアウトして トップがめんにもどる？")) {
-        window.location.href = 'index.html';
+        window.location.href = `index.html?temp=${encodeURIComponent(tempData.id)}`;
     }
 }
 
