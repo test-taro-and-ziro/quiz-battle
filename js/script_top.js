@@ -46,7 +46,7 @@ function changeScreen(screenId) {
 }
 
 // 💡 トップ画面の状態を最初のメニューだけにリセットする関数
-function resetTopScreen() {
+async function resetTopScreen() {
     // 各種入力欄をクリア
     if (document.getElementById('login-username-input')) document.getElementById('login-username-input').value = '';
     if (document.getElementById('username-input')) document.getElementById('username-input').value = '';
@@ -59,8 +59,6 @@ function resetTopScreen() {
     // ✨ プレビュー画像も「準備中」のイメージに自動リセット！
     if (typeof previewCharacter === 'function') previewCharacter();
 
-console.log("削除対象の temp が見つかりません（name）:", currentUser);
-        
     // ユーザ名が存在（ログイン後）の場合、ゲームデータを削除
     if (currentUser) {
         try {
