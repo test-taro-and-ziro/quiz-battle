@@ -59,23 +59,20 @@ async function resetTopScreen() {
     // ✨ プレビュー画像も「準備中」のイメージに自動リセット！
     if (typeof previewCharacter === 'function') previewCharacter();
 
-    // ユーザ名が存在（ログイン後）の場合、ゲームデータを削除
-    if (currentUser) {
+    // URLからパラメータ取得
+    const urlParams = new URLSearchParams(window.location.search);
+    const docId = urlParams.get('temp');
+
+    // パラメータが存在する場合、temp を削除
+    if (tempId) {
         try {
-            const q = query(tempRef, where("name", "==", currentUser));
-            const snap = await getDocs(q);
-            if (!snap.empty) {
-                const docRef = snap.docs[0].ref;
-                await deleteDoc(docRef);
-                console.log("temp を name で削除:", currentUser);
-            } else {
-                console.log("削除対象の temp が見つかりません（name）:", currentUser);
-            }
+            await deleteDoc(doc(db, "temp", docId));
+            console.log("トップ画面起動時に temp を削除:", docId);
         } catch (e) {
-            console.error("name 削除失敗:", e);
+            console.error("トップ画面での temp 削除失敗:", e);
         }
     }
-            
+     
     // 🌟 共通の金庫（変数）の中身をきれいにリセット！
     currentUser = null;
     logoutPlayerMaster(); 
