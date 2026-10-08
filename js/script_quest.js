@@ -38,6 +38,8 @@ window.addEventListener('DOMContentLoaded', async () => {
     await loadTreasureMaster();
     // 「Dungeons」コレクション（マスターデータ）をすべて読み込む [js]
     await loadDungeonMaster(); 
+    // 「genre」コレクション（マスターデータ）をすべて読み込む [js]
+    await loadGenreMaster();  // ★ ジャンルマスタ読み込み
 
     // 3. 共通関数を使ってプレイヤー情報を準備
     const userData = await setupPlayerMaster(currentUser);    
