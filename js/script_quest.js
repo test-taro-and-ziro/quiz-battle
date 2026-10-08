@@ -17,14 +17,21 @@ window.addEventListener('DOMContentLoaded', async () => {
     // 1. URLの「?temp=ドキュメントID」からプレイヤーの名前を読み取る
     const urlParams = new URLSearchParams(window.location.search);
     const docid = urlParams.get('temp');
+    if (!docid) {
+        alert("ゲームデータが見つかりません。もういちどログインしてね！");
+        window.location.href = 'index.html';
+        return;
+    }
+    // ★ temp コレクション読み取り（共通関数）
     await prepareTempData(docid); // docID で読み取れる
-    currentUser = tempData.name;
-    if (!currentUser) {
+    if (!tempData) {
         // 名前が取れなければ安全のためにトップ画面に戻す
         alert("もういちどログインしなおしてね！");
         window.location.href = 'index.html';
         return;
     }
+    currentUser = tempData.name;
+
     // 2. 「animal」コレクション（マスターデータ）をすべて読み込む [js]
     await loadAnimalMaster();
     // 「Treasures」コレクション（マスターデータ）をすべて読み込む [js]
