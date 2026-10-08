@@ -16,23 +16,35 @@ export let currentPlayerData = null;   // 💡 ログイン中のユーザーの
 export let tempData = null;            // 💡 temp データを保持するグローバル変数
 
 // 💡 temp コレクションのデータを取得・作成・初期化する共通関数
-export async function prepareTempData(userName) {
+export async function prepareTempData(identifier) {
     const tempRef = collection(db, "temp");
+    let docSnap = null;
 
-    // ① name で検索
-    const q = query(tempRef, where("name", "==", userName));
+    // ① identifier が docID 形式かどうか判定
+    // Firestore の docID は 20〜28文字程度の英数字なので簡易判定可能
+    if (identifier.length >= 20) {
+        const directRef = doc(db, "temp", identifier);
+        docSnap = await getDoc(directRef);
+        // 既存データがある場合 → 初期化せずそのまま使う
+        if (docSnap.exists()) {
+            tempData = { id: identifier, ...docSnap.data() };
+            return tempData;
+        }
+    }
+
+    // ③ docID で見つからなかった場合 → name で検索
+    const q = query(tempRef, where("name", "==", identifier));
     const snap = await getDocs(q);
-
     // ② 既存データがある場合 → 初期化せずそのまま使う
     if (!snap.empty) {
-        const docSnap = snap.docs[0];
-        tempData = { id: docSnap.id, ...docSnap.data() };
+        const found = snap.docs[0];
+        tempData = { id: found.id, ...found.data() };
         return tempData;
     }
 
-    // ③ 存在しない場合 → 新規作成
+    // ④ 新規作成（name の場合のみ） ※ 初回（トップ画面）は、ユーザ名しかこないため
     const newDoc = await addDoc(tempRef, {
-        name: userName,
+        name: identifier,
         dungeons_id: "",
         genre: ""
     });
@@ -40,7 +52,7 @@ export async function prepareTempData(userName) {
     // ④ グローバル変数に格納
     tempData = {
         id: newDoc.id,
-        name: userName,
+        name: identifier,
         dungeons_id: "",
         genre: ""
     };
