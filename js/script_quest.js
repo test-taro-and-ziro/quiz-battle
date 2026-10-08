@@ -5,8 +5,8 @@
 import { db, collection, doc, addDoc, getDocs, setDoc, getDoc, updateDoc, deleteDoc, query, where, orderBy, limit } from './firebase-config.js';
 // 共通ファイルを読み込む1行を追加
 import { loadAnimalMaster, getCharacterFileName, setCharacterSrc, setCompanionSrc, loadGenreMaster, loadGradeMaster, loadCompanionMaster, loadDungeonMaster, 
-        setupPlayerMaster, logoutPlayerMaster,
-        animalMasterData, genreMasterData, gradeMasterData, companionMasterData, dungeonMasterData, currentLoginUser, currentPlayerData } from './game-master.js';
+        setupPlayerMaster, logoutPlayerMaster, prepareTempData,
+        animalMasterData, genreMasterData, gradeMasterData, companionMasterData, dungeonMasterData, currentLoginUser, currentPlayerData, tempData } from './game-master.js';
 
 let currentUser = null;
 let treasureMasterData = [];
