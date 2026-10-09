@@ -31,13 +31,14 @@ function generateChoices(correct) {
 }
 
 // ==========================================
-// ★ custom_01：計算式をランダム生成する例
+// ★ custom_01：整数の足し算・引き算
+// 【値1】～【値4】、【答】　choices（最小,最大）
 // ==========================================
 function custom01(q) {
 
     // choices を設定値として使う（例：桁数など）
-    const base1 = Number(q.choices[0]);
-    const base2 = Number(q.choices[1]);
+    const min = Number(q.choices[0]);
+    const max = Number(q.choices[1]);
 
     // ランダム値生成
     const v1 = getRandomInt(10, 99);
