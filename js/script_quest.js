@@ -40,6 +40,8 @@ window.addEventListener('DOMContentLoaded', async () => {
     await loadDungeonMaster(); 
     // 「grade」コレクション（マスターデータ）をすべて読み込む [js]
     await loadGradeMaster();
+    // 「companions」コレクション（マスターデータ）をすべて読み込む [js]
+    await loadCompanionMaster();
 
     // 3. 共通関数を使ってプレイヤー情報を準備
     const userData = await setupPlayerMaster(currentUser);    
