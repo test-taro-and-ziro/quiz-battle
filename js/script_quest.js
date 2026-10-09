@@ -126,9 +126,19 @@ function setupProfileModal(userData) {
     // 左下の情報箱がクリックされたらモーダルを開く
     trigger.addEventListener('click', () => {
         document.getElementById('profile-modal-name').textContent = currentUser;
-        const displayGrade = userData.grade === 0 ? "幼児" : userData.grade + "年生";
-        document.getElementById('profile-modal-grade').textContent = "学年: " + displayGrade;
-        
+            
+        // ★ 学年マスタから label を取得
+        let gradeLabel = "未設定";
+        const gradeItem = gradeMasterData.find(g => g.value == userData.grade);
+        if (gradeItem) {
+            gradeLabel = gradeItem.label;
+        }
+        document.getElementById('profile-modal-grade').textContent = "学年：" + gradeLabel;
+
+        // ★ ランク表示
+        const rank = userData.rank ?? 0;
+        document.getElementById('profile-modal-rank').textContent = "ランク: " + rank;
+
         const fileName = getCharacterFileName(userData.animal, userData.gender);
         setCharacterSrc(document.getElementById('profile-modal-avatar'), fileName);
 
