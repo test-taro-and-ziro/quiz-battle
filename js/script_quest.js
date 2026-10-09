@@ -199,8 +199,8 @@ function renderCompanionsInProfile(companionIds) {
             <img src="images/sub/${comp.img}" alt="${comp.name}">
             <div class="companion-info">
                 <div><strong>${comp.name}</strong></div>
-                <div>得意：${(comp.good || []).map(g => genreMaster[g]).join(", ")}</div>
-                <div>天才：${(comp.genius || []).map(g => genreMaster[g]).join(", ")}</div>
+                <div>得意：${(comp.good || []).map(g => genreMasterData[g]).join(", ")}</div>
+                <div>天才：${(comp.genius || []).map(g => genreMasterData[g]).join(", ")}</div>
             </div>
         `;
 
