@@ -124,9 +124,9 @@ async function setupPartyAndRender(userName) {
             if (userData.grade !== undefined) {
                 userGrade = userData.grade;
             }
-            // 実データのフィールド名「companions」からIDリストを取得
-            if (userData.companions && Array.isArray(userData.companions)) {
-                partyIds = [...userData.companions];
+            // ★ 実データのフィールド名「equipment」からIDリストを取得
+            if (userData.equipment && Array.isArray(userData.equipment)) {
+                partyIds = [...userData.equipment];
             }
             // 動物キーと性別から画像ファイル名を逆引き
             playerFileName = getCharacterFileName(userData.animal, userData.gender);
