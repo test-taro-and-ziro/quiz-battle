@@ -198,18 +198,28 @@ function renderCompanionsInProfile(companionIds) {
         const comp = companionMasterData.find(c => c.id === id);
         if (!comp) return;
 
+        const getGenreName = (genreId) => {
+            const g = genreMasterData.find(item => item.id === genreId);
+            return g ? g.name : genreId;
+        };
+        const goodList = (comp.good || [])
+            .map(g => `${getGenreName(g)}（得意）`)
+            .join("、");
+        const geniusList = (comp.genius || [])
+            .map(g => `${getGenreName(g)}（天才）`)
+            .join("、");
+        const subjects = [goodList, geniusList].filter(Boolean).join("、");
+
         const card = document.createElement("div");
         card.className = "companion-card";
 
         card.innerHTML = `
-            <img src="images/sub/${comp.img}" alt="${comp.name}">
+            <img class="companion-img" src="images/sub/${comp.img}" alt="${comp.name}">
             <div class="companion-info">
-                <div><strong>${comp.name}</strong></div>
-                <div>得意：${(comp.good || []).map(g => genreMasterData[g]).join(", ")}</div>
-                <div>天才：${(comp.genius || []).map(g => genreMasterData[g]).join(", ")}</div>
+                <div class="companion-name">名前：${comp.name}</div>
+                <div class="companion-subjects">科目：${subjects}</div>
             </div>
         `;
-
         zone.appendChild(card);
     });
 }
