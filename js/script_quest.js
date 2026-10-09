@@ -200,7 +200,14 @@ function renderCompanionsInProfile(companionIds) {
 
         const getGenreName = (genreId) => {
             const g = genreMasterData.find(item => item.id === genreId);
-            return g ? g.name : genreId;
+            if (!g) return genreId;
+        
+            // ★ 学年によって表示名を切り替える
+            if (userData.grade === 0) {
+                return g.label; // 幼児は label
+            } else {
+                return g.label_junior; // 小学生は label_junior
+            }
         };
         const goodList = (comp.good || [])
             .map(g => `${getGenreName(g)}（得意）`)
