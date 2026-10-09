@@ -180,7 +180,7 @@ html, body {
     text-shadow: 1px 1px 0px white, -1px -1px 0px white, 1px -1px 0px white, -1px 1px 0px white;
 }
 
-/* 💡 変更点②：小さな選択小窓（モーダル）のスタイル */
+/* 💡 小さな選択小窓（モーダル）のスタイル */
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -276,7 +276,6 @@ html, body {
 /* ==========================================
    ✨ ユーザー詳細 ＆ ひほうモーダル専用スタイル
    ========================================== */
-
 /* 🌌 モーダル全体の背景（画面いっぱいに広がる半透明の黒） */
 .profile-modal-overlay {
     position: fixed;
@@ -291,7 +290,6 @@ html, body {
     z-index: 1000;
     backdrop-filter: blur(4px); /* 背景をオシャレにぼかす */
 }
-
 /* 🌟 JSで表示がONになったとき用の切り替えクラス */
 .profile-modal-overlay.is-active {
     display: flex;
@@ -336,7 +334,6 @@ html, body {
     border: 1px solid #bbf7d0;
     margin-bottom: 20px;
 }
-
 /* 枠に収まる丸いアバター画像 */
 .profile-avatar-wrap img {
     width: 60px;
@@ -346,18 +343,15 @@ html, body {
     background: #ffffff;
     object-fit: cover;
 }
-
 .profile-text-wrap {
     text-align: left;
 }
-
 .profile-name {
     font-size: 16px;
     font-weight: bold;
     color: #333333;
     margin-bottom: 4px;
 }
-
 .profile-grade {
     font-size: 12px;
     color: #16a34a;
@@ -372,14 +366,12 @@ html, body {
     border: 1px solid #e5e7eb;
     margin-bottom: 20px;
 }
-
 .treasure-title {
     margin: 0 0 12px 0;
     font-size: 13px;
     color: #666666;
     font-weight: bold;
 }
-
 /* 🎴 秘宝をグリッド状に並べる横並び/折り返しコンテナ */
 .treasure-list {
     display: flex;
@@ -390,7 +382,6 @@ html, body {
     overflow-y: auto; /* 秘宝の数が多くなってもスクロールできるように対応 */
     padding: 4px;
 }
-
 /* ⭕ 秘宝を囲む「丸い枠（スロット）」 */
 .treasure-slot {
     display: flex;
@@ -399,11 +390,9 @@ html, body {
     width: 76px;
     transition: transform 0.2s;
 }
-
 .treasure-slot:hover {
     transform: scale(1.05); /* マウスを乗せると少し大きく */
 }
-
 /* 🔮 丸い枠の中のメダル画像 */
 .treasure-icon {
     width: 52px;
@@ -414,7 +403,6 @@ html, body {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     object-fit: cover;
 }
-
 /* 🏷️ メダルの名前ラベル */
 .treasure-label {
     font-size: 10px;
@@ -427,16 +415,63 @@ html, body {
     overflow: hidden;
     text-overflow: ellipsis; /* 名前が長すぎる場合は「...」にする */
 }
-
 /* 🔒 【重要】ユーザーが未獲得のときの丸い枠（ロック状態） */
 .treasure-slot.is-locked .treasure-icon {
     border-color: #9ca3af; /* 未獲得はグレーの丸枠 */
     filter: grayscale(1) brightness(0.6); /* 画像を白黒＆薄暗くして「未獲得感」を演出 */
     opacity: 0.5;
 }
-
 .treasure-slot.is-locked .treasure-label {
     color: #9ca3af; /* 文字もグレーに */
+}
+
+/* タブの切り替え */
+.profile-tab-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+    margin-bottom: 10px;
+}
+.profile-tab-btn {
+    flex: 1;
+    padding: 8px 0;
+    background: #e2e8f0;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+}
+.profile-tab-btn.active {
+    background: #4CAF50;
+    color: #fff;
+}
+.profile-tab-content {
+    display: none;
+}
+.profile-tab-content.active {
+    display: block;
+}
+
+/* 仲間カード */
+.companion-card {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255,255,255,0.8);
+    padding: 8px 12px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    border: 1px solid #81c784;
+}
+.companion-card img {
+    width: 45px;
+    height: 45px;
+    border-radius: 6px;
+    object-fit: cover;
+}
+.companion-info {
+    font-size: 13px;
+    line-height: 1.3;
 }
 
 /* 🚪 とじるボタン */
@@ -451,7 +486,6 @@ html, body {
     cursor: pointer;
     transition: background 0.2s;
 }
-
 .btn-profile-close:hover {
     background: #94a3b8;
 }
