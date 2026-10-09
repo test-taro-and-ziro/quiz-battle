@@ -146,7 +146,13 @@ function setupProfileModal(userData) {
         overlay.classList.add('is-active');
     });
     // とじるボタンでモーダルを閉じる
-    closeBtn.addEventListener('click', () => {overlay.classList.remove('is-active');});
+    closeBtn.addEventListener('click', () => {
+        // ▼ タブの active をすべて解除
+        document.querySelectorAll('.profile-tab-btn').forEach(btn => btn.classList.remove('active'));
+        document.querySelectorAll('.profile-tab-content').forEach(tab => tab.classList.remove('active'));
+        // ▼ モーダルを閉じる
+        overlay.classList.remove('is-active');
+    });
 }
 
 // 💡 ひほう（秘宝）をマスタ順（order順）に丸い枠で並べる関数
