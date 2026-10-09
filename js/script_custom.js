@@ -67,7 +67,7 @@ function custom01(q) {
     newText = newText.replace("【値1】", "計算");
 
     // 正解計算
-    const answer = 0;
+    let answer = 0;
     if (v1 > v2) {
         answer = v1 + v2;
         newText = newText.replace("【値2】", v1);
@@ -77,7 +77,7 @@ function custom01(q) {
         answer = v2 - v1;
         newText = newText.replace("【値2】", v2);
         newText = newText.replace("【値3】", "－");
-        newText = newText.replace("【値4】", v3);
+        newText = newText.replace("【値4】", v1);
     }
 
     // 選択肢生成
