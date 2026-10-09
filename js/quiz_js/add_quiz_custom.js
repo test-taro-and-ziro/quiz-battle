@@ -20,3 +20,4 @@ targetArray.push(...[
 	{ grade: 6, genre: "math", type: "select", text: "【値1】の問題だよ。 <br>「【値2】 【値3】 【値4】　＝　？？？　」の 答えはどれかな？", choices: ["0.0001", "9.9999"], answer: "【custom_02】", explanation: "正解は「【答】」！<br>計算の 問題だよ。おちついて考えると 答えが わかるよね。" }
 ]);
 
+}
