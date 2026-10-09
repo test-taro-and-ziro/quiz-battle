@@ -479,6 +479,7 @@ html, body {
     gap: 4px;
     font-size: 13px;
     line-height: 1.4;
+    text-align: left;
 }
 /* 名前 */
 .companion-name {
