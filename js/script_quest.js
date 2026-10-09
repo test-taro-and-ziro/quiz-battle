@@ -199,7 +199,7 @@ function renderCompanionsInProfile(companionIds) {
         if (!comp) return;
 
         const getGenreName = (genreId) => {
-            const g = genreMasterData.find(item => item.id === genreId);
+            const g = genreMasterData.find(item => item.value === genreId);
             if (!g) return genreId;
         
             // ★ 学年によって表示名を切り替える
