@@ -121,13 +121,9 @@ async function setupPartyAndRender(userName) {
         let playerFileName = "placeholder.jpg";
         if (userData) {
             // ★ ここで取得した学年（grade）をグローバル変数にガチッと保存！
-            if (userData.grade !== undefined) {
-                userGrade = userData.grade;
-            }
+            if (userData.grade !== undefined) {userGrade = userData.grade;}
             // ★ 実データのフィールド名「equipment」からIDリストを取得
-            if (userData.equipment && Array.isArray(userData.equipment)) {
-                partyIds = [...userData.equipment];
-            }
+            if (userData.equipment && Array.isArray(userData.equipment)) {partyIds = [...userData.equipment];}
             // 動物キーと性別から画像ファイル名を逆引き
             playerFileName = getCharacterFileName(userData.animal, userData.gender);
         }
