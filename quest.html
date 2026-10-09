@@ -75,13 +75,24 @@
                         <div id="profile-modal-grade" class="profile-grade">---</div>
                     </div>
                 </div>
-        
+                
+                <!-- タブ切り替え -->
+                <div class="profile-tab-buttons">
+                    <button class="profile-tab-btn active" data-tab="treasure">あつめたひほう</button>
+                    <button class="profile-tab-btn" data-tab="companions">つれている仲間</button>
+                </div>
+                
                 <!-- 🏅 ひほう（秘宝）コレクションエリア -->
                 <div class="treasure-section">
                     <h4 class="treasure-title">✨ あつめた秘宝（ひほう） ✨</h4>
                     <div class="treasure-list" id="treasure-list-container">
                         <!-- JSで丸い枠の秘宝アイコンがここに自動生成されます -->
                     </div>
+                </div>
+                <!-- つれている仲間 エリア -->
+                <div id="tab-companions" class="profile-tab-content">
+                    <h4 class="companion-title">🐾 つれている仲間（なかま） 🐾</h4>
+                    <div id="profile-companion-list"></div>
                 </div>
                 
                 <button id="btn-close-profile" class="btn-profile-close">とじる</button>
