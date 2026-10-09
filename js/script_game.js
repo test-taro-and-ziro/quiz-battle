@@ -7,6 +7,7 @@ import { db, collection, doc, addDoc, getDocs, setDoc, getDoc, updateDoc, delete
 import { loadAnimalMaster, getCharacterFileName, setCharacterSrc, setCompanionSrc, loadGenreMaster, loadGradeMaster, loadCompanionMaster, loadDungeonMaster, 
         setupPlayerMaster, logoutPlayerMaster, prepareTempData,
         animalMasterData, genreMasterData, gradeMasterData, companionMasterData, dungeonMasterData, currentLoginUser, currentPlayerData, tempData } from './game-master.js';
+import { applyCustomTemplate } from "./script_custom.js";
 
 // ==========================================
 // 1. 本物のFirebase構造に合わせたダミーデータ
@@ -253,7 +254,9 @@ async function loadRealQuestions(userName, genre) {
         }
 
         // 5. 確実に10問になった配列の、先頭から10問を切り取って本番用の配列にセット！
-        currentQuestions = finalQuestions.slice(0, 10);
+        // currentQuestions = finalQuestions.slice(0, 10);
+        currentQuestions = finalQuestions.slice(0, 10).map(q => applyCustomTemplate(q));
+
 
         // 6. データの準備がすべて整ったら、ローディング画面を消して満を持して1問目を出題！
         const loadingScreen = document.getElementById('ai-loading-screen');
