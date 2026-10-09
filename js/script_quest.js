@@ -128,17 +128,23 @@ function setupProfileModal(userData) {
         const fileName = getCharacterFileName(userData.animal, userData.gender);
         setCharacterSrc(document.getElementById('profile-modal-avatar'), fileName);
 
-        // 💡 ユーザーの所持リスト（例: ['T1', 'T3']）を渡して丸い枠を生成
+        // ▼ 秘宝描画
         renderTreasures(userData.treasures || []);
+        // ▼ 仲間描画（equipment → companions）
+        const companionIds = userData.equipment || [];
+        renderCompanionsInProfile(companionIds);
 
+        // ▼ タブ初期化
+        setupProfileTabs();
+        // ▼ 初期表示は「秘宝」タブ
+        document.querySelector('[data-tab="treasure"]').classList.add('active');
+        document.getElementById('tab-treasure').classList.add('active');
+            
         // CSSのクラスを追加してモーダルを表示
         overlay.classList.add('is-active');
     });
-
     // とじるボタンでモーダルを閉じる
-    closeBtn.addEventListener('click', () => {
-        overlay.classList.remove('is-active');
-    });
+    closeBtn.addEventListener('click', () => {overlay.classList.remove('is-active');});
 }
 
 // 💡 ひほう（秘宝）をマスタ順（order順）に丸い枠で並べる関数
@@ -173,6 +179,53 @@ function renderTreasures(userTreasures) {
         slot.appendChild(img);
         slot.appendChild(label);
         container.appendChild(slot);
+    });
+}
+// 💡 仲間表示の関数
+function renderCompanionsInProfile(companionIds) {
+    const zone = document.getElementById("profile-companion-list");
+    zone.innerHTML = "";
+
+    companionIds.forEach(id => {
+        const comp = companionMasterData.find(c => c.id === id);
+        if (!comp) return;
+
+        const card = document.createElement("div");
+        card.className = "companion-card";
+
+        card.innerHTML = `
+            <img src="images/sub/${comp.img}" alt="${comp.name}">
+            <div class="companion-info">
+                <div><strong>${comp.name}</strong></div>
+                <div>得意：${(comp.good || []).map(g => genreMaster[g]).join(", ")}</div>
+                <div>天才：${(comp.genius || []).map(g => genreMaster[g]).join(", ")}</div>
+            </div>
+        `;
+
+        zone.appendChild(card);
+    });
+}
+// 💡 プロフィールタブの切り替え処理
+function setupProfileTabs() {
+    const buttons = document.querySelectorAll('.profile-tab-btn');
+    const contents = document.querySelectorAll('.profile-tab-content');
+
+    buttons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const target = btn.dataset.tab;
+
+            // ボタンの active 切り替え
+            buttons.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            // コンテンツの active 切り替え
+            contents.forEach(c => {
+                c.classList.remove('active');
+                if (c.id === `tab-${target}`) {
+                    c.classList.add('active');
+                }
+            });
+        });
     });
 }
 
