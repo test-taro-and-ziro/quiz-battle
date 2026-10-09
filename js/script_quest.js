@@ -198,16 +198,11 @@ function renderCompanionsInProfile(companionIds) {
         const comp = companionMasterData.find(c => c.id === id);
         if (!comp) return;
 
-        const getGenreName = (genreId) => {
-            const g = genreMasterData.find(item => item.value === genreId);
-            if (!g) return genreId;
-        
+        const getGenreName = (genreValue) => {
+            const g = genreMasterData.find(item => item.value === genreValue);
+            if (!g) return genreValue;
             // ★ 学年によって表示名を切り替える
-            if (userData.grade === 0) {
-                return g.label; // 幼児は label
-            } else {
-                return g.label_junior; // 小学生は label_junior
-            }
+            return (userData.grade === 0) ? (g.label) : g.label_junior;
         };
         const goodList = (comp.good || [])
             .map(g => `${getGenreName(g)}（得意）`)
