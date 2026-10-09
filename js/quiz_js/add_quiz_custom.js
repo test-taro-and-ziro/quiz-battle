@@ -13,7 +13,7 @@ targetArray.push(...[
 	{ grade: 4, genre: "math", type: "select", text: "【値1】の問題だよ。 <br>「【値2】 【値3】 【値4】　＝　？？？　」の 答えはどれかな？", choices: ["100", "999"], answer: "【custom_01】", explanation: "正解は「【答】」！<br>計算の 問題だよ。おちついて考えると 答えが わかるよね。" },
 	{ grade: 5, genre: "math", type: "select", text: "【値1】の問題だよ。 <br>「【値2】 【値3】 【値4】　＝　？？？　」の 答えはどれかな？", choices: ["1000", "4999"], answer: "【custom_01】", explanation: "正解は「【答】」！<br>計算の 問題だよ。おちついて考えると 答えが わかるよね。" },
 	{ grade: 6, genre: "math", type: "select", text: "【値1】の問題だよ。 <br>「【値2】 【値3】 【値4】　＝　？？？　」の 答えはどれかな？", choices: ["5000", "9999"], answer: "【custom_01】", explanation: "正解は「【答】」！<br>計算の 問題だよ。おちついて考えると 答えが わかるよね。" },
-	// custom_02：少数の足し算・引き算
+	// custom_02：小数の足し算・引き算
 	{ grade: 3, genre: "math", type: "select", text: "【値1】の 問題（もんだい）だよ。 <br>「【値2】 【値3】 【値4】　＝　？？？　」の 答えはどれかな？", choices: ["0.1", "9.9"], answer: "【custom_02】", explanation: "正解は「【答】」！<br>計算の 問題（もんだい）だよ。おちついて 考えると 答えが わかるよね。" },
 	{ grade: 4, genre: "math", type: "select", text: "【値1】の問題だよ。 <br>「【値2】 【値3】 【値4】　＝　？？？　」の 答えはどれかな？", choices: ["0.01", "9.99"], answer: "【custom_02】", explanation: "正解は「【答】」！<br>計算の 問題だよ。おちついて考えると 答えが わかるよね。" },
 	{ grade: 5, genre: "math", type: "select", text: "【値1】の問題だよ。 <br>「【値2】 【値3】 【値4】　＝　？？？　」の 答えはどれかな？", choices: ["0.001", "9.999"], answer: "【custom_02】", explanation: "正解は「【答】」！<br>計算の 問題だよ。おちついて考えると 答えが わかるよね。" },
