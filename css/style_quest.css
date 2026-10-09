@@ -452,26 +452,42 @@ html, body {
     display: block;
 }
 
-/* 仲間カード */
+/* 仲間カード（横並び） */
 .companion-card {
     display: flex;
-    align-items: center;
-    gap: 10px;
-    background: rgba(255,255,255,0.8);
-    padding: 8px 12px;
-    border-radius: 8px;
-    margin-bottom: 8px;
-    border: 1px solid #81c784;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 12px;
+    background: #ffffff;
+    padding: 10px 14px;
+    border-radius: 12px;
+    margin-bottom: 12px;
+    border: 2px solid #81c784;
 }
-.companion-card img {
-    width: 45px;
-    height: 45px;
-    border-radius: 6px;
+/* 左側の画像 */
+.companion-img {
+    width: 60px;
+    height: 60px;
+    border-radius: 10px;
+    border: 3px solid #4ade80;
     object-fit: cover;
 }
+/* 右側の情報ブロック */
 .companion-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
     font-size: 13px;
-    line-height: 1.3;
+    line-height: 1.4;
+}
+/* 名前 */
+.companion-name {
+    font-weight: bold;
+    color: #333;
+}
+/* 科目 */
+.companion-subjects {
+    color: #555;
 }
 
 /* 🚪 とじるボタン */
