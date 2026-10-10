@@ -141,6 +141,9 @@ html, body {
     transform: scale(0.98);
 }
 
+/* ===================================================
+   💡 村アイコン
+   =================================================== */
 .map-village {
     position: absolute;
     /* 💡 地図のど真ん中に配置 */
@@ -149,9 +152,9 @@ html, body {
     transform: translate(-50%, -50%);
     text-align: center;
     z-index: 4; /* スタンプより少し下に配置して邪魔しないように */
-    pointer-events: none; /* クリックの邪魔をしない設定 */
+    pointer-events: auto; /* クリックを許可 */
+    cursor: pointer;
 }
-
 /* 村の画像を丸くて可愛いアイコン風にする指定 */
 .village-icon-wrap {
     width: 100px;
@@ -165,13 +168,11 @@ html, body {
     overflow: hidden;
     box-shadow: 0 6px 12px rgba(0,0,0,0.2);
 }
-
 .village-img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
-
 .village-label {
     font-size: 11px;
     font-weight: bold;
