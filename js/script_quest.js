@@ -57,6 +57,12 @@ window.addEventListener('DOMContentLoaded', async () => {
 
     // ダンジョンボタンの自動生成を実行
     renderDungeonMenu();
+
+    // 「村アイコン」クリックイベント
+    document.querySelector('.map-village').addEventListener('click', () => {
+        window.location.href = `village.html?user=${encodeURIComponent(currentUser)}`;
+    });
+
 });
 
 // 💡 Firestoreから秘宝マスタをロードして order フィールド順に並べる関数
