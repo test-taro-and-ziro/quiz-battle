@@ -5,17 +5,17 @@ import { loadAnimalMaster, getCharacterFileName, setCharacterSrc, setCompanionSr
         setupPlayerMaster, logoutPlayerMaster, prepareTempData,
         animalMasterData, genreMasterData, gradeMasterData, companionMasterData, dungeonMasterData, currentLoginUser, currentPlayerData, tempData } from './game-master.js';
 
-let playerData = null;
+let currentUser = null; 
 
 // 起動時にプレイヤー情報を読み込む
 window.addEventListener('DOMContentLoaded', async () => {
     const user = new URLSearchParams(location.search).get('user');
-    playerData = await setupPlayerMaster(user);
+    await setupPlayerMaster(user);
 });
 
 // クエスト画面へ戻る
 function goQuest() {
-    window.location.href = `quest.html?user=${encodeURIComponent(playerData.name)}`;
+    window.location.href = `quest.html?user=${encodeURIComponent(currentPlayerData.name)}`;
 }
 
 // 仲間設定ポップアップを開く
@@ -37,7 +37,7 @@ function renderCompanionSetting() {
         const div = document.createElement('div');
         div.className = "companion-row";
 
-        const checked = playerData.companions.includes(comp.id) ? "checked" : "";
+        const checked = currentPlayerData.companions.includes(comp.id) ? "checked" : "";
 
         div.innerHTML = `
             <label>
