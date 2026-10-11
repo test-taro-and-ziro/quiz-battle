@@ -60,7 +60,7 @@ window.addEventListener('DOMContentLoaded', async () => {
 
     // 「村アイコン」クリックイベント
     document.querySelector('.map-village').addEventListener('click', () => {
-        window.location.href = `village.html?user=${encodeURIComponent(currentUser)}`;
+        window.location.href = `village.html?temp=${encodeURIComponent(tempData.id)}`;
     });
 
 });
