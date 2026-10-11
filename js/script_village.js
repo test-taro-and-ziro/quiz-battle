@@ -70,4 +70,4 @@ async function renderCompanionSetting() {
 
 // ★ HTML の onclick から呼べるようにする
 window.goQuest = goQuest;
-window.goQuest = closeCompanionModal;
+window.closeCompanionModal = closeCompanionModal;
