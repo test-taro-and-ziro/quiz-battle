@@ -4,6 +4,8 @@
 export function applyCustomTemplate(question) {
 
     const pattern = question.answer; // カスタム形式取得
+    console.log(pattern);
+    
     if (pattern === "【custom_01】") {return custom01(question);}
     if (pattern === "【custom_02】") {return custom02(question);}
 
@@ -30,6 +32,9 @@ function detectFix(num) {
     const idx = s.indexOf(".");
     return idx === -1 ? 0 : s.length - idx - 1;
 };
+function round(num, fix) {
+    return Number(num.toFixed(fix));
+}
 // 4択作成（整数）
 function generateChoices(answer, min) {
     const choices = new Set([answer]); // 正解
@@ -77,7 +82,7 @@ function generateChoicesFix(answer, min) {
         }
 
         // 正の値のみ採用、重複は Set が自動で排除
-        if (dummy > 0 && dummy !== answer) {choices.add(dummy.toFixed(fix));}
+        if (dummy > 0 && dummy !== answer) {choices.add(round(dummy, fix));}
     }
     return Array.from(choices);
 }
@@ -134,8 +139,6 @@ function custom01(q) {
 // ==========================================
 function custom02(q) {
 
-    console.log("custom_02");
-
     // choices を設定値として使う（例：桁数など）
     const min = Number(q.choices[0]);
     const max = Number(q.choices[1]);
@@ -151,13 +154,13 @@ function custom02(q) {
     // 正解計算
     let answer = 0;
     if (v1 > v2) {
-        answer = v1 + v2;
+        answer = round((v1 + v2), fix);
         newText = newText.replace("【値1】", "たし算");
         newText = newText.replace("【値2】", v1);
         newText = newText.replace("【値3】", "＋");
         newText = newText.replace("【値4】", v2);
     } else {
-        answer = v2 - v1;
+        answer = round((v2 - v1), fix);
         newText = newText.replace("【値1】", "ひき算");
         newText = newText.replace("【値2】", v2);
         newText = newText.replace("【値3】", "－");
@@ -165,7 +168,7 @@ function custom02(q) {
     }
 
     // 選択肢生成
-    const choices = generateChoices(answer, min);
+    const choices = generateChoicesFix(answer, min);
     // 解説置換
     const newExplanation = q.explanation.replace("【答】", answer);
 
