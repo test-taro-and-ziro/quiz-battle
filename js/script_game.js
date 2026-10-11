@@ -318,7 +318,7 @@ function loadQuestion(index) {
     }
 
     // クイズ
-    document.getElementById('quiz-text').textContent = q.text;
+    document.getElementById('quiz-text').innerHTML = q.text;
     document.getElementById('explanation-area').classList.add('hidden');
     
     const inputsContainer = document.getElementById('quiz-inputs');
@@ -531,7 +531,6 @@ function handleAnswer(userAnswer, correctAnswer) {
     document.getElementById('quota-bar-fill').style.width = `${progressPercent}%`;
 
     const q = currentQuestions[currentQuestionIndex];
-    // document.getElementById('explanation-text').textContent = q.explanation;
     document.getElementById('explanation-text').innerHTML = q.explanation;
     document.getElementById('explanation-area').classList.remove('hidden');
 
