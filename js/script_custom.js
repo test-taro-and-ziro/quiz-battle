@@ -16,7 +16,7 @@ export function applyCustomTemplate(question) {
 // ==========================================
 // ★ 共通処理
 // ==========================================
-// 乱数（最小～最高） ※fix：小数
+// 整数 or 小数の乱数（0：整数 1以上：小数）
 function getRandom(min, max, fix) {
     if (fix == 0) {
         return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -24,13 +24,13 @@ function getRandom(min, max, fix) {
         return Number((Math.random() * (max - min) + min).toFixed(fix));
     }
 }
-// 小数点
+// 小数点以下の桁数を検出
 function detectFix(num) {
     const s = String(num);
     const idx = s.indexOf(".");
     return idx === -1 ? 0 : s.length - idx - 1;
 };
-// 4択作成
+// 4択作成（整数）
 function generateChoices(answer, min) {
     const choices = new Set([answer]); // 正解
     // ダミー
@@ -50,6 +50,36 @@ function generateChoices(answer, min) {
         if (dummy > 0 && dummy !== answer) {choices.add(dummy);}
     }
     return Array.from(choices).map(String);
+}
+// 4択作成（少数）
+function generateChoicesFix(answer, min) {
+    // 正解の小数桁数を自動検出（文字列化）
+    const fix = detectFix(answer);
+    const choices = new Set([answer.toFixed(fix)]);
+    // ダミー
+    while (choices.size < 4) {
+        let dummy = 0;
+        const pt = getRandom(1, 4, 0); // パターン選択（整数）
+        if (pt === 1) { // パターン1：正解 ± 1～3（小数対応）
+            const diff = getRandom(1, 3, fix);
+            dummy = answer + (Math.random() < 0.5 ? -diff : diff);
+        } else if (pt === 2) { // パターン2：正解 ±（問題の最小値）
+            const diff = getRandom(0, min, fix);
+            dummy = answer + (Math.random() < 0.5 ? -diff : diff);
+        } else if (pt === 3) { // パターン3：正解 ±（正解値の5%）
+            const diff = Number((answer * 0.05).toFixed(fix));
+            const delta = getRandom(0, diff, fix);
+            dummy = answer + (Math.random() < 0.5 ? -delta : delta);
+        } else if (pt === 4) { // パターン4：正解 ±（正解値の10%）
+            const diff = Number((answer * 0.10).toFixed(fix));
+            const delta = getRandom(0, diff, fix);
+            dummy = answer + (Math.random() < 0.5 ? -delta : delta);
+        }
+
+        // 正の値のみ採用、重複は Set が自動で排除
+        if (dummy > 0 && dummy !== answer) {choices.add(dummy.toFixed(fix));}
+    }
+    return Array.from(choices);
 }
 
 // ==========================================
@@ -85,7 +115,7 @@ function custom01(q) {
     }
 
     // 選択肢生成
-    const choices = generateChoices(answer, min);
+    const choices = generateChoicesFix(answer, min);
     // 解説置換
     const newExplanation = q.explanation.replace("【答】", answer);
 
