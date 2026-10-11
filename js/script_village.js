@@ -48,7 +48,7 @@ function closeCompanionModal() {
 }
 
 // 仲間一覧を表示
-function renderCompanionSetting() {
+async function renderCompanionSetting() {
     const zone = document.getElementById('companion-setting-list');
     zone.innerHTML = "";
     
