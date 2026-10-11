@@ -67,3 +67,7 @@ async function renderCompanionSetting() {
         zone.appendChild(div);
     });
 }
+
+// ★ HTML の onclick から呼べるようにする
+window.goQuest = goQuest;
+window.goQuest = closeCompanionModal;
