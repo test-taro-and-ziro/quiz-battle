@@ -1,2 +1,35 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>こもれびの村</title>
+    <link rel="stylesheet" href="css/style_village.css">
+</head>
+<body>
 
-テスト
+    <div class="village-container">
+
+        <!-- 左上メニュー（クエスト選択画面と同じ） -->
+        <div class="village-menu-box">
+            <button class="menu-item-btn" onclick="goQuest()">🏰 クエストへもどる</button>
+            <button class="menu-item-btn" id="open-companion-setting">👥 つれていく仲間（なかま）</button>
+        </div>
+
+        <!-- 背景画像 -->
+        <div class="village-background"></div>
+
+    </div>
+
+    <!-- 仲間設定ポップアップ -->
+    <div id="companion-modal" class="modal-overlay hidden">
+        <div class="modal-window">
+            <h2>つれていく仲間（なかま）をえらぶ</h2>
+            <div id="companion-setting-list"></div>
+            <button class="close-btn" onclick="closeCompanionModal()">とじる</button>
+        </div>
+    </div>
+
+    <script src="script_village.js"></script>
+</body>
+</html>
