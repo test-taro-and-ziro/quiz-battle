@@ -24,11 +24,9 @@ window.addEventListener('DOMContentLoaded', async () => {
         window.location.href = 'index.html';
         return;
     }
-    // ★ tempData から値を復元
-    currentUser = tempData.name;
 
     // ユーザ情報を取得する
-    await setupPlayerMaster(currentUser);
+    await setupPlayerMaster(tempData.name);
 
     // 仲間設定ポップアップを開く
     document.getElementById('open-companion-setting').addEventListener('click', () => {
