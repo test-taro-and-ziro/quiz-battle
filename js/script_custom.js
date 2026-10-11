@@ -85,7 +85,7 @@ function custom01(q) {
     }
 
     // 選択肢生成
-    const choices = generateChoices(answer, min, fix);
+    const choices = generateChoices(answer, min);
     // 解説置換
     const newExplanation = q.explanation.replace("【答】", answer);
 
@@ -133,7 +133,7 @@ function custom02(q) {
     }
 
     // 選択肢生成
-    const choices = generateChoices(answer, min, fix);
+    const choices = generateChoices(answer, min);
     // 解説置換
     const newExplanation = q.explanation.replace("【答】", answer);
 
