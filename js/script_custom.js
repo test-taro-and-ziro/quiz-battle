@@ -114,7 +114,7 @@ function custom02(q) {
     const min = Number(q.choices[0]);
     const max = Number(q.choices[1]);
 
-    const fix = Math.max(detectFix(min), detectFix(max)));
+    const fix = Math.max(detectFix(min), detectFix(max));
     
     // ランダム値生成
     const v1 = getRandom(min, max, fix);
