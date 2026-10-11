@@ -134,6 +134,8 @@ function custom01(q) {
 // ==========================================
 function custom02(q) {
 
+    console.log("custom_02");
+
     // choices を設定値として使う（例：桁数など）
     const min = Number(q.choices[0]);
     const max = Number(q.choices[1]);
