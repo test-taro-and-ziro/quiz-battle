@@ -40,7 +40,7 @@ window.addEventListener('DOMContentLoaded', async () => {
 
 // クエスト画面へ戻る
 function goQuest() {
-    window.location.href = `quest.html?user=${encodeURIComponent(currentLoginUser)}`;
+    window.location.href = `quest.html?temp=${encodeURIComponent(tempData.id)}`;
 }
 // 仲間設定を閉じる
 function closeCompanionModal() {
