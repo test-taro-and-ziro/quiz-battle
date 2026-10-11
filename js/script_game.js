@@ -91,7 +91,7 @@ window.addEventListener('DOMContentLoaded', async () => {
     } else {
         // 万が一、ダンジョン情報が取れなかった場合はクエスト選択画面に戻す
         alert("ダンジョン情報が見つかりません。もういちど選んでね！");
-        window.location.href = `quest.html?user=${currentUser}`;
+        window.location.href = `quest.html?temp=${encodeURIComponent(tempData.id)}`;
         return;
     }
         
