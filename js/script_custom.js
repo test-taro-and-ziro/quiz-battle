@@ -53,8 +53,51 @@ function generateChoices(answer, min) {
 // ==========================================
 function custom01(q) {
 
-    console.log("クイズのカスタマイズ実施；custom_01:");
-    
+    // choices を設定値として使う（例：桁数など）
+    const min = Number(q.choices[0]);
+    const max = Number(q.choices[1]);
+
+    // ランダム値生成
+    const v1 = getRandomInt(min, max);
+    const v2 = getRandomInt(min, max);
+
+    let newText = q.text;
+    newText = newText.replace("【値1】", "計算");
+
+    // 正解計算
+    let answer = 0;
+    if (v1 > v2) {
+        answer = v1 + v2;
+        newText = newText.replace("【値2】", v1);
+        newText = newText.replace("【値3】", "＋");
+        newText = newText.replace("【値4】", v2);
+    } else {
+        answer = v2 - v1;
+        newText = newText.replace("【値2】", v2);
+        newText = newText.replace("【値3】", "－");
+        newText = newText.replace("【値4】", v1);
+    }
+
+    // 選択肢生成
+    const choices = generateChoices(answer, min);
+    // 解説置換
+    const newExplanation = q.explanation.replace("【答】", answer);
+
+    return {
+        ...q,
+        text: newText,
+        choices: choices,
+        answer: String(answer),
+        explanation: newExplanation
+    };
+}
+
+// ==========================================
+// ★ custom_02：少数の足し算・引き算
+// 【値1】～【値4】、【答】　choices（最小,最大）
+// ==========================================
+function custom02(q) {
+
     // choices を設定値として使う（例：桁数など）
     const min = Number(q.choices[0]);
     const max = Number(q.choices[1]);
