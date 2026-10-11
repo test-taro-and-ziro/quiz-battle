@@ -30,8 +30,6 @@ function detectFix(num) {
     const idx = s.indexOf(".");
     return idx === -1 ? 0 : s.length - idx - 1;
 };
-
-}
 // 4択作成
 function generateChoices(answer, min, fix) {
     const choices = new Set([answer]); // 正解
