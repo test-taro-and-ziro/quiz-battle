@@ -12,9 +12,9 @@ export const bulkQuestionsData = [];
 //import { loadQuestions4 } from './add_quiz_4.js';
 //import { loadQuestions5 } from './add_quiz_5.js';
 //import { loadQuestionsetc } from './add_quiz_etc.js';
-//import { loadQuestions_custom } from './add_quiz_custom.js';
+import { loadQuestions_custom } from './add_quiz_custom.js';
 
-import { loadQuestions_add } from './add_quiz_add.js';
+//import { loadQuestions_add } from './add_quiz_add.js';
 
 // 配列へ追加を実行する
 //loadQuestions0(bulkQuestionsData);
@@ -22,6 +22,6 @@ import { loadQuestions_add } from './add_quiz_add.js';
 //loadQuestions4(bulkQuestionsData);
 //loadQuestions5(bulkQuestionsData);
 //loadQuestionsetc(bulkQuestionsData);
-//loadQuestions_custom(bulkQuestionsData);
+loadQuestions_custom(bulkQuestionsData);
 
-loadQuestions_add(bulkQuestionsData);
+//loadQuestions_add(bulkQuestionsData);
