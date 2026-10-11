@@ -31,26 +31,20 @@ function detectFix(num) {
     return idx === -1 ? 0 : s.length - idx - 1;
 };
 // 4択作成
-function generateChoices(answer, min, fix) {
+function generateChoices(answer, min) {
     const choices = new Set([answer]); // 正解
     // ダミー
     while (choices.size < 4) {
         let dummy = 0; // ダミー問題
         const pt = getRandom(1, 4, 0); // ダミー問題のパターン
-        if (pt == 1) {
-            // パターン1：正解 ± 1～3
-            dummy = answer + getRandom(-3, 3, fix);
-        } else if (pt == 2) {
-            // パターン2：正解 ±（問題の最小値）
-            dummy = answer + getRandom(-min, min, fix);
-        } else if (pt == 3) {
-            // パターン3：正解 ±（正解値の5%）
+        if (pt == 1) {dummy = answer + getRandom(-3, 3);} // パターン1：正解 ± 1～3
+        if (pt == 2) {dummy = answer + getRandom(-min, min);} // パターン2：正解 ±（問題の最小値）
+        if (pt == 3) { // パターン3：正解 ±（正解値の5%）
             const diff = Math.floor(answer * 0.05);
-            dummy = answer + getRandom(-diff, diff, fix);
-        } else if (pt == 4) {
-            // パターン4：正解 ±（正解値の10%）
+            dummy = answer + getRandom(-diff, diff);
+        } else if (pt == 4) { // パターン4：正解 ±（正解値の10%）            
             const diff = Math.floor(answer * 0.10);
-            dummy = answer + getRandom(-diff, diff, fix);
+            dummy = answer + getRandom(-diff, diff);
         }
         // 正の値のみ採用、重複は Set が自動で排除
         if (dummy > 0 && dummy !== answer) {choices.add(dummy);}
