@@ -22,7 +22,7 @@ window.addEventListener('DOMContentLoaded', async () => {
 function goQuest() {
     window.location.href = `quest.html?user=${encodeURIComponent(currentLoginUser)}`;
 }
-.. 仲間設定を閉じる
+// 仲間設定を閉じる
 function closeCompanionModal() {
     document.getElementById('companion-modal').classList.add('hidden');
 }
@@ -31,7 +31,8 @@ function closeCompanionModal() {
 function renderCompanionSetting() {
     const zone = document.getElementById('companion-setting-list');
     zone.innerHTML = "";
-
+    
+    await loadCompanionMaster(); 
     companionMasterData.forEach(comp => {
         const div = document.createElement('div');
         div.className = "companion-row";
