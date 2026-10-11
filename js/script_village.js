@@ -7,8 +7,28 @@ import { loadAnimalMaster, getCharacterFileName, setCharacterSrc, setCompanionSr
 
 // 起動時にプレイヤー情報を読み込む
 window.addEventListener('DOMContentLoaded', async () => {
-    const user = new URLSearchParams(location.search).get('user');
-    await setupPlayerMaster(user);
+
+    // URLの「?temp=ドキュメントID」からプレイヤーの名前を読み取る
+    const urlParams = new URLSearchParams(window.location.search);
+    const docid = urlParams.get('temp');
+    if (!docid) {
+        alert("ゲームデータが見つかりません。もういちどログインしてね！");
+        window.location.href = 'index.html';
+        return;
+    }
+    // ★ temp コレクション読み取り（共通関数）
+    await prepareTempData(docid); // docID で読み取れる
+    if (!tempData) {
+        // 名前が取れなければ安全のためにトップ画面に戻す
+        alert("もういちどログインしなおしてね！");
+        window.location.href = 'index.html';
+        return;
+    }
+    // ★ tempData から値を復元
+    currentUser = tempData.name;
+
+    // ユーザ情報を取得する
+    await setupPlayerMaster(currentUser);
 
     // 仲間設定ポップアップを開く
     document.getElementById('open-companion-setting').addEventListener('click', () => {
