@@ -8,9 +8,7 @@ export function applyCustomTemplate(question) {
     
     if (pattern === "【custom_01】") {return custom01(question);}
     if (pattern === "【custom_02】") {return custom02(question);}
-
-    // 追加パターンはここに増やす
-    // if (pattern === "【custom_xxx】") return customXxx(question);
+    if (pattern === "【custom_03】") {return custom03(question);}
 
     // パターンが無ければそのまま返す
     return question;
@@ -185,7 +183,7 @@ function custom02(q) {
 // ★ custom_03：九九のかけ算
 // 【値1】～【値2】、【答】　choices（最小,最大）
 // ==========================================
-function custom01(q) {
+function custom03(q) {
 
     // choices を設定値として使う（例：桁数など）
     const min = Number(q.choices[0]);
