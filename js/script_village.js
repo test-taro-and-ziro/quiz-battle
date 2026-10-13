@@ -73,7 +73,7 @@ async function renderCompanionSetting() {
             <div class="companion-card selected" onclick="toggleSelect('${id}')">
                 <img src="images/sub/${comp.img}">
                 <div class="companion-info">
-                    <div>${comp.name}</div>
+                    <div>名前：${comp.name}</div>
                 </div>
             </div>
         `;
@@ -91,12 +91,11 @@ async function renderCompanionSetting() {
             <div class="companion-card ${isSelected ? "selected" : ""}" onclick="toggleSelect('${id}')">
                 <img src="images/sub/${comp.img}">
                 <div class="companion-info">
-                    <div>${comp.name}</div>
-                    <div>${skillText}</div>
+                    <div>名前：${comp.name}</div>
+                    <div>科目：${skillText}</div>
                 </div>
             </div>
         `;
-
     });
 }
 // 仲間科目表示フォーマット設定
