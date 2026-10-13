@@ -148,6 +148,7 @@ body, html {
     cursor: pointer;
     border: none;
     text-align: center;    /* ← 文字を中央に */
+    white-space: nowrap;   /* ← 改行を防ぐ（重要） */
 }
 /* SAVE ボタンの色 */
 .save-btn {
