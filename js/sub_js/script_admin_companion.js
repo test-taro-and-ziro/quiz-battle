@@ -147,24 +147,13 @@ async function saveAdminCompanion(id) {
         const geniusInputs = [...document.querySelectorAll(`#genius-list-${id} input`)];
         const genius = geniusInputs.map(i => i.value.trim()).filter(v => v !== "");
 
-        // ★ id が無い（新規） → addDoc（自動採番）
-        if (!id) {
-            const docRef = await addDoc(collection(db, "companions"), {
-                id: newId,
-                name,
-                img,
-                good,
-                genius
-            });
-        } else {
-            await updateDoc(doc(db, "companions", id), {
-                name,
-                img,
-                id: newId,
-                good,
-                genius
-            });
-        }
+        await updateDoc(doc(db, "companions", id), {
+            name,
+            img,
+            id: newId,
+            good,
+            genius
+        });
 
         alert("仲間データを保存しました！");
     } catch (e) {
@@ -203,14 +192,15 @@ async function addCompanionFromAdmin(){
             .map(v => v.trim())
             .filter(v => v !== "");
 
-        await setDoc(doc(db, "companions", id), {
+        // ★ id が無い（新規） → addDoc（自動採番）
+        await addDoc(collection(db, "companions"), {
+            id,
             name,
             img,
-            id,
             good,
             genius
         });
-
+        
         alert("新しい仲間を追加しました！");
         renderAdminCompanionList();
 
