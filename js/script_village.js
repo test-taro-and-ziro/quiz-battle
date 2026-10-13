@@ -83,22 +83,44 @@ async function renderCompanionSetting() {
         const comp = companionMasterData.find(c => c.id === id);
         if (!comp) return;
 
-        const goods = comp.goods ? comp.goods.join(" / ") : "";
-        const genius = comp.genius ? comp.genius.join(" / ") : "";
-
         const isSelected = equipment.includes(id);
+        const skillText = formatCompanionSkills(comp);
 
         companionsZone.innerHTML += `
             <div class="companion-card ${isSelected ? "selected" : ""}" onclick="toggleSelect('${id}')">
                 <img src="images/sub/${comp.img}">
                 <div class="companion-info">
                     <div>${comp.name}</div>
-                    <div>得意：${goods}</div>
-                    <div>天才：${genius}</div>
+                    <div>${skillText}</div>
                 </div>
             </div>
         `;
+
     });
+}
+// 仲間科目表示フォーマット設定
+function formatCompanionSkills(comp) {
+    let list = [];
+
+    // 得意科目
+    if (comp.good && comp.good.length > 0) {
+        comp.good.forEach(id => {
+            const genre = genreMasterData.find(g => g.value === id);
+            if (genre) {
+                list.push(`${genre.label}（得意）`);
+            }
+        });
+    }
+    // 天才科目
+    if (comp.genius && comp.genius.length > 0) {
+        comp.genius.forEach(id => {
+            const genre = genreMasterData.find(g => g.value === id);
+            if (genre) {
+                list.push(`${genre.label}（天才）`);
+            }
+        });
+    }
+    return list.join("、");
 }
 // 仲間選択時処理
 function toggleSelect(companionId) {
