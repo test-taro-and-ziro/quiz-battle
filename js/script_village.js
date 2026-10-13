@@ -135,3 +135,4 @@ async function saveCompanionSetting() {
 // ★ HTML の onclick から呼べるようにする
 window.goQuest = goQuest;
 window.closeCompanionModal = closeCompanionModal;
+window.toggleSelect = toggleSelect;
