@@ -5,6 +5,9 @@ import { loadAnimalMaster, getCharacterFileName, setCharacterSrc, setCompanionSr
         setupPlayerMaster, logoutPlayerMaster, prepareTempData,
         animalMasterData, genreMasterData, gradeMasterData, companionMasterData, dungeonMasterData, currentLoginUser, currentPlayerData, tempData } from './game-master.js';
 
+// ★ グローバル変数として宣言（必須）
+let tempEquipment = [];
+
 // 起動時にプレイヤー情報を読み込む
 window.addEventListener('DOMContentLoaded', async () => {
 
@@ -128,12 +131,6 @@ async function saveCompanionSetting() {
     alert("保存したよ！");
     closeCompanionModal();
 }
-
-
-
-
-
-
 
 // ★ HTML の onclick から呼べるようにする
 window.goQuest = goQuest;
