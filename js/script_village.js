@@ -8,7 +8,9 @@ import { loadAnimalMaster, getCharacterFileName, setCharacterSrc, setCompanionSr
 // ★ グローバル変数として宣言（必須）
 let tempEquipment = [];
 
+// ==========================================
 // 起動時にプレイヤー情報を読み込む
+// ==========================================
 window.addEventListener('DOMContentLoaded', async () => {
 
     // URLの「?temp=ドキュメントID」からプレイヤーの名前を読み取る
@@ -30,6 +32,7 @@ window.addEventListener('DOMContentLoaded', async () => {
 
     // ユーザ情報を取得する
     await setupPlayerMaster(tempData.name);
+    tempEquipment = [...(currentPlayerData.equipment || [])]; // ★ここで初期化
 
     // 仲間設定ポップアップを開く
     document.getElementById('open-companion-setting').addEventListener('click', () => {
@@ -43,11 +46,10 @@ window.addEventListener('DOMContentLoaded', async () => {
 function goQuest() {
     window.location.href = `quest.html?temp=${encodeURIComponent(tempData.id)}`;
 }
-// 仲間設定を閉じる
-function closeCompanionModal() {
-    document.getElementById('companion-modal').classList.add('hidden');
-}
 
+// ==========================================
+// 仲間設定ポップアップ起動処理
+// ==========================================
 async function renderCompanionSetting() {
 
     await loadCompanionMaster();
@@ -98,7 +100,7 @@ async function renderCompanionSetting() {
         `;
     });
 }
-
+// 仲間選択時処理
 function toggleSelect(companionId) {
     const equipment = tempEquipment; // 一時保存用
     const isSelected = equipment.includes(companionId);
@@ -119,6 +121,7 @@ function toggleSelect(companionId) {
     tempEquipment = [...equipment, companionId];
     renderCompanionSetting();
 }
+// 「SAVE」ボタン押下時処理
 async function saveCompanionSetting() {
     const userRef = doc(db, "users", currentPlayerData.docId);
 
@@ -131,6 +134,11 @@ async function saveCompanionSetting() {
     alert("保存したよ！");
     closeCompanionModal();
 }
+// 仲間設定を閉じる
+function closeCompanionModal() {
+    document.getElementById('companion-modal').classList.add('hidden');
+}
+
 
 // ★ HTML の onclick から呼べるようにする
 window.goQuest = goQuest;
