@@ -107,7 +107,11 @@ function formatCompanionSkills(comp) {
         comp.good.forEach(id => {
             const genre = genreMasterData.find(g => g.value === id);
             if (genre) {
-                list.push(`${genre.label}（得意）`);
+                if (currentPlayerData.grade == 0) {
+                        list.push(`${genre.label}（得意）`);
+                } else {
+                        list.push(`${genre.label_junior}（得意）`);
+                }
             }
         });
     }
@@ -116,7 +120,11 @@ function formatCompanionSkills(comp) {
         comp.genius.forEach(id => {
             const genre = genreMasterData.find(g => g.value === id);
             if (genre) {
-                list.push(`${genre.label}（天才）`);
+                if (currentPlayerData.grade == 0) {
+                        list.push(`${genre.label}（天才）`);
+                } else {
+                        list.push(`${genre.label_junior}（天才）`);
+                }
             }
         });
     }
