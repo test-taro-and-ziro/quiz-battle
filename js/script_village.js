@@ -32,10 +32,10 @@ window.addEventListener('DOMContentLoaded', async () => {
 
     // ユーザ情報を取得する
     await setupPlayerMaster(tempData.name);
-    tempEquipment = [...(currentPlayerData.equipment || [])]; // ★ここで初期化
 
     // 仲間設定ポップアップを開く
     document.getElementById('open-companion-setting').addEventListener('click', () => {
+        tempEquipment = [...(currentPlayerData.equipment || [])]; // ★ここで初期化
         renderCompanionSetting();
         document.getElementById('companion-modal').classList.remove('hidden');
     });
