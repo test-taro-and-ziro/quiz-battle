@@ -49,23 +49,66 @@ function closeCompanionModal() {
 async function renderCompanionSetting() {
     const zone = document.getElementById('companion-setting-list');
     zone.innerHTML = "";
-    
-    await loadCompanionMaster(); 
-    companionMasterData.forEach(comp => {
+
+    await loadCompanionMaster();
+
+    const friends = currentPlayerData.companions || [];   // 友達になった仲間（全員）
+    const equipment = currentPlayerData.equipment || [];  // 連れていく仲間（最大2人）
+
+    friends.forEach(id => {
+
+        const comp = companionMasterData.find(c => c.id === id);
+        if (!comp) return;
+
+        const isOn = equipment.includes(id);
+
         const div = document.createElement('div');
         div.className = "companion-row";
 
-        const checked = currentPlayerData.companions.includes(comp.id) ? "checked" : "";
-
         div.innerHTML = `
-            <label>
-                <input type="checkbox" value="${comp.id}" ${checked}>
-                ${comp.name}
+            <label class="companion-label">
+                <img src="images/sub/${comp.img}" class="companion-img">
+                <input type="checkbox" value="${comp.id}" ${isOn ? "checked" : ""}>
+                <span>${comp.name}</span>
             </label>
         `;
 
         zone.appendChild(div);
     });
+
+    // チェックイベント
+    zone.querySelectorAll("input[type='checkbox']").forEach(chk => {
+        chk.addEventListener("change", () => {
+            toggleEquipment(chk.value);
+        });
+    });
+}
+
+async function toggleEquipment(companionId) {
+
+    const userRef = doc(db, "users", currentPlayerData.docId);
+    const current = currentPlayerData.equipment || [];
+
+    // ON → OFF（外す）
+    if (current.includes(companionId)) {
+        const newList = current.filter(id => id !== companionId);
+        await updateDoc(userRef, { equipment: newList });
+        currentPlayerData.equipment = newList;
+        renderCompanionSetting();
+        return;
+    }
+
+    // OFF → ON（追加）
+    if (current.length >= 2) {
+        alert("つれていける仲間は 2人までだよ！");
+        return;
+    }
+
+    const newList = [...current, companionId];
+    await updateDoc(userRef, { equipment: newList });
+    currentPlayerData.equipment = newList;
+
+    renderCompanionSetting();
 }
 
 // ★ HTML の onclick から呼べるようにする
