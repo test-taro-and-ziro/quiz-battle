@@ -63,28 +63,33 @@ body, html {
 }
 
 /* 仲間の設定 */
+/* タイトルの文字サイズを調整 */
 .companion-title {
     font-size: 20px;
     margin-bottom: 10px;
 }
-/* カラムタイトル */
+
+/* ブロックタイトル */
 .column-title {
     font-size: 16px;
     margin-bottom: 8px;
 }
-/* 2カラムレイアウト */
-.companion-setting-container {
+
+/* ★ 上下レイアウト */
+.companion-setting-vertical {
     display: flex;
+    flex-direction: column;
     gap: 20px;
     margin-top: 10px;
 }
-.companion-column {
-    width: 50%;
+
+.companion-block {
     background: #ffffff;
     border: 1px solid #ccc;
     border-radius: 8px;
     padding: 10px;
 }
+
 /* 仲間カード */
 .companion-card {
     display: flex;
@@ -97,11 +102,13 @@ body, html {
     cursor: pointer;
     background: #fafafa;
 }
+
 .companion-card img {
     width: 50px;
     height: 50px;
     object-fit: contain;
 }
+
 .companion-info {
     display: flex;
     flex-direction: column;
