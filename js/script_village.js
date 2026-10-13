@@ -45,13 +45,12 @@ function closeCompanionModal() {
     document.getElementById('companion-modal').classList.add('hidden');
 }
 
-// 仲間一覧を表示
 async function renderCompanionSetting() {
 
     await loadCompanionMaster();
 
     const friends = currentPlayerData.companions || [];
-    const equipment = currentPlayerData.equipment || [];
+    const equipment = tempEquipment; // 一時保存用
 
     const equipmentZone = document.getElementById("equipment-list");
     const companionsZone = document.getElementById("companions-list");
@@ -59,13 +58,13 @@ async function renderCompanionSetting() {
     equipmentZone.innerHTML = "";
     companionsZone.innerHTML = "";
 
-    // ★ 上：連れていく仲間（横並び）
+    // 上：連れていく仲間（横並び）
     equipment.forEach(id => {
         const comp = companionMasterData.find(c => c.id === id);
         if (!comp) return;
 
         equipmentZone.innerHTML += `
-            <div class="companion-card" onclick="toggleEquipment('${id}')">
+            <div class="companion-card selected" onclick="toggleSelect('${id}')">
                 <img src="images/sub/${comp.img}">
                 <div class="companion-info">
                     <div>${comp.name}</div>
@@ -82,8 +81,10 @@ async function renderCompanionSetting() {
         const goods = comp.goods ? comp.goods.join(" / ") : "";
         const genius = comp.genius ? comp.genius.join(" / ") : "";
 
+        const isSelected = equipment.includes(id);
+
         companionsZone.innerHTML += `
-            <div class="companion-card" onclick="toggleEquipment('${id}')">
+            <div class="companion-card ${isSelected ? "selected" : ""}" onclick="toggleSelect('${id}')">
                 <img src="images/sub/${comp.img}">
                 <div class="companion-info">
                     <div>${comp.name}</div>
@@ -95,32 +96,44 @@ async function renderCompanionSetting() {
     });
 }
 
-async function toggleEquipment(companionId) {
+function toggleSelect(companionId) {
+    const equipment = tempEquipment; // 一時保存用
+    const isSelected = equipment.includes(companionId);
 
-    const userRef = doc(db, "users", currentPlayerData.docId);
-    const current = currentPlayerData.equipment || [];
-
-    // ON → OFF
-    if (current.includes(companionId)) {
-        const newList = current.filter(id => id !== companionId);
-        await updateDoc(userRef, { equipment: newList });
-        currentPlayerData.equipment = newList;
+    // 選択済み → 外す
+    if (isSelected) {
+        tempEquipment = equipment.filter(id => id !== companionId);
         renderCompanionSetting();
         return;
     }
 
-    // OFF → ON（最大2人）
-    if (current.length >= 2) {
+    // 未選択 → 追加（最大2人）
+    if (equipment.length >= 2) {
         alert("つれていける仲間は 2人までだよ！");
         return;
     }
 
-    const newList = [...current, companionId];
-    await updateDoc(userRef, { equipment: newList });
-    currentPlayerData.equipment = newList;
-
+    tempEquipment = [...equipment, companionId];
     renderCompanionSetting();
 }
+async function saveCompanionSetting() {
+    const userRef = doc(db, "users", currentPlayerData.docId);
+
+    await updateDoc(userRef, {
+        equipment: tempEquipment
+    });
+
+    currentPlayerData.equipment = tempEquipment;
+
+    alert("保存したよ！");
+    closeCompanionModal();
+}
+
+
+
+
+
+
 
 // ★ HTML の onclick から呼べるようにする
 window.goQuest = goQuest;
