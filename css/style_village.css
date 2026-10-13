@@ -40,58 +40,34 @@ body, html {
     text-align: left;
 }
 
-/* 小枠 */
+/* ===== ポップアップ全体 ===== */
 .modal-overlay {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
     background: rgba(0,0,0,0.4);
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
 }
 .modal-window {
-    background: white;
-    border: 3px solid #ffb74d;
-    border-radius: 12px;
-    padding: 20px;
+    background: #fff;
     width: 90%;
-    max-width: 320px;
-    text-align: center;
+    max-width: 480px;
+    padding: 20px;
+    border-radius: 10px;
 }
 
-/* ★ 連れていく仲間を横並びにする */
-.equipment-row {
-    display: flex;
-    gap: 12px;
-    flex-wrap: wrap; /* 2人以上になった時の安全対策 */
-}
-/* 連れていく仲間（上段）を横並びにする */
-#equipment-list {
-    display: flex;
-    flex-direction: row;
-    gap: 12px;
-    flex-wrap: wrap; /* 2人以上になった時の安全対策 */
-}
-
-/* 仲間の設定 */
+/* ===== タイトル ===== */
 .companion-title {
     font-size: 20px;
     margin-bottom: 10px;
 }
-/* ブロックタイトル */
-.column-title {
-    font-size: 16px;
-    margin-bottom: 8px;
-}
-/* ★ 上下レイアウト */
+/* ===== 上下レイアウト ===== */
 .companion-setting-vertical {
     display: flex;
     flex-direction: column;
     gap: 20px;
-    margin-top: 10px;
 }
 .companion-block {
     background: #ffffff;
@@ -99,14 +75,11 @@ body, html {
     border-radius: 8px;
     padding: 10px;
 }
-/* 仲間カード */
-/* 友達になった仲間（下段）のカードを右端まで伸ばす */
-#companions-list .companion-card {
-    width: 100%;
-    box-sizing: border-box;
+.column-title {
+    font-size: 16px;
+    margin-bottom: 8px;
 }
-
-/* 仲間カード（共通） */
+/* ===== 仲間カード（共通） ===== */
 .companion-card {
     display: flex;
     align-items: center;
@@ -115,20 +88,38 @@ body, html {
     margin-bottom: 10px;
     border: 1px solid #ddd;
     border-radius: 6px;
-    cursor: pointer;
     background: #fafafa;
+    cursor: pointer;
 }
+/* 画像 */
 .companion-card img {
     width: 50px;
     height: 50px;
     object-fit: contain;
 }
+/* テキスト領域（左寄せ固定） */
 .companion-info {
+    flex: 1;
     display: flex;
     flex-direction: column;
+    text-align: left;
     font-size: 14px;
 }
-/* ★ 閉じるボタンの装飾 */
+
+/* ===== 連れていく仲間（横並び） ===== */
+#equipment-list {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+/* ===== 友達になった仲間（枠を右端まで伸ばす） ===== */
+#companions-list .companion-card {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* ===== 閉じるボタン ===== */
 .close-btn {
     margin-top: 15px;
     padding: 10px 20px;
@@ -141,6 +132,7 @@ body, html {
     box-shadow: 0px 3px 6px rgba(0,0,0,0.2);
     transition: 0.2s;
 }
+
 .close-btn:hover {
     background: #fb8c00;
 }
