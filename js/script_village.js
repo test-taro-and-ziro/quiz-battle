@@ -50,8 +50,8 @@ async function renderCompanionSetting() {
 
     await loadCompanionMaster();
 
-    const friends = currentPlayerData.companions || [];   // 友達になった仲間（全員）
-    const equipment = currentPlayerData.equipment || [];  // 連れていく仲間（最大2人）
+    const friends = currentPlayerData.companions || [];
+    const equipment = currentPlayerData.equipment || [];
 
     const equipmentZone = document.getElementById("equipment-list");
     const companionsZone = document.getElementById("companions-list");
@@ -59,7 +59,7 @@ async function renderCompanionSetting() {
     equipmentZone.innerHTML = "";
     companionsZone.innerHTML = "";
 
-    // 上：連れていく仲間（equipment）
+    // ★ 上：連れていく仲間（横並び）
     equipment.forEach(id => {
         const comp = companionMasterData.find(c => c.id === id);
         if (!comp) return;
@@ -74,7 +74,7 @@ async function renderCompanionSetting() {
         `;
     });
 
-    // 下：友達になった仲間（companions）
+    // 下：友達になった仲間（縦並び）
     friends.forEach(id => {
         const comp = companionMasterData.find(c => c.id === id);
         if (!comp) return;
