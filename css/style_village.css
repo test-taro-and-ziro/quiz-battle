@@ -62,6 +62,7 @@ body, html {
 .companion-title {
     font-size: 20px;
     margin-bottom: 10px;
+    color: #4CAF50; /* 緑 */
 }
 /* ===== 上下レイアウト ===== */
 .companion-setting-vertical {
@@ -75,9 +76,16 @@ body, html {
     border-radius: 8px;
     padding: 10px;
 }
-.column-title {
+.title-equipment {
     font-size: 16px;
     margin-bottom: 8px;
+    color: #2196F3; /* 青 */
+}
+
+.title-companions {
+    font-size: 16px;
+    margin-bottom: 8px;
+    color: #FF5722; /* オレンジ */
 }
 /* ===== 仲間カード（共通） ===== */
 .companion-card {
@@ -119,6 +127,19 @@ body, html {
     box-sizing: border-box;
 }
 
+/* ===== save ボタン ===== */
+.save-btn {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0px 3px 6px rgba(0,0,0,0.2);
+    transition: 0.2s;
+}
 /* ===== 閉じるボタン ===== */
 .close-btn {
     margin-top: 15px;
