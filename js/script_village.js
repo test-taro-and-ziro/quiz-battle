@@ -136,3 +136,4 @@ async function saveCompanionSetting() {
 window.goQuest = goQuest;
 window.closeCompanionModal = closeCompanionModal;
 window.toggleSelect = toggleSelect;
+window.saveCompanionSetting = saveCompanionSetting;
