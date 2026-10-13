@@ -53,18 +53,18 @@ async function renderCompanionSetting() {
     const friends = currentPlayerData.companions || [];   // 友達になった仲間（全員）
     const equipment = currentPlayerData.equipment || [];  // 連れていく仲間（最大2人）
 
-    const leftZone = document.getElementById("equipment-list");
-    const rightZone = document.getElementById("companions-list");
+    const equipmentZone = document.getElementById("equipment-list");
+    const companionsZone = document.getElementById("companions-list");
 
-    leftZone.innerHTML = "";
-    rightZone.innerHTML = "";
+    equipmentZone.innerHTML = "";
+    companionsZone.innerHTML = "";
 
-    // 左：連れていく仲間（equipment）
+    // 上：連れていく仲間（equipment）
     equipment.forEach(id => {
         const comp = companionMasterData.find(c => c.id === id);
         if (!comp) return;
 
-        leftZone.innerHTML += `
+        equipmentZone.innerHTML += `
             <div class="companion-card" onclick="toggleEquipment('${id}')">
                 <img src="images/sub/${comp.img}">
                 <div class="companion-info">
@@ -74,7 +74,7 @@ async function renderCompanionSetting() {
         `;
     });
 
-    // 右：友達になった仲間（companions）
+    // 下：友達になった仲間（companions）
     friends.forEach(id => {
         const comp = companionMasterData.find(c => c.id === id);
         if (!comp) return;
@@ -82,7 +82,7 @@ async function renderCompanionSetting() {
         const goods = comp.goods ? comp.goods.join(" / ") : "";
         const genius = comp.genius ? comp.genius.join(" / ") : "";
 
-        rightZone.innerHTML += `
+        companionsZone.innerHTML += `
             <div class="companion-card" onclick="toggleEquipment('${id}')">
                 <img src="images/sub/${comp.img}">
                 <div class="companion-info">
