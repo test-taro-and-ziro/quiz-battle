@@ -100,16 +100,23 @@ body, html {
     padding: 10px;
 }
 /* 仲間カード */
+/* 友達になった仲間（下段）のカードを右端まで伸ばす */
+#companions-list .companion-card {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* 仲間カード（共通） */
 .companion-card {
     display: flex;
     align-items: center;
     gap: 10px;
     padding: 8px;
+    margin-bottom: 10px;
     border: 1px solid #ddd;
     border-radius: 6px;
     cursor: pointer;
     background: #fafafa;
-    width: fit-content; /* 横並び用にカード幅を自動調整 */
 }
 .companion-card img {
     width: 50px;
