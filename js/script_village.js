@@ -32,6 +32,7 @@ window.addEventListener('DOMContentLoaded', async () => {
 
     // ユーザ情報を取得する
     await setupPlayerMaster(tempData.name);
+    await loadGenreMaster();
 
     // 仲間設定ポップアップを開く
     document.getElementById('open-companion-setting').addEventListener('click', () => {
