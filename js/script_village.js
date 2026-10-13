@@ -50,43 +50,45 @@ async function renderCompanionSetting() {
 
     await loadCompanionMaster();
 
-    const friends = currentPlayerData.companions || [];
-    const equipment = currentPlayerData.equipment || [];
+    const friends = currentPlayerData.companions || [];   // 友達になった仲間（全員）
+    const equipment = currentPlayerData.equipment || [];  // 連れていく仲間（最大2人）
 
-    const leftZone = document.getElementById("companions-list");
-    const rightZone = document.getElementById("equipment-list");
+    const leftZone = document.getElementById("equipment-list");
+    const rightZone = document.getElementById("companions-list");
 
     leftZone.innerHTML = "";
     rightZone.innerHTML = "";
 
-    // 左：友達になった仲間（全員）
-    friends.forEach(id => {
+    // 左：連れていく仲間（equipment）
+    equipment.forEach(id => {
         const comp = companionMasterData.find(c => c.id === id);
         if (!comp) return;
-
-        const isSelected = equipment.includes(id);
 
         leftZone.innerHTML += `
             <div class="companion-card" onclick="toggleEquipment('${id}')">
                 <img src="images/sub/${comp.img}">
                 <div class="companion-info">
                     <div>${comp.name}</div>
-                    <div>${comp.good_genres.join(" / ")}</div>
                 </div>
             </div>
         `;
     });
 
-    // 右：連れていく仲間（最大2人）
-    equipment.forEach(id => {
+    // 右：友達になった仲間（companions）
+    friends.forEach(id => {
         const comp = companionMasterData.find(c => c.id === id);
         if (!comp) return;
+
+        const goods = comp.goods ? comp.goods.join(" / ") : "";
+        const genius = comp.genius ? comp.genius.join(" / ") : "";
 
         rightZone.innerHTML += `
             <div class="companion-card" onclick="toggleEquipment('${id}')">
                 <img src="images/sub/${comp.img}">
                 <div class="companion-info">
                     <div>${comp.name}</div>
+                    <div>得意：${goods}</div>
+                    <div>天才：${genius}</div>
                 </div>
             </div>
         `;
