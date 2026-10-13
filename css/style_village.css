@@ -68,6 +68,14 @@ body, html {
     gap: 12px;
     flex-wrap: wrap; /* 2人以上になった時の安全対策 */
 }
+/* 連れていく仲間（上段）を横並びにする */
+#equipment-list {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+    flex-wrap: wrap; /* 2人以上になった時の安全対策 */
+}
+
 /* 仲間の設定 */
 .companion-title {
     font-size: 20px;
