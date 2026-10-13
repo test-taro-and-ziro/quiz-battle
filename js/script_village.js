@@ -47,40 +47,49 @@ function closeCompanionModal() {
 
 // 仲間一覧を表示
 async function renderCompanionSetting() {
-    const zone = document.getElementById('companion-setting-list');
-    zone.innerHTML = "";
 
     await loadCompanionMaster();
 
-    const friends = currentPlayerData.companions || [];   // 友達になった仲間（全員）
-    const equipment = currentPlayerData.equipment || [];  // 連れていく仲間（最大2人）
+    const friends = currentPlayerData.companions || [];
+    const equipment = currentPlayerData.equipment || [];
 
+    const leftZone = document.getElementById("companions-list");
+    const rightZone = document.getElementById("equipment-list");
+
+    leftZone.innerHTML = "";
+    rightZone.innerHTML = "";
+
+    // 左：友達になった仲間（全員）
     friends.forEach(id => {
-
         const comp = companionMasterData.find(c => c.id === id);
         if (!comp) return;
 
-        const isOn = equipment.includes(id);
+        const isSelected = equipment.includes(id);
 
-        const div = document.createElement('div');
-        div.className = "companion-row";
-
-        div.innerHTML = `
-            <label class="companion-label">
-                <img src="images/sub/${comp.img}" class="companion-img">
-                <input type="checkbox" value="${comp.id}" ${isOn ? "checked" : ""}>
-                <span>${comp.name}</span>
-            </label>
+        leftZone.innerHTML += `
+            <div class="companion-card" onclick="toggleEquipment('${id}')">
+                <img src="images/sub/${comp.img}">
+                <div class="companion-info">
+                    <div>${comp.name}</div>
+                    <div>${comp.good_genres.join(" / ")}</div>
+                </div>
+            </div>
         `;
-
-        zone.appendChild(div);
     });
 
-    // チェックイベント
-    zone.querySelectorAll("input[type='checkbox']").forEach(chk => {
-        chk.addEventListener("change", () => {
-            toggleEquipment(chk.value);
-        });
+    // 右：連れていく仲間（最大2人）
+    equipment.forEach(id => {
+        const comp = companionMasterData.find(c => c.id === id);
+        if (!comp) return;
+
+        rightZone.innerHTML += `
+            <div class="companion-card" onclick="toggleEquipment('${id}')">
+                <img src="images/sub/${comp.img}">
+                <div class="companion-info">
+                    <div>${comp.name}</div>
+                </div>
+            </div>
+        `;
     });
 }
 
@@ -89,7 +98,7 @@ async function toggleEquipment(companionId) {
     const userRef = doc(db, "users", currentPlayerData.docId);
     const current = currentPlayerData.equipment || [];
 
-    // ON → OFF（外す）
+    // ON → OFF
     if (current.includes(companionId)) {
         const newList = current.filter(id => id !== companionId);
         await updateDoc(userRef, { equipment: newList });
@@ -98,7 +107,7 @@ async function toggleEquipment(companionId) {
         return;
     }
 
-    // OFF → ON（追加）
+    // OFF → ON（最大2人）
     if (current.length >= 2) {
         alert("つれていける仲間は 2人までだよ！");
         return;
