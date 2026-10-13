@@ -113,6 +113,10 @@ body, html {
     text-align: left;
     font-size: 14px;
 }
+.companion-card.selected {
+    border-color: #4CAF50;
+    background: #E8F5E9;
+}
 
 /* ===== 連れていく仲間（横並び） ===== */
 #equipment-list {
