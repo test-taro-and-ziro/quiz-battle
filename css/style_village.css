@@ -63,18 +63,29 @@ body, html {
 }
 
 /* 仲間の設定 */
+.companion-title {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+/* カラムタイトル */
+.column-title {
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+/* 2カラムレイアウト */
 .companion-setting-container {
     display: flex;
     gap: 20px;
-    margin-top: 15px;
+    margin-top: 10px;
 }
 .companion-column {
     width: 50%;
-    background: #fff;
+    background: #ffffff;
     border: 1px solid #ccc;
     border-radius: 8px;
     padding: 10px;
 }
+/* 仲間カード */
 .companion-card {
     display: flex;
     align-items: center;
@@ -84,6 +95,7 @@ body, html {
     border: 1px solid #ddd;
     border-radius: 6px;
     cursor: pointer;
+    background: #fafafa;
 }
 .companion-card img {
     width: 50px;
@@ -93,6 +105,24 @@ body, html {
 .companion-info {
     display: flex;
     flex-direction: column;
+    font-size: 14px;
+}
+
+/* ★ 閉じるボタンの装飾 */
+.close-btn {
+    margin-top: 15px;
+    padding: 10px 20px;
+    background: #ff9800;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0px 3px 6px rgba(0,0,0,0.2);
+    transition: 0.2s;
+}
+.close-btn:hover {
+    background: #fb8c00;
 }
 
 .hidden {
