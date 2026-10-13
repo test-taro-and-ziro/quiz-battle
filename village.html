@@ -24,25 +24,30 @@
     <!-- 仲間設定ポップアップ -->
     <div id="companion-modal" class="modal-overlay hidden">
         <div class="modal-window">
-            <h2>仲間（なかま）をえらぶ</h2>
+    
+            <h2 class="companion-title">つれていく仲間（なかま）をえらぶ</h2>
     
             <!-- ★ 左右2カラムのコンテナ -->
             <div class="companion-setting-container">
-                <div class="companion-column" id="companions-column">
-                    <h3>友達になった仲間</h3>
-                    <div id="companions-list"></div>
-                </div>
-                <div class="companion-column" id="equipment-column">
-                    <h3>つれていく仲間（最大2人）</h3>
+    
+                <!-- 左：equipment（連れていく仲間） -->
+                <div class="companion-column">
+                    <h3 class="column-title">つれていく仲間（最大2人）</h3>
                     <div id="equipment-list"></div>
                 </div>
+    
+                <!-- 右：companions（友達になった仲間） -->
+                <div class="companion-column">
+                    <h3 class="column-title">友達になった仲間</h3>
+                    <div id="companions-list"></div>
+                </div>
+    
             </div>
     
             <button class="close-btn" onclick="closeCompanionModal()">とじる</button>
         </div>
     </div>
-
-
+    
     <script type="module" src="js/script_village.js"></script>
 </body>
 </html>
