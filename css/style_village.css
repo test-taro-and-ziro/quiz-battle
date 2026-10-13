@@ -136,18 +136,18 @@ body, html {
 .button-row {
     display: flex;
     justify-content: space-between; /* 左右に配置 */
-    gap: 10px;
+    gap: 12px;
     margin-top: 15px;
 }
 /* SAVE と とじる の共通サイズ */
-.save-btn,
-.close-btn {
+.save-btn, .close-btn {
     flex: 1;                 /* ← 幅を揃える */
     padding: 10px 0;         /* ← 高さを揃える */
     font-size: 16px;
     border-radius: 8px;
     cursor: pointer;
     border: none;
+    text-align: center;    /* ← 文字を中央に */
 }
 /* SAVE ボタンの色 */
 .save-btn {
