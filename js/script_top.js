@@ -166,6 +166,7 @@ async function handleRegister() {
     const animalSelect = document.getElementById('char-animal-select').value;
   
     if (!nameInput) { alert('おなまえを入力してね！'); return; }
+    if (nameInput.length > 10) { alert('おなまえは 10文字（もじ）までだよ！'); return; }
     if (!gradeSelect) { alert('学年をえらんでね！'); return; }
     if (!genderSelect) { alert('せいべつをえらんでね！'); return; } 
     if (!animalSelect) { alert('どうぶつをえらんでね！'); return; }
