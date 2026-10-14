@@ -146,11 +146,11 @@ async function setupPartyAndRender(userName) {
             if (npc) activeCompanions.push(npc);
         });
         // 足りない場合は default を補完
-        // while (activeCompanions.length < 2) {
-        //     const defaultNpc = companionMasterData.find(c => c.id === DEFAULT_NPC_ID);
-        //     if (defaultNpc) activeCompanions.push(defaultNpc);
-        //     else break;
-        // }
+        while (activeCompanions.length < 2) {
+            const defaultNpc = companionMasterData.find(c => c.id === DEFAULT_NPC_ID);
+            if (defaultNpc) activeCompanions.push(defaultNpc);
+            else break;
+        }
         // なかま2人の画面反映（画像がないNPCは自動で準備中 placeholder.jpg に差し替え）
         activeCompanions.forEach((companion, index) => {
             const num = index + 1;
