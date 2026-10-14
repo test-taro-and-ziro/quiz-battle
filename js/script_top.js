@@ -6,13 +6,11 @@ import { loadAnimalMaster, getCharacterFileName, setCharacterSrc, setCompanionSr
         animalMasterData, genreMasterData, gradeMasterData, companionMasterData, dungeonMasterData, currentLoginUser, currentPlayerData, tempData } from './game-master.js';
 
 const ADMIN_PASSWORD = "admin1234"; 
-
-let deviceId = null;
 let currentUser = null; 
 
 // 起動時処理
 window.addEventListener('DOMContentLoaded', async () => { // asyncを追加
-    initDeviceId();
+
     resetTopScreen();
     await loadGradesFromDB(); // 💡 データベースから学年をロード
 
@@ -32,14 +30,6 @@ window.addEventListener('DOMContentLoaded', async () => { // asyncを追加
         });
     }
 });
-
-function initDeviceId() {
-    deviceId = localStorage.getItem('quiz_battle_device_id');
-    if (!deviceId) {
-        deviceId = 'dev_' + Math.random().toString(36).substring(2, 15);
-        localStorage.setItem('quiz_battle_device_id', deviceId);
-    }
-}
 
 // 💡 画面切り替えの汎用関数
 function changeScreen(screenId) {
