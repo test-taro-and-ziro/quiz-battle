@@ -6,9 +6,10 @@ export function applyCustomTemplate(question) {
     const pattern = question.answer; // カスタム形式取得
     console.log(pattern);
     
-    if (pattern === "【custom_01】") {return custom01(question);}
-    if (pattern === "【custom_02】") {return custom02(question);}
-    if (pattern === "【custom_03】") {return custom03(question);}
+    if (pattern === "【custom_01】") {return custom01(question);} // ★ custom_01：整数の足し算・引き算
+    if (pattern === "【custom_02】") {return custom02(question);} // ★ custom_02：少数の足し算・引き算
+    if (pattern === "【custom_03】") {return custom03(question);} // ★ custom_03：九九のかけ算
+    if (pattern === "【custom_04】") {return custom03(question);} // ★ custom_04：割り算
 
     // パターンが無ければそのまま返す
     return question;
@@ -218,24 +219,41 @@ function custom03(q) {
 // 【値1】～【値2】、【答】　choices（最小,最大）
 // ==========================================
 function custom04(q)  {
-    let A = 0;
-    let B = 0;
-    let C = 0;
+    // choices を設定値として使う（例：桁数など）
+    const BMin = Number(q.choices[0]);
+    const BMax = Number(q.choices[1]);
+    const CMin = Number(q.choices[2]);
+    const CMax = Number(q.choices[3]);
+    const AMin = Number(q.choices[4]);
+    const AMax = Number(q.choices[5]);
 
+    // 乱数取得
     while (true) {
-        B = getRandom(3, 9);      // 割る数（2桁）
-        C = getRandom(34, 99);    // 商（2桁）
-        A = B * C;                // 割られる数（3桁になるはず）
+        const B = getRandom( BMin, BMax, 0 ); // 割る数
+        const C = getRandom( CMin, CMax, 0 ); // 商
+        const A = B * C; // 割られる数（3桁になるはず）
 
-        if (A >= 100 && A <= 999) {
-            break; // 条件を満たしたら終了
-        }
+        // 条件を満たしたら終了
+        if (A >= AMin && A <= AMax) {break;}
     }
 
-    return { A, B, C };
-}
+    // 正解
+    const answer = C;
 
-// 乱数（整数）
-function getRandom(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
+    let newText = q.text;
+    newText = newText.replace("【値1】", A);
+    newText = newText.replace("【値2】", B);
+
+    // 選択肢生成
+    const choices = generateChoices(answer, BMin);
+    // 解説置換
+    const newExplanation = q.explanation.replace("【答】", answer);
+
+    return {
+        ...q,
+        text: newText,
+        choices: choices,
+        answer: String(answer),
+        explanation: newExplanation
+    };
 }
