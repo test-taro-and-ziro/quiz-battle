@@ -9,7 +9,7 @@ export function applyCustomTemplate(question) {
     if (pattern === "【custom_01】") {return custom01(question);} // ★ custom_01：整数の足し算・引き算
     if (pattern === "【custom_02】") {return custom02(question);} // ★ custom_02：少数の足し算・引き算
     if (pattern === "【custom_03】") {return custom03(question);} // ★ custom_03：九九のかけ算
-    if (pattern === "【custom_04】") {return custom03(question);} // ★ custom_04：割り算
+    if (pattern === "【custom_04】") {return custom04(question);} // ★ custom_04：割り算
 
     // パターンが無ければそのまま返す
     return question;
@@ -240,7 +240,6 @@ function custom04(q)  {
 
     // 正解
     const answer = C;
-    console.log(A + "÷" + B + " ＝ " + C);
     
     let newText = q.text;
     newText = newText.replace("【値1】", A);
