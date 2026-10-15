@@ -240,6 +240,8 @@ function custom04(q)  {
     // 正解
     const answer = C;
 
+    console.log(A + "÷" + B + " ＝ " + C);
+    
     let newText = q.text;
     newText = newText.replace("【値1】", A);
     newText = newText.replace("【値2】", B);
