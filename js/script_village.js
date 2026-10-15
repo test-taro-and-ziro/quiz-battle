@@ -73,7 +73,8 @@ async function renderCompanionSetting() {
             <div class="companion-card selected" onclick="toggleSelect('${id}')">
                 <img src="images/sub/${comp.img}">
                 <div class="companion-info">
-                    <div>名前：${comp.name}</div>
+                    <div>名前：</div>
+                    <div>${comp.name}</div>
                 </div>
             </div>
         `;
