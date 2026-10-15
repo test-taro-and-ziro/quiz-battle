@@ -65,12 +65,12 @@ targetArray.push(...[
     { grade: 4, genre: "japanese", type: "which", text: "送りがなの問題だよ<br>漢字 「残」 の送りがなは 「残す」で正しい？", choices: ["○", "×"], answer: "○", explanation: "正解は「残す」。<br>『残』に「す」をつけるのが正しい送りがなだよ。" },
     { grade: 4, genre: "japanese", type: "which", text: "送りがなの問題だよ<br>漢字 「照」 の送りがなは 「照らす」で正しい？", choices: ["○", "×"], answer: "○", explanation: "正解は「照らす」。<br>『照』に「らす」をつけるのが正しい送りがなだよ。" },
     // 同音異義語
-    { grade: 4, genre: "japanese", type: "select", text: "次の中で「橋（はし）」の <b>同音異義語（どうおんいぎご）</b> はどれかな？", choices: ["端", "川", "道", "鳥"], answer: "端", explanation: "正解は「端（はし）」。<br>「端（はし）」の<b>読み（よみ）</b>は 同じでも <b>意味が ちがう</b> 同音異義語（どうおんいぎご）だよ。" },
+    { grade: 4, genre: "japanese", type: "select", text: "次の中で「橋（はし）」の <b>同音異義語（どうおんいぎご）</b> はどれかな？", choices: ["端", "柱", "川", "走"], answer: "端", explanation: "正解は「端（はし）」。<br>「端（はし）」の<b>読み（よみ）</b>は 同じでも <b>意味が ちがう</b> 同音異義語（どうおんいぎご）だよ。" },
     { grade: 4, genre: "japanese", type: "select", text: "次の中で「階（かい）」の <b>同音異義語（どうおんいぎご）</b> はどれかな？", choices: ["貝", "机", "紙", "床"], answer: "貝", explanation: "正解は「貝（かい）」。<br>「貝（かい）」の<b>読み（よみ）</b>は 同じでも <b>意味が ちがう</b> 同音異義語（どうおんいぎご）だよ。" },
     { grade: 4, genre: "japanese", type: "select", text: "次の中で「木（き）」の <b>同音異義語（どうおんいぎご）</b> はどれかな？", choices: ["気", "森", "草", "土"], answer: "気", explanation: "正解は「気（き）」。<br>「気（き）」の<b>読み（よみ）</b>は 同じでも <b>意味が ちがう</b> 同音異義語（どうおんいぎご）だよ。" },
     { grade: 4, genre: "japanese", type: "select", text: "次の中で「城（しろ）」の <b>同音異義語（どうおんいぎご）</b> はどれかな？", choices: ["白", "山", "丘", "家"], answer: "白", explanation: "正解は「白（しろ）」。<br>「白（しろ）」の<b>読み（よみ）</b>は 同じでも <b>意味が ちがう</b> 同音異義語（どうおんいぎご）だよ。" },
-    // 一つの単語が持つ複数の意味
-    { grade: 4, genre: "japanese", type: "select", text: "「頭（あたま）」という言葉の意味として <b>正しくない</b>ものはどれかな？", choices: ["体の一部", "考える力", "ものごとのはじめ", "走る速さ"], answer: "走る速さ", explanation: "「頭」は体の一部・考える力・はじめ などの意味があるよ。" },
+    // 多義語（一つの単語が持つ複数の意味）
+    { grade: 4, genre: "japanese", type: "select", text: "次の中で「頭（あたま）」という言葉の意味として <b>正しくないもの</b> はどれかな？", choices: ["体の一部", "考える力", "ものごとのはじめ", "走る速さ"], answer: "走る速さ", explanation: "「頭」は体の一部・考える力・はじめ などの意味があるよ。" },
 
 
 ]);
