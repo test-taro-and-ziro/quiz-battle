@@ -70,9 +70,14 @@ targetArray.push(...[
     { grade: 4, genre: "japanese", type: "select", text: "次の中で「木（き）」の <b>同音異義語（どうおんいぎご）</b> はどれかな？", choices: ["気", "森", "草", "土"], answer: "気", explanation: "正解は「気（き）」。<br>「気（き）」の<b>読み（よみ）</b>は 同じでも <b>意味が ちがう</b> 同音異義語（どうおんいぎご）だよ。" },
     { grade: 4, genre: "japanese", type: "select", text: "次の中で「城（しろ）」の <b>同音異義語（どうおんいぎご）</b> はどれかな？", choices: ["白", "山", "丘", "家"], answer: "白", explanation: "正解は「白（しろ）」。<br>「白（しろ）」の<b>読み（よみ）</b>は 同じでも <b>意味が ちがう</b> 同音異義語（どうおんいぎご）だよ。" },
     // 多義語（一つの単語が持つ複数の意味）
-    { grade: 4, genre: "japanese", type: "select", text: "次の中で「頭（あたま）」という言葉の意味として <b>正しくないもの</b> はどれかな？", choices: ["体の一部", "考える力", "ものごとのはじめ", "走る速さ"], answer: "走る速さ", explanation: "「頭」は体の一部・考える力・はじめ などの意味があるよ。" },
-
-
+    { grade: 4, genre: "japanese", type: "select", text: "次の中で「頭」という言葉の意味として <b>正しくないもの</b> はどれかな？", choices: ["体の一部", "考える力", "ものごとのはじめ", "走る速さ"], answer: "走る速さ", explanation: "正解は「走る速さ」。<br>「頭」には <b>体の一部</b>・<b>考える力</b>・<b>はじめ</b> などの意味があるよ。" },
+    { grade: 4, genre: "japanese", type: "select", text: "次の中で「手」という言葉の意味として <b>正しくないもの</b> はどれかな？", choices: ["体の一部", "やり方", "仕事をする人", "空のようす"], answer: "空のようす", explanation: "正解は「空のようす」。<br>「手」には <b>体の一部</b>・<b>やり方</b>・<b>仕事をする人</b> などの意味があるよ。" },
+    { grade: 4, genre: "japanese", type: "select", text: "次の中で「上」という言葉の意味として <b>正しくないもの</b> はどれかな？", choices: ["位置", "身分が高いこと", "すぐれていること", "食べ物の名前"], answer: "食べ物の名前", explanation: "正解は「食べ物の名前」。<br>「上」には <b>位置</b>・<b>身分が高いこと</b>・<b>すぐれていること</b> などの意味があるよ。" },
+    { grade: 4, genre: "japanese", type: "select", text: "次の中で「下」という言葉の意味として <b>正しくないもの</b> はどれかな？", choices: ["位置", "身分が低いこと", "劣っていること", "体の一部"], answer: "体の一部", explanation: "正解は「体の一部」。<br>「下」には <b>位置</b>・<b>身分が低いこと</b>・<b>劣っていること</b> などの意味があるよ。" },
+    { grade: 4, genre: "japanese", type: "select", text: "次の中で「前」という言葉の意味として <b>正しくないもの</b> はどれかな？", choices: ["位置", "時間", "順番", "大きさ"], answer: "大きさ", explanation: "正解は「大きさ」。<br>「前」には <b>位置</b>・<b>時間</b>・<b>順番</b> などの意味があるよ。" },
+    { grade: 4, genre: "japanese", type: "select", text: "次の中で「顔」という言葉の意味として <b>正しくないもの</b> はどれかな？", choices: ["体の一部", "評判", "表面", "動物"], answer: "動物", explanation: "正解は「動物」。<br>「顔」には <b>体の一部</b>・<b>評判</b>・<b>表面</b> などの意味があるよ。" },
+    { grade: 4, genre: "japanese", type: "select", text: "次の中で「心」という言葉の意味として <b>正しくないもの</b> はどれかな？", choices: ["気持ち", "中心", "大事な部分", "高さ"], answer: "高さ", explanation: "正解は「高さ」。<br>「心」には <b>気持ち</b>・<b>中心</b>・<b>大事な部分</b> などの意味があるよ。" },
+    { grade: 4, genre: "japanese", type: "select", text: "次の中で「力」という言葉の意味として <b>正しくないもの</b> はどれかな？", choices: ["体の能力", "勢い", "影響力", "食べ物の名前"], answer: "食べ物の名前", explanation: "正解は「食べ物の名前」。<br>「力」には <b>体の能力</b>・<b>勢い</b>・<b>影響力</b> などの意味があるよ。" }
 ]);
 
 }
