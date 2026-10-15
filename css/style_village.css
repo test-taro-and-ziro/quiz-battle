@@ -99,6 +99,7 @@ body, html {
     border-radius: 6px;
     background: #fafafa;
     cursor: pointer;
+    width: auto;
 }
 /* 画像 */
 .companion-card img {
