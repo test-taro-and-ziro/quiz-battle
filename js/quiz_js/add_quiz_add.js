@@ -51,7 +51,20 @@ targetArray.push(...[
     { grade: 4, genre: "japanese", type: "select", text: "次の文で、<b>逆の関係（ぎゃく の かんけい）</b>をあらわす つなぎ言葉はどれかな？<br>「こどもは つかれていたが、宿題を 最後まで やった。」", choices: ["は", "が", "を", "まで"], answer: "が", explanation: "正解は「が」<br>反対（はんたい）の内容をつなぐ接続語（せつぞくご）だよ。" },
     { grade: 4, genre: "japanese", type: "select", text: "次の文で、<b>逆の関係（ぎゃく の かんけい）</b>をあらわす つなぎ言葉はどれかな？<br>「わたしは ねむかった。しかし 本を 読みつづけた。」", choices: ["は", "しかし", "を", "つなぎ言葉は無い"], answer: "が", explanation: "正解は「しかし」<br>反対（はんたい）の内容をつなぐ接続語（せつぞくご）だよ。" },
     // 送り仮名
-    { grade: 4, genre: "japanese", type: "select", text: "正しい送りがなはどれかな？<br>「かんがえる」", choices: ["考る", "考える", "考え", "考がえる"], answer: "考える", explanation: "「考える」は『考』に「える」をつけるのが正しい送りがなだよ。" },
+    { grade: 4, genre: "japanese", type: "which", text: "送りがなの問題だよ<br>漢字 「考」 の送りがなは 「考える」で正しい？", choices: ["○", "×"], answer: "○", explanation: "正解は「考える」。<br>『考』に「える」をつけるのが正しい送りがなだよ。" },
+    { grade: 4, genre: "japanese", type: "which", text: "送りがなの問題だよ<br>漢字 「改」 の送りがなは 「改める」で正しい？", choices: ["○", "×"], answer: "○", explanation: "正解は「改める」。<br>『改』に「める」をつけるのが正しい送りがなだよ。" },
+    { grade: 4, genre: "japanese", type: "which", text: "送りがなの問題だよ<br>漢字 「借」 の送りがなは 「借る」で正しい？", choices: ["○", "×"], answer: "×", explanation: "正解は「借りる」。<br>『借』に「りる」をつけるのが正しい送りがなだよ。" },
+    { grade: 4, genre: "japanese", type: "which", text: "送りがなの問題だよ<br>漢字 「治」 の送りがなは 「治す」で正しい？", choices: ["○", "×"], answer: "○", explanation: "正解は「治す」。<br>『治』に「す」をつけるのが正しい送りがなだよ。" },
+    { grade: 4, genre: "japanese", type: "which", text: "送りがなの問題だよ<br>漢字 「失」 の送りがなは 「失なう」で正しい？", choices: ["○", "×"], answer: "×", explanation: "正解は「失う」。<br>『失』に「う」をつけるのが正しい送りがなだよ。" },
+    { grade: 4, genre: "japanese", type: "which", text: "送りがなの問題だよ<br>漢字 「働」 の送りがなは 「働く」で正しい？", choices: ["○", "×"], answer: "○", explanation: "正解は「働く」。<br>『働』に「く」をつけるのが正しい送りがなだよ。" },
+    { grade: 4, genre: "japanese", type: "which", text: "送りがなの問題だよ<br>漢字 「続」 の送りがなは 「続る」で正しい？", choices: ["○", "×"], answer: "×", explanation: "正解は「続ける」。<br>『続』に「ける」をつけるのが正しい送りがなだよ。" },
+    { grade: 4, genre: "japanese", type: "which", text: "送りがなの問題だよ<br>漢字 「選」 の送りがなは 「選ぶ」で正しい？", choices: ["○", "×"], answer: "○", explanation: "正解は「選ぶ」。<br>『選』に「ぶ」をつけるのが正しい送りがなだよ。" },
+    { grade: 4, genre: "japanese", type: "which", text: "送りがなの問題だよ<br>漢字 「伝」 の送りがなは 「伝る」で正しい？", choices: ["○", "×"], answer: "×", explanation: "正解は「伝える」。<br>『伝』に「える」をつけるのが正しい送りがなだよ。" },
+    { grade: 4, genre: "japanese", type: "which", text: "送りがなの問題だよ<br>漢字 「試」 の送りがなは 「試す」で正しい？", choices: ["○", "×"], answer: "○", explanation: "正解は「試す」。<br>『試』に「す」をつけるのが正しい送りがなだよ。" },
+    { grade: 4, genre: "japanese", type: "which", text: "送りがなの問題だよ<br>漢字 「焼」 の送りがなは 「焼く」で正しい？", choices: ["○", "×"], answer: "○", explanation: "正解は「焼く」。<br>『焼』に「く」をつけるのが正しい送りがなだよ。" },
+    { grade: 4, genre: "japanese", type: "which", text: "送りがなの問題だよ<br>漢字 「残」 の送りがなは 「残す」で正しい？", choices: ["○", "×"], answer: "○", explanation: "正解は「残す」。<br>『残』に「す」をつけるのが正しい送りがなだよ。" },
+    { grade: 4, genre: "japanese", type: "which", text: "送りがなの問題だよ<br>漢字 「照」 の送りがなは 「照らす」で正しい？", choices: ["○", "×"], answer: "○", explanation: "正解は「照らす」。<br>『照』に「らす」をつけるのが正しい送りがなだよ。" },
+
     // 同音異義語や、一つの単語が持つ複数の意味
     { grade: 4, genre: "japanese", type: "select", text: "次の中で、<b>同じ読み</b>で <b>意味がちがう</b>言葉はどれかな？", choices: ["橋（はし）", "箸（はし）", "端（はし）", "全部ちがう"], answer: "全部ちがう", explanation: "橋・箸・端は、読み（よみ）は 同じでも 意味が ちがう 同音異義語（どうおんいぎご）だよ。" },
     { grade: 4, genre: "japanese", type: "select", text: "「頭（あたま）」という言葉の意味として <b>正しくない</b>ものはどれかな？", choices: ["体の一部", "考える力", "ものごとのはじめ", "走る速さ"], answer: "走る速さ", explanation: "「頭」は体の一部・考える力・はじめ などの意味があるよ。" }
