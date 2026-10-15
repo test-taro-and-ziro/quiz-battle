@@ -213,3 +213,29 @@ function custom03(q) {
         explanation: newExplanation
     };
 }
+// ==========================================
+// ★ custom_04：割り算
+// 【値1】～【値2】、【答】　choices（最小,最大）
+// ==========================================
+function custom04(q)  {
+    let A = 0;
+    let B = 0;
+    let C = 0;
+
+    while (true) {
+        B = getRandom(3, 9);      // 割る数（2桁）
+        C = getRandom(34, 99);    // 商（2桁）
+        A = B * C;                // 割られる数（3桁になるはず）
+
+        if (A >= 100 && A <= 999) {
+            break; // 条件を満たしたら終了
+        }
+    }
+
+    return { A, B, C };
+}
+
+// 乱数（整数）
+function getRandom(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
