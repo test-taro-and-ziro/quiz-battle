@@ -228,10 +228,11 @@ function custom04(q)  {
     const AMax = Number(q.choices[5]);
 
     // 乱数取得
+    let A, B, C;
     while (true) {
-        const B = getRandom( BMin, BMax, 0 ); // 割る数
-        const C = getRandom( CMin, CMax, 0 ); // 商
-        const A = B * C; // 割られる数（3桁になるはず）
+        B = getRandom( BMin, BMax, 0 ); // 割る数
+        C = getRandom( CMin, CMax, 0 ); // 商
+        A = B * C; // 割られる数（3桁になるはず）
 
         // 条件を満たしたら終了
         if (A >= AMin && A <= AMax) {break;}
@@ -239,7 +240,6 @@ function custom04(q)  {
 
     // 正解
     const answer = C;
-
     console.log(A + "÷" + B + " ＝ " + C);
     
     let newText = q.text;
