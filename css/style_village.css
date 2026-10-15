@@ -127,6 +127,14 @@ body, html {
     gap: 12px;
     flex-wrap: wrap;
 }
+/* テキスト領域（左寄せ固定） */
+.equipment-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    font-size: 14px;
+}
 /* ===== 友達になった仲間（枠を右端まで伸ばす） ===== */
 #companions-list .companion-card {
     width: 100%;
