@@ -10,7 +10,7 @@ export function applyCustomTemplate(question) {
     if (pattern === "【custom_02】") {return custom02(question);} // ★ custom_02：少数の足し算・引き算
     if (pattern === "【custom_03】") {return custom03(question);} // ★ custom_03：九九のかけ算
     if (pattern === "【custom_04】") {return custom04(question);} // ★ custom_04：割り算
-    if (pattern === "【custom_05】") {return custom05(question);} // ★ custom_05：数値の大中小
+    if (pattern === "【custom_05】") {return custom05(question);} // ★ custom_05：数値の大小
 
     // パターンが無ければそのまま返す
     return question;
@@ -261,7 +261,7 @@ function custom04(q)  {
 }
 
 // ==========================================
-// ★ custom_05：数値の大中小
+// ★ custom_05：数値の大小
 // 【値1】～【値4】、【答】　choices（最小,最大,大：1 小：0）
 // ==========================================
 function custom05(q)  {
@@ -292,12 +292,12 @@ function custom05(q)  {
 
     // 問題文
     let newText = q.text;
-    newText = newText.replace("【値1】", v1.toLocaleString('ja-JP'));
-    newText = newText.replace("【値2】", v2).toLocaleString('ja-JP');
-    newText = newText.replace("【値3】", v3.toLocaleString('ja-JP'));
-    newText = newText.replace("【値4】", v4.toLocaleString('ja-JP'));
+    newText = newText.replace("【値1】", v1);
+    newText = newText.replace("【値2】", v2);
+    newText = newText.replace("【値3】", v3);
+    newText = newText.replace("【値4】", v4);
     // 選択肢
-    const choices = new Set([v1, v2, v3, v4]);    
+    const choices = new Set([v1.toLocaleString('ja-JP'), v2.toLocaleString('ja-JP'), v3.toLocaleString('ja-JP'), v4.toLocaleString('ja-JP')]);    
     // 解説置換
     const newExplanation = q.explanation.replace("【答】", answer.toLocaleString('ja-JP'));
     return {
