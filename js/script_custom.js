@@ -292,19 +292,19 @@ function custom05(q)  {
 
     // 問題文
     let newText = q.text;
-    newText = newText.replace("【値1】", v1);
-    newText = newText.replace("【値2】", v2);
-    newText = newText.replace("【値3】", v3);
-    newText = newText.replace("【値4】", v4);
+    newText = newText.replace("【値1】", v1.toLocaleString('ja-JP'));
+    newText = newText.replace("【値2】", v2).toLocaleString('ja-JP');
+    newText = newText.replace("【値3】", v3.toLocaleString('ja-JP'));
+    newText = newText.replace("【値4】", v4.toLocaleString('ja-JP'));
     // 選択肢
     const choices = new Set([v1, v2, v3, v4]);    
     // 解説置換
-    const newExplanation = q.explanation.replace("【答】", answer);
+    const newExplanation = q.explanation.replace("【答】", answer.toLocaleString('ja-JP'));
     return {
         ...q,
         text: newText,
         choices: choices,
-        answer: String(answer),
+        answer: answer.toLocaleString('ja-JP'),
         explanation: newExplanation
     };
 }
