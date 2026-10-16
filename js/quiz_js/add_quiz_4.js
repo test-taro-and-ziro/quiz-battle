@@ -177,25 +177,12 @@ targetArray.push(...[
 // 🟦 【さんすう：math】
 targetArray.push(...[
 	{ grade: 4, genre: "math", type: "which", text: "「1億（おく）」という 大きな 数は、1万が 1000こ 集まった 数である。まるか ばつか？", choices: [true, false], answer: false, explanation: "せいかいは「ばつ」！<br>1億は 1万が 1000個ではなく、<b>1万が 1万個（万の万倍）</b> 集まった 大きな 数だよ！" },
-	{ grade: 4, genre: "math", type: "which", text: "角度を はかる 単位（たんい）の クイズ！ まんまるな 円を 1周（しゅう）した ときの 角度は 「360 度（ど）」である。まるか ばつか？", choices: [true, false], answer: true, explanation: "せいかいは「まる」！<br>分度器（ぶんどき）の 半分が 180度で、それを 2つ 合わせた 1周（しゅう）は <b>360度</b> になるんだよ！" },
-    { grade: 4, genre: "math", type: "select", text: "角度の問題だよ。1つの「直角」は何度のことかな？", choices: ["90度", "180度", "45度", "360度"], answer: "90度", explanation: "せいかいは「90度（90°）」！<br>ノートの角のような正しくまっすぐな直角は<b>90度</b>、半分にすると45度になるよ。" },
-	{ grade: 4, genre: "math", type: "select", text: "角度クイズ！ まっすぐに 伸びた 線の 角度は 何度かな？", choices: ["180度", "90度", "45度", "360度"], answer: "180度", explanation: "せいかいは「180度」！<br>まっすぐの 角度は <b>180度</b> と よぶよ。" },
-	{ grade: 4, genre: "math", type: "select", text: "面積（めんせき：広さ）を 表す 単位（たんい）クイズ！ 一辺（いっぺん）が 10メートル の 正方形（せいほうけい）の 広さを 何というかな？", choices: ["1アール（a）", "1ヘクタール（ha）", "1平方メートル", "1平方キロメートル"], answer: "1アール（a）", explanation: "せいかいは「1アール（a）」！<br>10メートル × 10メートル ＝ 100平方メートルの 広さの ことを <b>「1アール（a）」</b> とよぶよ！" },
-	{ grade: 4, genre: "math", type: "which", text: "2本の 直線が どこまで いっても 交わらないで ならんでいる 関係（かんけい）を 「垂直（すいちょく）」という。まるか ばつか？", choices: [true, false], answer: false, explanation: "せいかいは「ばつ」！<br>どこまで いっても 交わらない 関係は 垂直ではなく <b>「平行」</b> というんだよ！" },
-	{ grade: 4, genre: "math", type: "which", text: "向かい合う 2組（にくみ）の 辺（へん）が、どちらも 平行になっている 四角形を 「平行四辺形（へいこうしへんけい）」という。まるか ばつか？", choices: [true, false], answer: true, explanation: "せいかいは「まる」！<br>その 名前の とおり、向かい合う 辺が どちらも <b>平行な 四角形</b> のことだよ！" },
-	{ grade: 4, genre: "math", type: "which", text: "直方体（ちょくほうたい：箱のカタチ）や 立方体（りっぽうたい）の まわりを かこんでいる 平らな 部分の ことを 「面」という。まるか ばつか？", choices: [true, false], answer: true, explanation: "せいかいは「まる」！<br>サイコロの 1から 6までの 数の ように、立体の 平らな ところを <b>「面」</b> というよ！" },
-    { grade: 4, genre: "math", type: "select", text: "長方形の面積（めんせき）を求めるための正しい公式はどれ？", choices: ["たて × よこ", "たて ＋ よこ", "一辺 × 一辺", "底辺 × 高さ ÷ 2"], answer: "たて × よこ", explanation: "せいかいは「たて × よこ」！<br>面積（めんせき）の基本だね。ちなみに「一辺×一辺」は<b>正方形の公式</b>だよ！" },
-    { grade: 4, genre: "math", type: "which", text: "「平行四辺形（へいこうしへんけい）」の向かい合う辺の長さは、それぞれ等しい。○か×か？", choices: [true, false], answer: true, explanation: "せいかいは「まる」！<br>平行四辺形は、向かい合う<b>2組の辺がどちらも平行</b>で、長さも同じになる特徴があるよ！" },
-    { grade: 4, genre: "math", type: "which", text: "分数の問題だよ。「5分の3」は「5分の2」よりも小さい。○か×か？", choices: [true, false], answer: false, explanation: "せいかいは「ばつ」！<br>下の数が同じなら、上の数（分子（ぶんし））が<b>大きいほう（5分の3）が全体の量（りょう）も大きくなる</b>よ！" },
-    { grade: 4, genre: "math", type: "select", text: "「丸い 円」のまんなかの点から、はじまでの長さをなんという？", choices: ["半径", "直径", "まわり", "四角"], answer: "半径", explanation: "せいかいは「半径（はんけい）」！<br>まんなかから はじまでの長さを<b>「半径（はんけい）」</b>、はじから はじまでの長さを「直径（ちょっけい）」というよ。" },
     { grade: 4, genre: "math", type: "which", text: "「3 ÷ 0」の答えは「0」である。○か×か？", choices: [true, false], answer: false, explanation: "せいかいは「ばつ」！<br>算数では、数を<b>「0」でわることはできない</b>というルールがあるんだよ！" },
     { grade: 4, genre: "math", type: "select", text: "「1kg」は、何グラム（g）の重さと同じかな？", choices: ["1000g", "100g", "10g", "10000g"], answer: "1000g", explanation: "せいかいは「1000g」！<br>キロ（k）は<b>1000倍</b>という意味の記号なので、1kg = 1000g になるんだよ！" },
     { grade: 4, genre: "math", type: "select", text: "時速60kmのスピードで走る車が、2時間進むと何km先まで行けるかな？", choices: ["120km", "30km", "60km", "180km"], answer: "120km", explanation: "せいかいは「120km」！<br>時速60kmとは「1時間に60km進む」という意味なので、<b>60 × 2 = 120km 「速さ × 時間 ＝ 距離」</b> になるよ！" },
 	{ grade: 4, genre: "math", type: "select", text: "1時間に 80m 進む 人が、3時間 進むと 何m になるかな？", choices: ["240m", "160m", "200m", "300m"], answer: "240m", explanation: "せいかいは「240m」！<br>1時間で80mだから、<b>80×3＝240m 「速さ × 時間 ＝ 距離」</b> だね。" },
 	{ grade: 4, genre: "math", type: "select", text: "速さの問題だよ。時速40kmの 車が、3時間 進むと 何kmかな？", choices: ["120km", "80km", "100km", "140km"], answer: "120km", explanation: "せいかいは「120km」！<br>40km × 3時間＝<b>120km 「速さ × 時間 ＝ 距離」</b> だね。" },
-    { grade: 4, genre: "math", type: "select", text: "三角形の面積（めんせき）を求める公式はどれ？", choices: ["底辺 × 高さ", "半径 × 半経 × 3.14", "縦 × 横", "底辺 × 高さ ÷ 2"], answer: "底辺 × 高さ ÷ 2", explanation: "せいかいは「底辺 × 高さ ÷ 2」だよ！<br>四角形の面積（めんせき）の半分になるから、さいごの<b>「÷ 2」</b>を絶対に忘れないようにしよう！" },
     { grade: 4, genre: "math", type: "select", text: "1リットルは何ミリリットル（ml）？", choices: ["1000ml", "100ml", "10ml", "10000ml"], answer: "1000ml", explanation: "せいかいは「1000ml」だよ！<br>「m（ミリ）」には<b>1000分の1</b>という意味があるから、1000ml集まるとちょうど1Lになるんだよ。" },
-    { grade: 4, genre: "math", type: "select", text: "わり算の「あまり」の問題だよ。「45 ÷ 6」の正しい答えはどれ？", choices: ["7 あまり 3", "7 あまり 2", "6 あまり 9", "8 あまり 1"], answer: "7 あまり 3", explanation: "せいかいは「7 あまり 3」！<br>かけ算九九で考えると <b>6 × 7 = 42</b>。引き算して 45 - 42 = 3 なので、あまりは3になるね！" },
     { grade: 4, genre: "math", type: "select", text: "1平方メートル（㎡）は、何平方センチメートル（㎠）と同じ広さかな？", choices: ["10000㎠", "100㎠", "1000㎠", "1000000㎠"], answer: "10000㎠", explanation: "せいかいは「10000㎠」！<br>1mは100cmなので、たて100cm×よこ100cmを計算して、<b>100 × 100 = 10000</b> になるんだよ！" },
     // 大きな数（億・兆までの単位）
     { grade: 4, genre: "math", type: "select", text: "次の数「1,000,000,000」の読み方として <b>正しいもの</b> はどれかな？", choices: ["一億", "十億", "一兆", "百億"], answer: "十億", explanation: "せいかいは「十億」。<br>1,000,000,000 は 10億だよ。" },
@@ -209,6 +196,7 @@ targetArray.push(...[
     { grade: 4, genre: "math", type: "select", text: "わり算の筆算で「かける」とはどんな意味かな？", choices: ["割る数がいくつ入るか考える","引き算をする","次の位の数字を下におろす","商と割る数をかける"], answer: "商と割る数をかける", explanation: "せいかいは「商と割る数をかける」。<br>「かける」は、立てた商と 割る数をかけ算して 下に書くことだよ。" },
     { grade: 4, genre: "math", type: "select", text: "わり算の筆算で「引く」とはどんな意味かな？", choices: ["割る数がいくつ入るか考える","引き算をする","次の位の数字を下におろす","商と割る数をかける"], answer: "引き算をする", explanation: "せいかいは「引き算をする」。<br>「引く」は、割られる数から、かけ算した答えを 引き算することだよ。" },    
     { grade: 4, genre: "math", type: "select", text: "わり算の筆算で「おろす」とはどんな意味かな？", choices: ["割る数がいくつ入るか考える","引き算をする","次の位の数字を下におろす","商と割る数をかける"], answer: "次の位の数字を下におろす", explanation: "せいかいは「次の位の数字を下におろす」。<br>「おろす」は、引き算した 残りの右に 次の位の数字を下ろすことだよ。" },
+    { grade: 4, genre: "math", type: "select", text: "わり算の「あまり」の問題だよ。「45 ÷ 6」の正しい答えはどれ？", choices: ["7 あまり 3", "7 あまり 2", "6 あまり 9", "8 あまり 1"], answer: "7 あまり 3", explanation: "せいかいは「7 あまり 3」！<br>かけ算九九で考えると <b>6 × 7 = 42</b>。引き算して 45 - 42 = 3 なので、あまりは3になるね！" },
     // 小数・分数の仕組みと計算
     { grade: 4, genre: "math", type: "select", text: "小数の「0.1」は、1の何分の1かな？", choices: ["10分の1","100分の1","1より大きい数","1÷1のこと"], answer: "10分の1", explanation: "せいかいは「10分の1」。<br>「0.1は、1を10こに分けたうちの 1つの大きさだよ。" },
     { grade: 4, genre: "math", type: "select", text: "小数の「0.25」と同じ大きさの分数は どれかな？", choices: ["3/4","1/2","2/3","1/4"], answer: "1/4", explanation: "せいかいは「1/4」。<br>「0.25」は、1を4つに分けたうちの 1つ（1/4）と同じ大きさだよ。" },
