@@ -10,6 +10,7 @@ export function applyCustomTemplate(question) {
     if (pattern === "【custom_02】") {return custom02(question);} // ★ custom_02：少数の足し算・引き算
     if (pattern === "【custom_03】") {return custom03(question);} // ★ custom_03：九九のかけ算
     if (pattern === "【custom_04】") {return custom04(question);} // ★ custom_04：割り算
+    if (pattern === "【custom_05】") {return custom05(question);} // ★ custom_05：数値の大中小
 
     // パターンが無ければそのまま返す
     return question;
@@ -250,6 +251,55 @@ function custom04(q)  {
     // 解説置換
     const newExplanation = q.explanation.replace("【答】", answer);
 
+    return {
+        ...q,
+        text: newText,
+        choices: choices,
+        answer: String(answer),
+        explanation: newExplanation
+    };
+}
+
+// ==========================================
+// ★ custom_05：数値の大中小
+// 【値1】～【値4】、【答】　choices（最小,最大,大：1 小：0）
+// ==========================================
+function custom05(q)  {
+    // choices を設定値として使う
+    const min = Number(q.choices[0]);
+    const max = Number(q.choices[1]);
+    const val = Number(q.choices[2]);
+
+    const fix = Math.max(detectFix(min), detectFix(max));
+
+    // ランダム値生成
+    const v1 = getRandom(min, max, fix);
+    const v2 = getRandom(min, max, fix);
+    const v3 = getRandom(min, max, fix);
+    const v4 = getRandom(min, max, fix);
+
+    // 正解計算
+    let answer = v1;
+    if (val == 0){
+        if (answer > v2) {answer = v2);}
+        if (answer > v3) {answer = v3);}
+        if (answer > v4) {answer = v4);}
+    } else if (val == 1) {
+        if (answer < v2) {answer = v2);}
+        if (answer < v3) {answer = v3);}
+        if (answer < v4) {answer = v4);}
+    }
+
+    // 問題文
+    let newText = q.text;
+    newText = newText.replace("【値1】", v1);
+    newText = newText.replace("【値2】", v2);
+    newText = newText.replace("【値3】", v3);
+    newText = newText.replace("【値4】", v4);
+    // 選択肢
+    const choices = new Set([v1, v2, v3, v4]);    
+    // 解説置換
+    const newExplanation = q.explanation.replace("【答】", answer);
     return {
         ...q,
         text: newText,
