@@ -29,8 +29,10 @@ targetArray.push(...[
 	{ grade: 4, genre: "math", type: "select", text: "「【値1】 このおかしを 【値2】 こずつ袋（ふくろ）に入れると、何袋（ふくろ）できるかな？」", choices: ["5","10","5","20","50","100"], answer: "【custom_04】", explanation: "せいかいは「【答】」！<br>同じ数ずつ分けるときは わり算だよ。" },
 	{ grade: 4, genre: "math", type: "select", text: "「【値1】 メートルの道を 【値2】 メートルずつ区切ると、いくつに分けられるかな？」", choices: ["50","200","5","20","500","1000"], answer: "【custom_04】", explanation: "せいかいは「【答】」！<br>長さを同じ はばで 区切るときも わり算を使うよ。" },
 	// custom_05：数値の大中小
-	{ grade: 4, genre: "math", type: "select", text: "次の中で 一番大きい小数は どれかな？<br>[【値1】]　[【値2】]<br>[【値3】]　[【値4】]", choices: ["0.001","9.999"], answer: "【custom_05】", explanation: "せいかいは「【答】」！<br>小数は 左から順に大きさをくらべるよ。" },
-	{ grade: 4, genre: "math", type: "select", text: "次の中で 一番大きい数値は どれかな？<br>[【値1】]　[【値2】]<br>[【値3】]　[【値4】]", choices: ["10000000","9999999999999"], answer: "【custom_05】", explanation: "せいかいは「【答】」！<br>数値は 桁数（けたすう）に気を付けながら 大きさをくらべるよ。" },
+	{ grade: 4, genre: "math", type: "select", text: "次の中で 一番小さい小数は どれかな？<br>[【値1】]　[【値2】]<br>[【値3】]　[【値4】]", choices: ["0.001","9.999", "0"], answer: "【custom_05】", explanation: "せいかいは「【答】」！<br>小数は 左から順に大きさをくらべるよ。" },
+	{ grade: 4, genre: "math", type: "select", text: "次の中で 一番小さい数値は どれかな？<br>[【値1】]　[【値2】]<br>[【値3】]　[【値4】]", choices: ["10000000","9999999999999", "0"], answer: "【custom_05】", explanation: "せいかいは「【答】」！<br>数値は 桁数（けたすう）に気を付けながら 大きさをくらべるよ。" },
+	{ grade: 4, genre: "math", type: "select", text: "次の中で 一番大きい小数は どれかな？<br>[【値1】]　[【値2】]<br>[【値3】]　[【値4】]", choices: ["0.001","9.999", "1"], answer: "【custom_05】", explanation: "せいかいは「【答】」！<br>小数は 左から順に大きさをくらべるよ。" },
+	{ grade: 4, genre: "math", type: "select", text: "次の中で 一番大きい数値は どれかな？<br>[【値1】]　[【値2】]<br>[【値3】]　[【値4】]", choices: ["10000000","9999999999999", "1"], answer: "【custom_05】", explanation: "せいかいは「【答】」！<br>数値は 桁数（けたすう）に気を付けながら 大きさをくらべるよ。" },
 ]);
 
 }
