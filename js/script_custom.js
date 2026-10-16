@@ -280,14 +280,14 @@ function custom05(q)  {
 
     // 正解計算
     let answer = v1;
-    if (val == 0){
-        if (answer > v2) {answer = v2);}
-        if (answer > v3) {answer = v3);}
-        if (answer > v4) {answer = v4);}
+    if (val == 0) {
+        if (answer > v2) {answer = v2;}
+        if (answer > v3) {answer = v3;}
+        if (answer > v4) {answer = v4;}
     } else if (val == 1) {
-        if (answer < v2) {answer = v2);}
-        if (answer < v3) {answer = v3);}
-        if (answer < v4) {answer = v4);}
+        if (answer < v2) {answer = v2;}
+        if (answer < v3) {answer = v3;}
+        if (answer < v4) {answer = v4;}
     }
 
     // 問題文
