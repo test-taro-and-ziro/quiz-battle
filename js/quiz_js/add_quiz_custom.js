@@ -27,8 +27,10 @@ targetArray.push(...[
 	{ grade: 4, genre: "math", type: "select", text: "「【値1】 人を【値2】人ずつのグループに分けると、何グループになるかな？」", choices: ["3","5","6","30","30","100"], answer: "【custom_04】", explanation: "せいかいは「【答】」！<br>人数を分けるときは わり算を使うよ。" },
 	{ grade: 3, genre: "math", type: "select", text: "「【値1】 このおかしを 【値2】 こずつ袋（ふくろ）に入れると、何袋（ふくろ）できるかな？」", choices: ["1","9","1","9","1","50"], answer: "【custom_04】", explanation: "せいかいは「【答】」！<br>同じ数ずつ分けるときは わり算だよ。" },
 	{ grade: 4, genre: "math", type: "select", text: "「【値1】 このおかしを 【値2】 こずつ袋（ふくろ）に入れると、何袋（ふくろ）できるかな？」", choices: ["5","10","5","20","50","100"], answer: "【custom_04】", explanation: "せいかいは「【答】」！<br>同じ数ずつ分けるときは わり算だよ。" },
-	{ grade: 4, genre: "math", type: "select", text: "「【値1】 メートルの道を 【値2】 メートルずつ区切ると、いくつに分けられるかな？」", choices: ["50","200","5","20","500","1000"], answer: "【custom_04】", explanation: "せいかいは「【答】」！<br>長さを同じ はばで 区切るときも わり算を使うよ。" }
-
+	{ grade: 4, genre: "math", type: "select", text: "「【値1】 メートルの道を 【値2】 メートルずつ区切ると、いくつに分けられるかな？」", choices: ["50","200","5","20","500","1000"], answer: "【custom_04】", explanation: "せいかいは「【答】」！<br>長さを同じ はばで 区切るときも わり算を使うよ。" },
+	// custom_05：数値の大中小
+	{ grade: 4, genre: "math", type: "select", text: "「【値1】 メートルの道を 【値2】 メートルずつ区切ると、いくつに分けられるかな？」", choices: ["50","200","5","20","500","1000"], answer: "【custom_04】", explanation: "せいかいは「【答】」！<br>長さを同じ はばで 区切るときも わり算を使うよ。" },
+	
 ]);
 
 }
