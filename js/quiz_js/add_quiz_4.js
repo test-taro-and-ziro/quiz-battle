@@ -176,14 +176,10 @@ targetArray.push(...[
 ]);
 // 🟦 【さんすう：math】
 targetArray.push(...[
-	{ grade: 4, genre: "math", type: "which", text: "「1億（おく）」という 大きな 数は、1万が 1000こ 集まった 数である。まるか ばつか？", choices: [true, false], answer: false, explanation: "せいかいは「ばつ」！<br>1億は 1万が 1000個ではなく、<b>1万が 1万個（万の万倍）</b> 集まった 大きな 数だよ！" },
     { grade: 4, genre: "math", type: "which", text: "「3 ÷ 0」の答えは「0」である。○か×か？", choices: [true, false], answer: false, explanation: "せいかいは「ばつ」！<br>算数では、数を<b>「0」でわることはできない</b>というルールがあるんだよ！" },
-    { grade: 4, genre: "math", type: "select", text: "「1kg」は、何グラム（g）の重さと同じかな？", choices: ["1000g", "100g", "10g", "10000g"], answer: "1000g", explanation: "せいかいは「1000g」！<br>キロ（k）は<b>1000倍</b>という意味の記号なので、1kg = 1000g になるんだよ！" },
     { grade: 4, genre: "math", type: "select", text: "時速60kmのスピードで走る車が、2時間進むと何km先まで行けるかな？", choices: ["120km", "30km", "60km", "180km"], answer: "120km", explanation: "せいかいは「120km」！<br>時速60kmとは「1時間に60km進む」という意味なので、<b>60 × 2 = 120km 「速さ × 時間 ＝ 距離」</b> になるよ！" },
 	{ grade: 4, genre: "math", type: "select", text: "1時間に 80m 進む 人が、3時間 進むと 何m になるかな？", choices: ["240m", "160m", "200m", "300m"], answer: "240m", explanation: "せいかいは「240m」！<br>1時間で80mだから、<b>80×3＝240m 「速さ × 時間 ＝ 距離」</b> だね。" },
 	{ grade: 4, genre: "math", type: "select", text: "速さの問題だよ。時速40kmの 車が、3時間 進むと 何kmかな？", choices: ["120km", "80km", "100km", "140km"], answer: "120km", explanation: "せいかいは「120km」！<br>40km × 3時間＝<b>120km 「速さ × 時間 ＝ 距離」</b> だね。" },
-    { grade: 4, genre: "math", type: "select", text: "1リットルは何ミリリットル（ml）？", choices: ["1000ml", "100ml", "10ml", "10000ml"], answer: "1000ml", explanation: "せいかいは「1000ml」だよ！<br>「m（ミリ）」には<b>1000分の1</b>という意味があるから、1000ml集まるとちょうど1Lになるんだよ。" },
-    { grade: 4, genre: "math", type: "select", text: "1平方メートル（㎡）は、何平方センチメートル（㎠）と同じ広さかな？", choices: ["10000㎠", "100㎠", "1000㎠", "1000000㎠"], answer: "10000㎠", explanation: "せいかいは「10000㎠」！<br>1mは100cmなので、たて100cm×よこ100cmを計算して、<b>100 × 100 = 10000</b> になるんだよ！" },
     // 大きな数（億・兆までの単位）
     { grade: 4, genre: "math", type: "select", text: "次の数「1,000,000,000」の読み方として <b>正しいもの</b> はどれかな？", choices: ["一億", "十億", "一兆", "百億"], answer: "十億", explanation: "せいかいは「十億」。<br>1,000,000,000 は 10億だよ。" },
     { grade: 4, genre: "math", type: "select", text: "「3億5万」を数字で表すと <b>正しいもの</b> はどれかな？", choices: ["300,005", "30,005,000", "300,050,000", "305,000,000"], answer: "300,050,000", explanation: "せいかいは「300,050,000」。<br>3億＝300,000,000 と 5万＝50,000 を合わせるよ。" },
