@@ -337,8 +337,8 @@ function custom06(q) {
     const choices = generateChoices(answer, Amin);
     // 解説置換
     let newExplanation = q.explanation.replace("【答】", answer);
-    newExplanation = newExplanation.explanation.replace("【値1】", v1);
-    newExplanation = newExplanation.explanation.replace("【値2】", v2);
+    newExplanation = newExplanation.replace("【値1】", v1);
+    newExplanation = newExplanation.replace("【値2】", v2);
 
     return {
         ...q,
