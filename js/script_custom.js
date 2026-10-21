@@ -11,6 +11,7 @@ export function applyCustomTemplate(question) {
     if (pattern === "【custom_03】") {return custom03(question);} // ★ custom_03：九九のかけ算
     if (pattern === "【custom_04】") {return custom04(question);} // ★ custom_04：割り算
     if (pattern === "【custom_05】") {return custom05(question);} // ★ custom_05：数値の大小
+    if (pattern === "【custom_06】") {return custom06(question);} // ★ custom_06：掛け算
 
     // パターンが無ければそのまま返す
     return question;
@@ -305,6 +306,43 @@ function custom05(q)  {
         text: newText,
         choices: choices,
         answer: answer.toLocaleString('ja-JP'),
+        explanation: newExplanation
+    };
+}
+// ==========================================
+// ★ custom_06：掛け算
+// 【値1】～【値4】、【答】　choices（最小,最大）
+// ==========================================
+function custom06(q) {
+
+    // choices を設定値として使う（例：桁数など）
+    const Amin = Number(q.choices[0]); // 1つ目
+    const Amax = Number(q.choices[1]); // 1つ目
+    const Bmin = Number(q.choices[2]); // 2つ目
+    const Bmax = Number(q.choices[3]); // 2つ目
+
+    // ランダム値生成
+    const v1 = getRandom(Amin, Amax, 0);
+    const v2 = getRandom(Bmin, Bmax, 0);
+
+    let newText = q.text;
+
+    // 正解計算
+    let answer = 0;
+    answer = v1 * v2;
+    newText = newText.replace("【値1】", v1);
+    newText = newText.replace("【値2】", v2);
+
+    // 選択肢生成
+    const choices = generateChoices(answer, Amin);
+    // 解説置換
+    const newExplanation = q.explanation.replace("【答】", answer);
+
+    return {
+        ...q,
+        text: newText,
+        choices: choices,
+        answer: String(answer),
         explanation: newExplanation
     };
 }
