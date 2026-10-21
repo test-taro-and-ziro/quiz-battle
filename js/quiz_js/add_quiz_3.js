@@ -33,6 +33,12 @@ targetArray.push(...[
   	{ grade: 3, genre: "math", type: "select", text: "「丸い 円」の まんなかを通って、はじから はじまでの長さを 何というかな？", choices: ["半径（はんけい）", "直径（ちょっけい）", "円周（えんしゅう）", "高さ"], answer: "直径（ちょっけい）", explanation: "せいかいは「直径（ちょっけい）」！<br>円のまんなかを通って、はじから はじまでの長さのことだよ。" },
   	{ grade: 3, genre: "math", type: "select", text: "「丸い 円」の まわりの長さのことを 何というかな？", choices: ["半径（はんけい）", "直径（ちょっけい）", "円周（えんしゅう）", "高さ"], answer: "円周（えんしゅう）", explanation: "せいかいは「円周（えんしゅう）」！<br>円のぐるっと まわりの長さのことだよ。" },
   	{ grade: 3, genre: "math", type: "select", text: "「丸い 円」の 直径（ちょっけい）は、半径（はんけい）の 何倍かな？", choices: ["1倍", "2倍", "3倍", "4倍"], answer: "2倍", explanation: "せいかいは「2ばい」！<br>直径（ちょっけい）は、半径（はんけい）が 2つ分の長さになっているよ。" },
+    // 単位
+    { grade: 3, genre: "math", type: "select", text: "1時間は、何分かな？", choices: ["60分", "100分", "30分", "10分"], answer: "60分", explanation: "せいかいは「60分」！<br><b>時間は時・分・秒で表す単位（たんい）</b>で、テレビの時間や授業の時間をはかるときに使うよ。" },
+    { grade: 3, genre: "math", type: "select", text: "1分は、何秒かな？", choices: ["60秒", "10秒", "100秒", "30秒"], answer: "60秒", explanation: "せいかいは「60秒」！<br><b>秒はより細かい時間をはかる単位（たんい）</b>で、かけっこやストップウォッチで使うよ。" },
+    { grade: 3, genre: "math", type: "select", text: "1センチメートル（cm）は、何ミリメートル（mm）かな？", choices: ["10mm", "100mm", "1mm", "1,000mm"], answer: "10mm", explanation: "せいかいは「10mm」！<br><b>ミリメートルは より細かい長さを表す単位（たんい）</b>で、えんぴつの太さなどをはかるときに使うよ。" },
+    { grade: 3, genre: "math", type: "select", text: "1メートル（m）は、何センチメートル（cm）かな？", choices: ["100cm", "10cm", "1,000cm", "1cm"], answer: "100cm", explanation: "せいかいは「100cm」！<br><b>メートルは 長さを表す単位（たんい）</b>で、身長やものの長さをはかるときに使うよ。" },
+    { grade: 3, genre: "math", type: "select", text: "1リットル（L）は、何ミリリットル（ml）かな？", choices: ["1,000ml", "100ml", "10ml", "10,000ml"], answer: "1,000ml", explanation: "せいかいは「1,000ml」！<br><b>リットルは 水やジュースの量をはかる単位（たんい）</b>で、ペットボトルの大きさなどに使うよ。" },
 ]);
 // 🟦 【理科：science】
 targetArray.push(...[
