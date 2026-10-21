@@ -33,6 +33,9 @@ targetArray.push(...[
 	{ grade: 4, genre: "math", type: "select", text: "次の中で 一番小さい数値は どれかな？<br>[【値1】]　[【値2】]<br>[【値3】]　[【値4】]", choices: ["10000000","9999999999999", "0"], answer: "【custom_05】", explanation: "せいかいは「【答】」！<br>数値は 桁数（けたすう）に気を付けながら 大きさをくらべるよ。" },
 	{ grade: 4, genre: "math", type: "select", text: "次の中で 一番大きい小数は どれかな？<br>[【値1】]　[【値2】]<br>[【値3】]　[【値4】]", choices: ["0.001","9.999", "1"], answer: "【custom_05】", explanation: "せいかいは「【答】」！<br>小数は 左から順に大きさをくらべるよ。" },
 	{ grade: 4, genre: "math", type: "select", text: "次の中で 一番大きい数値は どれかな？<br>[【値1】]　[【値2】]<br>[【値3】]　[【値4】]", choices: ["10000000","9999999999999", "1"], answer: "【custom_05】", explanation: "せいかいは「【答】」！<br>数値は 桁数（けたすう）に気を付けながら 大きさをくらべるよ。" },
+	// custom_06：掛け算
+	{ grade: 4, genre: "math", type: "select", text: "かけ算の問題だよ。 <br>「【値1】 × 【値2】　＝　？？？　」の 答えは どれかな？", choices: ["100", "999", "1", "9"], answer: "【custom_05】", explanation: "せいかいは「【答】」！<br>かけ算の 問題だよ。おちついて考えると 答えが わかるよね。" },
+	{ grade: 4, genre: "math", type: "select", text: "「【値1】 人を【値2】人ずつのグループに分けると、何グループになるかな？」", choices: ["10", "99", "1", "9"], answer: "【custom_05】", explanation: "せいかいは「【答】」！<br>人数を分けるときは わり算を使うよ。" },
 ]);
 
 }
