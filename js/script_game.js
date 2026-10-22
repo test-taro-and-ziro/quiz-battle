@@ -655,8 +655,8 @@ async function getTreasureReward() {
     // ★ 重複チェック
     if (userData.treasures.includes(treasureId)) {return `<p>📘 秘宝（ひほう）はすでに持っているようだ…</p>`;}
 
-    // ★ 25% 抽選
-    const getChance = Math.random() < 0.25;
+    // ★ 20% 抽選
+    const getChance = Math.random() < 0.20;
     if (!getChance) {return `<p>😢 こんかいは秘宝（ひほう）を見つけられなかった…</p>`;}
 
     // ★ Firestore 保存
