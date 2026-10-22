@@ -1,11 +1,14 @@
 // ==========================================
 // ★ カスタム問題ルーター（受け口）
 // ==========================================
-export function applyCustomTemplate(question) {
+export function applyCustomTemplate(question, userGrade) {
 
     const pattern = question.answer; // カスタム形式取得
+    const grade = question.grade; // 学年取得
     console.log(pattern);
-    
+
+    if(grade == -1) {question = wordsConversion(question);} // ★ 漢字変換
+
     if (pattern === "【custom_01】") {return custom01(question);} // ★ custom_01：整数の足し算・引き算
     if (pattern === "【custom_02】") {return custom02(question);} // ★ custom_02：少数の足し算・引き算
     if (pattern === "【custom_03】") {return custom03(question);} // ★ custom_03：九九のかけ算
@@ -352,3 +355,17 @@ function custom06(q) {
 // ==========================================
 // ★ 学年別漢字変換
 // ==========================================
+function wordsConversion(q) {
+
+    let newText = q.text;
+    let newExplanation = q.explanation;
+
+    console.log(newText);
+    console.log(newExplanation);
+    
+    return {
+        ...q,
+        text: newText,
+        explanation: newExplanation
+    };
+}
