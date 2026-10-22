@@ -255,7 +255,7 @@ async function loadRealQuestions(userName, genre) {
 
         // 5. 確実に10問になった配列の、先頭から10問を切り取って本番用の配列にセット！
         // currentQuestions = finalQuestions.slice(0, 10);
-        currentQuestions = finalQuestions.slice(0, 10).map(q => applyCustomTemplate(q));
+        currentQuestions = finalQuestions.slice(0, 10).map(q => applyCustomTemplate(q, userGrade));
 
 
         // 6. データの準備がすべて整ったら、ローディング画面を消して満を持して1問目を出題！
