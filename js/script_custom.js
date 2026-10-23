@@ -7,7 +7,7 @@ export function applyCustomTemplate(question, userGrade) {
     const grade = question.grade; // 学年取得
     console.log(pattern);
 
-    if(grade == -1) {question = wordsConversion(question);} // ★ 漢字変換
+    if(grade == -1) {question = wordsConversion(question, grade);} // ★ 漢字変換
 
     if (pattern === "【custom_01】") {return custom01(question);} // ★ custom_01：整数の足し算・引き算
     if (pattern === "【custom_02】") {return custom02(question);} // ★ custom_02：少数の足し算・引き算
@@ -355,13 +355,54 @@ function custom06(q) {
 // ==========================================
 // ★ 学年別漢字変換
 // ==========================================
-function wordsConversion(q) {
+function wordsConversion(q, grade) {
 
     let newText = q.text;
     let newExplanation = q.explanation;
 
     console.log(newText);
     console.log(newExplanation);
+
+    // 小学1年生で習う漢字
+    if( grade <= 1) { newExplanation = newExplanation.replace("上", grade == 1 ? "上（うえ）" : "うえ"); } 
+    if( grade <= 1) { newExplanation = newExplanation.replace("下", grade == 1 ? "下（した）" : "した"); } 
+    if( grade <= 1) { newExplanation = newExplanation.replace("赤", grade == 1 ? "赤（あか）" : "あか"); } 
+    if( grade <= 1) { newExplanation = newExplanation.replace("青", grade == 1 ? "青（あお）" : "あお"); } 
+    if( grade <= 1) { newExplanation = newExplanation.replace("人", grade == 1 ? "人（にん）" : "にん"); } 
+    if( grade <= 1) { newExplanation = newExplanation.replace("一", grade == 1 ? "一（いち）" : "いち"); } 
+
+    // 小学2年生で習う漢字
+    if( grade <= 2) { newExplanation = newExplanation.replace("番目", grade == 2 ? "番目（ばんめ）" : "ばんめ"); } 
+    if( grade <= 2) { newExplanation = newExplanation.replace("数字", grade == 2 ? "数字（すうじ）" : "すうじ"); } 
+    if( grade <= 2) { newExplanation = newExplanation.replace("答え", "こたえ"); } 
+    if( grade <= 2) { newExplanation = newExplanation.replace("後ろ", "うしろ"); } 
+
+    // 小学3年生で習う漢字
+    if( grade <= 3) { newExplanation = newExplanation.replace("箱", grade == 3 ? "箱（はこ）" : "はこ"); } 
+    if( grade <= 3) { newExplanation = newExplanation.replace("全部", grade == 3 ? "全部（ぜんぶ）" : "ぜんぶ"); } 
+    if( grade <= 3) { newExplanation = newExplanation.replace("横", grade == 3 ? "横（よこ）" : "よこ"); } 
+    if( grade <= 3) { newExplanation = newExplanation.replace("列", grade == 3 ? "列（れつ）" : "れつ"); } 
+
+    // 小学4年生で習う漢字
+    if( grade <= 4) { newExplanation = newExplanation.replace("生徒", grade == 4 ? "生徒（せいと）" : "せいと"); } 
+
+    // 小学5年生で習う漢字
+    if( grade <= 5) { newExplanation = newExplanation.replace("個", grade == 5 ? "個（こ）" : "こ"); } 
+    if( grade <= 5) { newExplanation = newExplanation.replace("正解", grade == 5 ? "正解（せいかい）" : "せいかい"); } 
+
+    // 小学6年生で習う漢字
+    if( grade <= 6) { newExplanation = newExplanation.replace("縦", grade == 6 ? "縦（たて）" : "たて"); } 
+    if( grade <= 6) { newExplanation = newExplanation.replace("並び", "ならび"); } 
+
+    // 小学校で習わない漢字
+    newExplanation = newExplanation.replace("帽子", "帽子（ぼうし）");
+
+    
+    // みかんの 箱が あります。上から かぞえても、下から かぞえても、イチゴの 箱は 3番目に あります。箱は 全部で 何個 あるかな？（数字で 答えてね）
+    // 正解は「5」！<br>イチゴの 上に 2個、下に 2個 あるから、2 ＋ 1 ＋ 2 ＝ <b>5個</b> に なるよ！
+    // 帽子が 5個（赤3、青2）あります。3人の 生徒（A, B, C）が 縦一列に 並び、後ろの 人だけが 前の 人の 帽子を 見えるように かぶせました（Cが一番後ろ）。Cが「自分の帽子の色はわからない」と言い、それを聞いた Bも「わからない」と言いました。このとき、一番前の Aは 自分の 帽子の 色を 論理的に 特定できる。まるか ばつか？
+    // 正解は「まる」！<br>Cがわからないことから前2人は青・青ではない。Bがわからないことから、Aが青ならBは自分を赤と断定できたはず。よってAは自分が <b>赤</b> だと特定することができるよ！
+
     
     return {
         ...q,
