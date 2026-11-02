@@ -406,8 +406,62 @@ function custom07(q) {
     };
 }
 
-	// custom_08：計算のきまり（分配法則などのきまり）
-	//{ grade: 4, genre: "math", type: "select", text: "分配法則のきまりの問題だよ。<br>【値1】 × 【値2】 ＋ 【値1】 × 【値3】 を 計算すると 答えはどれ？", choices: ["20", "50", "1", "5"], answer: "【custom_08】", explanation: "せいかいは「【答】」！<br>この式は、【値1】が2回 出てくるので、計算をくふうできます。【値1】×（【値2】＋【値3】） の形にし、かっこの中を計算すると かんたんに計算できます。分配法則（ぶんぱいほうそく）は、同じ数がくり返し出てくるときに 計算をはやくするための 大切なきまりです。" },
+// ==========================================
+// ★ custom_08：計算のきまり（分配法則などのきまり）
+// 【値1】～【値4】、【答】　choices（最小,最大）
+// ==========================================
+// custom_08：計算のきまり（分配法則などのきまり）
+//{ grade: 4, genre: "math", type: "select", text: "分配法則のきまりの問題だよ。<br>【値1】 × 【値2】 ＋ 【値1】 × 【値3】 を 計算すると 答えはどれ？", 
+//choices: ["20", "50", "1", "5"], answer: "【custom_08】", 
+//explanation: "せいかいは「【答】」！<br>この式は、【値1】が2回 出てくるので、計算をくふうできます。【値1】×（【値2】＋【値3】） の形にし、かっこの中を計算すると かんたんに計算できます。
+//分配法則（ぶんぱいほうそく）は、同じ数がくり返し出てくるときに 計算をはやくするための 大切なきまりです。" },
+function custom08(q) {
+
+    // choices を設定値として使う（例：桁数など）
+    const Amin = Number(q.choices[0]); // 1つ目
+    const Amax = Number(q.choices[1]); // 1つ目
+    const Bmin = Number(q.choices[2]); // 2つ目
+    const Bmax = Number(q.choices[3]); // 2つ目
+
+    // ランダム値生成
+    const v1 = getRandom(Amin, Amax, 0);
+    const v2 = getRandom(Bmin, Bmax, 0);
+    const v3 = getRandom(Bmin, Bmax, 0);
+	const pt = getRandom(1, 2, 0);
+
+	// 正解計算
+    let answer = 0;
+	let newText = q.text;
+    let newExplanation = q.explanation;
+
+	// 問題パターンによる分岐
+	if (pt == 1) { // X + Y * Z
+		answer = v1 + (v2 * v3);
+	    newText = newText.replace("【値1】", v1 & " + " & v2 & " * " & v3);
+
+		newExplanation = newExplanation.replace("【答】", answer);
+	    newExplanation = newExplanation.replace("【値1】", v2 & " * " & v3);
+	    newExplanation = newExplanation.replace("【値2】", v1 & " + " & v2 * v3);
+	} else if (pt == 2) { // (X + Y) * Z
+		answer = (v3 + v2) * v1;
+	    newText = newText.replace("【値1】", "( " & v3 & " + " & v2 & " ) * " & v1);
+
+		newExplanation = newExplanation.replace("【答】", answer);
+	    newExplanation = newExplanation.replace("【値1】", "( " & v3 & " + " & v2 & " )");
+	    newExplanation = newExplanation.replace("【値2】", (v3 + v2) & " * " & v1;
+	}
+
+    // 選択肢生成
+    const choices = generateChoices(answer, Amin);
+
+    return {
+        ...q,
+        text: newText,
+        choices: choices,
+        answer: String(answer),
+        explanation: newExplanation
+    };
+}
 
 // ==========================================
 // ★ 学年別漢字変換
