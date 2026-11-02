@@ -380,18 +380,18 @@ function custom07(q) {
 	// 問題パターンによる分岐
 	if (pt == 1) { // X + Y * Z
 		answer = v1 + (v2 * v3);
-	    newText = newText.replace("【値1】", v1 & " + " & v2 & " * " & v3);
+	    newText = newText.replace("【値1】", v1 + " + " + v2 & " * " + v3);
 
 		newExplanation = newExplanation.replace("【答】", answer);
-	    newExplanation = newExplanation.replace("【値1】", v2 & " * " & v3);
-	    newExplanation = newExplanation.replace("【値2】", v1 & " + " & v2 * v3);
+	    newExplanation = newExplanation.replace("【値1】", v2 + " * " + v3);
+	    newExplanation = newExplanation.replace("【値2】", v1 + " + " + v2 * v3);
 	} else if (pt == 2) { // (X + Y) * Z
 		answer = (v3 + v2) * v1;
-	    newText = newText.replace("【値1】", "( " & v3 & " + " & v2 & " ) * " & v1);
+	    newText = newText.replace("【値1】", "( " + v3 + " + " + v2 + " ) * " + v1);
 
 		newExplanation = newExplanation.replace("【答】", answer);
-	    newExplanation = newExplanation.replace("【値1】", "( " & v3 & " + " & v2 & " )");
-	    newExplanation = newExplanation.replace("【値2】", (v3 + v2) & " * " & v1;
+	    newExplanation = newExplanation.replace("【値1】", "( " + v3 + " + " + v2 + " )");
+	    newExplanation = newExplanation.replace("【値2】", (v3 + v2) + " * " + v1);
 	}
 
     // 選択肢生成
