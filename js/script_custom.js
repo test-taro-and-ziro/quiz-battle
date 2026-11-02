@@ -358,11 +358,7 @@ function custom06(q) {
 // ★ custom_07：計算のきまり（計算のじゅんじょ）
 // 【値1】～【値4】、【答】　choices（最小,最大）
 // ==========================================
-// custom_07：計算のきまり（計算のじゅんじょ）
-//{ grade: 4, genre: "math", type: "select", text: "計算のじゅんじょの問題だよ。<br><b>「【値1】 ＝ ？？？」</b> の答えはどれかな？", 
-//choices: ["20", "50", "1", "9"], answer: "【custom_07】", 
-//explanation: "せいかいは「【答】」！<br>たし算とかけ算が ある式では、<b>「()のある計算」⇒「かけ算」⇒「たし算」の順</b>に 計算します。まず 【値1】を計算し、そのあと 【値2】と計算するので、答えは 【答】 になります。" },
-function custom06(q) {
+function custom07(q) {
 
     // choices を設定値として使う（例：桁数など）
     const Amin = Number(q.choices[0]); // 1つ目
@@ -374,7 +370,7 @@ function custom06(q) {
     const v1 = getRandom(Amin, Amax, 0);
     const v2 = getRandom(Bmin, Bmax, 0);
     const v3 = getRandom(Bmin, Bmax, 0);
-	const pt = getRandom(1, 4, 0);
+	const pt = getRandom(1, 2, 0);
 
 	// 正解計算
     let answer = 0;
@@ -397,7 +393,6 @@ function custom06(q) {
 	    newExplanation = newExplanation.replace("【値1】", "( " & v3 & " + " & v2 & " )");
 	    newExplanation = newExplanation.replace("【値2】", (v3 + v2) & " * " & v1;
 	}
-
 
     // 選択肢生成
     const choices = generateChoices(answer, Amin);
