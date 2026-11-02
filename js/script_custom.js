@@ -15,7 +15,9 @@ export function applyCustomTemplate(question, userGrade) {
     if (pattern === "【custom_04】") {return custom04(question);} // ★ custom_04：割り算
     if (pattern === "【custom_05】") {return custom05(question);} // ★ custom_05：数値の大小
     if (pattern === "【custom_06】") {return custom06(question);} // ★ custom_06：掛け算
-
+    if (pattern === "【custom_07】") {return custom07(question);} // ★ custom_07：計算のきまり（計算のじゅんじょ）
+    if (pattern === "【custom_08】") {return custom08(question);} // ★ custom_08：計算のきまり（分配法則などのきまり）
+    
     // パターンが無ければそのまま返す
     return question;
 }
@@ -351,6 +353,51 @@ function custom06(q) {
         explanation: newExplanation
     };
 }
+
+// ==========================================
+// ★ custom_07：計算のきまり（計算のじゅんじょ）
+// 【値1】～【値4】、【答】　choices（最小,最大）
+// ==========================================
+// custom_07：計算のきまり（計算のじゅんじょ）
+//{ grade: 4, genre: "math", type: "select", text: "計算のじゅんじょの問題だよ。<br><b>「【値1】 ＝ ？？？」</b> の答えはどれかな？", choices: ["20", "50", "1", "9"], answer: "【custom_07】", explanation: "せいかいは「【答】」！<br>たし算とかけ算が ある式では、<b>かけ算を先に計算</b>します。まず 【値1】を計算し、そのあと 【値2】と計算するので、答えは 【答】 になります。" },
+function custom06(q) {
+
+    // choices を設定値として使う（例：桁数など）
+    const Amin = Number(q.choices[0]); // 1つ目
+    const Amax = Number(q.choices[1]); // 1つ目
+    const Bmin = Number(q.choices[2]); // 2つ目
+    const Bmax = Number(q.choices[3]); // 2つ目
+
+    // ランダム値生成
+    const v1 = getRandom(Amin, Amax, 0);
+    const v2 = getRandom(Bmin, Bmax, 0);
+
+    let newText = q.text;
+
+    // 正解計算
+    let answer = 0;
+    answer = v1 * v2;
+    newText = newText.replace("【値1】", v1);
+    newText = newText.replace("【値2】", v2);
+
+    // 選択肢生成
+    const choices = generateChoices(answer, Amin);
+    // 解説置換
+    let newExplanation = q.explanation.replace("【答】", answer);
+    newExplanation = newExplanation.replace("【値1】", v1);
+    newExplanation = newExplanation.replace("【値2】", v2);
+
+    return {
+        ...q,
+        text: newText,
+        choices: choices,
+        answer: String(answer),
+        explanation: newExplanation
+    };
+}
+
+	// custom_08：計算のきまり（分配法則などのきまり）
+	//{ grade: 4, genre: "math", type: "select", text: "分配法則のきまりの問題だよ。<br>【値1】 × 【値2】 ＋ 【値1】 × 【値3】 を 計算すると 答えはどれ？", choices: ["20", "50", "1", "5"], answer: "【custom_08】", explanation: "せいかいは「【答】」！<br>この式は、【値1】が2回 出てくるので、計算をくふうできます。【値1】×（【値2】＋【値3】） の形にし、かっこの中を計算すると かんたんに計算できます。分配法則（ぶんぱいほうそく）は、同じ数がくり返し出てくるときに 計算をはやくするための 大切なきまりです。" },
 
 // ==========================================
 // ★ 学年別漢字変換
