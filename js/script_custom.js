@@ -358,6 +358,10 @@ function custom06(q) {
 // ★ custom_07：計算のきまり（計算のじゅんじょ）
 // 【値1】～【値4】、【答】　choices（最小,最大）
 // ==========================================
+//	{ grade: 4, genre: "math", type: "select", text: "計算のじゅんじょの問題だよ。<br><b>「【値1】 ＝ ？？？」</b> を計算すると 答えはどれかな？", 
+//choices: ["10", "20", "1", "5"], answer: "【custom_07】", 
+//explanation: "せいかいは「【答】」！<br>計算式が複数（ふくすう） ある式では、<b>「()のある計算」⇒「かけ算（わり算）」⇒「たし算（ひき算）」の順</b>に 計算します。
+//まず 【値1】を計算し、そのあと 【値2】と計算するので、答えは 【答】 になります。" },
 function custom07(q) {
 
     // choices を設定値として使う（例：桁数など）
@@ -380,7 +384,7 @@ function custom07(q) {
 	// 問題パターンによる分岐
 	if (pt == 1) { // X + Y * Z
 		answer = v1 + (v2 * v3);
-	    newText = newText.replaceAll("【値1】", v1 + " + " + v2 & " * " + v3);
+	    newText = newText.replaceAll("【値1】", v1 + " + " + v2 + " * " + v3);
 
 		newExplanation = newExplanation.replaceAll("【答】", answer);
 	    newExplanation = newExplanation.replaceAll("【値1】", v2 + " * " + v3);
