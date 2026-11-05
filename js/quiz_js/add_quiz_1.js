@@ -19,8 +19,6 @@ targetArray.push(...[
 ]);
 // 🟦 【さんすう：math】
 targetArray.push(...[
-	{ grade: 1, genre: "math", type: "select", text: "ノートが 12さつ あります。4さつ つかうと、のこりの ノートは なんさつに なるかな？", choices: ["8さつ", "7さつ", "9さつ", "6さつ"], answer: "8さつ", explanation: "せいかいは「8さつ」！<br>12 － 4 ＝ <b>8さつ</b> だね！" },
-	{ grade: 1, genre: "math", type: "select", text: "こどもが 14人（にん） います。おとこのこが 6人 のとき、おんなのこは なんにん いるかな？", choices: ["8人（にん）", "7人（にん）", "9人（にん）", "6人（にん）"], answer: "8人（にん）", explanation: "せいかいは「8人（にん）」！<br>14人（にん）から おとこのこの 6人（にん）を ひくと、14 － 6 ＝ <b>8人（にん）</b> だね！" },
 	{ grade: 1, genre: "math", type: "which", text: "「十（じゅう）のくらい」が 3で、「一（いち）のくらい」が 5の かずは 「53」である。まるか ばつか？", choices: [true, false], answer: false, explanation: "せいかいは「ばつ」！<br>十（じゅう）の位（くらい）が 3、一（いち）の位（くらい）が 5の かずは <b>「35」</b> だよ！" },
 	{ grade: 1, genre: "math", type: "select", text: "ごぜん 9じから 1じかん たつと、とけいの みじかい はりは どこを さすかな？", choices: ["10", "9", "11", "12"], answer: "10", explanation: "せいかいは「10」！<br>9じの 1じかん つぎは <b>10じ</b> だね！" },
 	{ grade: 1, genre: "math", type: "select", text: "ながい じゅんばんに ならべよう！ 10センチ、5センチ、20センチ。一番（いちばん） ながいのは どれかな？", choices: ["20センチ", "10センチ", "5センチ", "ぜんぶ同じ"], answer: "20センチ", explanation: "せいかいは「20センチ」！<br>数字（すうじ）が 一番（いちばん） おおきい <b>20センチ</b> が もっとも ながいよ！" },
