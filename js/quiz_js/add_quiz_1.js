@@ -19,16 +19,12 @@ targetArray.push(...[
 ]);
 // 🟦 【さんすう：math】
 targetArray.push(...[
-	{ grade: 1, genre: "math", type: "select", text: "たしざんの けいさんクイズ！ 【 8 ＋ 7 ＝ 〇 】 〇に はいる かずは なあに？", choices: ["15", "14", "16", "13"], answer: "15", explanation: "せいかいは「15」！<br>8に 2を たして 10、のこりの 5を あわせて <b>15</b> だね！" },
-	{ grade: 1, genre: "math", type: "which", text: "ひきざんの けいさんクイズ！ 【 13 ‐ 4 ＝ 8 】 この けいさんは まるか ばつか？", choices: [true, false], answer: false, explanation: "せいかいは「ばつ」！<br>13から 4を ひくと、ただしい こたえは <b>「9」</b> になるよ！" },
 	{ grade: 1, genre: "math", type: "select", text: "ノートが 12さつ あります。4さつ つかうと、のこりの ノートは なんさつに なるかな？", choices: ["8さつ", "7さつ", "9さつ", "6さつ"], answer: "8さつ", explanation: "せいかいは「8さつ」！<br>12 － 4 ＝ <b>8さつ</b> だね！" },
+	{ grade: 1, genre: "math", type: "select", text: "こどもが 14人（にん） います。おとこのこが 6人 のとき、おんなのこは なんにん いるかな？", choices: ["8人（にん）", "7人（にん）", "9人（にん）", "6人（にん）"], answer: "8人（にん）", explanation: "せいかいは「8人（にん）」！<br>14人（にん）から おとこのこの 6人（にん）を ひくと、14 － 6 ＝ <b>8人（にん）</b> だね！" },
 	{ grade: 1, genre: "math", type: "which", text: "「十（じゅう）のくらい」が 3で、「一（いち）のくらい」が 5の かずは 「53」である。まるか ばつか？", choices: [true, false], answer: false, explanation: "せいかいは「ばつ」！<br>十（じゅう）の位（くらい）が 3、一（いち）の位（くらい）が 5の かずは <b>「35」</b> だよ！" },
 	{ grade: 1, genre: "math", type: "select", text: "ごぜん 9じから 1じかん たつと、とけいの みじかい はりは どこを さすかな？", choices: ["10", "9", "11", "12"], answer: "10", explanation: "せいかいは「10」！<br>9じの 1じかん つぎは <b>10じ</b> だね！" },
-	{ grade: 1, genre: "math", type: "which", text: "【 0 ＋ 9 ＝ 9 】 この たしざんの こたえは ただしい。まるか ばつか？", choices: [true, false], answer: true, explanation: "せいかいは「まる」！<br>なにもない「0」に 9を たしても、かずは かわらず <b>9</b> のままだよ！" },
 	{ grade: 1, genre: "math", type: "select", text: "ながい じゅんばんに ならべよう！ 10センチ、5センチ、20センチ。一番（いちばん） ながいのは どれかな？", choices: ["20センチ", "10センチ", "5センチ", "ぜんぶ同じ"], answer: "20センチ", explanation: "せいかいは「20センチ」！<br>数字（すうじ）が 一番（いちばん） おおきい <b>20センチ</b> が もっとも ながいよ！" },
 	{ grade: 1, genre: "math", type: "which", text: "しかくの かたちの まわりには、へん（まっすぐなせん）が 3本（ぼん） ある。まるか ばつか？", choices: [true, false], answer: false, explanation: "せいかいは「ばつ」！<br>しかくには へんが <b>4本（ほん）</b> あるよ！" },
-	{ grade: 1, genre: "math", type: "select", text: "こどもが 14人（にん） います。おとこのこが 6人 のとき、おんなのこは なんにん いるかな？", choices: ["8人（にん）", "7人（にん）", "9人（にん）", "6人（にん）"], answer: "8人（にん）", explanation: "せいかいは「8人（にん）」！<br>14人（にん）から おとこのこの 6人（にん）を ひくと、14 － 6 ＝ <b>8人（にん）</b> だね！" },
-	{ grade: 1, genre: "math", type: "which", text: "【 10 － 10 ＝ 0 】 この ひきざんの こたえは ただしい。まるか ばつか？", choices: [true, false], answer: true, explanation: "せいかいは「まる」！<br>ある かずから おなじ かずを ぜんぶ ひくと <b>「0」</b> になるよ！" }
 ]);
 // 🟦 【理科：science】
 targetArray.push(...[
