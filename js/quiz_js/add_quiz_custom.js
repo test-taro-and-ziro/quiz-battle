@@ -20,6 +20,16 @@ targetArray.push(...[
 	{ grade: 4, genre: "math", type: "select", text: "ひき算の問題だよ。 <br>「【値1】 － 【値2】　＝　？？？　」の 答えは どれかな？", choices: ["100", "999", false], answer: "【custom_01】", explanation: "せいかいは「【答】」！<br>計算の 問題だよ。おちついて考えると 答えが わかるよね。" },
 	{ grade: 5, genre: "math", type: "select", text: "ひき算の問題だよ。 <br>「【値1】 － 【値2】　＝　？？？　」の 答えは どれかな？", choices: ["1000", "4999", false], answer: "【custom_01】", explanation: "正解（せいかい）は「【答】」！<br>計算の 問題だよ。おちついて考えると 答えが わかるよね。" },
 	{ grade: 6, genre: "math", type: "select", text: "ひき算の問題だよ。 <br>「【値1】 － 【値2】　＝　？？？　」の 答えは どれかな？", choices: ["5000", "9999", false], answer: "【custom_01】", explanation: "正解は「【答】」！<br>計算の 問題だよ。おちついて考えると 答えが わかるよね。" },
+	// custom_01：整数の足し算（文章）
+	{ grade: 0, genre: "math", type: "select", text: "うさぎが 【値1】 ひき います。そこへ 【値2】 ひき やってきました。うさぎは あわせて なんびきに なったかな？", choices: ["1", "5", true], answer: "【custom_01】", explanation: "せいかいは「【答】」！<br>はじめにいた 【値1】 ひきに やってきた【値2】 ひきを たすので、「【答】 ひき」になります。" },
+	{ grade: 1, genre: "math", type: "select", text: "りんごが 【値1】 こ あります。おともだちから 【値2】 こ もらいました。りんごは あわせて なんこに なったかな？", choices: ["3", "10", true], answer: "【custom_01】", explanation: "せいかいは「【答】」！<br>はじめに りんごが 【値1】 こ あります。さらに 【値2】 こ もらったので、「【答】 こ」になります。" },
+	{ grade: 2, genre: "math", type: "select", text: "えんぴつを 【値1】 本もっています。あたらしく 【値2】 本もらいました。えんぴつは あわせて なん本になったかな？", choices: ["15", "30", true], answer: "【custom_01】", explanation: "せいかいは「【答】」！<br>【値1】 本と 【値2】 本を あわせるので、「【答】 本」になります。" },
+	{ grade: 3, genre: "math", type: "select", text: "赤い 花が 【値1】 本あります。白い花が 【値2】 本あります。花は あわせて なん本あるかな？", choices: ["25", "60", true], answer: "【custom_01】", explanation: "せいかいは「【答】」！<br>赤い 花 【値1】本と、白い花 【値2】本を あわせると、「【答】 本」になります。" },
+	{ grade: 4, genre: "math", type: "select", text: "公園 鳥が 【値1】 羽いました。そのあと 【値2】 羽とんできました。鳥は あわせて なん羽に なったかな？", choices: ["30", "100", true], answer: "【custom_01】", explanation: "せいかいは「【答】」！<br>もともと 【値1】 羽いて、さらに 【値2】羽きたので、「【答】 羽」になります。" },
+	{ grade: 5, genre: "math", type: "select", text: "あめを 【値1】 こ 持っています。お母さんから 【値2】 こ もらいました。あめは あわせて なんこに なったかな？", choices: ["50", "500", true], answer: "【custom_01】", explanation: "せいかいは「【答】」！<br>はじめから持っている【値1】 こと 【値2】こを あわせるので、「【答】 こ」になります。" },
+	// custom_01：整数の引き算（文章）
+	{ grade: 1, genre: "math", type: "select", text: "ノートが 【値1】 さつ あります。【値2】 さつ つかうと、のこりの ノートは なんさつに なるかな？", choices: ["5", "10", false], answer: "【custom_01】", explanation: "せいかいは「【答】 さつ」！<br>もっているノートのかずから、つかったノートのかずをひいたら、のこったノートのかずは「【答】 さつ」だね" },
+	{ grade: 1, genre: "math", type: "select", text: "こどもが 【値1】 人（にん）います。おとこのこが 【値2】 人（にん）のとき、おんなのこは なんにん いるかな？", choices: ["5", "10", false], answer: "【custom_01】", explanation: "せいかいは「【答】 人（にん）」！<br>こどもの にんずうから、おとこのこの にんずうをひくと、おんなのこの にんずうがわかるね" },
 	// custom_02：小数の足し算・引き算
 	{ grade: 3, genre: "math", type: "select", text: "【値1】の 問題（もんだい）だよ。 <br>「【値2】 【値3】 【値4】　＝　？？？　」の 答えは どれかな？", choices: ["0.1", "9.9"], answer: "【custom_02】", explanation: "せいかいは「【答】」！<br>計算の 問題（もんだい）だよ。おちついて 考えると 答えが わかるよね。" },
 	{ grade: 4, genre: "math", type: "select", text: "【値1】の問題だよ。 <br>「【値2】 【値3】 【値4】　＝　？？？　」の 答えは どれかな？", choices: ["0.01", "9.99"], answer: "【custom_02】", explanation: "せいかいは「【答】」！<br>計算の 問題だよ。おちついて考えると 答えが わかるよね。" },
