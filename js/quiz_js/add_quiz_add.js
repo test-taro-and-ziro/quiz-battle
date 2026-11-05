@@ -65,4 +65,8 @@ targetArray.push(...[
 { grade: 4, genre: "science", type: "which", text: "腕（うで）をグッと 曲げたとき、腕（うで）の内側の 筋肉（きんにく：力こぶのところ）は カチカチに かたくなって ちぢんでいる。まるか ばつか？", choices: [true, false], answer: true, explanation: "せいかいは「まる」！<br>骨（ほね）を動かす とき、<b>内側の 筋肉（きんにく）が ギュッとちぢみ</b>、逆に 外側の 筋肉（きんにく）が のびる ことで 腕（うで）が 曲がるんだよ！" },
 ]);
 
+// 追加クイズ
+targetArray.push(...[
+]);
+
 }
