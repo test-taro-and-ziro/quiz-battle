@@ -95,40 +95,38 @@ function generateChoicesFix(answer, min) {
 
 // ==========================================
 // ★ custom_01：整数の足し算・引き算
-// 【値1】～【値4】、【答】　choices（最小,最大）
+// 【値1】～【値4】、【答】　choices（最小,最大,計算方法【true：足し算】）
 // ==========================================
 function custom01(q) {
 
     // choices を設定値として使う（例：桁数など）
     const min = Number(q.choices[0]);
     const max = Number(q.choices[1]);
+	const flg = q.choices[2];
 
     // ランダム値生成
-    const v1 = getRandom(min, max, 0);
-    const v2 = getRandom(min, max, 0);
+    let v1 = getRandom(min, max, 0);
+    let v2 = getRandom(min, max, 0);
 
     let newText = q.text;
 
     // 正解計算
     let answer = 0;
-    if (v1 > v2) {
+    if (flg) {
         answer = v1 + v2;
-        newText = newText.replace("【値1】", "たし算");
-        newText = newText.replace("【値2】", v1);
-        newText = newText.replace("【値3】", "＋");
-        newText = newText.replace("【値4】", v2);
+        newText = newText.replaceAll("【値1】", v1);
+        newText = newText.replaceAll("【値2】", v2);
     } else {
+		if (v1 > v2) { [v1, v2] = [v2, v1]; }
         answer = v2 - v1;
-        newText = newText.replace("【値1】", "ひき算");
-        newText = newText.replace("【値2】", v2);
-        newText = newText.replace("【値3】", "－");
-        newText = newText.replace("【値4】", v1);
+        newText = newText.replaceAll("【値1】", v2);
+        newText = newText.replaceAll("【値2】", v1);
     }
 
     // 選択肢生成
     const choices = generateChoices(answer, min);
     // 解説置換
-    const newExplanation = q.explanation.replace("【答】", answer);
+    const newExplanation = q.explanation.replaceAll("【答】", answer);
 
     return {
         ...q,
