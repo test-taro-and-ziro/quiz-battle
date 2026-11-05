@@ -109,24 +109,25 @@ function custom01(q) {
     let v2 = getRandom(min, max, 0);
 
     let newText = q.text;
+    let newExplanation = q.explanation;
 
     // 正解計算
     let answer = 0;
     if (flg) {
         answer = v1 + v2;
-        newText = newText.replaceAll("【値1】", v1);
-        newText = newText.replaceAll("【値2】", v2);
     } else {
-		if (v1 > v2) { [v1, v2] = [v2, v1]; }
-        answer = v2 - v1;
-        newText = newText.replaceAll("【値1】", v2);
-        newText = newText.replaceAll("【値2】", v1);
+		if (v2 > v1) { [v1, v2] = [v2, v1]; }
+        answer = v1 - v2;
     }
+	// 問題文置換
+    newText = newText.replaceAll("【値1】", v1);
+    newText = newText.replaceAll("【値2】", v2);
+    newExplanation = newExplanation.replaceAll("【値1】", v1);
+    newExplanation = newExplanation.replaceAll("【値2】", v2);
+    newExplanation = newExplanation.replaceAll("【答】", answer);
 
     // 選択肢生成
     const choices = generateChoices(answer, min);
-    // 解説置換
-    const newExplanation = q.explanation.replaceAll("【答】", answer);
 
     return {
         ...q,
