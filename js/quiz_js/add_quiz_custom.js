@@ -29,7 +29,7 @@ targetArray.push(...[
 	{ grade: 5, genre: "math", type: "select", text: "あめを 【値1】 こ 持っています。お母さんから 【値2】 こ もらいました。あめは あわせて なんこに なったかな？", choices: ["50", "500", true], answer: "【custom_01】", explanation: "せいかいは「【答】」！<br>はじめから持っている【値1】 こと 【値2】こを あわせるので、「【答】 こ」になります。" },
 	// custom_01：整数の引き算（文章）
 	{ grade: 1, genre: "math", type: "select", text: "ノートが 【値1】 さつ あります。【値2】 さつ つかうと、のこりの ノートは なんさつに なるかな？", choices: ["5", "10", false], answer: "【custom_01】", explanation: "せいかいは「【答】 さつ」！<br>もっているノートのかずから、つかったノートのかずをひいたら、のこったノートのかずは「【答】 さつ」だね" },
-	{ grade: 1, genre: "math", type: "select", text: "こどもが 【値1】 人（にん）います。おとこのこが 【値2】 人（にん）のとき、おんなのこは なんにん いるかな？", choices: ["5", "10", false], answer: "【custom_01】", explanation: "せいかいは「【答】 人（にん）」！<br>こどもの にんずうから、おとこのこの にんずうをひくと、おんなのこの にんずうがわかるね" },
+	{ grade: 2, genre: "math", type: "select", text: "こどもが 【値1】 人います。男の子が 【値2】 人のとき、女の子は なん人いるかな？", choices: ["15", "30", false], answer: "【custom_01】", explanation: "せいかいは「【答】 人（にん）」！<br>こどもの 人数（にんずう）から、男の子の 人数（にんずう）をひくと、女の子の 人数（にんずう）がわかるね" },
 	// custom_02：小数の足し算・引き算
 	{ grade: 3, genre: "math", type: "select", text: "【値1】の 問題（もんだい）だよ。 <br>「【値2】 【値3】 【値4】　＝　？？？　」の 答えは どれかな？", choices: ["0.1", "9.9"], answer: "【custom_02】", explanation: "せいかいは「【答】」！<br>計算の 問題（もんだい）だよ。おちついて 考えると 答えが わかるよね。" },
 	{ grade: 4, genre: "math", type: "select", text: "【値1】の問題だよ。 <br>「【値2】 【値3】 【値4】　＝　？？？　」の 答えは どれかな？", choices: ["0.01", "9.99"], answer: "【custom_02】", explanation: "せいかいは「【答】」！<br>計算の 問題だよ。おちついて考えると 答えが わかるよね。" },
