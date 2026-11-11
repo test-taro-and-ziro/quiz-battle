@@ -555,7 +555,6 @@ function handleAnswer(userAnswer, correctAnswer) {
     document.getElementById('explanation-text').innerHTML = q.explanation;
     document.getElementById('explanation-area').classList.remove('hidden');
 
-    const nextBtn = document.getElementById('next-question-btn');
     nextBtn.onclick = () => {
         currentQuestionIndex++;
         loadQuestion(currentQuestionIndex);
