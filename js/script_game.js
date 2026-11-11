@@ -435,7 +435,8 @@ function handleAnswer(userAnswer, correctAnswer) {
         isCorrect = (userBool === correctAnswer); 
     }
     const resultMessage = document.getElementById('result-message');
-    
+    const nextBtn = document.getElementById('next-question-btn');
+        
     let addedPlayerScore = 0;
     if (isCorrect) {
         resultMessage.textContent = "せいかい！ 🎉";
@@ -448,7 +449,10 @@ function handleAnswer(userAnswer, correctAnswer) {
         // 新しいポイント計算ロジック（残り時間ボーナス最大20ポイント ＋ 最小値10ポイント）
         const timeBonus = Math.round((currentScore / maxTimerValue) * 20);
         addedPlayerScore = timeBonus + 10; 
-        
+
+        nextBtn.disabled = false;
+        nextBtn.textContent = "つぎのもんだいへ ➔";
+            
     } else {
         resultMessage.textContent = "ざんねん… 😢";
         resultMessage.className = "result-text incorrect"; 
@@ -456,18 +460,17 @@ function handleAnswer(userAnswer, correctAnswer) {
 
         // ★5秒間押せない
         nextBtn.disabled = true;
-        nextBtn.textContent = "5びょう まってね";
-
         let count = 5;
+        nextBtn.textContent = `かいせつを よもう (${count})`;
 
         const waitTimer = setInterval(() => {
             count--;
             if (count > 0) {
-                nextBtn.textContent = `${count}びょう まってね`;
+                nextBtn.textContent = `かいせつを よもう (${count})`;
             } else {
                 clearInterval(waitTimer);
                 nextBtn.disabled = false;
-                nextBtn.textContent = "つぎへ";
+                nextBtn.textContent = "つぎのもんだいへ ➔";
             }
         }, 1000);
             
