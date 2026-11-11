@@ -6,6 +6,10 @@ export function loadQuestions_kanji(targetArray) {
 
 // 追加クイズ
 targetArray.push(...[
+// ひらがなを漢字に
+// 漢字の読み仮名
+// 正しい送り仮名
+// 同じ読み方の漢字
 ]);
 
 }
