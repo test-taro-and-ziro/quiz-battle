@@ -271,6 +271,11 @@ body {
     cursor: pointer;
     margin-top: 10px;
 }
+.next-btn-disabled {
+    background: #ffcc80;  /* オレンジ系 */
+    color: #795548;
+    cursor: not-allowed;
+}
 
 /* ==========================================
    ✨ 解説ポップアップの背景に巨大な「〇」「×」を表示
