@@ -460,6 +460,7 @@ function handleAnswer(userAnswer, correctAnswer) {
 
         // ★5秒間押せない
         nextBtn.disabled = true;
+        nextBtn.classList.add('next-btn-disabled');
         let count = 5;
         nextBtn.textContent = `かいせつを よもう (${count})`;
 
@@ -470,6 +471,7 @@ function handleAnswer(userAnswer, correctAnswer) {
             } else {
                 clearInterval(waitTimer);
                 nextBtn.disabled = false;
+                nextBtn.classList.remove('next-btn-disabled');
                 nextBtn.textContent = "つぎのもんだいへ ➔";
             }
         }, 1000);
