@@ -452,7 +452,25 @@ function handleAnswer(userAnswer, correctAnswer) {
     } else {
         resultMessage.textContent = "ざんねん… 😢";
         resultMessage.className = "result-text incorrect"; 
-        addedPlayerScore = 0; 
+        addedPlayerScore = 0;
+
+        // ★5秒間押せない
+        nextBtn.disabled = true;
+        nextBtn.textContent = "5びょう まってね";
+
+        let count = 5;
+
+        const waitTimer = setInterval(() => {
+            count--;
+            if (count > 0) {
+                nextBtn.textContent = `${count}びょう まってね`;
+            } else {
+                clearInterval(waitTimer);
+                nextBtn.disabled = false;
+                nextBtn.textContent = "つぎへ";
+            }
+        }, 1000);
+            
     }
     playerScore += addedPlayerScore;
 
