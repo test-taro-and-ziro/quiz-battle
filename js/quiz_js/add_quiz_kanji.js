@@ -24,4 +24,19 @@ targetArray.push(...[
 { grade: 4, genre: "japanese", type: "select", text: "「体育館の <u><b>しょうめい</b></u> が 明るく光っている。」<br>下線に入る漢字は どれかな？", choices: ["焼明", "照明", "笑明", "唱明"], answer: "照明", explanation: "せいかいは「照明」！<br>照明（しょうめい）は、光であたりを明るくする設備（せつび）のことです。照（しょう）は、照らすという意味を表します。" },
 ]);
 
+targetArray.push(...[
+// ひらがな → 漢字
+{ grade: 1, genre: "japanese", type: "select", text: "「こうえんで <u><b>いぬ</b></u> を みた。」<br>せんのひいてある ことばを かんじで かくと どれかな？", choices: ["犬", "鳥", "虫", "貝"], answer: "犬", explanation: "せいかいは「犬」！<br>犬（いぬ）は、人（ひと）と いっしょに くらすことが おおい どうぶつだよ。" },
+{ grade: 1, genre: "japanese", type: "select", text: "「そらに <u><b>つき</b></u> が みえる。」<br>せんのひいてある ことばを かんじで かくと どれかな？", choices: ["月", "日", "空", "雨"], answer: "月", explanation: "せいかいは「月」！<br>月（つき）は、よるの 空（そら）に みえる てんたいだよ。" },
+{ grade: 1, genre: "japanese", type: "select", text: "「にわに きれいな <u><b>はな</b></u> が さいた。」<br>せんのひいてある ことばを かんじで かくと どれかな？", choices: ["花", "草", "木", "竹"], answer: "花", explanation: "せいかいは「花」！<br>花（はな）は、しょくぶつに さく きれいな ところだよ。" },  
+// 漢字 → 読み方
+{ grade: 1, genre: "japanese", type: "select", text: "「<u><b>雨</b></u> が ふっている。」<br>せんのひいてある かんじは なんて よむかな？", choices: ["あめ", "くも", "ゆき", "かぜ"], answer: "あめ", explanation: "せいかいは「あめ」！<br>雨（あめ）は、空（そら）から ふる みずのことだよ。" },
+{ grade: 1, genre: "japanese", type: "select", text: "「<u><b>山</b></u> に のぼる。」<br>せんのひいてある かんじは なんて よむかな？", choices: ["やま", "かわ", "もり", "いし"], answer: "やま", explanation: "せいかいは「やま」！<br>山（やま）は、じめんが たかく なっている ところだよ。" },
+{ grade: 1, genre: "japanese", type: "select", text: "「<u><b>青</b></u> い そら。」<br>せんのひいてある かんじは なんて よむかな？", choices: ["あお", "あか", "しろ", "くろ"], answer: "あお", explanation: "せいかいは「あお」！<br>青（あお）は、空（そら）や うみのような いろを あらわす ことばだよ。" },
+// 文に合う漢字を選ぶ
+{ grade: 1, genre: "japanese", type: "select", text: "「きょうは <b>＿＿</b> が ふっている。」<br>せんのところに はいる かんじは どれかな？", choices: ["雨", "雲", "空", "雪"], answer: "雨", explanation: "せいかいは「雨」！<br>雨（あめ）は、そらから ふる みずのことだよ。" },
+{ grade: 1, genre: "japanese", type: "select", text: "「がっこうで <b>＿＿</b> を よんだ。」<br>せんのところに はいる かんじは どれかな？", choices: ["本", "木", "文", "字"], answer: "本", explanation: "せいかいは「本」！<br>本（ほん）は、おはなしや べんきょうのための文字（もじ）が かいてあるものだよ。" },
+{ grade: 1, genre: "japanese", type: "select", text: "「こうていに <b>＿＿</b> が たくさん ある。」<br>せんのところに はいる かんじは どれかな？", choices: ["木", "林", "森", "草"], answer: "木", explanation: "せいかいは「木」！<br>木（き）は、みどりの はっぱが ついている しょくぶつだよ。" },
+]);
+
 }
