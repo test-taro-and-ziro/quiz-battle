@@ -16,6 +16,7 @@ export const bulkQuestionsData = [];
 //import { loadQuestions6 } from './add_quiz_6.js';
 import { loadQuestions_custom } from './add_quiz_custom.js';
 import { loadQuestions_add } from './add_quiz_add.js';
+import { loadQuestions_kanji } from './add_quiz_kanji.js';
 
 // 配列へ追加を実行する
 //loadQuestions0(bulkQuestionsData);
@@ -27,3 +28,4 @@ import { loadQuestions_add } from './add_quiz_add.js';
 //loadQuestions6(bulkQuestionsData);
 loadQuestions_custom(bulkQuestionsData);
 loadQuestions_add(bulkQuestionsData);
+loadQuestions_kanji(bulkQuestionsData);
