@@ -27,7 +27,7 @@ targetArray.push(...[
 targetArray.push(...[
 // ひらがな → 漢字
 { grade: 1, genre: "japanese", type: "select", text: "「こうえんで <u><b>いぬ</b></u> を みた。」<br>せんのひいてある ことばを かんじで かくと どれかな？", choices: ["犬", "鳥", "虫", "貝"], answer: "犬", explanation: "せいかいは「犬」！<br>犬（いぬ）は、人（ひと）と いっしょに くらすことが おおい どうぶつだよ。" },
-{ grade: 1, genre: "japanese", type: "select", text: "「そらに <u><b>つき</b></u> が みえる。」<br>せんのひいてある ことばを かんじで かくと どれかな？", choices: ["月", "日", "空", "雨"], answer: "月", explanation: "せいかいは「月」！<br>月（つき）は、よるの 空（そら）に みえる てんたいだよ。" },
+{ grade: 1, genre: "japanese", type: "select", text: "「空（そら）に <u><b>つき</b></u> が みえる。」<br>せんのひいてある ことばを かんじで かくと どれかな？", choices: ["月", "日", "空", "雨"], answer: "月", explanation: "せいかいは「月」！<br>月（つき）は、よるの 空（そら）に みえる てんたいだよ。" },
 { grade: 1, genre: "japanese", type: "select", text: "「にわに きれいな <u><b>はな</b></u> が さいた。」<br>せんのひいてある ことばを かんじで かくと どれかな？", choices: ["花", "草", "木", "竹"], answer: "花", explanation: "せいかいは「花」！<br>花（はな）は、しょくぶつに さく きれいな ところだよ。" },  
 // 漢字 → 読み方
 { grade: 1, genre: "japanese", type: "select", text: "「<u><b>雨</b></u> が ふっている。」<br>せんのひいてある かんじは なんて よむかな？", choices: ["あめ", "くも", "ゆき", "かぜ"], answer: "あめ", explanation: "せいかいは「あめ」！<br>雨（あめ）は、空（そら）から ふる 水（みず）のことだよ。" },
