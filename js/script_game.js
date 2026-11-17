@@ -427,21 +427,12 @@ function handleAnswer(userAnswer, correctAnswer) {
     document.getElementById('quiz-inputs').classList.add('hidden');
     document.getElementById('timer-bar-fill').style.width = '0%';
 
-    // 表示用の回答文字列
-    let displayAnswer = userAnswer;
-        
     let isCorrect = (userAnswer === correctAnswer);
     // もし〇×クイズ（ボタンから "true" または "false" の文字列が届いた）の場合
     if (userAnswer === "true" || userAnswer === "false") {
         // ボタンから届いた文字を、本物の true / false （Boolean型）に変換してデータと比べます
         const userBool = (userAnswer === "true");
         isCorrect = (userBool === correctAnswer); 
-        // 回答表示文言の設定
-        if (userAnswer === "true") {
-            displayAnswer = "○";
-        } else if (userAnswer === "false") {
-            displayAnswer = "×";
-        }
     }
     const resultMessage = document.getElementById('result-message');
     const nextBtn = document.getElementById('next-question-btn');
@@ -562,10 +553,14 @@ function handleAnswer(userAnswer, correctAnswer) {
     const progressPercent = Math.min((totalScore / clearQuota) * 100, 100);
     document.getElementById('quota-bar-fill').style.width = `${progressPercent}%`;
     // あなたの回答
-    document.getElementById('answer-title').textContent = `${isCorrect ? '⭕' : '❌'} あなたの回答：${displayAnswer}`;
+    document.getElementById('answer-title').textContent = `${isCorrect ? '⭕' : '❌'} あなたの回答：${convertAnswerText(userAnswer)}`;
     // 解説
     const q = currentQuestions[currentQuestionIndex];
-    document.getElementById('explanation-text').innerHTML = q.explanation;
+    if (isCorrect) {
+        document.getElementById('explanation-text').innerHTML = q.explanation;
+    } else {
+        document.getElementById('explanation-text').innerHTML = `<strong>正解は：${convertAnswerText(correctAnswer)}</strong><br>${q.explanation}`;
+    }
     document.getElementById('explanation-area').classList.remove('hidden');
 
     nextBtn.onclick = () => {
@@ -720,4 +715,10 @@ function setupBackToMapButton() {
             });
         }
     });
+}
+// Boolean型のTrue/Falseを○×に変換
+function convertAnswerText(answer) {
+    if (answer === true || answer === "true") return "○";
+    if (answer === false || answer === "false") return "×";
+    return answer;
 }
