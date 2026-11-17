@@ -562,7 +562,7 @@ function handleAnswer(userAnswer, correctAnswer) {
     const progressPercent = Math.min((totalScore / clearQuota) * 100, 100);
     document.getElementById('quota-bar-fill').style.width = `${progressPercent}%`;
     // あなたの回答
-    document.getElementById('answer-title').textContent = `あなたの回答：${displayAnswer}`;
+    document.getElementById('answer-title').textContent = `${isCorrect ? '⭕' : '❌'} あなたの回答：${displayAnswer}`;
     // 解説
     const q = currentQuestions[currentQuestionIndex];
     document.getElementById('explanation-text').innerHTML = q.explanation;
