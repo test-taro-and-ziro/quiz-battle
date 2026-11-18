@@ -149,6 +149,13 @@ body {
     line-height: 1.6;
     margin: 10px 0 20px 0;
 }
+.quiz-image {
+    float: right;
+    width: 180px;
+    max-width: 40%;
+    margin-left: 12px;
+    margin-bottom: 8px;
+}
 
 /* 回答UIを包むコンテナ（〇×の時は横並び、それ以外は縦並びを自動切り替え） */
 .inputs-container {
