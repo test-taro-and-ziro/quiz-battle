@@ -6,7 +6,7 @@ export function loadQuestions_add(targetArray) {
 
 // 追加クイズ
 targetArray.push(...[
-	{ grade: 0, genre: "math", type: "select", text: "右図のような三角形があります。図の <u>（あ）</u> の角度は なんでしょう？【triangle_sum】", choices: ["70°", "80°", "60°", "100°"], answer: "70", explanation: "三角形の<b>内角の和（180°）</b>に関する問題です。<br>図からは 60°と50° と（あ）の角度を足すと 180° になります。そのため 180° ー（60° ＋ 50°）で計算すると 70° であることがわかります。" },
+	{ grade: 0, genre: "math", type: "select", text: "右図のような三角形があります。図の <u>（あ）</u> の角度は なんでしょう？【triangle_sum】", choices: ["70°", "80°", "60°", "100°"], answer: "70", explanation: "三角形の<b>内角の和（180°）</b>に関する問題です。<br>60°と50° と（あ）の角度を足すと 180° になります。そのため 180° ー（60° ＋ 50°）で計算すると 70° であることがわかります。" },
 ]);
 
 }
