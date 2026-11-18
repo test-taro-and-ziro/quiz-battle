@@ -454,6 +454,35 @@ function custom08(q) {
 }
 
 // ==========================================
+// ★ イメージURL定義
+// ==========================================
+const QUESTION_URL = {
+    "【triangle_sum】": { q: '<img src="images/question/q_triangle_sum.jpg" class="quiz-image">', e: '<img src="images/question/e_triangle_sum.jpg" class="quiz-image">'}
+};
+// ==========================================
+// ★ 問題文イメージ変換
+// ==========================================
+function questionConversion(q) {
+
+	// イメージURL変換
+	let newText = q.text ?? "";
+	let newExplanation = q.explanation ?? "";
+
+	Object.entries(QUESTION_URL).forEach(([key, value]) => {
+	    // 問題文の変換
+        if (value.q && newText.includes(key)) { newText = newText.replaceAll(key, value.q); }
+	    // 解説文の変換
+        if (value.e && newExplanation.includes(key)) { newExplanation = newExplanation.replaceAll(key, value.e); }
+    });
+
+    return {
+        ...q,
+        text: newText,
+        explanation: newExplanation,
+    };
+}
+
+// ==========================================
 // ★ 学年別漢字変換
 // ==========================================
 function wordsConversion(q, grade) {
