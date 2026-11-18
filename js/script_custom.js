@@ -17,7 +17,10 @@ export function applyCustomTemplate(question, userGrade) {
     if (pattern === "【custom_06】") {return custom06(question);} // ★ custom_06：掛け算
     if (pattern === "【custom_07】") {return custom07(question);} // ★ custom_07：計算のきまり（計算のじゅんじょ）
     if (pattern === "【custom_08】") {return custom08(question);} // ★ custom_08：計算のきまり（分配法則などのきまり）
-    
+
+	// ★ イメージ変換
+    question = questionConversion(question);
+	
     // パターンが無ければそのまま返す
     return question;
 }
