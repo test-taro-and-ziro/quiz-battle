@@ -19,11 +19,13 @@ targetArray.push(...[
 { grade: 4, genre: "japanese", type: "select", text: "「電気を <u><b>おびる</b></u>。」<br>下線の正しい書き方は どれかな？", choices: ["帯びる", "帯る", "帯", "帯び"], answer: "帯びる", explanation: "「帯びる（おびる）」は、何かを 身につけたり、あるせいしつを もったりすることを 表す言葉だよ。<br>ものを こすったときに 『電気を 帯びる』 といって、電気の 力を もつことが あるんだ。<br>送り仮名は <b>「帯びる」</b> と 書くよ！" },
 // 同じ読み方の漢字
 { grade: 4, genre: "japanese", type: "select", text: "「運動会のかけっこで <u><b>きょうそう</b></u> した。」<br>下線に入る漢字は どれかな？", choices: ["競走", "競争", "共走", "協走"], answer: "競走", explanation: "「競走（きょうそう）」は、走って速さを競（きそ）うことだよ。<br>かけっこやマラソンなど、走る勝負のときに 使う言葉なんだ。" },
-// 画数
+// 漢字の画数
 { grade: 4, genre: "japanese", type: "select", text: "漢字「芽（め）」の 画数は 何画？", choices: ["6画", "7画", "8画", "9画"], answer: "8画", explanation: "部首は「くさかんむり（艹）」だね。" },
 { grade: 4, genre: "japanese", type: "select", text: "漢字「案（あん）」の 画数は 何画？", choices: ["8画", "9画", "10画", "11画"], answer: "10画", explanation: "「安」と「木」を 組み合わせた 漢字だね。" },
 { grade: 4, genre: "japanese", type: "select", text: "漢字「希（き）」の 画数は 何画？", choices: ["6画", "7画", "8画", "9画"], answer: "7画", explanation: "「希」は 『希望（きぼう）』 などの 言葉で 使われる 漢字だね。" },
-
+// 類似の言葉
+{ grade: 4, genre: "japanese", type: "select", text: "「車が<u><b>いっせいに</b></u> 走り出す。」<br>下線の言葉と意味のにている言葉は どれかな？", choices: ["同時に", "とつぜんに", "急に", "ばらばらに"], answer: "同時に", explanation: "車が いっせいに 走り出すとは、たくさんの車が <b>同じタイミング</b>で 走り始めるという 意味なんだ。<br>他にも「いっぺんに」や「そろって」などの 言葉と意味がにているね。" },	
+{ grade: 4, genre: "japanese", type: "select", text: "「下書きの線が <u><b>かすかに</b></u> のこっている。」<br>下線の言葉と意味のにている言葉は どれかな？", choices: ["うっすらと", "はっきりと", "しっかりと", "ゆっくりと"], answer: "うっすらと", explanation: "「うっすらと」は、<b>はっきり見えないくらい</b> わずか である様子を表す言葉だよ。" },
 ]);
 
 }
