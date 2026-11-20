@@ -10,8 +10,8 @@ targetArray.push(...[
 
 targetArray.push(...[
 // 図を使った問題
-{ grade: 4, genre: "math", type: "select", text: "図の <u>（あ）</u> 対角線にある角の大きさは 何度かな？【diagonal_angle】", choices: ["70°", "90°", "110°", "180°"], answer: "110°", explanation: "一直線の上に できる 2つの角の大きさを あわせると <b>180°</b> に なるよ。<br>だから 「あ」の角は <b>180° - 70° = 110°</b> だね。" },
-{ grade: 4, genre: "math", type: "select", text: "図の <u>（あ）</u> 三角形の角の大きさは 何度かな？【triangle_angle】", choices: ["30°", "60°", "90°", "120°"], answer: "60°", explanation: "三角形の 3つの角を あわせると <b>180°</b> に なるよ。<br>この三角形には 90° と 30° が わかっているので、<br><b>180° − 90° − 30° = 60°</b><br>だから 「あ」は <b>60°</b> だね。" },
+{ grade: 4, genre: "math", type: "select", text: "図の対角線にある <u>（あ）</u> 角の大きさは 何度かな？【diagonal_angle】", choices: ["70°", "90°", "110°", "180°"], answer: "110°", explanation: "一直線の上に できる 2つの角の大きさを あわせると <b>180°</b> に なるよ。<br>だから 「あ」の角は <b>180° - 70° = 110°</b> だね。" },
+{ grade: 4, genre: "math", type: "select", text: "図の三角形の <u>（あ）</u> 角の大きさは 何度かな？【triangle_angle】", choices: ["30°", "60°", "90°", "120°"], answer: "60°", explanation: "三角形の 3つの角を あわせると <b>180°</b> に なるよ。<br>この三角形には 90° と 30° が わかっているので、<br><b>180° − 90° − 30° = 60°</b><br>だから 「あ」は <b>60°</b> だね。" },
 // 星
 { grade: 4, genre: "science", type: "select", text: "星の <b>ちがい</b> として 正しくないものは どれ？", choices: ["色", "明るさ", "大きさ", "音"], answer: "音", explanation: "星には <b>色</b> や <b>明るさ</b>、<b>大きさ</b> の ちがいが あるよ。<br>また、星の温度によって、赤っぽい星や 青白い星 のように見えるよ。<br>夜空を 観察（かんさつ）すると、星によって 明るく見えるものや 暗く見えるものが あることも わかるよ！" },
 // ひらがなを漢字に
