@@ -460,7 +460,8 @@ function custom08(q) {
 // ★ イメージURL定義
 // ==========================================
 const QUESTION_URL = {
-    "【triangle_sum】": { q: '<img src="images/quiz/q_triangle_sum.jpg" class="quiz-image">'}
+    "【triangle_sum】": { q: '<img src="images/quiz/q_triangle_sum.jpg" class="quiz-image">'},
+	"【diagonal_angle】": { q: '<img src="images/quiz/q_diagonal.jpg" class="quiz-image">'}
 };
 // ==========================================
 // ★ 問題文イメージ変換
